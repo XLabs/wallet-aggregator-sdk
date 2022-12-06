@@ -45,8 +45,8 @@ export class AlgorandWallet extends Wallet {
 
   async sendTransaction(signedTx: Uint8Array): Promise<any> {
     const algod = new algosdk.Algodv2('', 'https://node.testnet.algoexplorerapi.io', '');
-    const { txid } = await algod.sendRawTransaction(signedTx).do();
-    await algosdk.waitForConfirmation(algod, txid, this.WAIT_ROUNDS);
+    const { txId } = await algod.sendRawTransaction(signedTx).do();
+    return await algosdk.waitForConfirmation(algod, txId, this.WAIT_ROUNDS);
   }
 
   async signMessage(msg: Uint8Array): Promise<any> {

@@ -13,9 +13,6 @@ import { EthereumWallet, Wallet } from 'wormhole-wallet-aggregator';
 import { useWallet } from 'wormhole-wallet-aggregator-react';
 import useStyles from './styles';
 
-
-// COMO RESUELVE SOLANA CUANDO HAY UN CAMBIO DE WALLET?
-
 const ALGORAND_HOST = {
     algodToken: "",
     algodServer: "https://testnet-api.algonode.cloud",
@@ -36,25 +33,27 @@ const buildAlgorandTxs = async function(wallet: Wallet): Promise<any> {
     ALGORAND_HOST.algodServer,
     ALGORAND_HOST.algodPort
   );
-  // const tokenAddress = '0xF890982f9310df57d00f659cf4fd87e65adEd8d7';
-  const recipientAddress = '0xE6990c7e206D418D62B9e50c8E61f59Dc360183b';
-  const txs = await transferFromAlgorand(
+
+  const recipientAddress = 'E6990c7e206D418D62B9e50c8E61f59Dc360183b';
+  const txSignerPairs = await transferFromAlgorand(
     algodClient,
     BigInt(CONTRACTS['TESTNET'].algorand.token_bridge),
     BigInt(CONTRACTS['TESTNET'].algorand.core),
     pubkey!,
     BigInt(0),
     transferAmountParsed.toBigInt(),
-    Buffer.from(recipientAddress).toString('hex'),
+    recipientAddress,
     CHAIN_ID_ETH,
     feeParsed.toBigInt()
   );
 
-  return txs.map((t: any) => t.tx);
+  const txs = txSignerPairs.map(p => p.tx);
+  algosdk.assignGroupID(txs);
+
+  return txs;
 }
 
 const buildEthTxs = async function(wallet: Wallet): Promise<any> {
-  // const amount = "0.001";
   const usdcAmount = "1";
   const decimals = 18;
 
@@ -120,10 +119,6 @@ function App() {
 
   return (
     <div className="App">
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-      </header> */}
-
       <div className={clsx(styles.appContainer)}>
         <div className={clsx(styles.content)}>
           <ChainSelector />
