@@ -16,6 +16,10 @@ export class AlgorandWallet extends Wallet {
     this.accounts = [];
   }
 
+  getName(): string {
+    return 'MyAlgo';
+  }
+
   async connect(): Promise<void> {
     const accounts = await this.client.connect();
     this.accounts = accounts.map(a => a.address);

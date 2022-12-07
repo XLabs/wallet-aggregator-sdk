@@ -2,6 +2,7 @@ import { TransactionRequest } from "@ethersproject/abstract-provider";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { ethers } from 'ethers';
 import { EthereumWallet } from "./ethereum";
+const CacheSubprovider = require("web3-provider-engine/subproviders/cache");
 
 type EthProvider = ethers.providers.ExternalProvider | ethers.providers.JsonRpcFetchFunc;
 
@@ -59,6 +60,10 @@ export class EthereumWalletConnectWallet extends EthereumWallet {
         super();
     }
 
+    getName(): string {
+        return 'Eth Wallet Connect';
+    }
+
     async connect(): Promise<void> {
         this.walletConnectProvider = new WalletConnectProvider({
             rpc: EVM_RPC_MAP,
@@ -73,45 +78,23 @@ export class EthereumWalletConnectWallet extends EthereumWallet {
             'any'
         );
 
-        // this.walletConnectProvider.on("chainChanged", (chainId: number) => {
-        //     setChainId(chainId);
-        //     // HACK: clear the block-cache when switching chains by creating a new CacheSubprovider
-        //     // Otherwise ethers may not resolve transaction receipts/waits
-        //     const index = this.walletConnectProvider!._providers.findIndex(
-        //         (subprovider: any) => subprovider instanceof CacheSubprovider
-        //     );
-        //     if (index >= 0) {
-        //         const subprovider = this.walletConnectProvider!._providers[index];
-        //         this.walletConnectProvider!.removeProvider(subprovider);
-        //         this.walletConnectProvider!.addProvider(
-        //             new CacheSubprovider(),
-        //             index
-        //         );
-        //         // also reset the latest block
-        //         this.walletConnectProvider!._blockTracker._resetCurrentBlock();
-        //     }
-        // });
-        // this.walletConnectProvider.on(
-        //     "accountsChanged",
-        //     (accounts: string[]) => {
-        //     try {
-        //         const signer = provider.getSigner();
-        //         setSigner(signer);
-        //         signer
-        //         .getAddress()
-        //         .then((address) => {
-        //             setSignerAddress(address);
-        //         })
-        //         .catch(() => {
-        //             setProviderError(
-        //             "An error occurred while getting the signer address"
-        //             );
-        //         });
-        //     } catch (error) {
-        //         console.error(error);
-        //     }
-        //     }
-        // );
+        this.walletConnectProvider.on("chainChanged", (chainId: number) => {
+            // HACK: clear the block-cache when switching chains by creating a new CacheSubprovider
+            // Otherwise ethers may not resolve transaction receipts/waits
+            const index = this.walletConnectProvider!._providers.findIndex(
+                (subprovider: any) => subprovider instanceof CacheSubprovider
+            );
+            if (index >= 0) {
+                const subprovider = this.walletConnectProvider!._providers[index];
+                this.walletConnectProvider!.removeProvider(subprovider);
+                this.walletConnectProvider!.addProvider(
+                    new CacheSubprovider(),
+                    index
+                );
+                // also reset the latest block
+                this.walletConnectProvider!._blockTracker._resetCurrentBlock();
+            }
+        });
         this.walletConnectProvider.on(
             "disconnect",
             (code: number, reason: string) => {
@@ -123,6 +106,7 @@ export class EthereumWalletConnectWallet extends EthereumWallet {
     }
 
     async disconnect(): Promise<void> {
+        return this.walletConnectProvider?.disconnect();
     }
 
     async getPublicKey(): Promise<string> {

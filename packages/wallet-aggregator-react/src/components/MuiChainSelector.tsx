@@ -5,8 +5,8 @@ import {
 } from "@material-ui/core";
 import clsx from "clsx";
 import { AlgorandWallet, EthereumWalletConnectWallet, EthereumWeb3Wallet, CHAINS as CHAIN_IDS, ChainId } from "wormhole-wallet-aggregator";
-import algorandIcon from "./icons/algorand.svg";
-import ethIcon from "./icons/eth.svg";
+import algorandIcon from "../icons/algorand.svg";
+import ethIcon from "../icons/eth.svg";
 
 export interface ChainInfo {
     id: ChainId;

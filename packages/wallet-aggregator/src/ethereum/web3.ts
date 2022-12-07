@@ -12,6 +12,10 @@ export class EthereumWeb3Wallet extends EthereumWallet {
     super();
   }
 
+  getName(): string {
+    return 'Eth Metamask';
+  }
+
   async connect(): Promise<void> {
     // // TODO: retrieve network and other info
     // this.provider.send('eth_requestAccounts', []);

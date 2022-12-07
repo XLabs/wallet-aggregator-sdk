@@ -7,10 +7,11 @@ import algosdk from 'algosdk';
 import clsx from 'clsx';
 import { parseUnits } from "ethers/lib/utils";
 import { useState } from 'react';
-import './App.css';
-import ChainSelector from './components/Selector';
-import { EthereumWallet, Wallet } from 'wormhole-wallet-aggregator';
+import { ChainId, EthereumWallet, Wallet } from 'wormhole-wallet-aggregator';
 import { useWallet } from 'wormhole-wallet-aggregator-react';
+import './App.css';
+import ChainSelector from './components/ChainSelector';
+import WalletSelector from './components/WalletSelector';
 import useStyles from './styles';
 
 const ALGORAND_HOST = {
@@ -84,6 +85,7 @@ function App() {
   const styles = useStyles();
   const wallet = useWallet();
 
+  const [ chainId, setChainId ] = useState<ChainId | undefined>();
   const [ pubKey, setPubKey ] = useState<string | undefined>();
   const [ result, setResult ] = useState<any>();
   const [ error, setError ] = useState<any>();
@@ -97,6 +99,15 @@ function App() {
 
     const pubKey = await wallet.getPublicKey();
     setPubKey(pubKey);
+  }
+
+  const onClickDisconnect = async () => {
+    if (!wallet) {
+      return;
+    }
+
+    await wallet.disconnect();
+    setPubKey(undefined);
   }
 
   const onClickSign = async () => {
@@ -117,15 +128,31 @@ function App() {
     }
   }
 
+  const onChangeChain = (ev: any) => {
+    const chainId: ChainId = ev.target.value;
+    setChainId(chainId);
+    setPubKey(undefined);
+  }
+
   return (
     <div className="App">
       <div className={clsx(styles.appContainer)}>
         <div className={clsx(styles.content)}>
-          <ChainSelector />
+          <div className={clsx(styles.row)}>
+            <ChainSelector onChange={onChangeChain} />
+          </div>
+
+          <div className={clsx(styles.row)}>
+            {chainId && <WalletSelector chainId={chainId} />}
+          </div>
 
           <div className={clsx(styles.row)}>
             {wallet && <Button variant='contained' onClick={onClickConnect}>Connect</Button>}
             {pubKey && <span className={clsx(styles.pubkey)}>{pubKey}</span>}
+          </div>
+
+          <div className={clsx(styles.row)}>
+            {pubKey && <Button variant='contained' onClick={onClickDisconnect}>Disconnect</Button>}
           </div>
 
           <div className={clsx(styles.row)}>

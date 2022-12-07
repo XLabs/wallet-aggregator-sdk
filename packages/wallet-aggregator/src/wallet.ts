@@ -7,6 +7,7 @@ export type Message = any;
 export type SignedMessage = any;
 
 export abstract class Wallet {
+  abstract getName(): string;
   abstract connect(): Promise<void>;
   abstract disconnect(): Promise<void>;
   abstract getChainId(): number;

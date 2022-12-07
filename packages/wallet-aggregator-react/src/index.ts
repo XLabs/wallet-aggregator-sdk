@@ -1,2 +1,2 @@
-export * from './WalletContext';
-export * from './MuiChainSelector';
+export * from './context';
+export * from './components';
