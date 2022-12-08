@@ -3,12 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-// import WalletContextProvider from './components/WalletContext';
-import { WalletContextProvider } from 'wormhole-wallet-aggregator-react';
+import { WalletContextProvider, initWallets } from 'wormhole-wallet-aggregator-react';
+
+const wallets = initWallets();
 
 ReactDOM.render(
   <React.StrictMode>
-    <WalletContextProvider>
+    <WalletContextProvider availableWallets={wallets}>
       <App />
     </WalletContextProvider>
   </React.StrictMode>,

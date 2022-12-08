@@ -2,7 +2,6 @@
   "name": "wormhole-wallet-aggregator-react",
   "version": "0.0.1",
   "license": "MIT",
-  "private": true,
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/types/index.d.ts",
@@ -15,20 +14,15 @@
     "dist"
   ],
   "devDependencies": {
-    "@types/node": "^18.11.9",
-    "@types/react": "^18.0.0",
-    "@types/react-router-dom": "^5.1.8",
+    "@types/node": "^16.7.13",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
     "react-app-rewired": "^2.2.1"
   },
   "dependencies": {
-    "@certusone/wormhole-sdk": "file:.yalc/@certusone/wormhole-sdk",
     "@material-ui/core": "^4.12.2",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.60",
-    "@types/node": "^16.7.13",
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0",
-    "@types/react-router-dom": "^5.1.8",
     "assert": "^2.0.0",
     "buffer": "^6.0.3",
     "clsx": "^1.1.1",
@@ -39,7 +33,6 @@
     "react": "^17.0.2",
     "react-app-rewired": "^2.2.1",
     "react-dom": "^17.0.2",
-    "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "5.0.1",
     "react-table": "^7.7.0",
@@ -49,5 +42,11 @@
     "url": "^0.11.0",
     "web-vitals": "^2.1.0",
     "wormhole-wallet-aggregator": "workspace:^"
+  },
+  "pnpm": {
+    "overrides": {
+      "@types/react": "^17.0.0",
+      "@types/react-dom": "17.0.0"
+    }
   }
 }

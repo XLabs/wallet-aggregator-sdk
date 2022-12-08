@@ -43,7 +43,7 @@ export class AlgorandWallet extends Wallet {
     return result.map(s => s.blob);
   }
 
-  async getPublicKey(): Promise<string | undefined> {
+  getPublicKey(): string | undefined {
     return this.accounts.length > 0 ? this.accounts[0] : undefined;
   }
 
@@ -56,5 +56,14 @@ export class AlgorandWallet extends Wallet {
   async signMessage(msg: Uint8Array): Promise<any> {
     const pk = await this.getPublicKey();
     return this.client.signBytes(msg, pk!);
+  }
+
+  async getBalance(): Promise<string> {
+    if (this.accounts.length === 0) throw new Error('Not connected');
+
+    const address = this.getPublicKey();
+    const res = await fetch(`https://indexer.testnet.algoexplorerapi.io/v2/accounts/${address}`);
+    const json = await res.json();
+    return json.account.amount.toString();
   }
 }

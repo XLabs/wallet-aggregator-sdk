@@ -54,7 +54,6 @@ const EVM_RPC_MAP = Object.entries(METAMASK_CHAIN_PARAMETERS).reduce(
 
 export class EthereumWalletConnectWallet extends EthereumWallet {
     private walletConnectProvider?: WalletConnectProvider;
-    private provider?: ethers.providers.Web3Provider;  
 
     constructor() {
         super();
@@ -64,7 +63,7 @@ export class EthereumWalletConnectWallet extends EthereumWallet {
         return 'Eth Wallet Connect';
     }
 
-    async connect(): Promise<void> {
+    async innerConnect(): Promise<void> {
         this.walletConnectProvider = new WalletConnectProvider({
             rpc: EVM_RPC_MAP,
             storageId: "walletconnectid-evm"
@@ -101,42 +100,9 @@ export class EthereumWalletConnectWallet extends EthereumWallet {
                 this.disconnect();
             }
         );
-
-        await this.provider.getSigner().getAddress();
     }
 
     async disconnect(): Promise<void> {
         return this.walletConnectProvider?.disconnect();
-    }
-
-    async getPublicKey(): Promise<string> {
-        if (!this.provider) throw new Error('Not connected');
-
-        return this.provider.getSigner().getAddress();
-    }
-
-    async createTransaction(params: object): Promise<object> {
-        return params;
-    }
-
-    async signTransaction(tx: TransactionRequest): Promise<any> {
-        if (!this.provider) throw new Error('Not connected');
-        // return this.provider.getSigner().signTransaction(tx);
-        return tx;
-    }
-
-    async sendTransaction(tx: TransactionRequest): Promise<any> {
-        if (!this.provider) throw new Error('Not connected');
-        return this.provider.getSigner().sendTransaction(tx);
-    }
-
-    async signMessage(msg: Uint8Array): Promise<any> {
-        if (!this.provider) throw new Error('Not connected');
-        return this.provider.getSigner().signMessage(msg);
-    }
-
-    getSigner(): ethers.Signer {
-        if (!this.provider) throw new Error('Not connected');
-        return this.provider.getSigner();
     }
 }

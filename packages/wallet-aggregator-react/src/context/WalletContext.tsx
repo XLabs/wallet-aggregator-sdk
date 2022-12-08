@@ -1,26 +1,35 @@
 import { createContext, useMemo, useState } from "react";
-import { Wallet } from "wormhole-wallet-aggregator";
+import { ChainId, Wallet } from "wormhole-wallet-aggregator";
+
+export type WalletMap = { [key: number]: Wallet[] }
 
 interface IWalletContext {
   wallet?: Wallet;
-  changeWallet: (newWallet: Wallet) => void;
+  availableWallets: WalletMap;
+  changeWallet: (newWallet: Wallet | undefined) => void;
 }
 
 export const WalletContext = createContext<IWalletContext>({
-  changeWallet: () => {}
+  changeWallet: () => {},
+  availableWallets: {}
 });
 
-export const WalletContextProvider = ({ children }: React.PropsWithChildren) => {
+interface IWalletContextProviderProps {
+  availableWallets: WalletMap;
+}
+
+export const WalletContextProvider = ({ availableWallets, children }: React.PropsWithChildren<IWalletContextProviderProps>) => {
   const [ wallet, setWallet ] = useState<Wallet | undefined>();
 
-  const changeWallet = (newWallet: Wallet) => {
+  const changeWallet = (newWallet: Wallet | undefined) => {
     setWallet(newWallet);
   }
 
   const value = useMemo(() => ({
     wallet,
+    availableWallets,
     changeWallet,
-  }), [ wallet ])
+  }), [ wallet, availableWallets ])
 
   return (
     <WalletContext.Provider value={value}>

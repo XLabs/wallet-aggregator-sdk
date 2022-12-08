@@ -26,11 +26,6 @@ const CHAINS = [
       logo: ethIcon,
     }
 ]
-
-const PROVIDERS = {
-    [CHAIN_IDS['algorand']]: [AlgorandWallet],
-    [CHAIN_IDS['ethereum']]: [EthereumWeb3Wallet, EthereumWalletConnectWallet],
-};
   
 const useStyles = makeStyles((theme) => ({
     select: {

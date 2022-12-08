@@ -1,5 +1,5 @@
 import { useCallback, useContext, useMemo } from "react";
-import { AlgorandWallet, ChainId, CHAINS, EthereumWalletConnectWallet, EthereumWeb3Wallet, Wallet } from "wormhole-wallet-aggregator";
+import { ChainId, Wallet } from "wormhole-wallet-aggregator";
 import { WalletContext } from "./WalletContext";
 
 
@@ -9,10 +9,8 @@ export const useWallet = (): Wallet => {
 }
 
 export const useAvailableWallets = (): { [key: number]: Wallet[] } => {
-    return useMemo(() => ({
-        [CHAINS['algorand']]: [ new AlgorandWallet() ],
-        [CHAINS['ethereum']]: [ new EthereumWeb3Wallet(), new EthereumWalletConnectWallet() ]
-    }), []);
+    const { availableWallets } = useContext(WalletContext);
+    return useMemo(() => availableWallets, [availableWallets]);
 }
 
 export const useAvailableChains = () => {
@@ -22,7 +20,7 @@ export const useAvailableChains = () => {
 
 export const useGetWalletsForChain = () => {
     const walletsMap = useAvailableWallets();
-    // return useMemo(() => available[chainId] || [], [ chainId ])
+
     return useCallback((chainId: ChainId) => {
         return walletsMap[chainId] || [];
     }, [ walletsMap ])
@@ -31,7 +29,7 @@ export const useGetWalletsForChain = () => {
 export const useChangeWallet = () => {
     const { changeWallet } = useContext(WalletContext);
 
-    return useCallback((wallet: Wallet) => {
+    return useCallback((wallet: Wallet | undefined) => {
         changeWallet(wallet);
     }, [ changeWallet ]);
 }

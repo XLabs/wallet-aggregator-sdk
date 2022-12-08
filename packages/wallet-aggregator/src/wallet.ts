@@ -11,7 +11,8 @@ export abstract class Wallet {
   abstract connect(): Promise<void>;
   abstract disconnect(): Promise<void>;
   abstract getChainId(): number;
-  abstract getPublicKey(): Promise<string | undefined>;
+  abstract getPublicKey(): string | undefined;
+  abstract getBalance(): Promise<string>;
   abstract signTransaction(tx: any): Promise<any>;
   abstract sendTransaction(tx: any): Promise<any>;
   abstract signMessage(tx: Uint8Array): Promise<any>;
