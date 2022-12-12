@@ -3,9 +3,9 @@ import { ChainId, Wallet } from "wormhole-wallet-aggregator";
 import { WalletContext } from "./WalletContext";
 
 
-export const useWallet = (): Wallet => {
+export const useWallet = (): Wallet | undefined => {
     const { wallet } = useContext(WalletContext);
-    return useMemo(() => wallet, [wallet]) as Wallet;
+    return useMemo(() => wallet, [wallet]);
 }
 
 export const useAvailableWallets = (): { [key: number]: Wallet[] } => {
