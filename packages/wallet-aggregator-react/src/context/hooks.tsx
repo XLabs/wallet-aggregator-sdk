@@ -4,8 +4,13 @@ import { WalletContext } from "./WalletContext";
 
 
 export const useWallet = (): Wallet | undefined => {
-    const { wallet } = useContext(WalletContext);
+    const { defaultWallet: wallet } = useContext(WalletContext);
     return useMemo(() => wallet, [wallet]);
+}
+
+export const useWalletFromChain = (chainId: ChainId): Wallet | undefined => {
+    const { wallets } = useContext(WalletContext);
+    return useMemo(() => wallets[chainId], [ chainId, wallets ])
 }
 
 export const useAvailableWallets = (): { [key: number]: Wallet[] } => {
