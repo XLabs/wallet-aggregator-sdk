@@ -1,6 +1,7 @@
 import { TransactionRequest } from "@ethersproject/abstract-provider";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { ethers } from 'ethers';
+import { ChainId } from "../constants";
 import { EthereumWallet } from "./ethereum";
 const CacheSubprovider = require("web3-provider-engine/subproviders/cache");
 
@@ -42,7 +43,7 @@ interface EvmRpcMap {
     [chainId: string]: string;
 }
 
-const EVM_RPC_MAP = Object.entries(METAMASK_CHAIN_PARAMETERS).reduce(
+const DEFAULT_EVM_RPC_MAP = Object.entries(METAMASK_CHAIN_PARAMETERS).reduce(
     (evmRpcMap, [evmChainId, { rpcUrls }]) => {
         if (rpcUrls.length > 0) {
             evmRpcMap[evmChainId] = rpcUrls[0];
@@ -55,7 +56,7 @@ const EVM_RPC_MAP = Object.entries(METAMASK_CHAIN_PARAMETERS).reduce(
 export class EthereumWalletConnectWallet extends EthereumWallet {
     private walletConnectProvider?: WalletConnectProvider;
 
-    constructor() {
+    constructor(private readonly rpcMap: EvmRpcMap = DEFAULT_EVM_RPC_MAP) {
         super();
     }
 
@@ -65,7 +66,7 @@ export class EthereumWalletConnectWallet extends EthereumWallet {
 
     async innerConnect(): Promise<void> {
         this.walletConnectProvider = new WalletConnectProvider({
-            rpc: EVM_RPC_MAP,
+            rpc: this.rpcMap,
             storageId: "walletconnectid-evm"
         });
 
@@ -100,6 +101,18 @@ export class EthereumWalletConnectWallet extends EthereumWallet {
                 this.disconnect();
             }
         );
+    }
+
+    async checkAndSwitchNetwork(evmChainId: number): Promise<void> {
+        if (
+            DEFAULT_EVM_RPC_MAP[evmChainId] === undefined
+        ) {
+            // WalletConnect requires a rpc url for this chain
+            // Force user to switch connect type
+            return this.disconnect();
+        }
+
+        return super.checkAndSwitchNetwork(evmChainId);
     }
 
     async disconnect(): Promise<void> {

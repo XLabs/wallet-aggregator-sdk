@@ -1,6 +1,6 @@
 import MyAlgoConnect from '@randlabs/myalgo-connect';
 import algosdk from 'algosdk';
-import { CHAINS } from './constants';
+import { ChainId, CHAINS } from './constants';
 import { Wallet } from "./wallet";
 
 type AlgorandAddress = string;
@@ -29,7 +29,7 @@ export class AlgorandWallet extends Wallet {
     this.accounts = [];
   }
 
-  getChainId(): number {
+  getChainId(): ChainId {
     return CHAINS['algorand'];
   }
 
