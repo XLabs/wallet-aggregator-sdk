@@ -10,7 +10,8 @@ export const useWallet = (): Wallet | undefined => {
 
 export const useWalletFromChain = (chainId: ChainId): Wallet | undefined => {
     const { wallets } = useContext(WalletContext);
-    return useMemo(() => wallets[chainId], [ chainId, wallets ])
+    const wallet = wallets[chainId];
+    return useMemo(() => wallet, [ chainId, wallet, wallets ])
 }
 
 export const useAvailableWallets = (): { [key: number]: Wallet[] } => {
