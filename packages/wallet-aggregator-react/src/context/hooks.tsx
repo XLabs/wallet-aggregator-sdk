@@ -24,19 +24,26 @@ export const useAvailableChains = () => {
     return useMemo(() => Object.keys(walletsMap), [ walletsMap ])
 };
 
-export const useGetWalletsForChain = () => {
+export const useWalletsForChain = (chainId: ChainId) => {
     const walletsMap = useAvailableWallets();
+    const wallets = walletsMap[chainId] || [];
 
-    return useCallback((chainId: ChainId) => {
-        return walletsMap[chainId] || [];
-    }, [ walletsMap ])
+    return useMemo(() => wallets, [ wallets, walletsMap ])
 };
 
 export const useChangeWallet = () => {
     const { changeWallet } = useContext(WalletContext);
 
-    return useCallback((wallet: Wallet | undefined) => {
+    return useCallback((wallet: Wallet) => {
         changeWallet(wallet);
     }, [ changeWallet ]);
+}
+
+export const useUnsetWalletFromChain = () => {
+    const { unsetWalletFromChain } = useContext(WalletContext);
+
+    return useCallback((chainId: ChainId) => {
+        unsetWalletFromChain(chainId);
+    }, [ unsetWalletFromChain ]);
 }
   
