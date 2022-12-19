@@ -1,7 +1,7 @@
 import { ListItemText, MenuItem, TextField } from "@material-ui/core";
 import { useCallback } from "react";
-import { ChainId } from "wormhole-wallet-aggregator";
-import { useChangeWallet, useGetWalletsForChain } from "wormhole-wallet-aggregator-react";
+import { ChainId } from "wormhole-wallet-aggregator-core";
+import { useChangeWallet, useWalletsForChain } from "wormhole-wallet-aggregator-react";
 
 interface WalletSelectorProps {
     chainId: ChainId
@@ -9,8 +9,7 @@ interface WalletSelectorProps {
 
 export default function WalletSelector({ chainId }: WalletSelectorProps) {
     const changeWallet = useChangeWallet();
-    const getWalletsForChain = useGetWalletsForChain();
-    const wallets = getWalletsForChain(chainId);
+    const wallets = useWalletsForChain(chainId);
 
     const onChange = useCallback((ev: any) => {
         const walletName = ev.target.value;

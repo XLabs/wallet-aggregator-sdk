@@ -1,0 +1,25 @@
+{
+  "name": "wormhole-wallet-aggregator-solana",
+  "version": "0.0.1",
+  "license": "MIT",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
+  "scripts": {
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build": "rm -rf dist && npm run build:cjs && npm run build:esm"
+  },
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@types/node": "^18.11.9",
+    "typescript": "^4.4.2",
+    "@solana/web3.js": "^1.70.1"
+  },
+  "dependencies": {
+    "@solana/wallet-adapter-base": "^0.9.20",
+    "wormhole-wallet-aggregator-core": "workspace:^"
+  }
+}

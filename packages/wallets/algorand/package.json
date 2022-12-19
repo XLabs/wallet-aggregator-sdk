@@ -1,0 +1,25 @@
+{
+  "name": "wormhole-wallet-aggregator-algorand",
+  "version": "0.0.1",
+  "license": "MIT",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
+  "scripts": {
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build": "rm -rf dist && npm run build:cjs && npm run build:esm"
+  },
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@types/node": "^18.11.9",
+    "typescript": "^4.4.2"
+  },
+  "dependencies": {
+    "@randlabs/myalgo-connect": "^1.4.0",
+    "wormhole-wallet-aggregator-core": "workspace:^",
+    "algosdk": "^1.22.0"
+  }
+}

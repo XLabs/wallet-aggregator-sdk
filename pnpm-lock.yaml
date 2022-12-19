@@ -26,7 +26,8 @@ importers:
       stream-http: ^3.2.0
       typescript: ^4.9.3
       web-vitals: ^2.1.4
-      wormhole-wallet-aggregator: workspace:^
+      wormhole-wallet-aggregator-core: workspace:^
+      wormhole-wallet-aggregator-evm: workspace:^
       wormhole-wallet-aggregator-react: workspace:^
       wormhole-wallet-aggregator-react-mui: workspace:^0.0.1
     dependencies:
@@ -47,9 +48,10 @@ importers:
       stream-http: 3.2.0
       typescript: 4.9.3
       web-vitals: 2.1.4
-      wormhole-wallet-aggregator: link:../packages/wallet-aggregator
-      wormhole-wallet-aggregator-react: link:../packages/wallet-aggregator-react
-      wormhole-wallet-aggregator-react-mui: link:../packages/wallet-aggregator-react-mui
+      wormhole-wallet-aggregator-core: link:../packages/wallets/core
+      wormhole-wallet-aggregator-evm: link:../packages/wallets/evm
+      wormhole-wallet-aggregator-react: link:../packages/react
+      wormhole-wallet-aggregator-react-mui: link:../packages/react-mui
     devDependencies:
       '@types/jest': 27.5.2
       '@types/node': 16.18.6
@@ -57,40 +59,7 @@ importers:
       assert: 2.0.0
       os-browserify: 0.3.0
 
-  packages/wallet-aggregator:
-    specifiers:
-      '@ethersproject/abstract-provider': ^5.7.0
-      '@ethersproject/bytes': ^5.7.0
-      '@metamask/detect-provider': ^2.0.0
-      '@randlabs/myalgo-connect': ^1.4.0
-      '@solana/wallet-adapter-base': ^0.9.20
-      '@solana/web3.js': ^1.70.1
-      '@types/node': ^18.11.9
-      '@walletconnect/web3-provider': ^1.7.8
-      algosdk: ^1.22.0
-      ethers: ^5.7.2
-      process: ^0.11.10
-      react-app-rewired: ^2.2.1
-      typescript: ^4.4.2
-      web3-provider-engine: ^16.0.4
-    dependencies:
-      '@ethersproject/abstract-provider': 5.7.0
-      '@ethersproject/bytes': 5.7.0
-      '@metamask/detect-provider': 2.0.0
-      '@randlabs/myalgo-connect': 1.4.2
-      '@solana/wallet-adapter-base': 0.9.20_@solana+web3.js@1.70.1
-      '@walletconnect/web3-provider': 1.8.0
-      algosdk: 1.24.0
-      ethers: 5.7.2
-      web3-provider-engine: 16.0.4
-    devDependencies:
-      '@solana/web3.js': 1.70.1
-      '@types/node': 18.11.11
-      process: 0.11.10
-      react-app-rewired: 2.2.1
-      typescript: 4.9.3
-
-  packages/wallet-aggregator-react:
+  packages/react:
     specifiers:
       '@solana/wallet-adapter-base': ^0.9.20
       '@solana/wallet-adapter-wallets': ^0.19.9
@@ -116,9 +85,15 @@ importers:
       typescript: ^4.4.2
       url: ^0.11.0
       web-vitals: ^2.1.0
-      wormhole-wallet-aggregator: workspace:^
+      wormhole-wallet-aggregator-algorand: workspace:^
+      wormhole-wallet-aggregator-core: workspace:^
+      wormhole-wallet-aggregator-evm: workspace:^
+      wormhole-wallet-aggregator-solana: workspace:^
     dependencies:
-      wormhole-wallet-aggregator: link:../wallet-aggregator
+      wormhole-wallet-aggregator-algorand: link:../wallets/algorand
+      wormhole-wallet-aggregator-core: link:../wallets/core
+      wormhole-wallet-aggregator-evm: link:../wallets/evm
+      wormhole-wallet-aggregator-solana: link:../wallets/solana
     devDependencies:
       '@solana/wallet-adapter-base': 0.9.20_@solana+web3.js@1.70.1
       '@solana/wallet-adapter-wallets': 0.19.9_cjk4rhvfxlkmzfay3hjwlj6ple
@@ -145,7 +120,7 @@ importers:
       url: 0.11.0
       web-vitals: 2.1.4
 
-  packages/wallet-aggregator-react-mui:
+  packages/react-mui:
     specifiers:
       '@material-ui/core': ^4.12.2
       '@material-ui/icons': ^4.11.2
@@ -171,7 +146,7 @@ importers:
       typescript: ^4.4.2
       url: ^0.11.0
       web-vitals: ^2.1.0
-      wormhole-wallet-aggregator: workspace:^
+      wormhole-wallet-aggregator-core: workspace:^
       wormhole-wallet-aggregator-react: workspace:^
     dependencies:
       '@material-ui/core': 4.12.4_gzv7pa6nrbev3fs6gyzn7sadkq
@@ -195,12 +170,73 @@ importers:
       typescript: 4.9.3
       url: 0.11.0
       web-vitals: 2.1.4
-      wormhole-wallet-aggregator: link:../wallet-aggregator
-      wormhole-wallet-aggregator-react: link:../wallet-aggregator-react
+      wormhole-wallet-aggregator-core: link:../wallets/core
+      wormhole-wallet-aggregator-react: link:../react
     devDependencies:
       '@types/node': 16.18.6
       '@types/react': 17.0.52
       '@types/react-dom': 17.0.18
+
+  packages/wallets/algorand:
+    specifiers:
+      '@randlabs/myalgo-connect': ^1.4.0
+      '@types/node': ^18.11.9
+      algosdk: ^1.22.0
+      typescript: ^4.4.2
+      wormhole-wallet-aggregator-core: workspace:^
+    dependencies:
+      '@randlabs/myalgo-connect': 1.4.2
+      algosdk: 1.24.0
+      wormhole-wallet-aggregator-core: link:../core
+    devDependencies:
+      '@types/node': 18.11.11
+      typescript: 4.9.3
+
+  packages/wallets/core:
+    specifiers:
+      '@types/node': ^18.11.9
+      typescript: ^4.4.2
+    devDependencies:
+      '@types/node': 18.11.11
+      typescript: 4.9.3
+
+  packages/wallets/evm:
+    specifiers:
+      '@ethersproject/abstract-provider': ^5.7.0
+      '@ethersproject/bytes': ^5.7.0
+      '@metamask/detect-provider': ^2.0.0
+      '@types/node': ^18.11.9
+      '@walletconnect/web3-provider': ^1.7.8
+      ethers: ^5.7.2
+      typescript: ^4.4.2
+      web3-provider-engine: ^16.0.4
+      wormhole-wallet-aggregator-core: workspace:^
+    dependencies:
+      '@ethersproject/abstract-provider': 5.7.0
+      '@ethersproject/bytes': 5.7.0
+      '@metamask/detect-provider': 2.0.0
+      '@walletconnect/web3-provider': 1.8.0
+      ethers: 5.7.2
+      web3-provider-engine: 16.0.4
+      wormhole-wallet-aggregator-core: link:../core
+    devDependencies:
+      '@types/node': 18.11.11
+      typescript: 4.9.3
+
+  packages/wallets/solana:
+    specifiers:
+      '@solana/wallet-adapter-base': ^0.9.20
+      '@solana/web3.js': ^1.70.1
+      '@types/node': ^18.11.9
+      typescript: ^4.4.2
+      wormhole-wallet-aggregator-core: workspace:^
+    dependencies:
+      '@solana/wallet-adapter-base': 0.9.20_@solana+web3.js@1.70.1
+      wormhole-wallet-aggregator-core: link:../core
+    devDependencies:
+      '@solana/web3.js': 1.70.1
+      '@types/node': 18.11.11
+      typescript: 4.9.3
 
 packages:
 
@@ -4029,7 +4065,7 @@ packages:
     resolution: {integrity: sha512-wTR0t0Bp1HABLFRbYaE3vFLuco2QbAg6QvxBnzi5j9qjhYezWHW7OiCZyaWbt25UkSaoolUUT4Il0nS/2vcbSw==}
     dependencies:
       '@stablelib/keyagreement': 1.0.1
-      '@stablelib/random': 1.0.1
+      '@stablelib/random': 1.0.2
       '@stablelib/wipe': 1.0.1
     dev: true
 
@@ -11846,15 +11882,6 @@ packages:
       raf: 3.4.1
       regenerator-runtime: 0.13.11
       whatwg-fetch: 3.6.2
-
-  /react-app-rewired/2.2.1:
-    resolution: {integrity: sha512-uFQWTErXeLDrMzOJHKp0h8P1z0LV9HzPGsJ6adOtGlA/B9WfT6Shh4j2tLTTGlXOfiVx6w6iWpp7SOC5pvk+gA==}
-    hasBin: true
-    peerDependencies:
-      react-scripts: '>=2.1.3'
-    dependencies:
-      semver: 5.7.1
-    dev: true
 
   /react-app-rewired/2.2.1_react-scripts@5.0.1:
     resolution: {integrity: sha512-uFQWTErXeLDrMzOJHKp0h8P1z0LV9HzPGsJ6adOtGlA/B9WfT6Shh4j2tLTTGlXOfiVx6w6iWpp7SOC5pvk+gA==}
