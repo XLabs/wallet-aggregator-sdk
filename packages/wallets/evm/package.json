@@ -1,5 +1,5 @@
 {
-  "name": "wormhole-wallet-aggregator-evm",
+  "name": "wallet-aggregator-evm",
   "version": "0.0.1",
   "license": "MIT",
   "main": "dist/cjs/index.js",
@@ -24,6 +24,6 @@
     "@walletconnect/web3-provider": "^1.7.8",
     "ethers": "^5.7.2",
     "web3-provider-engine": "^16.0.4",
-    "wormhole-wallet-aggregator-core": "workspace:^"
+    "wallet-aggregator-core": "workspace:^"
   }
 }

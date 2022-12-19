@@ -4,7 +4,7 @@ import {
     makeStyles, MenuItem, OutlinedTextFieldProps, TextField
 } from "@material-ui/core";
 import clsx from "clsx";
-import { ChainId, CHAINS as CHAIN_IDS } from "wormhole-wallet-aggregator-core";
+import { ChainId, CHAINS as CHAIN_IDS } from "wallet-aggregator-core";
 import algorandIcon from "../icons/algorand.svg";
 import ethIcon from "../icons/eth.svg";
 

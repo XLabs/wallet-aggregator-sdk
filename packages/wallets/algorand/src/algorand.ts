@@ -1,6 +1,6 @@
 import MyAlgoConnect from '@randlabs/myalgo-connect';
 import algosdk from 'algosdk';
-import { ChainId, CHAINS, Wallet } from 'wormhole-wallet-aggregator-core';
+import { ChainId, CHAINS, Wallet } from "wallet-aggregator-core";
 
 type AlgorandAddress = string;
 

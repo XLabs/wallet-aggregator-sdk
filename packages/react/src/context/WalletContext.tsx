@@ -1,5 +1,5 @@
 import { createContext, useMemo, useState } from "react";
-import { ChainId, Wallet } from "wormhole-wallet-aggregator-core";
+import { ChainId, Wallet } from "wallet-aggregator-core";
 
 export type AvailableWalletsMap = { [key: number]: Wallet[] }
 export type WalletMap = { [key: number]: Wallet | undefined }

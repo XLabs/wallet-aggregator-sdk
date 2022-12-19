@@ -1,5 +1,5 @@
 {
-  "name": "wormhole-wallet-aggregator-algorand",
+  "name": "wallet-aggregator-algorand",
   "version": "0.0.1",
   "license": "MIT",
   "main": "dist/cjs/index.js",
@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@randlabs/myalgo-connect": "^1.4.0",
-    "wormhole-wallet-aggregator-core": "workspace:^",
+    "wallet-aggregator-core": "workspace:^",
     "algosdk": "^1.22.0"
   }
 }

@@ -1,6 +1,6 @@
 import { TransactionRequest } from "@ethersproject/abstract-provider";
 import { ethers } from "ethers";
-import { Wallet, ChainId, CHAINS } from "wormhole-wallet-aggregator-core";
+import { Wallet, ChainId, CHAINS } from "wallet-aggregator-core";
 import { hexlify, hexStripZeros } from "@ethersproject/bytes";
 
 export abstract class EthereumWallet extends Wallet {

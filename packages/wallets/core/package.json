@@ -1,5 +1,5 @@
 {
-  "name": "wormhole-wallet-aggregator-core",
+  "name": "wallet-aggregator-core",
   "version": "0.0.1",
   "license": "MIT",
   "main": "dist/cjs/index.js",

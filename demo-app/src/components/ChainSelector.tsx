@@ -1,5 +1,5 @@
 // import { useChangeWallet } from "./WalletContext";
-import { MuiChainSelector } from "wormhole-wallet-aggregator-react-mui";
+import { MuiChainSelector } from "wallet-aggregator-react-mui";
 
 interface ChainSelectorProps {
     onChange: (event: any) => void;

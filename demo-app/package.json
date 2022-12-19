@@ -20,10 +20,10 @@
     "stream-http": "^3.2.0",
     "typescript": "^4.9.3",
     "web-vitals": "^2.1.4",
-    "wormhole-wallet-aggregator-core": "workspace:^",
-    "wormhole-wallet-aggregator-evm": "workspace:^",
-    "wormhole-wallet-aggregator-react": "workspace:^",
-    "wormhole-wallet-aggregator-react-mui": "workspace:^0.0.1"
+    "wallet-aggregator-core": "workspace:^",
+    "wallet-aggregator-evm": "workspace:^",
+    "wallet-aggregator-react": "workspace:^",
+    "wallet-aggregator-react-mui": "workspace:^0.0.1"
   },
   "devDependencies": {
     "@types/jest": "^27.0.1",

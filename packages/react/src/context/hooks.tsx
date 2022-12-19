@@ -1,5 +1,5 @@
 import { useCallback, useContext, useMemo } from "react";
-import { ChainId, Wallet } from "wormhole-wallet-aggregator-core";
+import { ChainId, Wallet } from "wallet-aggregator-core";
 import { WalletContext } from "./WalletContext";
 
 

@@ -4,10 +4,10 @@ import {
     TorusWalletAdapter
 } from "@solana/wallet-adapter-wallets";
 import { clusterApiUrl, Connection } from "@solana/web3.js";
-import { AlgorandWallet } from "wormhole-wallet-aggregator-algorand";
-import { CHAINS } from "wormhole-wallet-aggregator-core";
-import { EthereumWalletConnectWallet, EthereumWeb3Wallet } from "wormhole-wallet-aggregator-evm";
-import { SolanaAdapter, SolanaWallet } from "wormhole-wallet-aggregator-solana";
+import { AlgorandWallet } from "wallet-aggregator-algorand";
+import { CHAINS } from "wallet-aggregator-core";
+import { EthereumWalletConnectWallet, EthereumWeb3Wallet } from "wallet-aggregator-evm";
+import { SolanaAdapter, SolanaWallet } from "wallet-aggregator-solana";
 import { AvailableWalletsMap } from "./WalletContext";
 
 

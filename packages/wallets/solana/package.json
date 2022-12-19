@@ -1,5 +1,5 @@
 {
-  "name": "wormhole-wallet-aggregator-solana",
+  "name": "wallet-aggregator-solana",
   "version": "0.0.1",
   "license": "MIT",
   "main": "dist/cjs/index.js",
@@ -20,6 +20,6 @@
   },
   "dependencies": {
     "@solana/wallet-adapter-base": "^0.9.20",
-    "wormhole-wallet-aggregator-core": "workspace:^"
+    "wallet-aggregator-core": "workspace:^"
   }
 }
