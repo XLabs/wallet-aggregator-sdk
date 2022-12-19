@@ -16,5 +16,5 @@ export abstract class Wallet {
   abstract getBalance(): Promise<string>;
   abstract signTransaction(tx: any): Promise<any>;
   abstract sendTransaction(tx: any): Promise<any>;
-  abstract signMessage(tx: Uint8Array): Promise<any>;
+  abstract signMessage(msg: Uint8Array): Promise<any>;
 }

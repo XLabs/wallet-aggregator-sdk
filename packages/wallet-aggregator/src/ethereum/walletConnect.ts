@@ -115,7 +115,7 @@ export class EthereumWalletConnectWallet extends EthereumWallet {
         return super.checkAndSwitchNetwork(evmChainId);
     }
 
-    async disconnect(): Promise<void> {
-        return this.walletConnectProvider?.disconnect();
+    async innerDisconnect(): Promise<void> {
+        this.walletConnectProvider?.disconnect();
     }
 }

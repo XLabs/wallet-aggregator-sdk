@@ -28,6 +28,6 @@ export class EthereumWeb3Wallet extends EthereumWallet {
     await this.provider.send('eth_requestAccounts', []);
   }
 
-  async disconnect(): Promise<void> {
+  async innerDisconnect(): Promise<void> {
   }
 }

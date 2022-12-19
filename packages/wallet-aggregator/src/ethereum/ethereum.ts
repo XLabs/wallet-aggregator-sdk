@@ -9,6 +9,7 @@ export abstract class EthereumWallet extends Wallet {
   protected provider?: ethers.providers.Web3Provider;
 
   protected abstract innerConnect(): Promise<void>;
+  protected abstract innerDisconnect(): Promise<void>;
 
   async checkAndSwitchNetwork(ethChainId: number): Promise<void> {
     if (!this.provider) return;
@@ -47,7 +48,9 @@ export abstract class EthereumWallet extends Wallet {
   }
 
   async disconnect(): Promise<void> {
+    await this.innerDisconnect();
     await this.provider?.removeAllListeners();
+    this.address = undefined;
   }
 
   getChainId(): ChainId {
