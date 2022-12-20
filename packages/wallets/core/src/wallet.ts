@@ -1,12 +1,5 @@
 import { ChainId } from "./constants";
 
-export type TxParams = object;
-export type Tx = object;
-export type SignedTx = object;
-export type TxResult = object;
-export type Message = any;
-export type SignedMessage = any;
-
 export abstract class Wallet {
   abstract getName(): string;
   abstract connect(): Promise<void>;
