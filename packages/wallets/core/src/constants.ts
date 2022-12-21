@@ -1,3 +1,4 @@
+// From: https://github.com/wormhole-foundation/wormhole/blob/dev.v2/sdk/js/src/utils/consts.ts#L1
 export const CHAINS = {
     unset: 0,
     solana: 1,

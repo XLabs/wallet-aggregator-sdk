@@ -1,6 +1,6 @@
 import { useCallback, useContext, useMemo } from "react";
 import { ChainId, Wallet } from "wallet-aggregator-core";
-import { WalletContext } from "./WalletContext";
+import { AvailableWalletsMap, WalletContext } from "./WalletContext";
 
 
 export const useWallet = (): Wallet | undefined => {
@@ -14,17 +14,17 @@ export const useWalletFromChain = (chainId: ChainId): Wallet | undefined => {
     return useMemo(() => wallet, [ chainId, wallet, wallets ])
 }
 
-export const useAvailableWallets = (): { [key: number]: Wallet[] } => {
+export const useAvailableWallets = (): AvailableWalletsMap => {
     const { availableWallets } = useContext(WalletContext);
     return useMemo(() => availableWallets, [availableWallets]);
 }
 
-export const useAvailableChains = () => {
+export const useAvailableChains = (): ChainId[] => {
     const walletsMap = useAvailableWallets();
-    return useMemo(() => Object.keys(walletsMap), [ walletsMap ])
+    return useMemo(() => Object.keys(walletsMap).map(id => +id as ChainId), [ walletsMap ])
 };
 
-export const useWalletsForChain = (chainId: ChainId) => {
+export const useWalletsForChain = (chainId: ChainId): Wallet[] => {
     const walletsMap = useAvailableWallets();
     const wallets = walletsMap[chainId] || [];
 

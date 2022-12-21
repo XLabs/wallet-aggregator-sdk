@@ -4,8 +4,6 @@ import { ChainId, Wallet } from "wallet-aggregator-core";
 export type AvailableWalletsMap = { [key: number]: Wallet[] }
 export type WalletMap = { [key: number]: Wallet | undefined }
 
-const DEFAULT_CHAIN: number = -1;
-
 interface IWalletContext {
   wallets: WalletMap;
   defaultWallet?: Wallet | undefined;
