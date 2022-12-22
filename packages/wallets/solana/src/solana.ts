@@ -29,12 +29,12 @@ export class SolanaWallet extends Wallet {
     return this.adapter.name;
   }
 
-  connect(): Promise<void> {
-    return new Promise((resolve, reject) => {
+  async connect(): Promise<void> {
+    await new Promise((resolve, reject) => {
       this.adapter.on('connect', () => {
         this.adapter.off('connect');
         this.adapter.off('error');
-        resolve();
+        resolve(undefined);
       });
 
       this.adapter.on('error', () => {
@@ -45,14 +45,16 @@ export class SolanaWallet extends Wallet {
 
       this.adapter.connect();
     });
+
+    this.emit('connect');
   }
 
-  disconnect(): Promise<void> {
-    return new Promise((resolve, reject) => {
+  async disconnect(): Promise<void> {
+    await new Promise((resolve, reject) => {
       this.adapter.on('disconnect', () => {
         this.adapter.off('disconnect');
         this.adapter.off('error');
-        resolve();
+        resolve(undefined);
       });
 
       this.adapter.on('error', () => {
@@ -63,6 +65,8 @@ export class SolanaWallet extends Wallet {
 
       this.adapter.disconnect();
     });
+
+    this.emit('disconnect');
   }
 
   getChainId(): ChainId {

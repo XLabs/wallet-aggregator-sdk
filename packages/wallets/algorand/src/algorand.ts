@@ -22,10 +22,12 @@ export class AlgorandWallet extends Wallet {
   async connect(): Promise<void> {
     const accounts = await this.client.connect();
     this.accounts = accounts.map(a => a.address);
+    this.emit('connect');
   }
 
   async disconnect(): Promise<void> {
     this.accounts = [];
+    this.emit('disconnect');
   }
 
   getChainId(): ChainId {

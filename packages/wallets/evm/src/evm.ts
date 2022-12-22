@@ -46,6 +46,8 @@ export abstract class EVMWallet extends Wallet<EVMWalletEvents> {
     await this.innerConnect();
     this.address = await this.getSigner().getAddress();
     this.evmChainId = (await this.provider!.getNetwork()).chainId;
+
+    this.emit('connect');
   }
 
   async disconnect(): Promise<void> {
@@ -54,6 +56,8 @@ export abstract class EVMWallet extends Wallet<EVMWalletEvents> {
     this.provider = undefined;
     this.address = undefined;
     this.evmChainId = undefined;
+
+    this.emit('disconnect');
   }
 
   getChainId(): ChainId {
@@ -101,7 +105,6 @@ export abstract class EVMWallet extends Wallet<EVMWalletEvents> {
   }
 
   protected async onChainChanged(chainId: number): Promise<void> {
-    console.log('Chain changed to', chainId)
     const network = await this.provider!.getNetwork();
     this.evmChainId = network.chainId;
     this.emit('evmChainChanged', this.evmChainId)

@@ -52,9 +52,8 @@ export class EVMWalletConnectWallet extends EVMWallet {
 
         this.walletConnectProvider.on(
             "disconnect",
-            (code: number, reason: string) => {
-                console.log('disconnected!')
-                this.disconnect();
+            () => {
+                this.emit('disconnect');
             }
         );
     }
@@ -72,7 +71,7 @@ export class EVMWalletConnectWallet extends EVMWallet {
     }
 
     async innerDisconnect(): Promise<void> {
-        this.walletConnectProvider?.disconnect();
+        await this.walletConnectProvider?.disconnect();
         this.walletConnectProvider?.removeAllListeners();
         this.walletConnectProvider = undefined;
     }
