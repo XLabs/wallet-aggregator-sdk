@@ -1,55 +1,10 @@
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { ethers } from 'ethers';
-import { EthereumWallet } from "./ethereum";
+import { EvmRpcMap, EVM_RPC_MAP as DEFAULT_EVM_RPC_MAP } from "./parameters";
+import { EVMWallet } from "./evm";
 const CacheSubprovider = require("web3-provider-engine/subproviders/cache");
 
-interface AddEthereumChainParameter {
-    chainId: string; // A 0x-prefixed hexadecimal string
-    chainName: string;
-    nativeCurrency: {
-        name: string;
-        symbol: string; // 2-6 characters long
-        decimals: 18;
-    };
-    rpcUrls: string[];
-    blockExplorerUrls?: string[];
-    iconUrls?: string[]; // Currently ignored.
-}
-
-const METAMASK_CHAIN_PARAMETERS: {
-    [evmChainId: number]: AddEthereumChainParameter;
-  } = {
-    3: {
-        chainId: "0x3",
-        chainName: "Ropsten",
-        nativeCurrency: { name: "Ropsten Ether", symbol: "ROP", decimals: 18 },
-        rpcUrls: ["https://rpc.ankr.com/eth_ropsten"],
-        blockExplorerUrls: ["https://ropsten.etherscan.io"],
-    },
-    5: {
-        chainId: "0x5",
-        chainName: "Görli",
-        nativeCurrency: { name: "Görli Ether", symbol: "GOR", decimals: 18 },
-        rpcUrls: ["https://rpc.ankr.com/eth_goerli"],
-        blockExplorerUrls: ["https://goerli.etherscan.io"],
-    }
-};
-
-interface EvmRpcMap {
-    [chainId: string]: string;
-}
-
-const DEFAULT_EVM_RPC_MAP = Object.entries(METAMASK_CHAIN_PARAMETERS).reduce(
-    (evmRpcMap, [evmChainId, { rpcUrls }]) => {
-        if (rpcUrls.length > 0) {
-            evmRpcMap[evmChainId] = rpcUrls[0];
-        }
-        return evmRpcMap;
-    },
-    {} as EvmRpcMap
-);
-
-export class EthereumWalletConnectWallet extends EthereumWallet {
+export class EVMWalletConnectWallet extends EVMWallet {
     private walletConnectProvider?: WalletConnectProvider;
 
     constructor(private readonly rpcMap: EvmRpcMap = DEFAULT_EVM_RPC_MAP) {
@@ -74,6 +29,8 @@ export class EthereumWalletConnectWallet extends EthereumWallet {
             'any'
         );
 
+        this.walletConnectProvider.on('accountsChanged', () => this.onAccountsChanged());
+
         this.walletConnectProvider.on("chainChanged", (chainId: number) => {
             // HACK: clear the block-cache when switching chains by creating a new CacheSubprovider
             // Otherwise ethers may not resolve transaction receipts/waits
@@ -90,16 +47,19 @@ export class EthereumWalletConnectWallet extends EthereumWallet {
                 // also reset the latest block
                 this.walletConnectProvider!._blockTracker._resetCurrentBlock();
             }
+            this.onChainChanged(chainId);
         });
+
         this.walletConnectProvider.on(
             "disconnect",
             (code: number, reason: string) => {
+                console.log('disconnected!')
                 this.disconnect();
             }
         );
     }
 
-    async checkAndSwitchNetwork(evmChainId: number): Promise<void> {
+    async switchChain(evmChainId: number): Promise<void> {
         if (
             DEFAULT_EVM_RPC_MAP[evmChainId] === undefined
         ) {
@@ -108,10 +68,12 @@ export class EthereumWalletConnectWallet extends EthereumWallet {
             return this.disconnect();
         }
 
-        return super.checkAndSwitchNetwork(evmChainId);
+        return super.switchChain(evmChainId);
     }
 
     async innerDisconnect(): Promise<void> {
         this.walletConnectProvider?.disconnect();
+        this.walletConnectProvider?.removeAllListeners();
+        this.walletConnectProvider = undefined;
     }
 }

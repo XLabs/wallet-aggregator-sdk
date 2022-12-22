@@ -1,6 +1,12 @@
+import EventEmitter from "eventemitter3";
 import { ChainId } from "./constants";
 
-export abstract class Wallet {
+export interface WalletEvents {
+  connect(): void;
+  disconnect(): void;
+}
+
+export abstract class Wallet<E extends WalletEvents = any> extends EventEmitter<E> {
   abstract getName(): string;
   abstract connect(): Promise<void>;
   abstract disconnect(): Promise<void>;

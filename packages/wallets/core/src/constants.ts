@@ -35,3 +35,24 @@ export const CHAINS = {
 export type ChainName = keyof typeof CHAINS;
 
 export type ChainId = typeof CHAINS[ChainName];
+
+export function isEVMChain(chainId: ChainId): boolean {
+    return (
+        chainId === CHAINS['ethereum'] ||
+        chainId === CHAINS['bsc'] ||
+        chainId === CHAINS['avalanche'] ||
+        chainId === CHAINS['polygon'] ||
+        chainId === CHAINS['oasis'] ||
+        chainId === CHAINS['aurora'] ||
+        chainId === CHAINS['fantom'] ||
+        chainId === CHAINS['karura'] ||
+        chainId === CHAINS['acala'] ||
+        chainId === CHAINS['klaytn'] ||
+        chainId === CHAINS['celo'] ||
+        chainId === CHAINS['moonbeam'] ||
+        chainId === CHAINS['neon'] ||
+        chainId === CHAINS['arbitrum'] ||
+        chainId === CHAINS['optimism'] ||
+        chainId === CHAINS['gnosis']
+    );
+}

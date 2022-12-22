@@ -1,16 +1,23 @@
 import { TransactionRequest } from "@ethersproject/abstract-provider";
 import { ethers } from "ethers";
-import { Wallet, ChainId, CHAINS } from "wallet-aggregator-core";
+import { Wallet, WalletEvents, ChainId, CHAINS } from "wallet-aggregator-core";
 import { hexlify, hexStripZeros } from "@ethersproject/bytes";
+import { METAMASK_CHAIN_PARAMETERS } from "./parameters";
 
-export abstract class EthereumWallet extends Wallet {
+interface EVMWalletEvents extends WalletEvents {
+  evmChainChanged(evmChainId: number): void;
+  accountsChanged(address: string): void;
+}
+
+export abstract class EVMWallet extends Wallet<EVMWalletEvents> {
   protected address?: string;
+  protected evmChainId?: number;
   protected provider?: ethers.providers.Web3Provider;
 
   protected abstract innerConnect(): Promise<void>;
   protected abstract innerDisconnect(): Promise<void>;
 
-  async checkAndSwitchNetwork(ethChainId: number): Promise<void> {
+  async switchChain(ethChainId: number): Promise<void> {
     if (!this.provider) return;
 
     try {
@@ -20,17 +27,14 @@ export abstract class EthereumWallet extends Wallet {
     } catch (switchError: any) {
       // This error code indicates that the chain has not been added to MetaMask.
       if (switchError.code === 4902) {
-        // const addChainParameter =
-        //   METAMASK_CHAIN_PARAMETERS[correctEvmNetwork];
-        // if (addChainParameter !== undefined) {
-        //   try {
-        //     await this.provider.send("wallet_addEthereumChain", [
-        //       addChainParameter,
-        //     ]);
-        //   } catch (addError) {
-        //     console.error(addError);
-        //   }
-        // }
+        const addChainParameter =
+          METAMASK_CHAIN_PARAMETERS[ethChainId];
+
+        if (addChainParameter !== undefined) {
+          await this.provider.send("wallet_addEthereumChain", [
+            addChainParameter,
+          ]);
+        }
         throw new Error("Chain not in metamask")
       }
       throw switchError
@@ -38,22 +42,27 @@ export abstract class EthereumWallet extends Wallet {
   }
 
   async connect(): Promise<void> {
+    // TODO: throw error when the evm chain is not supported (evmChainId not in CHAINS) 
     await this.innerConnect();
     this.address = await this.getSigner().getAddress();
-
-    this.provider!.on('accountsChanged', async () => {
-      this.address = await this.getSigner().getAddress();
-    })
+    this.evmChainId = (await this.provider!.getNetwork()).chainId;
   }
 
   async disconnect(): Promise<void> {
     await this.innerDisconnect();
     await this.provider?.removeAllListeners();
+    this.provider = undefined;
     this.address = undefined;
+    this.evmChainId = undefined;
   }
 
   getChainId(): ChainId {
-    return CHAINS['ethereum'];
+    return this.evmChainId as ChainId;
+  }
+
+  getEvmChainId(): number | undefined {
+    if (!this.provider) throw new Error('Not connected');
+    return this.evmChainId;
   }
 
   getPublicKey(): string | undefined {
@@ -89,5 +98,17 @@ export abstract class EthereumWallet extends Wallet {
     if (!this.provider) throw new Error('Not connected');
     const balance = await this.provider.getSigner().getBalance();
     return balance.toString();
+  }
+
+  protected async onChainChanged(chainId: number): Promise<void> {
+    console.log('Chain changed to', chainId)
+    const network = await this.provider!.getNetwork();
+    this.evmChainId = network.chainId;
+    this.emit('evmChainChanged', this.evmChainId)
+  }
+
+  protected async onAccountsChanged(): Promise<void> {
+    this.address = await this.getSigner().getAddress();
+    this.emit('accountsChanged', this.address);
   }
 }
