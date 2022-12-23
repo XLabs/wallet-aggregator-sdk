@@ -6,7 +6,7 @@ export interface WalletEvents {
   disconnect(): void;
 }
 
-export abstract class Wallet<E extends WalletEvents = WalletEvents> extends EventEmitter<E> {
+export abstract class Wallet<E extends WalletEvents = any> extends EventEmitter<E> {
   abstract getName(): string;
   abstract connect(): Promise<void>;
   abstract disconnect(): Promise<void>;
@@ -16,4 +16,5 @@ export abstract class Wallet<E extends WalletEvents = WalletEvents> extends Even
   abstract signTransaction(tx: any): Promise<any>;
   abstract sendTransaction(tx: any): Promise<any>;
   abstract signMessage(msg: Uint8Array): Promise<any>;
+  abstract getIcon(): string;
 }

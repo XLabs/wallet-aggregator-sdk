@@ -94,4 +94,8 @@ export class SolanaWallet extends Wallet {
     if (!this.adapter.signMessage) throw new Error('Not supported');
     return this.adapter.signMessage(msg);
   }
+
+  getIcon(): string {
+    return this.adapter.icon;
+  }
 }

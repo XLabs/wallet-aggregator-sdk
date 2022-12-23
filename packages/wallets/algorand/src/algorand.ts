@@ -67,4 +67,8 @@ export class AlgorandWallet extends Wallet {
     const json = await res.json();
     return json.account.amount.toString();
   }
+
+  getIcon(): string {
+    return 'data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NTAgNjUwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPkFMR09fTG9nb3NfMTkwMzIwPC90aXRsZT48ZyBpZD0ibElOVDdXIj48cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iNDQ0LjE4IDQ0NC4zMiA0MDYuODEgNDQ0LjMyIDM4Mi41NCAzNTQuMDQgMzMwLjM2IDQ0NC4zMyAyODguNjQgNDQ0LjMzIDM2OS4yOSAzMDQuNTcgMzU2LjMxIDI1Ni4wNSAyNDcuNTYgNDQ0LjM2IDIwNS44MiA0NDQuMzYgMzQzLjY0IDIwNS42NCAzODAuMTggMjA1LjY0IDM5Ni4xOCAyNjQuOTUgNDMzLjg4IDI2NC45NSA0MDguMTQgMzA5LjcxIDQ0NC4xOCA0NDQuMzIiLz48L2c+PC9zdmc+';
+  }
 }
