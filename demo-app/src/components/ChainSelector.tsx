@@ -1,5 +1,4 @@
-// import { useChangeWallet } from "./WalletContext";
-import { MuiChainSelector } from "wallet-aggregator-react-mui";
+import { MuiChainSelector } from "./MuiChainSelector";
 
 interface ChainSelectorProps {
     onChange: (event: any) => void;

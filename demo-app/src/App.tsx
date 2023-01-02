@@ -8,7 +8,7 @@ import clsx from 'clsx';
 import { parseUnits } from "ethers/lib/utils";
 import { useState } from 'react';
 import { ChainId, Wallet } from "wallet-aggregator-core";
-import { EthereumWallet } from 'wallet-aggregator-evm';
+import { EVMWallet } from 'wallet-aggregator-evm';
 import { useWallet } from 'wallet-aggregator-react';
 import './App.css';
 import ChainSelector from './components/ChainSelector';
@@ -69,7 +69,7 @@ const buildEthTxs = async function(wallet: Wallet): Promise<any> {
 
   return transferFromEthTx(
     TOKEN_BRIDGE_ADDRESS,
-    (wallet as EthereumWallet).getSigner(),
+    (wallet as EVMWallet).getSigner(),
     USDC_TOKEN_ADDRESS,
     transferAmountParsed,
     CHAIN_ID_ALGORAND,
