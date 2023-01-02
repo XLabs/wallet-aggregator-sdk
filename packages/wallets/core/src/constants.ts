@@ -32,27 +32,62 @@ export const CHAINS = {
     wormchain: 3104,
 } as const;
 
+export const CHAINS_TESTNET = {
+    eth: 5,
+    bsc: 97,
+    polygon: 80001,
+    avax: 43113,
+    oasis: 42261,
+    aurora: 1313161555,
+    fantom: 4002,
+    karura: 596,
+    acala: 597,
+    klaytn: 1001,
+    celo: 44787,
+    neon: 245022926,
+    arbitrum: 421613
+} as const;
+
 export type ChainName = keyof typeof CHAINS;
 
 export type ChainId = typeof CHAINS[ChainName];
 
+const EVM_CHAINS_MAINNET: ChainId[] = [
+    CHAINS['ethereum'],
+    CHAINS['bsc'],
+    CHAINS['avalanche'],
+    CHAINS['polygon'],
+    CHAINS['oasis'],
+    CHAINS['aurora'],
+    CHAINS['fantom'],
+    CHAINS['karura'],
+    CHAINS['acala'],
+    CHAINS['klaytn'],
+    CHAINS['celo'],
+    CHAINS['moonbeam'],
+    CHAINS['neon'],
+    CHAINS['arbitrum'],
+    CHAINS['optimism'],
+    CHAINS['gnosis']
+];
+
+const EVM_CHAINS_TESTNET: number[] = [
+    CHAINS_TESTNET['eth'],
+    CHAINS_TESTNET['bsc'],
+    CHAINS_TESTNET['polygon'],
+    CHAINS_TESTNET['avax'],
+    CHAINS_TESTNET['oasis'],
+    CHAINS_TESTNET['aurora'],
+    CHAINS_TESTNET['fantom'],
+    CHAINS_TESTNET['karura'],
+    CHAINS_TESTNET['acala'],
+    CHAINS_TESTNET['klaytn'],
+    CHAINS_TESTNET['celo'],
+    CHAINS_TESTNET['neon'],
+    CHAINS_TESTNET['arbitrum']
+];
+
 export function isEVMChain(chainId: ChainId): boolean {
-    return (
-        chainId === CHAINS['ethereum'] ||
-        chainId === CHAINS['bsc'] ||
-        chainId === CHAINS['avalanche'] ||
-        chainId === CHAINS['polygon'] ||
-        chainId === CHAINS['oasis'] ||
-        chainId === CHAINS['aurora'] ||
-        chainId === CHAINS['fantom'] ||
-        chainId === CHAINS['karura'] ||
-        chainId === CHAINS['acala'] ||
-        chainId === CHAINS['klaytn'] ||
-        chainId === CHAINS['celo'] ||
-        chainId === CHAINS['moonbeam'] ||
-        chainId === CHAINS['neon'] ||
-        chainId === CHAINS['arbitrum'] ||
-        chainId === CHAINS['optimism'] ||
-        chainId === CHAINS['gnosis']
-    );
+    return EVM_CHAINS_MAINNET.includes(chainId) ||
+        EVM_CHAINS_TESTNET.includes(chainId);
 }
