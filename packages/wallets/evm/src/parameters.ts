@@ -12,10 +12,12 @@ export interface AddEthereumChainParameter {
   iconUrls?: string[]; // Currently ignored.
 }
 
-// https://chainid.network/chains.json for chain info
-export const METAMASK_CHAIN_PARAMETERS: {
+export interface AddEthereumChainParameterMap {
   [evmChainId: number]: AddEthereumChainParameter;
-} = {
+}
+
+// https://chainid.network/chains.json for chain info
+export const DEFAULT_CHAIN_PARAMETERS: AddEthereumChainParameterMap = {
   3: {
     chainId: "0x3",
     chainName: "Ropsten",
@@ -124,7 +126,7 @@ export interface EvmRpcMap {
   [chainId: string]: string;
 }
 
-export const EVM_RPC_MAP = Object.entries(METAMASK_CHAIN_PARAMETERS).reduce(
+export const EVM_RPC_MAP = Object.entries(DEFAULT_CHAIN_PARAMETERS).reduce(
   (evmRpcMap, [evmChainId, { rpcUrls }]) => {
     if (rpcUrls.length > 0) {
       evmRpcMap[evmChainId] = rpcUrls[0];
@@ -133,3 +135,14 @@ export const EVM_RPC_MAP = Object.entries(METAMASK_CHAIN_PARAMETERS).reduce(
   },
   {} as EvmRpcMap
 );
+
+export const buildRpcMap = (params: AddEthereumChainParameterMap) =>
+  Object.entries(params).reduce(
+    (evmRpcMap, [evmChainId, { rpcUrls }]) => {
+      if (rpcUrls.length > 0) {
+        evmRpcMap[evmChainId] = rpcUrls[0];
+      }
+      return evmRpcMap;
+    },
+    {} as EvmRpcMap
+  );

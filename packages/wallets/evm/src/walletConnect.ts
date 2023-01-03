@@ -1,14 +1,16 @@
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { ethers } from 'ethers';
-import { EvmRpcMap, EVM_RPC_MAP as DEFAULT_EVM_RPC_MAP } from "./parameters";
+import { AddEthereumChainParameterMap, buildRpcMap, EvmRpcMap, EVM_RPC_MAP as DEFAULT_EVM_RPC_MAP } from "./parameters";
 import { EVMWallet } from "./evm";
 const CacheSubprovider = require("web3-provider-engine/subproviders/cache");
 
 export class EVMWalletConnectWallet extends EVMWallet {
     private walletConnectProvider?: WalletConnectProvider;
+    private rpcMap: EvmRpcMap;
 
-    constructor(private readonly rpcMap: EvmRpcMap = DEFAULT_EVM_RPC_MAP) {
-        super();
+    constructor(params?: AddEthereumChainParameterMap) {
+        super(params);
+        this.rpcMap = buildRpcMap(this.chainParameters)
     }
 
     getName(): string {

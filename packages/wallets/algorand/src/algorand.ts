@@ -4,13 +4,35 @@ import { ChainId, CHAINS, Wallet } from "wallet-aggregator-core";
 
 type AlgorandAddress = string;
 
+export interface AlgorandNodeConfig {
+  url: string;
+  token?: string;
+  port?: string;
+}
+
+export interface AlgorandIndexerConfig {
+  url: string;
+}
+
+export interface AlgorandWalletConfig {
+  node: AlgorandNodeConfig;
+  indexer: AlgorandIndexerConfig;
+}
+
+const DEFAULT_CONFIG: AlgorandWalletConfig = {
+  node: { url: 'https://node.algoexplorerapi.io' },
+  indexer: { url: 'https://indexer.algoexplorerapi.io' }
+}
+
 export class AlgorandWallet extends Wallet {
   private readonly WAIT_ROUNDS = 5;
   private readonly client: MyAlgoConnect;
   private accounts: AlgorandAddress[];
+  private config: AlgorandWalletConfig;
 
-  constructor() {
+  constructor(config?: AlgorandWalletConfig) {
     super();
+    this.config = config || DEFAULT_CONFIG;
     this.client = new MyAlgoConnect();
     this.accounts = [];
   }
@@ -49,7 +71,11 @@ export class AlgorandWallet extends Wallet {
   }
 
   async sendTransaction(signedTx: Uint8Array): Promise<any> {
-    const algod = new algosdk.Algodv2('', 'https://node.testnet.algoexplorerapi.io', '');
+    const algod = new algosdk.Algodv2(
+      this.config.node.token || '',
+      this.config.node.url,
+      this.config.node.port || ''
+    );
     const { txId } = await algod.sendRawTransaction(signedTx).do();
     return await algosdk.waitForConfirmation(algod, txId, this.WAIT_ROUNDS);
   }
@@ -63,7 +89,7 @@ export class AlgorandWallet extends Wallet {
     if (this.accounts.length === 0) throw new Error('Not connected');
 
     const address = this.getPublicKey();
-    const res = await fetch(`https://indexer.testnet.algoexplorerapi.io/v2/accounts/${address}`);
+    const res = await fetch(`${this.config.indexer.url}/v2/accounts/${address}`);
     const json = await res.json();
     return json.account.amount.toString();
   }

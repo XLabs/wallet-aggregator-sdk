@@ -2,7 +2,7 @@ import { TransactionRequest } from "@ethersproject/abstract-provider";
 import { ethers } from "ethers";
 import { Wallet, WalletEvents, ChainId, CHAINS } from "wallet-aggregator-core";
 import { hexlify, hexStripZeros } from "@ethersproject/bytes";
-import { METAMASK_CHAIN_PARAMETERS } from "./parameters";
+import { AddEthereumChainParameterMap, DEFAULT_CHAIN_PARAMETERS } from "./parameters";
 
 interface EVMWalletEvents extends WalletEvents {
   evmChainChanged(evmChainId: number): void;
@@ -13,6 +13,12 @@ export abstract class EVMWallet extends Wallet<EVMWalletEvents> {
   protected address?: string;
   protected evmChainId?: number;
   protected provider?: ethers.providers.Web3Provider;
+  protected chainParameters: AddEthereumChainParameterMap;
+
+  constructor(params?: AddEthereumChainParameterMap) {
+    super();
+    this.chainParameters = Object.assign({}, DEFAULT_CHAIN_PARAMETERS, params)
+  }
 
   protected abstract innerConnect(): Promise<void>;
   protected abstract innerDisconnect(): Promise<void>;
@@ -28,7 +34,7 @@ export abstract class EVMWallet extends Wallet<EVMWalletEvents> {
       // This error code indicates that the chain has not been added to MetaMask.
       if (switchError.code === 4902) {
         const addChainParameter =
-          METAMASK_CHAIN_PARAMETERS[ethChainId];
+          this.chainParameters[ethChainId];
 
         if (addChainParameter !== undefined) {
           await this.provider.send("wallet_addEthereumChain", [

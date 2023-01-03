@@ -4,15 +4,22 @@ import {
     TorusWalletAdapter
 } from "@solana/wallet-adapter-wallets";
 import { clusterApiUrl, Connection } from "@solana/web3.js";
-import { AlgorandWallet } from "wallet-aggregator-algorand";
+import { AlgorandWallet, AlgorandWalletConfig } from "wallet-aggregator-algorand";
 import { ChainId, CHAINS, isEVMChain } from "wallet-aggregator-core";
 import { EVMWalletConnectWallet, EVMWeb3Wallet } from "wallet-aggregator-evm";
+import { AddEthereumChainParameterMap } from "wallet-aggregator-evm/dist/types/parameters";
 import { SolanaAdapter, SolanaWallet } from "wallet-aggregator-solana";
 import { AvailableWalletsMap } from "./WalletContext";
 
 
 interface InitWalletsConfig {
-    solanaHost?: string;
+    solana?: {
+        host?: string;
+    },
+    algorand?: AlgorandWalletConfig,
+    evm?: {
+        chainParameters?: AddEthereumChainParameterMap
+    }
 }
 
 export const initWallets = (config?: InitWalletsConfig): AvailableWalletsMap => {
@@ -32,9 +39,14 @@ export const initWallets = (config?: InitWalletsConfig): AvailableWalletsMap => 
     ];
 
     return {
-        [CHAINS['algorand']]: [new AlgorandWallet()],
-        [CHAINS['ethereum']]: [new EVMWeb3Wallet(), new EVMWalletConnectWallet()],
-        [CHAINS['solana']]: solanaAdapters.map(adapter => new SolanaWallet(adapter, new Connection(config?.solanaHost || clusterApiUrl("devnet"))))
+        [CHAINS['algorand']]: [new AlgorandWallet(config?.algorand)],
+        [CHAINS['ethereum']]: [
+            new EVMWeb3Wallet(config?.evm?.chainParameters),
+            new EVMWalletConnectWallet(config?.evm?.chainParameters)
+        ],
+        [CHAINS['solana']]:
+            solanaAdapters.map(adapter =>
+                new SolanaWallet(adapter, new Connection(config?.solana?.host || clusterApiUrl("devnet"))))
     };
 };
 

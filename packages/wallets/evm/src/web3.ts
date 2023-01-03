@@ -1,6 +1,7 @@
 import detectEthereumProvider from "@metamask/detect-provider";
 import { ethers } from 'ethers';
 import { EVMWallet } from "./evm";
+import { AddEthereumChainParameterMap } from "./parameters";
 
 // detectEthereumProvider does not export its return type interface
 export interface MetaMaskEthereumProvider {
@@ -15,10 +16,6 @@ export interface MetaMaskEthereumProvider {
 
 export class EVMWeb3Wallet extends EVMWallet {
   private metamaskProvider?: MetaMaskEthereumProvider;
-
-  constructor() {
-    super();
-  }
 
   getName(): string {
     return 'Eth Metamask';
