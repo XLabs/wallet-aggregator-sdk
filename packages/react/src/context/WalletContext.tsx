@@ -1,5 +1,5 @@
 import { createContext, useMemo, useState } from "react";
-import { ChainId, CHAINS, Wallet, isEVMChain } from "wallet-aggregator-core";
+import { ChainId, Wallet } from "wallet-aggregator-core";
 import { getChainId } from "./utils";
 
 export type AvailableWalletsMap = { [key: number]: Wallet[] }
