@@ -22,8 +22,7 @@
     "web-vitals": "^2.1.4",
     "wallet-aggregator-core": "workspace:^",
     "wallet-aggregator-evm": "workspace:^",
-    "wallet-aggregator-react": "workspace:^",
-    "wallet-aggregator-react-mui": "workspace:^0.0.1"
+    "wallet-aggregator-react": "workspace:^"
   },
   "devDependencies": {
     "@types/jest": "^27.0.1",

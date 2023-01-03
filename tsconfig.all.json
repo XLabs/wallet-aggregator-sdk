@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.root.json",
+  "references": [
+    { "path": "./packages/wallets/core/tsconfig.json" },
+    { "path": "./packages/wallets/algorand/tsconfig.json" },
+    { "path": "./packages/wallets/evm/tsconfig.json" },
+    { "path": "./packages/wallets/solana/tsconfig.json" },
+    { "path": "./packages/react/tsconfig.json" },
+  ]
+}

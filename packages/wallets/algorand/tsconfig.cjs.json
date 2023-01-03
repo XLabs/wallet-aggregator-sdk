@@ -1,13 +1,8 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "../../../tsconfig.cjs.json",
+  "include": [ "src" ],
   "compilerOptions": {
-      "module": "commonjs",
-      "outDir": "./dist/cjs",
-      "sourceMap": false,
-      "declarationMap": false,
-      "declaration": false
-  },
-  "exclude": [
-      "./test"
-  ]
+    "outDir": "./dist/cjs",
+    "skipLibCheck": true
+  }
 }

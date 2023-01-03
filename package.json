@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "name": "wallet-aggregator-sdk",
+  "repository": "https://github.com/XLabs/wallet-aggregator-sdk",
+  "license": "Apache-2.0",
+  "engines": {
+      "node": ">=16",
+      "pnpm": ">=7"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc --build --verbose tsconfig.all.json",
+    "clean": "pnpm -r run clean"
+  }
+}
