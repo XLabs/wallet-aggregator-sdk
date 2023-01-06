@@ -1,6 +1,6 @@
 import { WalletAdapter } from "@solana/wallet-adapter-base";
 import { Connection, Transaction } from "@solana/web3.js";
-import { ChainId, CHAINS, Wallet } from "wallet-aggregator-core";
+import { ChainId, CHAINS, Wallet, WalletState } from "wallet-aggregator-core";
 
 export interface SolanaAdapter extends WalletAdapter {
   signTransaction<T extends Transaction>(
@@ -97,5 +97,13 @@ export class SolanaWallet extends Wallet {
 
   getIcon(): string {
     return this.adapter.icon;
+  }
+
+  getWalletState(): WalletState {
+    const state = this.adapter.readyState;
+    if (!(state in WalletState)) {
+      throw new Error(`Unknown wallet state ${state}`);
+    }
+    return WalletState[state];
   }
 }

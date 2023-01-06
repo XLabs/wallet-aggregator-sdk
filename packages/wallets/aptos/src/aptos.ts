@@ -1,4 +1,4 @@
-import { ChainId, CHAINS, Wallet } from "wallet-aggregator-core";
+import { ChainId, CHAINS, Wallet, WalletState } from "wallet-aggregator-core";
 import { BaseWalletAdapter } from "@manahippo/aptos-wallet-adapter";
 
 export type AptosAdapter = BaseWalletAdapter;
@@ -50,5 +50,13 @@ export class AptosWallet extends Wallet {
 
   getIcon(): string {
     return this.adapter.icon;
+  }
+
+  getWalletState(): WalletState {
+    const state = this.adapter.readyState;
+    if (!(state in WalletState)) {
+      throw new Error(`Unknown wallet state ${state}`);
+    }
+    return WalletState[state];
   }
 }

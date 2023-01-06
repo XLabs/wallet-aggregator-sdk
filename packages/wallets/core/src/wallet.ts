@@ -6,6 +6,13 @@ export interface WalletEvents {
   disconnect(): void;
 }
 
+export enum WalletState {
+  Installed = 'Installed',
+  NotDetected = 'NotDetected',
+  Loadable = 'Loadable',
+  Unsupported = 'Unsupported'
+}
+
 export abstract class Wallet<E extends WalletEvents = any> extends EventEmitter<E> {
   abstract getName(): string;
   abstract connect(): Promise<void>;
@@ -17,4 +24,8 @@ export abstract class Wallet<E extends WalletEvents = any> extends EventEmitter<
   abstract sendTransaction(tx: any): Promise<any>;
   abstract signMessage(msg: Uint8Array): Promise<any>;
   abstract getIcon(): string;
+  getWalletState(): WalletState {
+    // default
+    return WalletState.Installed;
+  }
 }
