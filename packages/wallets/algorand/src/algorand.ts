@@ -1,6 +1,6 @@
 import MyAlgoConnect from '@randlabs/myalgo-connect';
 import algosdk from 'algosdk';
-import { ChainId, CHAINS, Wallet } from "wallet-aggregator-core";
+import { ChainId, CHAINS, SendTransactionResult, Wallet } from "wallet-aggregator-core";
 
 type AlgorandAddress = string;
 
@@ -23,6 +23,7 @@ const DEFAULT_CONFIG: AlgorandWalletConfig = {
   node: { url: 'https://node.algoexplorerapi.io' },
   indexer: { url: 'https://indexer.algoexplorerapi.io' }
 }
+
 
 export class AlgorandWallet extends Wallet {
   private readonly WAIT_ROUNDS = 5;
@@ -70,19 +71,27 @@ export class AlgorandWallet extends Wallet {
     return this.accounts.length > 0 ? this.accounts[0] : undefined;
   }
 
-  async sendTransaction(signedTx: Uint8Array): Promise<any> {
+  async sendTransaction(signedTx: Uint8Array): Promise<SendTransactionResult<any>> {
     const algod = new algosdk.Algodv2(
       this.config.node.token || '',
       this.config.node.url,
       this.config.node.port || ''
     );
     const { txId } = await algod.sendRawTransaction(signedTx).do();
-    return await algosdk.waitForConfirmation(algod, txId, this.WAIT_ROUNDS);
+    const info = await algosdk.waitForConfirmation(algod, txId, this.WAIT_ROUNDS);
+    return {
+      id: txId,
+      data: info
+    };
   }
 
   async signMessage(msg: Uint8Array): Promise<any> {
     const pk = await this.getPublicKey();
     return this.client.signBytes(msg, pk!);
+  }
+
+  async tealSign(data: Uint8Array, contractAddress: string, signer: string) {
+    return this.client.tealSign(data, contractAddress, signer)
   }
 
   async getBalance(): Promise<string> {

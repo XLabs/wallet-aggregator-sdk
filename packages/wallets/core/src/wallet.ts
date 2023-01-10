@@ -13,7 +13,12 @@ export enum WalletState {
   Unsupported = 'Unsupported'
 }
 
-export abstract class Wallet<E extends WalletEvents = any> extends EventEmitter<E> {
+export interface SendTransactionResult<R = any> {
+  id: string;
+  data?: R;
+}
+
+export abstract class Wallet<R = any, E extends WalletEvents = any> extends EventEmitter<E> {
   abstract getName(): string;
   abstract connect(): Promise<void>;
   abstract disconnect(): Promise<void>;
@@ -21,7 +26,7 @@ export abstract class Wallet<E extends WalletEvents = any> extends EventEmitter<
   abstract getPublicKey(): string | undefined;
   abstract getBalance(): Promise<string>;
   abstract signTransaction(tx: any): Promise<any>;
-  abstract sendTransaction(tx: any): Promise<any>;
+  abstract sendTransaction(tx: any): Promise<SendTransactionResult<R>>;
   abstract signMessage(msg: Uint8Array): Promise<any>;
   abstract getIcon(): string;
   getWalletState(): WalletState {

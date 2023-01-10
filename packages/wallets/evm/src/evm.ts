@@ -1,7 +1,7 @@
-import { TransactionRequest } from "@ethersproject/abstract-provider";
-import { ethers } from "ethers";
-import { Wallet, WalletEvents, ChainId, CHAINS } from "wallet-aggregator-core";
+import { TransactionReceipt, TransactionRequest } from "@ethersproject/abstract-provider";
 import { hexlify, hexStripZeros } from "@ethersproject/bytes";
+import { ethers } from "ethers";
+import { ChainId, SendTransactionResult, Wallet, WalletEvents } from "wallet-aggregator-core";
 import { AddEthereumChainParameterMap, DEFAULT_CHAIN_PARAMETERS } from "./parameters";
 
 interface EVMWalletEvents extends WalletEvents {
@@ -9,7 +9,7 @@ interface EVMWalletEvents extends WalletEvents {
   accountsChanged(address: string): void;
 }
 
-export abstract class EVMWallet extends Wallet<EVMWalletEvents> {
+export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEvents> {
   protected address?: string;
   protected evmChainId?: number;
   protected provider?: ethers.providers.Web3Provider;
@@ -84,9 +84,16 @@ export abstract class EVMWallet extends Wallet<EVMWalletEvents> {
     return tx;
   }
 
-  async sendTransaction(tx: TransactionRequest): Promise<any> {
+  async sendTransaction(tx: TransactionRequest): Promise<SendTransactionResult<TransactionReceipt>> {
     if (!this.provider) throw new Error('Not connected');
-    return this.provider.getSigner().sendTransaction(tx);
+    const response = await this.provider.getSigner().sendTransaction(tx);
+
+    // TODO: parameterize confirmations
+    const receipt = await response.wait();
+    return {
+      id: receipt.transactionHash,
+      data: receipt
+    }
   }
 
   async signMessage(msg: Uint8Array): Promise<any> {

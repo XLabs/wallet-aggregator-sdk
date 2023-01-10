@@ -1,6 +1,6 @@
 import { WalletAdapter } from "@solana/wallet-adapter-base";
-import { Connection, Transaction } from "@solana/web3.js";
-import { ChainId, CHAINS, Wallet, WalletState } from "wallet-aggregator-core";
+import { Connection, Transaction, TransactionSignature } from "@solana/web3.js";
+import { ChainId, CHAINS, SendTransactionResult, Wallet, WalletState } from "wallet-aggregator-core";
 
 export interface SolanaAdapter extends WalletAdapter {
   signTransaction<T extends Transaction>(
@@ -86,8 +86,11 @@ export class SolanaWallet extends Wallet {
     return Array.isArray(tx) ? this.adapter.signAllTransactions(tx) : this.adapter.signTransaction(tx)
   }
 
-  sendTransaction(tx: any): Promise<any> {
-    return this.adapter.sendTransaction(tx, this.connection);
+  async sendTransaction(tx: any): Promise<SendTransactionResult> {
+    const result = await this.adapter.sendTransaction(tx, this.connection);
+    return {
+      id: result
+    }
   }
 
   signMessage(msg: Uint8Array): Promise<any> {

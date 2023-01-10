@@ -52,6 +52,19 @@ export type ChainName = keyof typeof CHAINS;
 
 export type ChainId = typeof CHAINS[ChainName];
 
+export type ChainIdToName = {
+    -readonly [key in keyof typeof CHAINS as typeof CHAINS[key]]: key;
+};
+
+export const CHAIN_ID_TO_NAME: ChainIdToName = Object.entries(CHAINS).reduce(
+    (obj, [name, id]) => {
+        obj[id] = name;
+        return obj;
+    },
+    {} as any
+) as ChainIdToName;
+
+
 const EVM_CHAINS_MAINNET: ChainId[] = [
     CHAINS['ethereum'],
     CHAINS['bsc'],

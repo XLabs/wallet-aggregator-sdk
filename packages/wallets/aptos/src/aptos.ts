@@ -1,4 +1,4 @@
-import { ChainId, CHAINS, Wallet, WalletState } from "wallet-aggregator-core";
+import { ChainId, CHAINS, SendTransactionResult, Wallet, WalletState } from "wallet-aggregator-core";
 import { BaseWalletAdapter } from "@manahippo/aptos-wallet-adapter";
 
 export type AptosAdapter = BaseWalletAdapter;
@@ -40,8 +40,11 @@ export class AptosWallet extends Wallet {
     return tx;
   }
 
-  sendTransaction(tx: any): Promise<any> {
-    return this.adapter.signAndSubmitTransaction(tx)
+  async sendTransaction(tx: any): Promise<SendTransactionResult> {
+    const { hash } = await this.adapter.signAndSubmitTransaction(tx);
+    return {
+      id: hash
+    }
   }
 
   signMessage(msg: Uint8Array): Promise<any> {
