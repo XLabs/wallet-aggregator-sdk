@@ -28,7 +28,9 @@ export const useAvailableChains = (): ChainId[] => {
     return useMemo(() => Object.keys(walletsMap).map(id => +id as ChainId), [ walletsMap ])
 };
 
-export const useWalletsForChain = (chainId: ChainId): Wallet[] => {
+export const useWalletsForChain = (chainId?: ChainId): Wallet[] => {
+    if (!chainId) return []
+
     const walletsMap = useAvailableWallets();
 
     const finalChainId = getChainId(chainId);

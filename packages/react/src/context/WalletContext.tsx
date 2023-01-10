@@ -1,4 +1,4 @@
-import { createContext, useMemo, useState } from "react";
+import React, { createContext, useMemo, useState } from "react";
 import { ChainId, Wallet } from "wallet-aggregator-core";
 import { getChainId } from "./utils";
 
