@@ -21,7 +21,7 @@ export class EVMWeb3Wallet extends EVMWallet {
     return 'Eth Metamask';
   }
 
-  async innerConnect(): Promise<void> {
+  async innerConnect(): Promise<string[]> {
     this.metamaskProvider = await detectEthereumProvider() || undefined;
 
     if (!this.metamaskProvider) throw new Error('Failed to detect provider')
@@ -34,7 +34,7 @@ export class EVMWeb3Wallet extends EVMWallet {
     this.metamaskProvider!.on('accountsChanged', () => this.onAccountsChanged());
     this.metamaskProvider!.on('chainChanged', (chainId: number) => this.onChainChanged(chainId));
 
-    await this.provider.send('eth_requestAccounts', []);
+    return await this.provider.send('eth_requestAccounts', [])
   }
 
   async innerDisconnect(): Promise<void> {

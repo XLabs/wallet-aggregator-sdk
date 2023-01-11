@@ -180,6 +180,7 @@ importers:
       '@metamask/detect-provider': ^2.0.0
       '@types/node': ^18.11.9
       '@walletconnect/web3-provider': ^1.7.8
+      buffer: ^6.0.3
       ethers: ^5.7.2
       shx: ^0.3.4
       typescript: ^4.4.2
@@ -193,6 +194,22 @@ importers:
       ethers: 5.7.2
       wallet-aggregator-core: link:../core
       web3-provider-engine: 16.0.4
+    devDependencies:
+      '@types/node': 18.11.11
+      buffer: 6.0.3
+      shx: 0.3.4
+      typescript: 4.9.3
+
+  packages/wallets/near:
+    specifiers:
+      '@near-wallet-selector/core': ^7.4.0
+      '@types/node': ^18.11.9
+      shx: ^0.3.4
+      typescript: ^4.4.2
+      wallet-aggregator-core: workspace:^
+    dependencies:
+      '@near-wallet-selector/core': 7.4.0
+      wallet-aggregator-core: link:../core
     devDependencies:
       '@types/node': 18.11.11
       shx: 0.3.4
@@ -3223,6 +3240,14 @@ packages:
 
   /@metamask/safe-event-emitter/2.0.0:
     resolution: {integrity: sha512-/kSXhY692qiV1MXu6EeOZvg5nECLclxNXcKCxJ3cXQgYuRymRHpdx/t7JXfsK+JLjwA1e1c1/SBrlQYpusC29Q==}
+    dev: false
+
+  /@near-wallet-selector/core/7.4.0:
+    resolution: {integrity: sha512-7dq8MTgJ5nQjxK06L+r95E1qvEjBqyBgHK0Mt0aJf8EaQff+U7AhI3WyjXhLN4/f0q/qxthWuV7cjrDYFojZ5Q==}
+    peerDependencies:
+      near-api-js: ^0.44.2 || ^1.0.0
+    dependencies:
+      rxjs: 7.6.0
     dev: false
 
   /@ngraveio/bc-ur/1.1.6:

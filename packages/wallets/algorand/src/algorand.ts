@@ -1,6 +1,6 @@
 import MyAlgoConnect from '@randlabs/myalgo-connect';
 import algosdk from 'algosdk';
-import { ChainId, CHAINS, SendTransactionResult, Wallet } from "wallet-aggregator-core";
+import { ChainId, CHAINS, PublicKey, SendTransactionResult, Wallet } from "wallet-aggregator-core";
 
 type AlgorandAddress = string;
 
@@ -42,10 +42,11 @@ export class AlgorandWallet extends Wallet {
     return 'MyAlgo';
   }
 
-  async connect(): Promise<void> {
+  async connect(): Promise<PublicKey[]> {
     const accounts = await this.client.connect();
     this.accounts = accounts.map(a => a.address);
     this.emit('connect');
+    return this.accounts
   }
 
   async disconnect(): Promise<void> {
@@ -85,7 +86,7 @@ export class AlgorandWallet extends Wallet {
     };
   }
 
-  async signMessage(msg: Uint8Array): Promise<any> {
+  async signMessage(msg: Uint8Array): Promise<Uint8Array> {
     const pk = await this.getPublicKey();
     return this.client.signBytes(msg, pk!);
   }

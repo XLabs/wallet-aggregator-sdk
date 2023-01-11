@@ -1,7 +1,7 @@
 import { TransactionReceipt, TransactionRequest } from "@ethersproject/abstract-provider";
 import { hexlify, hexStripZeros } from "@ethersproject/bytes";
 import { ethers } from "ethers";
-import { ChainId, SendTransactionResult, Wallet, WalletEvents } from "wallet-aggregator-core";
+import { ChainId, PublicKey, SendTransactionResult, Wallet, WalletEvents } from "wallet-aggregator-core";
 import { AddEthereumChainParameterMap, DEFAULT_CHAIN_PARAMETERS } from "./parameters";
 
 interface EVMWalletEvents extends WalletEvents {
@@ -10,6 +10,7 @@ interface EVMWalletEvents extends WalletEvents {
 }
 
 export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEvents> {
+  protected addresses: string[] = [];
   protected address?: string;
   protected evmChainId?: number;
   protected provider?: ethers.providers.Web3Provider;
@@ -20,7 +21,7 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
     this.chainParameters = Object.assign({}, DEFAULT_CHAIN_PARAMETERS, params)
   }
 
-  protected abstract innerConnect(): Promise<void>;
+  protected abstract innerConnect(): Promise<string[]>;
   protected abstract innerDisconnect(): Promise<void>;
 
   async switchChain(ethChainId: number): Promise<void> {
@@ -47,13 +48,15 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
     }
   }
 
-  async connect(): Promise<void> {
+  async connect(): Promise<PublicKey[]> {
     // TODO: throw error when the evm chain is not supported (evmChainId not in CHAINS) 
-    await this.innerConnect();
-    this.address = await this.getSigner().getAddress();
+    this.addresses = await this.innerConnect();
+    this.address = this.addresses[0];
     this.evmChainId = (await this.provider!.getNetwork()).chainId;
 
     this.emit('connect');
+
+    return this.addresses
   }
 
   async disconnect(): Promise<void> {
@@ -96,9 +99,10 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
     }
   }
 
-  async signMessage(msg: Uint8Array): Promise<any> {
+  async signMessage(msg: Uint8Array): Promise<Uint8Array> {
     if (!this.provider) throw new Error('Not connected');
-    return this.provider.getSigner().signMessage(msg);
+    const signature = await this.provider.getSigner().signMessage(msg);
+    return new Uint8Array(Buffer.from(signature.substring(2), 'hex'))
   }
 
   getProvider(): ethers.providers.Web3Provider | undefined {

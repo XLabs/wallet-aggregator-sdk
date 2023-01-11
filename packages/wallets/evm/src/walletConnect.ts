@@ -17,10 +17,9 @@ export class EVMWalletConnectWallet extends EVMWallet {
         return 'Eth Wallet Connect';
     }
 
-    async innerConnect(): Promise<void> {
+    async innerConnect(): Promise<string[]> {
         this.walletConnectProvider = new WalletConnectProvider({
-            rpc: this.rpcMap,
-            storageId: "walletconnectid-evm"
+            rpc: this.rpcMap
         });
 
         await this.walletConnectProvider.enable();
@@ -58,6 +57,8 @@ export class EVMWalletConnectWallet extends EVMWallet {
                 this.emit('disconnect');
             }
         );
+
+        return [ await this.provider.getSigner().getAddress() ]
     }
 
     async switchChain(evmChainId: number): Promise<void> {

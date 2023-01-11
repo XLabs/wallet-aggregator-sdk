@@ -18,16 +18,18 @@ export interface SendTransactionResult<R = any> {
   data?: R;
 }
 
+export type PublicKey = string;
+
 export abstract class Wallet<R = any, E extends WalletEvents = any> extends EventEmitter<E> {
   abstract getName(): string;
-  abstract connect(): Promise<void>;
+  abstract connect(): Promise<PublicKey[]>;
   abstract disconnect(): Promise<void>;
   abstract getChainId(): ChainId;
-  abstract getPublicKey(): string | undefined;
+  abstract getPublicKey(): PublicKey | undefined;
   abstract getBalance(): Promise<string>;
   abstract signTransaction(tx: any): Promise<any>;
   abstract sendTransaction(tx: any): Promise<SendTransactionResult<R>>;
-  abstract signMessage(msg: Uint8Array): Promise<any>;
+  abstract signMessage(msg: Uint8Array): Promise<Uint8Array>;
   abstract getIcon(): string;
   getWalletState(): WalletState {
     // default
