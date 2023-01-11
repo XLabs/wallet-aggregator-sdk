@@ -29,13 +29,14 @@ export const useAvailableChains = (): ChainId[] => {
 };
 
 export const useWalletsForChain = (chainId?: ChainId): Wallet[] => {
-    if (!chainId) return []
-
     const walletsMap = useAvailableWallets();
 
-    const finalChainId = getChainId(chainId);
+    let wallets: Wallet[] = []
 
-    const wallets = walletsMap[finalChainId] || [];
+    if (chainId) {
+        const finalChainId = getChainId(chainId);
+        wallets = walletsMap[finalChainId] || [];
+    }
 
     return useMemo(() => wallets, [ wallets, walletsMap ])
 };
