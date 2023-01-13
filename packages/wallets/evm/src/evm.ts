@@ -4,27 +4,44 @@ import { ethers, utils } from "ethers";
 import { ChainId, Address, SendTransactionResult, Wallet, WalletEvents } from "@xlabs/wallet-aggregator-core";
 import { AddEthereumChainParameterMap, DEFAULT_CHAIN_PARAMETERS } from "./parameters";
 
+type EVMChainId = number
+
 interface EVMWalletEvents extends WalletEvents {
-  evmChainChanged(evmChainId: number): void;
+  chainChanged(evmChainId: number): void;
   accountsChanged(address: Address): void;
+}
+
+// See:
+// - https://github.com/MetaMask/eth-rpc-errors/blob/main/src/error-constants.ts
+// - https://docs.metamask.io/guide/rpc-api.html#returns-7
+enum ERROR_CODES {
+  USER_REJECTED = 4001,
+  CHAIN_NOT_ADDED = 4902
+}
+
+export interface EVMWalletConfig {
+  chainParameters?: AddEthereumChainParameterMap
+  preferredChain?: EVMChainId
 }
 
 export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEvents> {
   protected addresses: Address[] = [];
   protected address?: Address;
-  protected evmChainId?: number;
+  protected evmChainId?: EVMChainId;
+  protected preferredChain?: EVMChainId;
   protected provider?: ethers.providers.Web3Provider;
   protected chainParameters: AddEthereumChainParameterMap;
 
-  constructor(params?: AddEthereumChainParameterMap) {
+  constructor({ chainParameters, preferredChain }: EVMWalletConfig = {}) {
     super();
-    this.chainParameters = Object.assign({}, DEFAULT_CHAIN_PARAMETERS, params)
+    this.chainParameters = Object.assign({}, DEFAULT_CHAIN_PARAMETERS, chainParameters)
+    this.preferredChain = preferredChain
   }
 
   protected abstract innerConnect(): Promise<Address[]>;
   protected abstract innerDisconnect(): Promise<void>;
 
-  async switchChain(ethChainId: number): Promise<void> {
+  async switchChain(ethChainId: EVMChainId): Promise<void> {
     if (!this.provider) return;
 
     try {
@@ -33,7 +50,7 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
       ]);
     } catch (switchError: any) {
       // This error code indicates that the chain has not been added to MetaMask.
-      if (switchError.code === 4902) {
+      if (switchError.code === ERROR_CODES.CHAIN_NOT_ADDED) {
         const addChainParameter =
           this.chainParameters[ethChainId];
 
@@ -44,6 +61,12 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
         }
         throw new Error("Chain not in metamask")
       }
+
+      // User rejected, disconnect and throw
+      if (switchError.code === ERROR_CODES.USER_REJECTED) {
+        await this.disconnect()
+      }
+
       throw switchError
     }
   }
@@ -52,11 +75,26 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
     // TODO: throw error when the evm chain is not supported (evmChainId not in CHAINS) 
     this.addresses = await this.innerConnect();
     this.address = this.addresses[0];
+
+    const chainId = (await this.provider!.getNetwork()).chainId;
+    await this.verifyPrefferedChain(chainId);
+
     this.evmChainId = (await this.provider!.getNetwork()).chainId;
 
     this.emit('connect');
 
-    return this.addresses.map(addr => this.checksumAddress(addr)!)
+    return this.addresses.map(addr => this.checksumAddress(addr)!);
+  }
+
+  private async verifyPrefferedChain(chainId: EVMChainId): Promise<void> {
+    if (this.preferredChain && chainId !== this.preferredChain) {
+      await this.switchChain(this.preferredChain);
+    }
+  }
+
+  public async setPrefferedChain(chainId: EVMChainId): Promise<void> {
+    await this.verifyPrefferedChain(chainId);
+    this.preferredChain = chainId;
   }
 
   async disconnect(): Promise<void> {
@@ -64,7 +102,7 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
     await this.provider?.removeAllListeners();
     this.provider = undefined;
     this.address = undefined;
-    this.addresses = []
+    this.addresses = [];
     this.evmChainId = undefined;
 
     this.emit('disconnect');
@@ -137,9 +175,11 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
   }
 
   protected async onChainChanged(chainId: number): Promise<void> {
-    const network = await this.provider!.getNetwork();
-    this.evmChainId = network.chainId;
-    this.emit('evmChainChanged', this.evmChainId)
+    this.verifyPrefferedChain(chainId)
+
+    this.evmChainId = chainId;
+
+    this.emit('chainChanged', this.evmChainId);
   }
 
   protected async onAccountsChanged(accounts: string[]): Promise<void> {

@@ -1,15 +1,16 @@
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { ethers } from 'ethers';
 import { AddEthereumChainParameterMap, buildRpcMap, EvmRpcMap, EVM_RPC_MAP as DEFAULT_EVM_RPC_MAP } from "./parameters";
-import { EVMWallet } from "./evm";
+import { EVMWallet, EVMWalletConfig } from "./evm";
+import { hexlify, hexStripZeros } from "@ethersproject/bytes";
 const CacheSubprovider = require("web3-provider-engine/subproviders/cache");
 
 export class EVMWalletConnectWallet extends EVMWallet {
     private walletConnectProvider?: WalletConnectProvider;
     private rpcMap: EvmRpcMap;
 
-    constructor(params?: AddEthereumChainParameterMap) {
-        super(params);
+    constructor(config: EVMWalletConfig) {
+        super(config);
         this.rpcMap = buildRpcMap(this.chainParameters)
     }
 
@@ -62,7 +63,8 @@ export class EVMWalletConnectWallet extends EVMWallet {
         ) {
             // WalletConnect requires a rpc url for this chain
             // Force user to switch connect type
-            return this.disconnect();
+            await this.disconnect();
+            throw new Error(`No WalletConnect configuration found for chain ${hexStripZeros(hexlify(evmChainId))}`);
         }
 
         return super.switchChain(evmChainId);
