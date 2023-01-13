@@ -30,7 +30,7 @@ export class EVMWalletConnectWallet extends EVMWallet {
             'any'
         );
 
-        this.walletConnectProvider.on('accountsChanged', () => this.onAccountsChanged());
+        this.walletConnectProvider.on('accountsChanged', (accounts: string[]) => this.onAccountsChanged(accounts));
 
         this.walletConnectProvider.on("chainChanged", (chainId: number) => {
             // HACK: clear the block-cache when switching chains by creating a new CacheSubprovider
@@ -51,12 +51,7 @@ export class EVMWalletConnectWallet extends EVMWallet {
             this.onChainChanged(chainId);
         });
 
-        this.walletConnectProvider.on(
-            "disconnect",
-            () => {
-                this.emit('disconnect');
-            }
-        );
+        this.walletConnectProvider.on("disconnect", () => this.disconnect());
 
         return [ await this.provider.getSigner().getAddress() ]
     }

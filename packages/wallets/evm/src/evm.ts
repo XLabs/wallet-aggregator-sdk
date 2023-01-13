@@ -142,7 +142,10 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
     this.emit('evmChainChanged', this.evmChainId)
   }
 
-  protected async onAccountsChanged(): Promise<void> {
+  protected async onAccountsChanged(accounts: string[]): Promise<void> {
+    // no new accounts === wallet disconnected
+    if (!accounts.length) return this.disconnect()
+
     this.address = await this.provider!.getSigner().getAddress();
     this.emit('accountsChanged', this.address);
   }
