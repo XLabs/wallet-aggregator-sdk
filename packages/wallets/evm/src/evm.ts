@@ -62,11 +62,6 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
         throw new Error("Chain not in metamask")
       }
 
-      // User rejected, disconnect and throw
-      if (switchError.code === ERROR_CODES.USER_REJECTED) {
-        await this.disconnect()
-      }
-
       throw switchError
     }
   }
@@ -77,7 +72,7 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
     this.address = this.addresses[0];
 
     const chainId = (await this.provider!.getNetwork()).chainId;
-    await this.verifyPrefferedChain(chainId);
+    await this.enforcePrefferedChain(chainId);
 
     this.evmChainId = (await this.provider!.getNetwork()).chainId;
 
@@ -86,14 +81,23 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
     return this.addresses.map(addr => this.checksumAddress(addr)!);
   }
 
-  private async verifyPrefferedChain(chainId: EVMChainId): Promise<void> {
-    if (this.preferredChain && chainId !== this.preferredChain) {
+  private async enforcePrefferedChain(chainId: EVMChainId): Promise<void> {
+    if (!this.preferredChain || chainId === this.preferredChain) return;
+
+    try {
       await this.switchChain(this.preferredChain);
+    } catch (error: any) {
+      // enforce disconnect if the user is not willing to change to the desired chain
+      if (error.code === ERROR_CODES.USER_REJECTED) {
+        await this.disconnect()
+      }
+
+      throw error
     }
   }
 
   public async setPrefferedChain(chainId: EVMChainId): Promise<void> {
-    await this.verifyPrefferedChain(chainId);
+    await this.enforcePrefferedChain(chainId);
     this.preferredChain = chainId;
   }
 
@@ -175,7 +179,7 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
   }
 
   protected async onChainChanged(chainId: number): Promise<void> {
-    this.verifyPrefferedChain(chainId)
+    this.enforcePrefferedChain(chainId)
 
     this.evmChainId = chainId;
 
