@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@randlabs/myalgo-connect": "^1.4.0",
-    "@xlabs/wallet-aggregator-core": "workspace:^",
+    "@xlabs/wallet-aggregator-core": "^0.0.1-alpha",
     "algosdk": "^1.24.0"
   }
 }

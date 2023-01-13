@@ -21,6 +21,6 @@
   },
   "dependencies": {
     "@manahippo/aptos-wallet-adapter": "^1.0.8",
-    "@xlabs/wallet-aggregator-core": "workspace:^"
+    "@xlabs/wallet-aggregator-core": "^0.0.1-alpha"
   }
 }

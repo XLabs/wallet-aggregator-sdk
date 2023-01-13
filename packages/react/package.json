@@ -25,7 +25,7 @@
     "shx": "^0.3.4"
   },
   "dependencies": {
-    "@xlabs/wallet-aggregator-core": "workspace:^"
+    "@xlabs/wallet-aggregator-core": "^0.0.1-alpha"
   },
   "pnpm": {
     "overrides": {

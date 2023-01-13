@@ -22,6 +22,6 @@
   },
   "dependencies": {
     "@solana/wallet-adapter-base": "^0.9.20",
-    "@xlabs/wallet-aggregator-core": "workspace:^"
+    "@xlabs/wallet-aggregator-core": "^0.0.1-alpha"
   }
 }
