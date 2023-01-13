@@ -19,13 +19,13 @@ import {
   TorusWalletAdapter
 } from "@solana/wallet-adapter-wallets";
 import { clusterApiUrl, Connection } from "@solana/web3.js";
-import { AlgorandWallet, AlgorandWalletConfig } from "wallet-aggregator-algorand";
-import { AptosWallet } from "wallet-aggregator-aptos";
-import { CHAINS } from "wallet-aggregator-core";
-import { EVMWalletConnectWallet, EVMWeb3Wallet } from "wallet-aggregator-evm";
-import { AddEthereumChainParameterMap } from "wallet-aggregator-evm/dist/types/parameters";
-import { AvailableWalletsMap } from "wallet-aggregator-react";
-import { SolanaAdapter, SolanaWallet } from "wallet-aggregator-solana";
+import { AlgorandWallet, AlgorandWalletConfig } from "@xlabs/wallet-aggregator-algorand";
+import { AptosWallet } from "@xlabs/wallet-aggregator-aptos";
+import { CHAINS } from "@xlabs/wallet-aggregator-core";
+import { EVMWalletConnectWallet, EVMWeb3Wallet } from "@xlabs/wallet-aggregator-evm";
+import { AddEthereumChainParameterMap } from "@xlabs/wallet-aggregator-evm/dist/types/parameters";
+import { AvailableWalletsMap } from "@xlabs/wallet-aggregator-react";
+import { SolanaAdapter, SolanaWallet } from "@xlabs/wallet-aggregator-solana";
 
 
 interface InitWalletsConfig {

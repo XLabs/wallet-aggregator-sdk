@@ -1,6 +1,6 @@
 {
-  "name": "wallet-aggregator-react-init",
-  "version": "0.0.1",
+  "name": "@xlabs/wallet-aggregator-react-init",
+  "version": "0.0.1-alpha",
   "license": "MIT",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -28,12 +28,12 @@
   "dependencies": {
     "@manahippo/aptos-wallet-adapter": "^1.0.8",
     "@solana/wallet-adapter-wallets": "^0.19.10",
-    "wallet-aggregator-algorand": "workspace:^",
-    "wallet-aggregator-core": "workspace:^",
-    "wallet-aggregator-evm": "workspace:^",
-    "wallet-aggregator-react": "workspace:^",
-    "wallet-aggregator-solana": "workspace:^",
-    "wallet-aggregator-aptos": "workspace:^"
+    "@xlabs/wallet-aggregator-algorand": "workspace:^",
+    "@xlabs/wallet-aggregator-core": "workspace:^",
+    "@xlabs/wallet-aggregator-evm": "workspace:^",
+    "@xlabs/wallet-aggregator-react": "workspace:^",
+    "@xlabs/wallet-aggregator-solana": "workspace:^",
+    "@xlabs/wallet-aggregator-aptos": "workspace:^"
   },
   "pnpm": {
     "overrides": {

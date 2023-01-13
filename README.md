@@ -12,8 +12,8 @@ For more information, check each package README:
 
 | Package | Description |
 | - | - |
-| [wallet-aggregator-core](./packages/wallets/core) | Base package. Provides the Wallet abstractions. |
-| [wallet-aggregator-evm](./packages/wallets/evm) | Wallet implementation for EVM chains |
-| [wallet-aggregator-algorand](./packages/wallets/algorand) | Wallet implementation for algorand |
-| [wallet-aggregator-solana](./packages/wallets/solana) | Wallet implementation for solana |
-| [wallet-aggregator-react](./packages/react) | React Context component & hooks to interact with the wallets |
+| [@xlabs/wallet-aggregator-core](./packages/wallets/core) | Base package. Provides the Wallet abstractions. |
+| [@xlabs/wallet-aggregator-evm](./packages/wallets/evm) | Wallet implementation for EVM chains |
+| [@xlabs/wallet-aggregator-algorand](./packages/wallets/algorand) | Wallet implementation for algorand |
+| [@xlabs/wallet-aggregator-solana](./packages/wallets/solana) | Wallet implementation for solana |
+| [@xlabs/wallet-aggregator-react](./packages/react) | React Context component & hooks to interact with the wallets |

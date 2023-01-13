@@ -1,7 +1,7 @@
 import { TransactionReceipt, TransactionRequest } from "@ethersproject/abstract-provider";
 import { hexlify, hexStripZeros } from "@ethersproject/bytes";
 import { ethers, utils } from "ethers";
-import { ChainId, Address, SendTransactionResult, Wallet, WalletEvents } from "wallet-aggregator-core";
+import { ChainId, Address, SendTransactionResult, Wallet, WalletEvents } from "@xlabs/wallet-aggregator-core";
 import { AddEthereumChainParameterMap, DEFAULT_CHAIN_PARAMETERS } from "./parameters";
 
 interface EVMWalletEvents extends WalletEvents {

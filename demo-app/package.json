@@ -20,9 +20,9 @@
     "stream-http": "^3.2.0",
     "typescript": "^4.9.3",
     "web-vitals": "^2.1.4",
-    "wallet-aggregator-core": "workspace:^",
-    "wallet-aggregator-evm": "workspace:^",
-    "wallet-aggregator-react": "workspace:^"
+    "@xlabs/wallet-aggregator-core": "workspace:^",
+    "@xlabs/wallet-aggregator-evm": "workspace:^",
+    "@xlabs/wallet-aggregator-react": "workspace:^"
   },
   "devDependencies": {
     "@types/jest": "^27.0.1",

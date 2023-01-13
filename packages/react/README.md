@@ -9,8 +9,8 @@ The library supplies a `WaletContextProvider` which will hold information relate
 In order to use it, wrap the application in the context component and pass the wallets which will be available for the app to use.
 
 ```tsx
-import { CHAINS } from "wallet-aggregator-core";
-import { WalletContextProvider } from 'wallet-aggregator-react';
+import { CHAINS } from "@xlabs/wallet-aggregator-core";
+import { WalletContextProvider } from '@xlabs/wallet-aggregator-react';
 
 const Main = () => {
   const wallets = {

@@ -1,6 +1,6 @@
 import MyAlgoConnect from '@randlabs/myalgo-connect';
 import algosdk from 'algosdk';
-import { Address, ChainId, CHAINS, SendTransactionResult, Wallet } from "wallet-aggregator-core";
+import { Address, ChainId, CHAINS, SendTransactionResult, Wallet } from "@xlabs/wallet-aggregator-core";
 
 type AlgorandAddress = string;
 

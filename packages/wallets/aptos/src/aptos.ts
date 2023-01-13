@@ -1,4 +1,4 @@
-import { ChainId, CHAINS, SendTransactionResult, Wallet, WalletState } from "wallet-aggregator-core";
+import { ChainId, CHAINS, SendTransactionResult, Wallet, WalletState } from "@xlabs/wallet-aggregator-core";
 import { BaseWalletAdapter } from "@manahippo/aptos-wallet-adapter";
 
 export type AptosAdapter = BaseWalletAdapter;

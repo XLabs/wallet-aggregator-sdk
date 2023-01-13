@@ -1,6 +1,6 @@
 {
-  "name": "wallet-aggregator-evm",
-  "version": "0.0.1",
+  "name": "@xlabs/wallet-aggregator-evm",
+  "version": "0.0.1-alpha",
   "license": "MIT",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -25,7 +25,7 @@
     "@metamask/detect-provider": "^2.0.0",
     "@walletconnect/web3-provider": "^1.7.8",
     "ethers": "^5.7.2",
-    "wallet-aggregator-core": "workspace:^",
+    "@xlabs/wallet-aggregator-core": "workspace:^",
     "web3-provider-engine": "^16.0.4"
   }
 }

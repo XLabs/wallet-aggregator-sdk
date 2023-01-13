@@ -1,7 +1,7 @@
 import { ListItemText, MenuItem, TextField } from "@material-ui/core";
 import { useCallback } from "react";
-import { ChainId } from "wallet-aggregator-core";
-import { useChangeWallet, useWalletsForChain } from "wallet-aggregator-react";
+import { ChainId } from "@xlabs/wallet-aggregator-core";
+import { useChangeWallet, useWalletsForChain } from "@xlabs/wallet-aggregator-react";
 
 interface WalletSelectorProps {
     chainId: ChainId

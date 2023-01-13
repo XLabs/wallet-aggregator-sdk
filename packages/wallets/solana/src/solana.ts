@@ -1,6 +1,6 @@
 import { WalletAdapter } from "@solana/wallet-adapter-base";
 import { Connection, Transaction, TransactionSignature } from "@solana/web3.js";
-import { ChainId, CHAINS, SendTransactionResult, Wallet, WalletState } from "wallet-aggregator-core";
+import { ChainId, CHAINS, SendTransactionResult, Wallet, WalletState } from "@xlabs/wallet-aggregator-core";
 
 export interface SolanaAdapter extends WalletAdapter {
   signTransaction<T extends Transaction>(

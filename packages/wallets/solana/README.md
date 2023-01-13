@@ -6,7 +6,7 @@ This package leverages on the existing abstractions provided by the Solana walle
 
 ```ts
 import { SolflareWalletAdapter } from "@solana/wallet-adapter-solflare";
-import { SolanaWallet } from "wallet-aggregator-solana";
+import { SolanaWallet } from "@xlabs/wallet-aggregator-solana";
 
 const adapter = new SolflareWalletAdapter();
 const wallet = new SolanaWallet(adapter);

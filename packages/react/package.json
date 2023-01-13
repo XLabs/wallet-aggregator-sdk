@@ -1,6 +1,6 @@
 {
-  "name": "wallet-aggregator-react",
-  "version": "0.0.1",
+  "name": "@xlabs/wallet-aggregator-react",
+  "version": "0.0.1-alpha",
   "license": "MIT",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -25,7 +25,7 @@
     "shx": "^0.3.4"
   },
   "dependencies": {
-    "wallet-aggregator-core": "workspace:^"
+    "@xlabs/wallet-aggregator-core": "workspace:^"
   },
   "pnpm": {
     "overrides": {

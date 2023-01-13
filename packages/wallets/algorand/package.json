@@ -1,6 +1,6 @@
 {
-  "name": "wallet-aggregator-algorand",
-  "version": "0.0.1",
+  "name": "@xlabs/wallet-aggregator-algorand",
+  "version": "0.0.1-alpha",
   "license": "MIT",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@randlabs/myalgo-connect": "^1.4.0",
-    "wallet-aggregator-core": "workspace:^",
+    "@xlabs/wallet-aggregator-core": "workspace:^",
     "algosdk": "^1.24.0"
   }
 }
