@@ -29,12 +29,14 @@ export class SolanaWallet extends Wallet {
     return this.adapter.name;
   }
 
-  async connect(): Promise<void> {
-    await new Promise((resolve, reject) => {
+  async connect(): Promise<string[]> {
+    return new Promise((resolve, reject) => {
       this.adapter.on('connect', () => {
         this.adapter.off('connect');
         this.adapter.off('error');
-        resolve(undefined);
+
+        resolve(this.getAddresses());
+        this.emit('connect');
       });
 
       this.adapter.on('error', () => {
@@ -45,8 +47,6 @@ export class SolanaWallet extends Wallet {
 
       this.adapter.connect();
     });
-
-    this.emit('connect');
   }
 
   async disconnect(): Promise<void> {
@@ -73,8 +73,17 @@ export class SolanaWallet extends Wallet {
     return CHAINS['solana'];
   }
 
-  getPublicKey(): string | undefined {
+  getAddress(): string | undefined {
     return this.adapter.publicKey?.toString();
+  }
+
+  getAddresses(): string[] {
+    const address = this.getAddress()
+    return address ? [ address ] : []
+  }
+
+  setMainAddress(address: string): void {
+    throw new Error('Not supported')
   }
 
   getBalance(): Promise<string> {

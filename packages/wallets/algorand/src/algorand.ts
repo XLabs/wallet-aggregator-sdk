@@ -1,6 +1,6 @@
 import MyAlgoConnect from '@randlabs/myalgo-connect';
 import algosdk from 'algosdk';
-import { ChainId, CHAINS, PublicKey, SendTransactionResult, Wallet } from "wallet-aggregator-core";
+import { Address, ChainId, CHAINS, SendTransactionResult, Wallet } from "wallet-aggregator-core";
 
 type AlgorandAddress = string;
 
@@ -14,14 +14,26 @@ export interface AlgorandIndexerConfig {
   url: string;
 }
 
+export interface MyAlgoConnectConfig {
+  bridgeUrl?: string;
+  disableLedgerNano?: boolean;
+}
+
+interface AlgorandWalletConfigParams {
+  node?: AlgorandNodeConfig;
+  indexer?: AlgorandIndexerConfig;
+  myAlgoConnect?: MyAlgoConnectConfig
+}
+
 export interface AlgorandWalletConfig {
   node: AlgorandNodeConfig;
   indexer: AlgorandIndexerConfig;
+  myAlgoConnect?: MyAlgoConnectConfig
 }
 
 const DEFAULT_CONFIG: AlgorandWalletConfig = {
   node: { url: 'https://node.algoexplorerapi.io' },
-  indexer: { url: 'https://indexer.algoexplorerapi.io' }
+  indexer: { url: 'https://indexer.algoexplorerapi.io' },
 }
 
 
@@ -29,12 +41,13 @@ export class AlgorandWallet extends Wallet {
   private readonly WAIT_ROUNDS = 5;
   private readonly client: MyAlgoConnect;
   private accounts: AlgorandAddress[];
+  private account: AlgorandAddress | undefined;
   private config: AlgorandWalletConfig;
 
-  constructor(config?: AlgorandWalletConfig) {
+  constructor(config?: AlgorandWalletConfigParams) {
     super();
-    this.config = config || DEFAULT_CONFIG;
-    this.client = new MyAlgoConnect();
+    this.config = Object.assign({}, DEFAULT_CONFIG, config);
+    this.client = new MyAlgoConnect({ ...this.config?.myAlgoConnect });
     this.accounts = [];
   }
 
@@ -42,10 +55,13 @@ export class AlgorandWallet extends Wallet {
     return 'MyAlgo';
   }
 
-  async connect(): Promise<PublicKey[]> {
+  async connect(): Promise<Address[]> {
     const accounts = await this.client.connect();
     this.accounts = accounts.map(a => a.address);
+    this.account = this.accounts[0]
+
     this.emit('connect');
+
     return this.accounts
   }
 
@@ -68,8 +84,18 @@ export class AlgorandWallet extends Wallet {
     return result.map(s => s.blob);
   }
 
-  getPublicKey(): string | undefined {
-    return this.accounts.length > 0 ? this.accounts[0] : undefined;
+  getAddress(): AlgorandAddress | undefined {
+    return this.account;
+  }
+
+  getAddresses(): AlgorandAddress[] {
+    return this.accounts
+  }
+
+  setMainAddress(account: AlgorandAddress): void {
+    if (!this.accounts.includes(account))
+      throw new Error('Unknown address')
+    this.account = account
   }
 
   async sendTransaction(signedTx: Uint8Array): Promise<SendTransactionResult<any>> {
@@ -87,18 +113,18 @@ export class AlgorandWallet extends Wallet {
   }
 
   async signMessage(msg: Uint8Array): Promise<Uint8Array> {
-    const pk = await this.getPublicKey();
+    const pk = await this.getAddress();
     return this.client.signBytes(msg, pk!);
   }
 
-  async tealSign(data: Uint8Array, contractAddress: string, signer: string) {
+  async tealSign(data: Uint8Array, contractAddress: string, signer: AlgorandAddress) {
     return this.client.tealSign(data, contractAddress, signer)
   }
 
   async getBalance(): Promise<string> {
     if (this.accounts.length === 0) throw new Error('Not connected');
 
-    const address = this.getPublicKey();
+    const address = this.getAddress();
     const res = await fetch(`${this.config.indexer.url}/v2/accounts/${address}`);
     const json = await res.json();
     return json.account.amount.toString();

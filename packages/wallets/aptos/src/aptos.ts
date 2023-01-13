@@ -16,8 +16,9 @@ export class AptosWallet extends Wallet {
     return this.adapter.name;
   }
 
-  connect(): Promise<void> {
-    return this.adapter.connect();
+  async connect(): Promise<string[]> {
+    await this.adapter.connect();
+    return this.getAddresses()
   }
 
   disconnect(): Promise<void> {
@@ -28,12 +29,21 @@ export class AptosWallet extends Wallet {
     return CHAINS['aptos'];
   }
 
-  getPublicKey(): string | undefined {
+  getAddress(): string | undefined {
     return this.adapter.publicAccount.address?.toString();
   }
 
+  getAddresses(): string[] {
+    const address = this.getAddress()
+    return address ? [ address ] : []
+  }
+
+  setMainAddress(address: string): void {
+    throw new Error("Not supported");
+  }
+
   getBalance(): Promise<string> {
-    throw new Error("Method not implemented.");
+    throw new Error("Not supported");
   }
 
   signTransaction(tx: any): Promise<any> {

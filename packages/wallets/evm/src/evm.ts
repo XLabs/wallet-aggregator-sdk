@@ -1,17 +1,17 @@
 import { TransactionReceipt, TransactionRequest } from "@ethersproject/abstract-provider";
 import { hexlify, hexStripZeros } from "@ethersproject/bytes";
-import { ethers } from "ethers";
-import { ChainId, PublicKey, SendTransactionResult, Wallet, WalletEvents } from "wallet-aggregator-core";
+import { ethers, utils } from "ethers";
+import { ChainId, Address, SendTransactionResult, Wallet, WalletEvents } from "wallet-aggregator-core";
 import { AddEthereumChainParameterMap, DEFAULT_CHAIN_PARAMETERS } from "./parameters";
 
 interface EVMWalletEvents extends WalletEvents {
   evmChainChanged(evmChainId: number): void;
-  accountsChanged(address: string): void;
+  accountsChanged(address: Address): void;
 }
 
 export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEvents> {
-  protected addresses: string[] = [];
-  protected address?: string;
+  protected addresses: Address[] = [];
+  protected address?: Address;
   protected evmChainId?: number;
   protected provider?: ethers.providers.Web3Provider;
   protected chainParameters: AddEthereumChainParameterMap;
@@ -21,7 +21,7 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
     this.chainParameters = Object.assign({}, DEFAULT_CHAIN_PARAMETERS, params)
   }
 
-  protected abstract innerConnect(): Promise<string[]>;
+  protected abstract innerConnect(): Promise<Address[]>;
   protected abstract innerDisconnect(): Promise<void>;
 
   async switchChain(ethChainId: number): Promise<void> {
@@ -48,7 +48,7 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
     }
   }
 
-  async connect(): Promise<PublicKey[]> {
+  async connect(): Promise<Address[]> {
     // TODO: throw error when the evm chain is not supported (evmChainId not in CHAINS) 
     this.addresses = await this.innerConnect();
     this.address = this.addresses[0];
@@ -56,7 +56,7 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
 
     this.emit('connect');
 
-    return this.addresses
+    return this.addresses.map(addr => this.checksumAddress(addr)!)
   }
 
   async disconnect(): Promise<void> {
@@ -64,6 +64,7 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
     await this.provider?.removeAllListeners();
     this.provider = undefined;
     this.address = undefined;
+    this.addresses = []
     this.evmChainId = undefined;
 
     this.emit('disconnect');
@@ -78,8 +79,22 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
     return this.evmChainId;
   }
 
-  getPublicKey(): string | undefined {
-    return this.address;
+  getAddress(): string | undefined {
+    return this.checksumAddress(this.address);
+  }
+
+  getAddresses(): string[] {
+    return this.addresses.map(addr => this.checksumAddress(addr)!)
+  }
+
+  setMainAddress(address: string): void {
+    if (!this.addresses.includes(address))
+      throw new Error('Unknown address')
+    this.address = address
+  }
+
+  private checksumAddress(address: string | undefined) {
+    return address ? utils.getAddress(address) : undefined;
   }
 
   async signTransaction(tx: TransactionRequest): Promise<any> {
@@ -89,10 +104,10 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
 
   async sendTransaction(tx: TransactionRequest): Promise<SendTransactionResult<TransactionReceipt>> {
     if (!this.provider) throw new Error('Not connected');
-    const response = await this.provider.getSigner().sendTransaction(tx);
+    const account = await this.getSigner().sendTransaction(tx);
 
     // TODO: parameterize confirmations
-    const receipt = await response.wait();
+    const receipt = await account.wait();
     return {
       id: receipt.transactionHash,
       data: receipt
@@ -101,7 +116,7 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
 
   async signMessage(msg: Uint8Array): Promise<Uint8Array> {
     if (!this.provider) throw new Error('Not connected');
-    const signature = await this.provider.getSigner().signMessage(msg);
+    const signature = await this.getSigner().signMessage(msg);
     return new Uint8Array(Buffer.from(signature.substring(2), 'hex'))
   }
 
@@ -112,12 +127,12 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
 
   getSigner(): ethers.Signer {
     if (!this.provider) throw new Error('Not connected');
-    return this.provider.getSigner();
+    return this.provider.getSigner(this.address);
   }
 
   async getBalance(): Promise<string> {
     if (!this.provider) throw new Error('Not connected');
-    const balance = await this.provider.getSigner().getBalance();
+    const balance = await this.getSigner().getBalance();
     return balance.toString();
   }
 
@@ -128,7 +143,7 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
   }
 
   protected async onAccountsChanged(): Promise<void> {
-    this.address = await this.getSigner().getAddress();
+    this.address = await this.provider!.getSigner().getAddress();
     this.emit('accountsChanged', this.address);
   }
 }
