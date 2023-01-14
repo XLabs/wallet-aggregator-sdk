@@ -22,6 +22,7 @@ enum ERROR_CODES {
 export interface EVMWalletConfig {
   chainParameters?: AddEthereumChainParameterMap
   preferredChain?: EVMChainId
+  defaultAccount?: string
 }
 
 export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEvents> {
@@ -32,10 +33,11 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
   protected provider?: ethers.providers.Web3Provider;
   protected chainParameters: AddEthereumChainParameterMap;
 
-  constructor({ chainParameters, preferredChain }: EVMWalletConfig = {}) {
+  constructor({ chainParameters, preferredChain, defaultAccount }: EVMWalletConfig = {}) {
     super();
-    this.chainParameters = Object.assign({}, DEFAULT_CHAIN_PARAMETERS, chainParameters)
-    this.preferredChain = preferredChain
+    this.chainParameters = Object.assign({}, DEFAULT_CHAIN_PARAMETERS, chainParameters);
+    this.preferredChain = preferredChain;
+    this.addresses = defaultAccount ? [ defaultAccount ] : [];
   }
 
   protected abstract innerConnect(): Promise<Address[]>;

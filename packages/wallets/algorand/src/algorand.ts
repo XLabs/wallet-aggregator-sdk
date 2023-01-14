@@ -19,16 +19,17 @@ export interface MyAlgoConnectConfig {
   disableLedgerNano?: boolean;
 }
 
-interface AlgorandWalletConfigParams {
+export interface AlgorandWalletParams {
   node?: AlgorandNodeConfig;
   indexer?: AlgorandIndexerConfig;
-  myAlgoConnect?: MyAlgoConnectConfig
+  myAlgoConnect?: MyAlgoConnectConfig;
+  defaultAccount?: string;
 }
 
 export interface AlgorandWalletConfig {
   node: AlgorandNodeConfig;
   indexer: AlgorandIndexerConfig;
-  myAlgoConnect?: MyAlgoConnectConfig
+  myAlgoConnect?: MyAlgoConnectConfig;
 }
 
 const DEFAULT_CONFIG: AlgorandWalletConfig = {
@@ -44,11 +45,13 @@ export class AlgorandWallet extends Wallet {
   private account: AlgorandAddress | undefined;
   private config: AlgorandWalletConfig;
 
-  constructor(config?: AlgorandWalletConfigParams) {
+  // constructor(config?: AlgorandWalletConfigParams) {
+  constructor({ defaultAccount, ...config }: AlgorandWalletParams = {}) {
     super();
     this.config = Object.assign({}, DEFAULT_CONFIG, config);
     this.client = new MyAlgoConnect({ ...this.config?.myAlgoConnect });
-    this.accounts = [];
+    this.accounts = defaultAccount ? [ defaultAccount ] : [];
+    this.account = defaultAccount;
   }
 
   getName(): string {
