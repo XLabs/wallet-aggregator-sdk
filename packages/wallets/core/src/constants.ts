@@ -32,11 +32,11 @@ export const CHAINS = {
     wormchain: 3104,
 } as const;
 
-export const CHAINS_TESTNET = {
-    eth: 5,
+export const CHAINS_EVM_TESTNET = {
+    ethereum: 5,
     bsc: 97,
     polygon: 80001,
-    avax: 43113,
+    avalanche: 43113,
     oasis: 42261,
     aurora: 1313161555,
     fantom: 4002,
@@ -56,13 +56,15 @@ export type ChainIdToName = {
     -readonly [key in keyof typeof CHAINS as typeof CHAINS[key]]: key;
 };
 
-export const CHAIN_ID_TO_NAME: ChainIdToName = Object.entries(CHAINS).reduce(
+const invertChainIdMap = (map: { [key: string]: number }) => Object.entries(map).reduce(
     (obj, [name, id]) => {
         obj[id] = name;
         return obj;
     },
     {} as any
-) as ChainIdToName;
+)
+
+export const CHAIN_ID_TO_NAME: ChainIdToName = invertChainIdMap(CHAINS) as ChainIdToName;
 
 export const CHAIN_ID_UNSET = CHAINS["unset"];
 export const CHAIN_ID_SOLANA = CHAINS["solana"];
@@ -95,42 +97,73 @@ export const CHAIN_ID_XPLA = CHAINS["xpla"];
 export const CHAIN_ID_BTC = CHAINS["btc"];
 export const CHAIN_ID_WORMCHAIN = CHAINS["wormchain"];
 
-const EVM_CHAINS_MAINNET: ChainId[] = [
-    CHAINS['ethereum'],
-    CHAINS['bsc'],
-    CHAINS['avalanche'],
-    CHAINS['polygon'],
-    CHAINS['oasis'],
-    CHAINS['aurora'],
-    CHAINS['fantom'],
-    CHAINS['karura'],
-    CHAINS['acala'],
-    CHAINS['klaytn'],
-    CHAINS['celo'],
-    CHAINS['moonbeam'],
-    CHAINS['neon'],
-    CHAINS['arbitrum'],
-    CHAINS['optimism'],
-    CHAINS['gnosis']
-];
+export type Network = "MAINNET" | "TESTNET" | "DEVNET";
 
-const EVM_CHAINS_TESTNET: number[] = [
-    CHAINS_TESTNET['eth'],
-    CHAINS_TESTNET['bsc'],
-    CHAINS_TESTNET['polygon'],
-    CHAINS_TESTNET['avax'],
-    CHAINS_TESTNET['oasis'],
-    CHAINS_TESTNET['aurora'],
-    CHAINS_TESTNET['fantom'],
-    CHAINS_TESTNET['karura'],
-    CHAINS_TESTNET['acala'],
-    CHAINS_TESTNET['klaytn'],
-    CHAINS_TESTNET['celo'],
-    CHAINS_TESTNET['neon'],
-    CHAINS_TESTNET['arbitrum']
-];
+export type EVMChainName =
+  | "ethereum"
+  | "bsc"
+  | "polygon"
+  | "avalanche"
+  | "oasis"
+  | "aurora"
+  | "fantom"
+  | "karura"
+  | "acala"
+  | "klaytn"
+  | "celo"
+  | "moonbeam"
+  | "neon"
+  | "arbitrum"
+  | "optimism"
+  | "gnosis";
 
-export function isEVMChain(chainId: ChainId): boolean {
-    return EVM_CHAINS_MAINNET.includes(chainId) ||
-        EVM_CHAINS_TESTNET.includes(chainId);
+export type EVMChainId = typeof CHAINS[EVMChainName]
+
+const EVM_CHAINS_MAINNET: { [key in EVMChainName]: EVMChainId } = {
+    ethereum: CHAINS['ethereum'],
+    bsc: CHAINS['bsc'],
+    avalanche: CHAINS['avalanche'],
+    polygon: CHAINS['polygon'],
+    oasis: CHAINS['oasis'],
+    aurora: CHAINS['aurora'],
+    fantom: CHAINS['fantom'],
+    karura: CHAINS['karura'],
+    acala: CHAINS['acala'],
+    klaytn: CHAINS['klaytn'],
+    celo: CHAINS['celo'],
+    moonbeam: CHAINS['moonbeam'],
+    neon: CHAINS['neon'],
+    arbitrum: CHAINS['arbitrum'],
+    optimism: CHAINS['optimism'],
+    gnosis: CHAINS['gnosis']
+};
+
+const EVM_CHAINS_TESTNET = {
+    ethereum: CHAINS_EVM_TESTNET['ethereum'],
+    bsc: CHAINS_EVM_TESTNET['bsc'],
+    avalanche: CHAINS_EVM_TESTNET['avalanche'],
+    polygon: CHAINS_EVM_TESTNET['polygon'],
+    oasis: CHAINS_EVM_TESTNET['oasis'],
+    aurora: CHAINS_EVM_TESTNET['aurora'],
+    fantom: CHAINS_EVM_TESTNET['fantom'],
+    karura: CHAINS_EVM_TESTNET['karura'],
+    acala: CHAINS_EVM_TESTNET['acala'],
+    klaytn: CHAINS_EVM_TESTNET['klaytn'],
+    celo: CHAINS_EVM_TESTNET['celo'],
+    neon: CHAINS_EVM_TESTNET['neon'],
+    arbitrum: CHAINS_EVM_TESTNET['arbitrum']
+};
+
+export function isEVMChain(chainId: number): boolean {
+    return Object.values(EVM_CHAINS_MAINNET).includes(chainId as any) ||
+        Object.values(EVM_CHAINS_TESTNET).includes(chainId as any);
+}
+
+
+export const EVM_TESTNET_CHAIN_ID_TO_NAME: { [key: number]: ChainName } = invertChainIdMap(CHAINS_EVM_TESTNET);
+
+export function evmChainIdToChainId(evmChainId: number): ChainId {
+    const chainName = CHAIN_ID_TO_NAME[evmChainId as EVMChainId] || EVM_TESTNET_CHAIN_ID_TO_NAME[evmChainId]
+    if (chainName === undefined) throw new Error(`No chain found for evm chain id ${evmChainId}`)
+    return CHAINS[chainName]
 }

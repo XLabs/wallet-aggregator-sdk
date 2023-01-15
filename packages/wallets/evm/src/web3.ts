@@ -18,7 +18,7 @@ export class EVMWeb3Wallet extends EVMWallet {
   private metamaskProvider?: MetaMaskEthereumProvider;
 
   getName(): string {
-    return 'Eth Metamask';
+    return 'Metamask';
   }
 
   async innerConnect(): Promise<string[]> {

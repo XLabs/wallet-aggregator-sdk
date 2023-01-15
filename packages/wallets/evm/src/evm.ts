@@ -1,7 +1,7 @@
 import { TransactionReceipt, TransactionRequest } from "@ethersproject/abstract-provider";
 import { hexlify, hexStripZeros } from "@ethersproject/bytes";
 import { ethers, utils } from "ethers";
-import { ChainId, Address, SendTransactionResult, Wallet, WalletEvents } from "@xlabs/wallet-aggregator-core";
+import { ChainId, Address, SendTransactionResult, Wallet, WalletEvents, CHAIN_ID_ETH, evmChainIdToChainId, CHAIN_ID_UNSET } from "@xlabs/wallet-aggregator-core";
 import { AddEthereumChainParameterMap, DEFAULT_CHAIN_PARAMETERS } from "./parameters";
 
 type EVMChainId = number
@@ -115,7 +115,8 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
   }
 
   getChainId(): ChainId {
-    return this.evmChainId as ChainId;
+    if (!this.provider) return CHAIN_ID_ETH
+    return evmChainIdToChainId(this.getEvmChainId()!)
   }
 
   getEvmChainId(): number | undefined {

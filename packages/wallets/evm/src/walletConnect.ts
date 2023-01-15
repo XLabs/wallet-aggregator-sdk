@@ -20,7 +20,8 @@ export class EVMWalletConnectWallet extends EVMWallet {
 
     async innerConnect(): Promise<string[]> {
         this.walletConnectProvider = new WalletConnectProvider({
-            rpc: this.rpcMap
+            rpc: this.rpcMap,
+            chainId: this.preferredChain
         });
 
         await this.walletConnectProvider.enable();
