@@ -64,6 +64,36 @@ export const CHAIN_ID_TO_NAME: ChainIdToName = Object.entries(CHAINS).reduce(
     {} as any
 ) as ChainIdToName;
 
+export const CHAIN_ID_UNSET = CHAINS["unset"];
+export const CHAIN_ID_SOLANA = CHAINS["solana"];
+export const CHAIN_ID_ETH = CHAINS["ethereum"];
+export const CHAIN_ID_TERRA = CHAINS["terra"];
+export const CHAIN_ID_BSC = CHAINS["bsc"];
+export const CHAIN_ID_POLYGON = CHAINS["polygon"];
+export const CHAIN_ID_AVAX = CHAINS["avalanche"];
+export const CHAIN_ID_OASIS = CHAINS["oasis"];
+export const CHAIN_ID_ALGORAND = CHAINS["algorand"];
+export const CHAIN_ID_AURORA = CHAINS["aurora"];
+export const CHAIN_ID_FANTOM = CHAINS["fantom"];
+export const CHAIN_ID_KARURA = CHAINS["karura"];
+export const CHAIN_ID_ACALA = CHAINS["acala"];
+export const CHAIN_ID_KLAYTN = CHAINS["klaytn"];
+export const CHAIN_ID_CELO = CHAINS["celo"];
+export const CHAIN_ID_NEAR = CHAINS["near"];
+export const CHAIN_ID_MOONBEAM = CHAINS["moonbeam"];
+export const CHAIN_ID_NEON = CHAINS["neon"];
+export const CHAIN_ID_TERRA2 = CHAINS["terra2"];
+export const CHAIN_ID_INJECTIVE = CHAINS["injective"];
+export const CHAIN_ID_OSMOSIS = CHAINS["osmosis"];
+export const CHAIN_ID_SUI = CHAINS["sui"];
+export const CHAIN_ID_APTOS = CHAINS["aptos"];
+export const CHAIN_ID_ARBITRUM = CHAINS["arbitrum"];
+export const CHAIN_ID_OPTIMISM = CHAINS["optimism"];
+export const CHAIN_ID_GNOSIS = CHAINS["gnosis"];
+export const CHAIN_ID_PYTHNET = CHAINS["pythnet"];
+export const CHAIN_ID_XPLA = CHAINS["xpla"];
+export const CHAIN_ID_BTC = CHAINS["btc"];
+export const CHAIN_ID_WORMCHAIN = CHAINS["wormchain"];
 
 const EVM_CHAINS_MAINNET: ChainId[] = [
     CHAINS['ethereum'],
