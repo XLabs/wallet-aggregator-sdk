@@ -1,7 +1,7 @@
 import { TransactionReceipt, TransactionRequest } from "@ethersproject/abstract-provider";
 import { hexlify, hexStripZeros } from "@ethersproject/bytes";
+import { Address, ChainId, CHAIN_ID_ETH, evmChainIdToChainId, SendTransactionResult, Signature, Wallet, WalletEvents } from "@xlabs/wallet-aggregator-core";
 import { ethers, utils } from "ethers";
-import { ChainId, Address, SendTransactionResult, Wallet, WalletEvents, CHAIN_ID_ETH, evmChainIdToChainId, CHAIN_ID_UNSET } from "@xlabs/wallet-aggregator-core";
 import { AddEthereumChainParameterMap, DEFAULT_CHAIN_PARAMETERS } from "./parameters";
 
 type EVMChainId = number
@@ -22,10 +22,18 @@ enum ERROR_CODES {
 export interface EVMWalletConfig {
   chainParameters?: AddEthereumChainParameterMap
   preferredChain?: EVMChainId
-  defaultAccount?: string
 }
 
-export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEvents> {
+export type EthereumMessage = string | ethers.utils.Bytes;
+
+export abstract class EVMWallet extends Wallet<
+  TransactionRequest,
+  TransactionRequest,
+  TransactionReceipt,
+  EthereumMessage,
+  Signature,
+  EVMWalletEvents
+> {
   protected addresses: Address[] = [];
   protected address?: Address;
   protected evmChainId?: EVMChainId;
@@ -33,12 +41,10 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
   protected provider?: ethers.providers.Web3Provider;
   protected chainParameters: AddEthereumChainParameterMap;
 
-  constructor({ chainParameters, preferredChain, defaultAccount }: EVMWalletConfig = {}) {
+  constructor({ chainParameters, preferredChain }: EVMWalletConfig = {}) {
     super();
     this.chainParameters = Object.assign({}, DEFAULT_CHAIN_PARAMETERS, chainParameters);
     this.preferredChain = preferredChain;
-    this.addresses = defaultAccount ? [ defaultAccount ] : [];
-    this.address = defaultAccount;
   }
 
   protected abstract innerConnect(): Promise<Address[]>;
@@ -134,10 +140,9 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
   }
 
   setMainAddress(address: string): void {
-    if (!this.addresses.includes(address)) {
-      throw new Error('Unknown address');
-    }
-    this.address = address;
+    if (!this.addresses.includes(address))
+      throw new Error('Unknown address')
+    this.address = address
   }
 
   private checksumAddress(address: string | undefined) {
@@ -148,7 +153,7 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
     return addresses.map(addr => this.checksumAddress(addr)!);
   }
 
-  async signTransaction(tx: TransactionRequest): Promise<any> {
+  async signTransaction(tx: TransactionRequest): Promise<TransactionRequest> {
     if (!this.provider) throw new Error('Not connected');
     return tx;
   }
@@ -165,7 +170,7 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
     }
   }
 
-  async signMessage(msg: Uint8Array): Promise<Uint8Array> {
+  async signMessage(msg: EthereumMessage): Promise<Signature> {
     if (!this.provider) throw new Error('Not connected');
     const signature = await this.getSigner().signMessage(msg);
     return new Uint8Array(Buffer.from(signature.substring(2), 'hex'))

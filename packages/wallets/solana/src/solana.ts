@@ -1,6 +1,6 @@
 import { WalletAdapter } from "@solana/wallet-adapter-base";
 import { Connection, Transaction, TransactionSignature } from "@solana/web3.js";
-import { ChainId, CHAINS, SendTransactionResult, Wallet, WalletState } from "@xlabs/wallet-aggregator-core";
+import { ChainId, CHAINS, SendTransactionResult, Signature, Wallet, WalletState } from "@xlabs/wallet-aggregator-core";
 
 export interface SolanaAdapter extends WalletAdapter {
   signTransaction<T extends Transaction>(
@@ -12,8 +12,17 @@ export interface SolanaAdapter extends WalletAdapter {
   signMessage?(message: Uint8Array): Promise<Uint8Array>;
 }
 
+export type SolanaUnsignedTransaction = Transaction | Transaction[];
+export type SolanaSignedTransaction = Transaction | Transaction[];
+export type SolanaSubmitTransactionResult = TransactionSignature | TransactionSignature[];
+export type SolanaMessage = Uint8Array;
 
-export class SolanaWallet extends Wallet {
+export class SolanaWallet extends Wallet<
+  SolanaUnsignedTransaction,
+  SolanaSignedTransaction,
+  SolanaSubmitTransactionResult,
+  SolanaMessage
+> {
   constructor(
     private readonly adapter: SolanaAdapter,
     private readonly connection: Connection
@@ -90,19 +99,31 @@ export class SolanaWallet extends Wallet {
     throw new Error("Not supported")
   }
 
-  signTransaction(tx: any): Promise<any> {
+  signTransaction(tx: SolanaUnsignedTransaction): Promise<SolanaSignedTransaction> {
     if (!this.adapter.signTransaction || !this.adapter.signAllTransactions) throw new Error('Not supported');
     return Array.isArray(tx) ? this.adapter.signAllTransactions(tx) : this.adapter.signTransaction(tx)
   }
 
-  async sendTransaction(tx: any): Promise<SendTransactionResult> {
-    const result = await this.adapter.sendTransaction(tx, this.connection);
+  async sendTransaction(toSign: SolanaSignedTransaction): Promise<SendTransactionResult<SolanaSubmitTransactionResult>> {
+    const txs = Array.isArray(toSign) ? toSign : [ toSign ]
+
+    if (txs.length === 0) {
+      throw new Error('Empty transactions array')
+    }
+
+    const ids: TransactionSignature[] = []
+    for (const tx of txs) {
+      const id = await this.adapter.sendTransaction(tx, this.connection);
+      ids.push(id)
+    }
+
     return {
-      id: result
+      id: ids[0],
+      data: ids
     }
   }
 
-  signMessage(msg: Uint8Array): Promise<any> {
+  signMessage(msg: SolanaMessage): Promise<Signature> {
     if (!this.adapter.signMessage) throw new Error('Not supported');
     return this.adapter.signMessage(msg);
   }

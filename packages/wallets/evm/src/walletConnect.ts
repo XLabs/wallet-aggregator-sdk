@@ -1,8 +1,8 @@
+import { hexlify, hexStripZeros } from "@ethersproject/bytes";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { ethers } from 'ethers';
-import { AddEthereumChainParameterMap, buildRpcMap, EvmRpcMap, EVM_RPC_MAP as DEFAULT_EVM_RPC_MAP } from "./parameters";
 import { EVMWallet, EVMWalletConfig } from "./evm";
-import { hexlify, hexStripZeros } from "@ethersproject/bytes";
+import { buildRpcMap, EvmRpcMap, EVM_RPC_MAP as DEFAULT_EVM_RPC_MAP } from "./parameters";
 const CacheSubprovider = require("web3-provider-engine/subproviders/cache");
 
 export class EVMWalletConnectWallet extends EVMWallet {

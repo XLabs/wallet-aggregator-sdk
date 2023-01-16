@@ -13,14 +13,30 @@ export enum WalletState {
   Unsupported = 'Unsupported'
 }
 
-export interface SendTransactionResult<R = any> {
+export interface SendTransactionResult<R> {
   id: string;
   data?: R;
 }
 
 export type Address = string;
+export type IconSource = string;
+export type Signature = Uint8Array;
 
-export abstract class Wallet<R = any, E extends WalletEvents = any> extends EventEmitter<E> {
+export type BaseUnsignedTransaction = any;
+export type BaseSignedTransaction = any;
+export type BaseSubmitTransactionResult = any;
+export type BaseMessage = any;
+export type SignMessageResult = any;
+
+
+export abstract class Wallet<
+  BUT extends BaseUnsignedTransaction = any,
+  BST extends BaseSignedTransaction = any,
+  R extends BaseSubmitTransactionResult = any,
+  BM extends BaseMessage = any,
+  MR extends SignMessageResult = any,
+  E extends WalletEvents = any
+> extends EventEmitter<E> {
   abstract getName(): string;
   abstract connect(): Promise<Address[]>;
   abstract disconnect(): Promise<void>;
@@ -29,10 +45,10 @@ export abstract class Wallet<R = any, E extends WalletEvents = any> extends Even
   abstract getAddresses(): Address[];
   abstract setMainAddress(address: Address): void
   abstract getBalance(): Promise<string>;
-  abstract signTransaction(tx: any): Promise<any>;
-  abstract sendTransaction(tx: any): Promise<SendTransactionResult<R>>;
-  abstract signMessage(msg: Uint8Array): Promise<Uint8Array>;
-  abstract getIcon(): string;
+  abstract signTransaction(tx: BUT): Promise<BST>;
+  abstract sendTransaction(tx: BST): Promise<SendTransactionResult<R>>;
+  abstract signMessage(msg: BM): Promise<MR>;
+  abstract getIcon(): IconSource;
 
   async signAndSendTransaction(tx: any): Promise<SendTransactionResult<R>> {
     const signed = await this.signTransaction(tx)

@@ -1,9 +1,22 @@
 import { ChainId, CHAINS, SendTransactionResult, Wallet, WalletState } from "@xlabs/wallet-aggregator-core";
-import { BaseWalletAdapter } from "@manahippo/aptos-wallet-adapter";
+import { BaseWalletAdapter, SignMessagePayload, SignMessageResponse } from "@manahippo/aptos-wallet-adapter";
+import { Types } from "aptos";
 
 export type AptosAdapter = BaseWalletAdapter;
+export interface AptosSubmitResult {
+  hash: Types.HexEncodedBytes
+}
 
-export class AptosWallet extends Wallet {
+export type AptosMessage = string | SignMessagePayload | Uint8Array;
+export type SignedAptosMessage = string | SignMessageResponse;
+
+export class AptosWallet extends Wallet<
+  Types.TransactionPayload,
+  Types.TransactionPayload,
+  AptosSubmitResult,
+  AptosMessage,
+  SignedAptosMessage
+> {
   constructor(private readonly adapter: AptosAdapter) {
     super();
   }
@@ -46,18 +59,19 @@ export class AptosWallet extends Wallet {
     throw new Error("Not supported");
   }
 
-  signTransaction(tx: any): Promise<any> {
+  async signTransaction(tx: Types.TransactionPayload): Promise<Types.TransactionPayload> {
     return tx;
   }
 
-  async sendTransaction(tx: any): Promise<SendTransactionResult> {
-    const { hash } = await this.adapter.signAndSubmitTransaction(tx);
+  async sendTransaction(tx: Types.TransactionPayload): Promise<SendTransactionResult<AptosSubmitResult>> {
+    const result = await this.adapter.signAndSubmitTransaction(tx);
     return {
-      id: hash
+      id: result.hash,
+      data: result
     }
   }
 
-  signMessage(msg: Uint8Array): Promise<any> {
+  signMessage(msg: AptosMessage): Promise<SignedAptosMessage> {
     return this.adapter.signMessage(msg);
   }
 

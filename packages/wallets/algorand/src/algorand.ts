@@ -1,8 +1,9 @@
-import MyAlgoConnect from '@randlabs/myalgo-connect';
+import MyAlgoConnect, { EncodedTransaction } from '@randlabs/myalgo-connect';
 import algosdk from 'algosdk';
-import { Address, ChainId, CHAINS, SendTransactionResult, Wallet } from "@xlabs/wallet-aggregator-core";
+import { Address, ChainId, CHAINS, IconSource, SendTransactionResult, Signature, Wallet } from "@xlabs/wallet-aggregator-core";
 
-type AlgorandAddress = string;
+export type SubmittedTransactionMap = Record<string, string>
+export type AlgorandMessage = Uint8Array
 
 export interface AlgorandNodeConfig {
   url: string;
@@ -37,12 +38,19 @@ const DEFAULT_CONFIG: AlgorandWalletConfig = {
   indexer: { url: 'https://indexer.algoexplorerapi.io' },
 }
 
+export type EncodedSignedTransaction = Uint8Array
 
-export class AlgorandWallet extends Wallet {
+export class AlgorandWallet extends Wallet<
+  algosdk.Transaction,
+  EncodedSignedTransaction,
+  SubmittedTransactionMap,
+  AlgorandMessage,
+  Signature
+> {
   private readonly WAIT_ROUNDS = 5;
   private readonly client: MyAlgoConnect;
-  private accounts: AlgorandAddress[];
-  private account: AlgorandAddress | undefined;
+  private accounts: Address[];
+  private account: Address | undefined;
   private config: AlgorandWalletConfig;
 
   constructor({ defaultAccount, ...config }: AlgorandWalletParams = {}) {
@@ -76,31 +84,34 @@ export class AlgorandWallet extends Wallet {
     return CHAINS['algorand'];
   }
 
-  async createTransaction(params: any): Promise<object> {
-    return new algosdk.Transaction({ ...params });
+  async signTransaction(tx: algosdk.Transaction): Promise<EncodedSignedTransaction>;
+  async signTransaction(tx: algosdk.Transaction[]): Promise<EncodedSignedTransaction[]>;
+  async signTransaction(tx: algosdk.Transaction | algosdk.Transaction[]): Promise<EncodedSignedTransaction | EncodedSignedTransaction[]> {
+    const toSend = Array.isArray(tx) ? tx : [ tx ]
+    const result = await this.client.signTransaction(toSend.map(t => t.toByte()))
+
+    if (Array.isArray(tx)) {
+      return result.map(res => res.blob)
+    }
+
+    return result[0].blob
   }
 
-  async signTransaction(tx: any): Promise<any> {
-    const txsArray = Array.isArray(tx) ? tx : [ tx ];
-    const result = await this.client.signTransaction(txsArray.map(tx => tx.toByte()));
-    return result.map(s => s.blob);
-  }
-
-  getAddress(): AlgorandAddress | undefined {
+  getAddress(): Address | undefined {
     return this.account;
   }
 
-  getAddresses(): AlgorandAddress[] {
+  getAddresses(): Address[] {
     return this.accounts
   }
 
-  setMainAddress(account: AlgorandAddress): void {
+  setMainAddress(account: Address): void {
     if (!this.accounts.includes(account))
       throw new Error('Unknown address')
     this.account = account
   }
 
-  async sendTransaction(signedTx: Uint8Array): Promise<SendTransactionResult<any>> {
+  async sendTransaction(signedTx: EncodedSignedTransaction): Promise<SendTransactionResult<SubmittedTransactionMap>> {
     const algod = new algosdk.Algodv2(
       this.config.node.token || '',
       this.config.node.url,
@@ -114,12 +125,12 @@ export class AlgorandWallet extends Wallet {
     };
   }
 
-  async signMessage(msg: Uint8Array): Promise<Uint8Array> {
+  async signMessage(msg: AlgorandMessage): Promise<Signature> {
     const pk = await this.getAddress();
     return this.client.signBytes(msg, pk!);
   }
 
-  async tealSign(data: Uint8Array, contractAddress: string, signer: AlgorandAddress) {
+  async tealSign(data: Uint8Array, contractAddress: Address, signer: Address) {
     return this.client.tealSign(data, contractAddress, signer)
   }
 
@@ -132,7 +143,7 @@ export class AlgorandWallet extends Wallet {
     return json.account.amount.toString();
   }
 
-  getIcon(): string {
+  getIcon(): IconSource {
     return 'data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NTAgNjUwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPkFMR09fTG9nb3NfMTkwMzIwPC90aXRsZT48ZyBpZD0ibElOVDdXIj48cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iNDQ0LjE4IDQ0NC4zMiA0MDYuODEgNDQ0LjMyIDM4Mi41NCAzNTQuMDQgMzMwLjM2IDQ0NC4zMyAyODguNjQgNDQ0LjMzIDM2OS4yOSAzMDQuNTcgMzU2LjMxIDI1Ni4wNSAyNDcuNTYgNDQ0LjM2IDIwNS44MiA0NDQuMzYgMzQzLjY0IDIwNS42NCAzODAuMTggMjA1LjY0IDM5Ni4xOCAyNjQuOTUgNDMzLjg4IDI2NC45NSA0MDguMTQgMzA5LjcxIDQ0NC4xOCA0NDQuMzIiLz48L2c+PC9zdmc+';
   }
 }
