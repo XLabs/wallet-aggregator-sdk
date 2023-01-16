@@ -45,7 +45,6 @@ export class AlgorandWallet extends Wallet {
   private account: AlgorandAddress | undefined;
   private config: AlgorandWalletConfig;
 
-  // constructor(config?: AlgorandWalletConfigParams) {
   constructor({ defaultAccount, ...config }: AlgorandWalletParams = {}) {
     super();
     this.config = Object.assign({}, DEFAULT_CONFIG, config);
@@ -55,7 +54,7 @@ export class AlgorandWallet extends Wallet {
   }
 
   getName(): string {
-    return 'MyAlgo';
+    return 'My Algo Wallet';
   }
 
   async connect(): Promise<Address[]> {

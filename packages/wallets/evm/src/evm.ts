@@ -38,6 +38,7 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
     this.chainParameters = Object.assign({}, DEFAULT_CHAIN_PARAMETERS, chainParameters);
     this.preferredChain = preferredChain;
     this.addresses = defaultAccount ? [ defaultAccount ] : [];
+    this.address = defaultAccount;
   }
 
   protected abstract innerConnect(): Promise<Address[]>;
