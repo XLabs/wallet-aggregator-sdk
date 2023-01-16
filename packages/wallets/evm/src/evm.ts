@@ -71,7 +71,7 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
 
   async connect(): Promise<Address[]> {
     // TODO: throw error when the evm chain is not supported (evmChainId not in CHAINS) 
-    this.addresses = await this.innerConnect();
+    this.addresses = this.checksumAddresses(await this.innerConnect());
     this.address = this.addresses[0];
 
     const chainId = (await this.provider!.getNetwork()).chainId;
@@ -81,7 +81,7 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
 
     this.emit('connect');
 
-    return this.addresses.map(addr => this.checksumAddress(addr)!);
+    return this.addresses;
   }
 
   private async enforcePrefferedChain(chainId: EVMChainId): Promise<void> {
@@ -126,21 +126,26 @@ export abstract class EVMWallet extends Wallet<TransactionReceipt, EVMWalletEven
   }
 
   getAddress(): string | undefined {
-    return this.checksumAddress(this.address);
+    return this.address;
   }
 
   getAddresses(): string[] {
-    return this.addresses.map(addr => this.checksumAddress(addr)!)
+    return this.addresses;
   }
 
   setMainAddress(address: string): void {
-    if (!this.addresses.includes(address))
-      throw new Error('Unknown address')
-    this.address = address
+    if (!this.addresses.includes(address)) {
+      throw new Error('Unknown address');
+    }
+    this.address = address;
   }
 
   private checksumAddress(address: string | undefined) {
     return address ? utils.getAddress(address) : undefined;
+  }
+
+  private checksumAddresses(addresses: string[]): string[] {
+    return addresses.map(addr => this.checksumAddress(addr)!);
   }
 
   async signTransaction(tx: TransactionRequest): Promise<any> {
