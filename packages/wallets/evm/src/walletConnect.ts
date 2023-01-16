@@ -9,7 +9,7 @@ export class EVMWalletConnectWallet extends EVMWallet {
     private walletConnectProvider?: WalletConnectProvider;
     private rpcMap: EvmRpcMap;
 
-    constructor(config: EVMWalletConfig) {
+    constructor(config: EVMWalletConfig = {}) {
         super(config);
         this.rpcMap = buildRpcMap(this.chainParameters)
     }
