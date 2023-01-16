@@ -33,6 +33,12 @@ export abstract class Wallet<R = any, E extends WalletEvents = any> extends Even
   abstract sendTransaction(tx: any): Promise<SendTransactionResult<R>>;
   abstract signMessage(msg: Uint8Array): Promise<Uint8Array>;
   abstract getIcon(): string;
+
+  async signAndSendTransaction(tx: any): Promise<SendTransactionResult<R>> {
+    const signed = await this.signTransaction(tx)
+    return this.sendTransaction(tx)
+  }
+
   getWalletState(): WalletState {
     // default
     return WalletState.Installed;
