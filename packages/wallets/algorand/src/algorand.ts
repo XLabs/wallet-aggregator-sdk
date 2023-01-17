@@ -1,6 +1,6 @@
 import MyAlgoConnect, { EncodedTransaction } from '@randlabs/myalgo-connect';
 import algosdk from 'algosdk';
-import { Address, ChainId, CHAINS, IconSource, SendTransactionResult, Signature, Wallet } from "@xlabs/wallet-aggregator-core";
+import { Address, ChainId, CHAINS, IconSource, SendTransactionResult, Signature, Wallet } from "@xlabs-libs/wallet-aggregator-core";
 
 export type SubmittedTransactionMap = Record<string, string>
 export type AlgorandMessage = Uint8Array

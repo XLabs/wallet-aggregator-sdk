@@ -1,5 +1,5 @@
 import React, { createContext, useMemo, useState } from "react";
-import { ChainId, Wallet } from "@xlabs/wallet-aggregator-core";
+import { ChainId, Wallet } from "@xlabs-libs/wallet-aggregator-core";
 import { getChainId } from "./utils";
 
 export type AvailableWalletsMap = { [key: number]: Wallet[] }

@@ -1,5 +1,5 @@
 import { useCallback, useContext, useMemo } from "react";
-import { ChainId, Wallet } from "@xlabs/wallet-aggregator-core";
+import { ChainId, Wallet } from "@xlabs-libs/wallet-aggregator-core";
 import { getChainId } from "./utils";
 import { AvailableWalletsMap, WalletContext } from "./WalletContext";
 

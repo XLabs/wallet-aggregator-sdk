@@ -1,4 +1,4 @@
-import { ChainId, CHAINS, isEVMChain } from "@xlabs/wallet-aggregator-core";
+import { ChainId, CHAINS, isEVMChain } from "@xlabs-libs/wallet-aggregator-core";
 
 
 // utility function to coalesce evm chains into a single id
