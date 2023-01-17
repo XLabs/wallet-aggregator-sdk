@@ -1,6 +1,6 @@
 import { TransactionReceipt, TransactionRequest } from "@ethersproject/abstract-provider";
 import { hexlify, hexStripZeros } from "@ethersproject/bytes";
-import { Address, ChainId, CHAIN_ID_ETH, evmChainIdToChainId, SendTransactionResult, Signature, Wallet, WalletEvents } from "@xlabs-libs/wallet-aggregator-core";
+import { Address, ChainId, CHAIN_ID_ETH, isTestnetEvm, evmChainIdToChainId, SendTransactionResult, Signature, Wallet, WalletEvents } from "@xlabs-libs/wallet-aggregator-core";
 import { ethers, utils } from "ethers";
 import { AddEthereumChainParameterMap, DEFAULT_CHAIN_PARAMETERS } from "./parameters";
 
@@ -123,7 +123,11 @@ export abstract class EVMWallet extends Wallet<
 
   getChainId(): ChainId {
     if (!this.provider) return CHAIN_ID_ETH
-    return evmChainIdToChainId(this.getEvmChainId()!)
+
+    const evmChainId = this.getEvmChainId()!;
+    const network = isTestnetEvm(evmChainId) ? "TESTNET" : "MAINNET";
+
+    return evmChainIdToChainId(evmChainId, network)
   }
 
   getEvmChainId(): number | undefined {

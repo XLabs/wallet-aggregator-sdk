@@ -162,8 +162,16 @@ export function isEVMChain(chainId: number): boolean {
 
 export const EVM_TESTNET_CHAIN_ID_TO_NAME: { [key: number]: ChainName } = invertChainIdMap(CHAINS_EVM_TESTNET);
 
-export function evmChainIdToChainId(evmChainId: number): ChainId {
-    const chainName = CHAIN_ID_TO_NAME[evmChainId as EVMChainId] || EVM_TESTNET_CHAIN_ID_TO_NAME[evmChainId]
+export function evmChainIdToChainId(evmChainId: number, network: Network = "MAINNET"): ChainId {
+    let chainName;
+
+    if (network === "MAINNET") chainName = CHAIN_ID_TO_NAME[evmChainId as EVMChainId];
+    if (network === "TESTNET") chainName = EVM_TESTNET_CHAIN_ID_TO_NAME[evmChainId as EVMChainId];
+
     if (chainName === undefined) throw new Error(`No chain found for evm chain id ${evmChainId}`)
     return CHAINS[chainName]
+}
+
+export function isTestnetEvm(chainId: number): boolean {
+    return Object.values(EVM_CHAINS_TESTNET).includes(chainId as any);
 }
