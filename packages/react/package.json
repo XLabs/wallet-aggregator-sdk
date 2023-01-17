@@ -9,7 +9,8 @@
   "scripts": {
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "build:esm": "tsc -p tsconfig.esm.json",
-    "build": "rm -rf dist && npm run build:cjs && npm run build:esm"
+    "build": "shx rm -rf dist && npm run build:cjs && npm run build:esm",
+    "clean": "shx rm -rf dist"
   },
   "files": [
     "dist"
