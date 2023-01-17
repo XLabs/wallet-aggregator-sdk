@@ -1,7 +1,7 @@
 {
   "name": "@xlabs-libs/wallet-aggregator-react-init",
   "repository": "https://github.com/XLabs/wallet-aggregator-sdk/tree/master/packages/react-init",
-  "version": "0.0.1-alpha.1",
+  "version": "0.0.1-alpha.2",
   "license": "MIT",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -29,12 +29,12 @@
   "dependencies": {
     "@manahippo/aptos-wallet-adapter": "^1.0.8",
     "@solana/wallet-adapter-wallets": "^0.19.10",
-    "@xlabs-libs/wallet-aggregator-algorand": "^0.0.1-alpha.1",
-    "@xlabs-libs/wallet-aggregator-core": "^0.0.1-alpha.1",
-    "@xlabs-libs/wallet-aggregator-evm": "^0.0.1-alpha.1",
-    "@xlabs-libs/wallet-aggregator-react": "^0.0.1-alpha.1",
-    "@xlabs-libs/wallet-aggregator-solana": "^0.0.1-alpha.1",
-    "@xlabs-libs/wallet-aggregator-aptos": "^0.0.1-alpha.1"
+    "@xlabs-libs/wallet-aggregator-algorand": "^0.0.1-alpha.2",
+    "@xlabs-libs/wallet-aggregator-core": "^0.0.1-alpha.2",
+    "@xlabs-libs/wallet-aggregator-evm": "^0.0.1-alpha.2",
+    "@xlabs-libs/wallet-aggregator-react": "^0.0.1-alpha.2",
+    "@xlabs-libs/wallet-aggregator-solana": "^0.0.1-alpha.2",
+    "@xlabs-libs/wallet-aggregator-aptos": "^0.0.1-alpha.2"
   },
   "pnpm": {
     "overrides": {

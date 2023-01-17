@@ -1,7 +1,7 @@
 {
   "name": "@xlabs-libs/wallet-aggregator-evm",
   "repository": "https://github.com/XLabs/wallet-aggregator-sdk/tree/master/packages/wallets/evm",
-  "version": "0.0.1-alpha.1",
+  "version": "0.0.1-alpha.2",
   "license": "MIT",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -26,7 +26,7 @@
     "@metamask/detect-provider": "^2.0.0",
     "@walletconnect/web3-provider": "^1.7.8",
     "ethers": "^5.7.2",
-    "@xlabs-libs/wallet-aggregator-core": "^0.0.1-alpha.1",
+    "@xlabs-libs/wallet-aggregator-core": "^0.0.1-alpha.2",
     "web3-provider-engine": "^16.0.4"
   }
 }
