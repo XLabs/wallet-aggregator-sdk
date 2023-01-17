@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { WalletContextProvider, initWallets } from '@xlabs-libs/wallet-aggregator-react';
+import { WalletContextProvider } from '@xlabs-libs/wallet-aggregator-react';
+import { initWallets } from '@xlabs-libs/wallet-aggregator-react-init';
 
 const wallets = initWallets();
 

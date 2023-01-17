@@ -44,6 +44,7 @@ module.exports = function override(config, env) {
         https: require.resolve("https-browserify"),
         stream: require.resolve("stream-browserify"),
         os: require.resolve("os-browserify"),
+        url: require.resolve("url"),
       },
     },
     experiments: {

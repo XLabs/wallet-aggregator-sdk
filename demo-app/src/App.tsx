@@ -23,7 +23,7 @@ const ALGORAND_HOST = {
 
 
 const buildAlgorandTxs = async function(wallet: Wallet): Promise<any> {
-  const pubkey = await wallet.getPublicKey();
+  const pubkey = wallet.getAddress();
   const amount = "1";
   const decimals = 6;
 
@@ -98,7 +98,7 @@ function App() {
 
     await wallet.connect();
 
-    const pubKey = await wallet.getPublicKey();
+    const pubKey = wallet.getAddress();
     setPubKey(pubKey);
   }
 
