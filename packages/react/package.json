@@ -1,7 +1,7 @@
 {
   "name": "@xlabs-libs/wallet-aggregator-react",
   "repository": "https://github.com/XLabs/wallet-aggregator-sdk/tree/master/packages/react",
-  "version": "0.0.1-alpha.2",
+  "version": "0.0.1-alpha.3",
   "license": "MIT",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -27,7 +27,7 @@
     "shx": "^0.3.4"
   },
   "dependencies": {
-    "@xlabs-libs/wallet-aggregator-core": "^0.0.1-alpha.2"
+    "@xlabs-libs/wallet-aggregator-core": "workspace:^"
   },
   "pnpm": {
     "overrides": {
