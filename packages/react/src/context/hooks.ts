@@ -1,6 +1,5 @@
 import { useCallback, useContext, useMemo } from "react";
 import { ChainId, Wallet } from "@xlabs-libs/wallet-aggregator-core";
-import { getChainId } from "./utils";
 import { AvailableWalletsMap, WalletContext } from "./WalletContext";
 
 
@@ -12,10 +11,8 @@ export const useWallet = (): Wallet | undefined => {
 export const useWalletFromChain = (chainId: ChainId): Wallet | undefined => {
     const { wallets } = useContext(WalletContext);
 
-    const finalChainId = getChainId(chainId);
-
-    const wallet = wallets[finalChainId];
-    return useMemo(() => wallet, [ finalChainId, wallet, wallets ])
+    const wallet = wallets[chainId];
+    return useMemo(() => wallet, [ chainId, wallet, wallets ]);
 }
 
 export const useAvailableWallets = (): AvailableWalletsMap => {
@@ -34,8 +31,7 @@ export const useWalletsForChain = (chainId?: ChainId): Wallet[] => {
     let wallets: Wallet[] = []
 
     if (chainId) {
-        const finalChainId = getChainId(chainId);
-        wallets = walletsMap[finalChainId] || [];
+        wallets = walletsMap[chainId] || [];
     }
 
     return useMemo(() => wallets, [ wallets, walletsMap ])

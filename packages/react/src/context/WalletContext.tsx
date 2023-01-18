@@ -1,6 +1,5 @@
 import React, { createContext, useMemo, useState } from "react";
 import { ChainId, Wallet } from "@xlabs-libs/wallet-aggregator-core";
-import { getChainId } from "./utils";
 
 export type AvailableWalletsMap = { [key: number]: Wallet[] }
 export type WalletMap = { [key: number]: Wallet | undefined }
@@ -31,19 +30,15 @@ export const WalletContextProvider = ({ availableWallets, children }: React.Prop
   const changeWallet = (newWallet: Wallet) => {
     if (!newWallet) throw new Error('Invalid wallet');
 
-    const finalChainId = getChainId(newWallet.getChainId());
-
     setDefaultWallet(newWallet);
     setWallets({
       ...wallets,
-      [ finalChainId ]: newWallet
+      [ newWallet.getChainId() ]: newWallet
     });
   }
 
   const unsetWalletFromChain = (chainId: ChainId) => {
-    const finalChainId = getChainId(chainId);
-
-    const { [finalChainId]: removedWallet, ...otherWallets } = wallets;
+    const { [chainId]: removedWallet, ...otherWallets } = wallets;
     setWallets(otherWallets);
 
     if (defaultWallet && defaultWallet.getName() === removedWallet?.getName()) {
