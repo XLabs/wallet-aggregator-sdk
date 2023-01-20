@@ -38,7 +38,8 @@ const DEFAULT_CONFIG: AlgorandWalletConfig = {
   indexer: { url: 'https://indexer.algoexplorerapi.io' },
 }
 
-export type EncodedSignedTransaction = Uint8Array
+export type UnsignedTransaction = algosdk.Transaction | Uint8Array;
+export type EncodedSignedTransaction = Uint8Array;
 
 export class AlgorandWallet extends Wallet<
   algosdk.Transaction,
@@ -84,17 +85,19 @@ export class AlgorandWallet extends Wallet<
     return CHAINS['algorand'];
   }
 
-  async signTransaction(tx: algosdk.Transaction): Promise<EncodedSignedTransaction>;
-  async signTransaction(tx: algosdk.Transaction[]): Promise<EncodedSignedTransaction[]>;
-  async signTransaction(tx: algosdk.Transaction | algosdk.Transaction[]): Promise<EncodedSignedTransaction | EncodedSignedTransaction[]> {
+  async signTransaction(tx: UnsignedTransaction): Promise<EncodedSignedTransaction>;
+  async signTransaction(tx: UnsignedTransaction[]): Promise<EncodedSignedTransaction[]>;
+  async signTransaction(tx: UnsignedTransaction | UnsignedTransaction[]): Promise<EncodedSignedTransaction | EncodedSignedTransaction[]> {
     const toSend = Array.isArray(tx) ? tx : [ tx ]
-    const result = await this.client.signTransaction(toSend.map(t => t.toByte()))
+    const result = await this.client.signTransaction(
+      toSend.map(t => t instanceof Uint8Array ? t : t.toByte())
+    );
 
     if (Array.isArray(tx)) {
       return result.map(res => res.blob)
-    }
+    };
 
-    return result[0].blob
+    return result[0].blob;
   }
 
   getAddress(): Address | undefined {
@@ -102,13 +105,14 @@ export class AlgorandWallet extends Wallet<
   }
 
   getAddresses(): Address[] {
-    return this.accounts
+    return this.accounts;
   }
 
   setMainAddress(account: Address): void {
-    if (!this.accounts.includes(account))
+    if (!this.accounts.includes(account)) {
       throw new Error('Unknown address')
-    this.account = account
+    }
+    this.account = account;
   }
 
   async sendTransaction(signedTx: EncodedSignedTransaction): Promise<SendTransactionResult<SubmittedTransactionMap>> {
