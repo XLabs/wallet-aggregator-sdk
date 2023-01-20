@@ -128,7 +128,7 @@ export abstract class EVMWallet extends Wallet<
     const evmChainId = this.getEvmChainId()!;
     const network = isTestnetEvm(evmChainId) ? "TESTNET" : "MAINNET";
 
-    return evmChainIdToChainId(evmChainId, network)
+    return evmChainIdToChainId(evmChainId, network);
   }
 
   getEvmChainId(): number | undefined {
