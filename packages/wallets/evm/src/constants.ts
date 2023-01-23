@@ -1,4 +1,4 @@
-import { ChainId, ChainName, CHAINS, CHAIN_ID_TO_NAME, Network } from "@xlabs-libs/wallet-aggregator-core";
+import { ChainId, ChainName, CHAINS, Network } from "@xlabs-libs/wallet-aggregator-core";
 
 export const EVM_CHAINS = {
   ethereum: 1,
@@ -17,7 +17,7 @@ export const EVM_CHAINS = {
   moonbeam: 1284,
   optimism: 10,
   gnosis: 100
-} as Record<EVMChainName, number>;
+} as const;
 
 export const EVM_CHAINS_TESTNET = {
   ethereum: 5,
@@ -54,11 +54,6 @@ export type EVMChainName =
   | "gnosis";
 
 export type EVMChainId = typeof CHAINS[EVMChainName]
-
-export function isEVMChain(chainId: number): boolean {
-  return Object.values(EVM_CHAINS).includes(chainId as any) ||
-      Object.values(EVM_CHAINS_TESTNET).includes(chainId as any);
-}
 
 const invertMap = (map: Record<string, number>) =>
   Object.entries(map).reduce(
