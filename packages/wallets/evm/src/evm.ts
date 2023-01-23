@@ -21,8 +21,9 @@ enum ERROR_CODES {
 }
 
 export interface EVMWalletConfig {
-  chainParameters?: AddEthereumChainParameterMap
-  preferredChain?: EVMChainId
+  chainParameters?: AddEthereumChainParameterMap;
+  preferredChain?: EVMChainId;
+  autoswitch?: boolean;
 }
 
 export type EthereumMessage = string | ethers.utils.Bytes;
@@ -41,11 +42,13 @@ export abstract class EVMWallet extends Wallet<
   protected preferredChain?: EVMChainId;
   protected provider?: ethers.providers.Web3Provider;
   protected chainParameters: AddEthereumChainParameterMap;
+  protected autoSwitch: boolean;
 
-  constructor({ chainParameters, preferredChain }: EVMWalletConfig = {}) {
+  constructor({ chainParameters, preferredChain, autoswitch = false }: EVMWalletConfig = {}) {
     super();
     this.chainParameters = Object.assign({}, DEFAULT_CHAIN_PARAMETERS, chainParameters);
     this.preferredChain = preferredChain;
+    this.autoSwitch = autoswitch;
   }
 
   protected abstract innerConnect(): Promise<Address[]>;
@@ -92,7 +95,7 @@ export abstract class EVMWallet extends Wallet<
   }
 
   private async enforcePrefferedChain(chainId: EVMChainId): Promise<void> {
-    if (!this.preferredChain || chainId === this.preferredChain) return;
+    if (!this.preferredChain || chainId === this.preferredChain || !this.autoSwitch) return;
 
     try {
       await this.switchChain(this.preferredChain);
@@ -126,8 +129,8 @@ export abstract class EVMWallet extends Wallet<
     if (!this.provider) return CHAIN_ID_ETH
 
     const evmChainId = this.getEvmChainId()!;
-    const network = isTestnetEvm(evmChainId) ? "TESTNET" : "MAINNET";
 
+    const network = isTestnetEvm(evmChainId) ? "TESTNET" : "MAINNET";
     return evmChainIdToChainId(evmChainId, network);
   }
 
