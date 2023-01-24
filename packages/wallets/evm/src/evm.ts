@@ -67,12 +67,13 @@ export abstract class EVMWallet extends Wallet<
         const addChainParameter =
           this.chainParameters[ethChainId];
 
-        if (addChainParameter !== undefined) {
-          await this.provider.send("wallet_addEthereumChain", [
-            addChainParameter,
-          ]);
+        if (addChainParameter === undefined) {
+          throw new Error(`No metamask config found for chain ${ethChainId}`)
         }
-        throw new Error("Chain not in metamask")
+
+        return this.provider.send("wallet_addEthereumChain", [
+          addChainParameter,
+        ]);
       }
 
       throw switchError
@@ -95,7 +96,7 @@ export abstract class EVMWallet extends Wallet<
   }
 
   private async enforcePrefferedChain(chainId: EVMChainId): Promise<void> {
-    if (!this.preferredChain || chainId === this.preferredChain || !this.autoSwitch) return;
+    if (!this.preferredChain || chainId === this.preferredChain) return;
 
     try {
       await this.switchChain(this.preferredChain);
@@ -201,7 +202,9 @@ export abstract class EVMWallet extends Wallet<
   }
 
   protected async onChainChanged(chainId: number): Promise<void> {
-    this.enforcePrefferedChain(chainId)
+    if (this.autoSwitch) {
+      this.enforcePrefferedChain(chainId);
+    }
 
     this.evmChainId = chainId;
 
