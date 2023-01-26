@@ -88,6 +88,10 @@ export class InjectiveWallet extends Wallet<
     return `Injective${suffix}`
   }
 
+  getUrl(): string {
+    return 'https://injective.com/';
+  }
+
   getChainId(): ChainId {
     return CHAIN_ID_INJECTIVE;
   }

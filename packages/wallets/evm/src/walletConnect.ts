@@ -18,6 +18,10 @@ export class EVMWalletConnectWallet extends EVMWallet {
         return 'Eth Wallet Connect';
     }
 
+    getUrl(): string {
+        return 'https://walletconnect.com';
+    }
+
     async innerConnect(): Promise<string[]> {
         this.walletConnectProvider = new WalletConnectProvider({
             rpc: this.rpcMap,

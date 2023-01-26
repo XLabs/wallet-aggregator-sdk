@@ -66,6 +66,10 @@ export class AlgorandWallet extends Wallet<
     return 'My Algo Wallet';
   }
 
+  getUrl(): string {
+    return 'https://wallet.myalgo.com';
+  }
+
   async connect(): Promise<Address[]> {
     const accounts = await this.client.connect();
     this.accounts = accounts.map(a => a.address);

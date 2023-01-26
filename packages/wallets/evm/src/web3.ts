@@ -16,6 +16,10 @@ export interface MetaMaskEthereumProvider {
 export class EVMWeb3Wallet extends EVMWallet {
   private metamaskProvider?: MetaMaskEthereumProvider;
 
+  getUrl(): string {
+    return 'https://metamask.io';
+  }
+
   getName(): string {
     return 'Metamask';
   }

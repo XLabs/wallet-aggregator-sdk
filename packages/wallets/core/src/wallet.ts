@@ -38,6 +38,7 @@ export abstract class Wallet<
   E extends WalletEvents = any
 > extends EventEmitter<E> {
   abstract getName(): string;
+  abstract getUrl(): string;
   abstract connect(): Promise<Address[]>;
   abstract disconnect(): Promise<void>;
   abstract getChainId(): ChainId;

@@ -3,10 +3,10 @@ import { Connection, Transaction, TransactionSignature } from "@solana/web3.js";
 import { ChainId, CHAINS, SendTransactionResult, Signature, Wallet, WalletState } from "@xlabs-libs/wallet-aggregator-core";
 
 export interface SolanaAdapter extends WalletAdapter {
-  signTransaction<T extends Transaction>(
+  signTransaction?<T extends Transaction>(
     transaction: T
   ): Promise<T>;
-  signAllTransactions<T extends Transaction>(
+  signAllTransactions?<T extends Transaction>(
       transactions: T[]
   ): Promise<T[]>;
   signMessage?(message: Uint8Array): Promise<Uint8Array>;
@@ -36,6 +36,10 @@ export class SolanaWallet extends Wallet<
 
   getName(): string {
     return this.adapter.name;
+  }
+
+  getUrl(): string {
+    return this.adapter.url;
   }
 
   async connect(): Promise<string[]> {
@@ -99,11 +103,15 @@ export class SolanaWallet extends Wallet<
     throw new Error("Not supported")
   }
 
+  signTransaction(tx: Transaction): Promise<Transaction>;
+  signTransaction(tx: Transaction[]): Promise<Transaction[]>;
   signTransaction(tx: SolanaUnsignedTransaction): Promise<SolanaSignedTransaction> {
     if (!this.adapter.signTransaction || !this.adapter.signAllTransactions) throw new Error('Not supported');
     return Array.isArray(tx) ? this.adapter.signAllTransactions(tx) : this.adapter.signTransaction(tx)
   }
 
+  sendTransaction(tx: Transaction): Promise<SendTransactionResult<TransactionSignature>>;
+  sendTransaction(tx: Transaction[]): Promise<SendTransactionResult<TransactionSignature[]>>;
   async sendTransaction(toSign: SolanaSignedTransaction): Promise<SendTransactionResult<SolanaSubmitTransactionResult>> {
     const txs = Array.isArray(toSign) ? toSign : [ toSign ]
 
@@ -119,7 +127,7 @@ export class SolanaWallet extends Wallet<
 
     return {
       id: ids[0],
-      data: ids
+      data: ids.length === 1 ? ids[0] : ids
     }
   }
 

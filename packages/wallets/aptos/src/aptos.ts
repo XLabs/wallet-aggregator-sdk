@@ -29,6 +29,10 @@ export class AptosWallet extends Wallet<
     return this.adapter.name;
   }
 
+  getUrl(): string {
+    return this.adapter.url;
+  }
+
   async connect(): Promise<string[]> {
     await this.adapter.connect();
     return this.getAddresses()
