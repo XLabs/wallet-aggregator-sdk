@@ -23,7 +23,7 @@ enum ERROR_CODES {
 export interface EVMWalletConfig {
   chainParameters?: AddEthereumChainParameterMap;
   preferredChain?: EVMChainId;
-  autoswitch?: boolean;
+  autoSwitch?: boolean;
 }
 
 export type EthereumMessage = string | ethers.utils.Bytes;
@@ -44,11 +44,11 @@ export abstract class EVMWallet extends Wallet<
   protected chainParameters: AddEthereumChainParameterMap;
   protected autoSwitch: boolean;
 
-  constructor({ chainParameters, preferredChain, autoswitch = false }: EVMWalletConfig = {}) {
+  constructor({ chainParameters, preferredChain, autoSwitch = false }: EVMWalletConfig = {}) {
     super();
     this.chainParameters = Object.assign({}, DEFAULT_CHAIN_PARAMETERS, chainParameters);
     this.preferredChain = preferredChain;
-    this.autoSwitch = autoswitch;
+    this.autoSwitch = autoSwitch;
   }
 
   protected abstract innerConnect(): Promise<Address[]>;
