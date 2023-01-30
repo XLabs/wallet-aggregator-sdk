@@ -9,6 +9,9 @@
   },
   "type": "module",
   "sideEffects": false,
+  "devDependencies": {
+    "typescript": "^4.4.2"
+  },
   "scripts": {
     "build": "tsc --build --verbose tsconfig.all.json",
     "clean": "pnpm -r run clean"

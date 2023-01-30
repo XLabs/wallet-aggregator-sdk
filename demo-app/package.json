@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@certusone/wormhole-sdk": "file:.yalc/@certusone/wormhole-sdk",
     "@material-ui/core": "^4.12.2",
     "@types/react-dom": "^17.0.0",
     "@xlabs-libs/wallet-aggregator-aptos": "workspace:^",
@@ -33,8 +32,8 @@
     "@types/react": "^17.0.0",
     "assert": "^2.0.0",
     "os-browserify": "^0.3.0",
-    "url": "^0.11.0",
-    "shx": "^0.3.4"
+    "shx": "^0.3.4",
+    "url": "^0.11.0"
   },
   "scripts": {
     "start": "HTTPS=true react-app-rewired start",
