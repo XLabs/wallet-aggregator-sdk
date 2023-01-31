@@ -36,9 +36,10 @@ export class PeraWallet extends AlgorandWallet {
   }
 
   async innerConnect(): Promise<Address[]> {
-    const accounts = this.client.isConnected
-      ? await this.client.reconnectSession()
-      : await this.client.connect();
+    const accounts =
+      await this.client.reconnectSession()
+        .then(async (accounts: string[]) => accounts.length > 0 ? accounts : this.client.connect())
+        .catch(() => this.client.connect());
     this.client.connector?.on('disconnect', () => this.disconnect());
     return accounts;
   }
