@@ -1,7 +1,7 @@
 {
   "name": "@xlabs-libs/wallet-aggregator-algorand",
   "repository": "https://github.com/XLabs/wallet-aggregator-sdk/tree/master/packages/wallets/algorand",
-  "version": "0.0.1-alpha.5",
+  "version": "0.0.1-alpha.6",
   "license": "MIT",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -13,7 +13,8 @@
     "clean": "shx rm -rf dist"
   },
   "files": [
-    "dist"
+    "dist/",
+    "src/"
   ],
   "devDependencies": {
     "@types/node": "^18.11.9",
@@ -21,6 +22,7 @@
     "typescript": "^4.4.2"
   },
   "dependencies": {
+    "@perawallet/connect": "^1.1.0",
     "@randlabs/myalgo-connect": "^1.4.0",
     "@xlabs-libs/wallet-aggregator-core": "workspace:^",
     "algosdk": "^1.24.0"

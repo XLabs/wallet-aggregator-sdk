@@ -1,8 +1,6 @@
 import {
   AptosSnapAdapter,
-  AptosWalletAdapter, BaseWalletAdapter, BitkeepWalletAdapter,
-  BloctoWalletAdapter,
-  FewchaWalletAdapter,
+  AptosWalletAdapter, BaseWalletAdapter, BitkeepWalletAdapter, FewchaWalletAdapter,
   FletchWalletAdapter,
   MartianWalletAdapter,
   NightlyWalletAdapter as AptosNightlyWalletAdapter,
@@ -19,7 +17,7 @@ import {
   TorusWalletAdapter
 } from "@solana/wallet-adapter-wallets";
 import { clusterApiUrl, Connection } from "@solana/web3.js";
-import { AlgorandWallet, AlgorandWalletConfig } from "@xlabs-libs/wallet-aggregator-algorand";
+import { AlgorandWalletConfig, MyAlgoWallet } from "@xlabs-libs/wallet-aggregator-algorand";
 import { AptosWallet } from "@xlabs-libs/wallet-aggregator-aptos";
 import { CHAINS } from "@xlabs-libs/wallet-aggregator-core";
 import { EVMWalletConnectWallet, EVMWeb3Wallet } from "@xlabs-libs/wallet-aggregator-evm";
@@ -70,7 +68,7 @@ export const initWallets = (config?: InitWalletsConfig): AvailableWalletsMap => 
   ];
 
   return {
-      [CHAINS['algorand']]: [new AlgorandWallet(config?.algorand)],
+      [CHAINS['algorand']]: [new MyAlgoWallet(config?.algorand)],
       [CHAINS['ethereum']]: [
           new EVMWeb3Wallet(config?.evm?.chainParameters),
           new EVMWalletConnectWallet(config?.evm?.chainParameters)

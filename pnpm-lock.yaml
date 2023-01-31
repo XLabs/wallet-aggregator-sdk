@@ -141,6 +141,7 @@ importers:
 
   packages/wallets/algorand:
     specifiers:
+      '@perawallet/connect': ^1.1.0
       '@randlabs/myalgo-connect': ^1.4.0
       '@types/node': ^18.11.9
       '@xlabs-libs/wallet-aggregator-core': workspace:^
@@ -148,6 +149,7 @@ importers:
       shx: ^0.3.4
       typescript: ^4.4.2
     dependencies:
+      '@perawallet/connect': 1.1.0_algosdk@1.24.0
       '@randlabs/myalgo-connect': 1.4.2
       '@xlabs-libs/wallet-aggregator-core': link:../core
       algosdk: 1.24.0
@@ -2550,6 +2552,10 @@ packages:
       '@ethersproject/strings': 5.7.0
     dev: false
 
+  /@evanhahn/lottie-web-light/5.8.1:
+    resolution: {integrity: sha512-U0G1tt3/UEYnyCNNslWPi1dB7X1xQ9aoSip+B3GTKO/Bns8yz/p39vBkRSN9d25nkbHuCsbjky2coQftj5YVKw==}
+    dev: false
+
   /@fewcha/web3/0.1.32:
     resolution: {integrity: sha512-5QrBit4XlDpg4b8UMmDHNxDL/or+1/mk688IbZZ6JSEnvFs15/FW60TTPBTzt9sQKLC+0fq7uMCi3JH/EoMZYg==}
     dependencies:
@@ -3802,6 +3808,23 @@ packages:
 
   /@pedrouid/environment/1.0.1:
     resolution: {integrity: sha512-HaW78NszGzRZd9SeoI3JD11JqY+lubnaOx7Pewj5pfjqWXOEATpeKIFb9Z4t2WBUK2iryiXX3lzWwmYWgUL0Ug==}
+    dev: false
+
+  /@perawallet/connect/1.1.0_algosdk@1.24.0:
+    resolution: {integrity: sha512-bbXY0GE9MeOz4bf8Hp5P2hc0fIAQdKAEaBXKYl1RfFbAbYwUfTM6AbBRzBvsudZ7Dgz66rVNyQVrZFyRhF4Jxw==}
+    peerDependencies:
+      algosdk: ^1.23.2
+    dependencies:
+      '@evanhahn/lottie-web-light': 5.8.1
+      '@walletconnect/client': 1.8.0
+      '@walletconnect/types': 1.8.0
+      algosdk: 1.24.0
+      bowser: 2.11.0
+      buffer: 6.0.3
+      qr-code-styling: 1.6.0-rc.1
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
     dev: false
 
   /@pmmmwh/react-refresh-webpack-plugin/0.5.10_unmakpayn7vcxadrrsbqlrpehy:
@@ -14313,8 +14336,18 @@ packages:
     engines: {node: '>=0.6.0', teleport: '>=0.2.0'}
     dev: false
 
+  /qr-code-styling/1.6.0-rc.1:
+    resolution: {integrity: sha512-ModRIiW6oUnsP18QzrRYZSc/CFKFKIdj7pUs57AEVH20ajlglRpN3HukjHk0UbNMTlKGuaYl7Gt6/O5Gg2NU2Q==}
+    dependencies:
+      qrcode-generator: 1.4.4
+    dev: false
+
   /qr.js/0.0.0:
     resolution: {integrity: sha512-c4iYnWb+k2E+vYpRimHqSu575b1/wKl4XFeJGpFmrJQz5I88v9aY2czh7s0w36srfCM1sXgC/xpoJz5dJfq+OQ==}
+    dev: false
+
+  /qrcode-generator/1.4.4:
+    resolution: {integrity: sha512-HM7yY8O2ilqhmULxGMpcHSF1EhJJ9yBj8gvDEuZ6M+KGJ0YY2hKpnXvRD+hZPLrDVck3ExIGhmPtSdcjC+guuw==}
     dev: false
 
   /qrcode.react/1.0.1_react@16.13.1:
