@@ -1,7 +1,8 @@
-import React, { createContext, useMemo, useState } from "react";
+import React, { createContext, useCallback, useEffect, useMemo, useState } from "react";
 import { ChainId, Wallet } from "@xlabs-libs/wallet-aggregator-core";
 
-export type AvailableWalletsMap = { [key: number]: Wallet[] }
+export type AvailableWalletsMap = Partial<Record<ChainId, Wallet[]>>;
+export type AvailableWalletsMapBuilderFn = () => Promise<AvailableWalletsMap>;
 export type WalletMap = { [key: number]: Wallet | undefined }
 
 interface IWalletContext {
@@ -20,14 +21,26 @@ export const WalletContext = createContext<IWalletContext>({
 });
 
 interface IWalletContextProviderProps {
-  availableWallets: AvailableWalletsMap;
+  wallets: AvailableWalletsMap | AvailableWalletsMapBuilderFn;
 }
 
-export const WalletContextProvider = ({ availableWallets, children }: React.PropsWithChildren<IWalletContextProviderProps>) => {
+export const WalletContextProvider = ({ wallets: configureWallets, children }: React.PropsWithChildren<IWalletContextProviderProps>) => {
   const [ wallets, setWallets ] = useState<WalletMap>({});
+  const [ availableWallets, setAvailableWallets ] = useState<AvailableWalletsMap>({});
   const [ defaultWallet, setDefaultWallet ] = useState<Wallet | undefined>();
 
-  const changeWallet = (newWallet: Wallet) => {
+  useEffect(() => {
+    const initWallets = async () => {
+      const available = typeof configureWallets === 'function'
+        ? await configureWallets()
+        : configureWallets;
+
+      setAvailableWallets(available);
+    }
+    initWallets();
+  }, [ configureWallets ])
+
+  const changeWallet = useCallback((newWallet: Wallet) => {
     if (!newWallet) throw new Error('Invalid wallet');
 
     setDefaultWallet(newWallet);
@@ -35,9 +48,9 @@ export const WalletContextProvider = ({ availableWallets, children }: React.Prop
       ...wallets,
       [ newWallet.getChainId() ]: newWallet
     });
-  }
+  }, [ wallets ]);
 
-  const unsetWalletFromChain = (chainId: ChainId) => {
+  const unsetWalletFromChain = useCallback((chainId: ChainId) => {
     const { [chainId]: removedWallet, ...otherWallets } = wallets;
     setWallets(otherWallets);
 
@@ -45,7 +58,7 @@ export const WalletContextProvider = ({ availableWallets, children }: React.Prop
       const potentialDefaults = Object.values(otherWallets);
       setDefaultWallet(potentialDefaults.length ? potentialDefaults[0] : undefined);
     }
-  }
+  }, [ wallets, defaultWallet ]);
 
   const value = useMemo(() => ({
     wallets,
