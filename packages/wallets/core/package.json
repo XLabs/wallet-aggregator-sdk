@@ -1,16 +1,11 @@
 {
   "name": "@xlabs-libs/wallet-aggregator-core",
   "repository": "https://github.com/XLabs/wallet-aggregator-sdk/tree/master/packages/wallets/core",
-  "version": "0.0.1-alpha.4",
+  "version": "0.0.1-alpha.5",
   "license": "MIT",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/types/index.d.ts",
-  "exports": {
-    "require": "./dist/cjs/index.js",
-    "import": "./dist/esm/index.js",
-    "types": "./dist/types/index.d.ts"
-  },
   "scripts": {
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "build:esm": "tsc -p tsconfig.esm.json",
@@ -18,7 +13,8 @@
     "clean": "shx rm -rf dist"
   },
   "files": [
-    "dist"
+    "dist/",
+    "src/"
   ],
   "devDependencies": {
     "@types/node": "^18.11.9",

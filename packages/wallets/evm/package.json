@@ -1,7 +1,7 @@
 {
   "name": "@xlabs-libs/wallet-aggregator-evm",
   "repository": "https://github.com/XLabs/wallet-aggregator-sdk/tree/master/packages/wallets/evm",
-  "version": "0.0.1-alpha.7",
+  "version": "0.0.1-alpha.8",
   "license": "MIT",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -13,7 +13,8 @@
     "clean": "shx rm -rf dist"
   },
   "files": [
-    "dist"
+    "dist/",
+    "src/"
   ],
   "devDependencies": {
     "@types/node": "^18.11.9",

@@ -7,6 +7,7 @@
     { "path": "./packages/wallets/solana/tsconfig.json" },
     { "path": "./packages/wallets/aptos/tsconfig.json" },
     { "path": "./packages/wallets/injective/tsconfig.json" },
+    { "path": "./packages/wallets/near/tsconfig.json" },
     { "path": "./packages/react/tsconfig.json" },
     { "path": "./packages/react-init/tsconfig.json" },
   ]
