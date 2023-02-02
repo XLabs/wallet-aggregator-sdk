@@ -1,13 +1,15 @@
-import { Account, Action, FinalExecutionOutcome, Network, NetworkId, setupWalletSelector, Wallet as InternalWallet, WalletMetadata, WalletSelector } from "@near-wallet-selector/core";
+import { Account, Action, FinalExecutionOutcome, NetworkId, setupWalletSelector, Wallet as InternalWallet, WalletMetadata, WalletSelector } from "@near-wallet-selector/core";
 import { setupModal } from "@near-wallet-selector/modal-ui";
 import { Address, ChainId, CHAIN_ID_NEAR, SendTransactionResult, Wallet } from "@xlabs-libs/wallet-aggregator-core";
+import { connect, ConnectConfig as NearConfig, Account as ConnectedAccount } from "near-api-js";
+import { BN } from "bn.js";
 
-type NearNetwork = NetworkId | Network;
 
 export interface NearWalletParams {
-    network: NearNetwork;
+    config: NearConfig;
     modules: any[];
     contractId: string;
+    allowRedirect?: boolean;
 }
 
 interface NearTransaction {
@@ -27,19 +29,21 @@ export class NearWallet extends Wallet<
     NearTransactionParams,
     NearTransactionResult
 > {
-    private readonly network: NearNetwork;
+    private readonly config: NearConfig;
     private readonly modules: any[];
     private readonly contractId: string;
     private accounts: Account[] = [];
     private activeAccount?: Account;
     private selector?: WalletSelector;
     private metadata?: WalletMetadata;
+    private allowRedirect: boolean;
 
-    constructor({ network, modules, contractId }: NearWalletParams) {
+    constructor({ config, modules, contractId, allowRedirect }: NearWalletParams) {
         super();
-        this.network = network;
+        this.config = config;
         this.modules = modules;
         this.contractId = contractId;
+        this.allowRedirect = allowRedirect ?? true;
     }
 
     getAddress(): string | undefined {
@@ -91,17 +95,48 @@ export class NearWallet extends Wallet<
 
     async sendTransaction(txs: NearTransactionParams): Promise<SendTransactionResult<NearTransactionResult>> {
         const wallet = await this.getWallet();
-        if (!wallet) throw new Error('Not connected');
+        if (!wallet || !this.activeAccount) throw new Error('Not connected');
         
+        let result: FinalExecutionOutcome[];
         if (wallet.type === 'browser') {
-            // TODO: find a way to solve this
-            throw new Error('SendTransaction not supported by browser wallets');
-        } else {
-            const result = await wallet.signAndSendTransactions(txs);
-            return {
-                id: result[result.length - 1].transaction_outcome.id,
-                data: result
+            const connection = await connect(this.config);
+            const account = await connection.account(this.activeAccount.accountId)
+            result = [];
+            for (const tx of txs.transactions) {
+                // browser wallets may redirect to another page, which might not be desirable for developers
+                if (this.allowRedirect) {
+                    for (const tx of txs.transactions) {
+                        const outcome = await wallet.signAndSendTransaction(tx);
+                        result.push(outcome as FinalExecutionOutcome);
+                    }
+                } else {
+                    for (const action of tx.actions) {
+                        result.push(await this.executeAction(account, action));
+                    }
+                }
             }
+        } else {
+            result = await wallet.signAndSendTransactions(txs);
+        }
+
+        return {
+            id: result[result.length - 1].transaction_outcome.id,
+            data: result
+        }
+    }
+
+    private async executeAction(account: ConnectedAccount, action: Action): Promise<FinalExecutionOutcome> {
+        switch (action.type) {
+            case "FunctionCall":
+                return account.functionCall({
+                    args: action.params.args,
+                    methodName: action.params.methodName,
+                    gas: new BN(action.params.gas || 0),
+                    attachedDeposit: new BN(action.params.deposit || 0),
+                    contractId: this.contractId
+                });
+            default:
+                throw new Error('WIP: only FunctionCall is supported for browser wallets');
         }
     }
 
@@ -115,7 +150,7 @@ export class NearWallet extends Wallet<
      */
     async connect(): Promise<Address[]> {
         this.selector = await setupWalletSelector({
-            network: this.network,
+            network: this.config.networkId as NetworkId,
             modules: this.modules
         });
 
