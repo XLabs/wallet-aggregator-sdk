@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useEffect, useMemo, useState } from "react";
-import { ChainId, Wallet } from "@xlabs-libs/wallet-aggregator-core";
+import { ChainId, CHAIN_ID_ETH, isEVMChain, Wallet } from "@xlabs-libs/wallet-aggregator-core";
 
 export type AvailableWalletsMap = Partial<Record<ChainId, Wallet[]>>;
 export type AvailableWalletsMapBuilderFn = () => Promise<AvailableWalletsMap>;
@@ -9,6 +9,7 @@ interface IWalletContext {
   wallets: WalletMap;
   defaultWallet?: Wallet | undefined;
   availableWallets: AvailableWalletsMap;
+  coalesceEvmChains: boolean;
   changeWallet: (newWallet: Wallet) => void;
   unsetWalletFromChain: (chainId: ChainId) => void;
 }
@@ -17,14 +18,20 @@ export const WalletContext = createContext<IWalletContext>({
   changeWallet: () => {},
   unsetWalletFromChain: () => {},
   availableWallets: {},
-  wallets: {}
+  wallets: {},
+  coalesceEvmChains: true
 });
 
 interface IWalletContextProviderProps {
   wallets: AvailableWalletsMap | AvailableWalletsMapBuilderFn;
+  coalesceEvmChains?: boolean;
 }
 
-export const WalletContextProvider = ({ wallets: configureWallets, children }: React.PropsWithChildren<IWalletContextProviderProps>) => {
+function coalesceEvmChainId(id: ChainId) {
+  return isEVMChain(id) ? CHAIN_ID_ETH : id;
+}
+
+export const WalletContextProvider = ({ wallets: configureWallets, children, coalesceEvmChains = true }: React.PropsWithChildren<IWalletContextProviderProps>) => {
   const [ wallets, setWallets ] = useState<WalletMap>({});
   const [ availableWallets, setAvailableWallets ] = useState<AvailableWalletsMap>({});
   const [ defaultWallet, setDefaultWallet ] = useState<Wallet | undefined>();
@@ -43,14 +50,23 @@ export const WalletContextProvider = ({ wallets: configureWallets, children }: R
   const changeWallet = useCallback((newWallet: Wallet) => {
     if (!newWallet) throw new Error('Invalid wallet');
 
+    let chainId = newWallet.getChainId();
+    if (coalesceEvmChains && isEVMChain(chainId)) {
+      chainId = CHAIN_ID_ETH;
+    }
+
     setDefaultWallet(newWallet);
     setWallets({
       ...wallets,
-      [ newWallet.getChainId() ]: newWallet
+      [ chainId ]: newWallet
     });
   }, [ wallets ]);
 
   const unsetWalletFromChain = useCallback((chainId: ChainId) => {
+    if (coalesceEvmChains && isEVMChain(chainId)) {
+      chainId = CHAIN_ID_ETH;
+    }
+
     const { [chainId]: removedWallet, ...otherWallets } = wallets;
     setWallets(otherWallets);
 
@@ -65,7 +81,8 @@ export const WalletContextProvider = ({ wallets: configureWallets, children }: R
     defaultWallet,
     availableWallets,
     changeWallet,
-    unsetWalletFromChain
+    unsetWalletFromChain,
+    coalesceEvmChains
   }), [ wallets, defaultWallet, availableWallets, unsetWalletFromChain ])
 
   return (

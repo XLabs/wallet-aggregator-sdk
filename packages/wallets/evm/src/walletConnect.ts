@@ -6,6 +6,7 @@ import { buildRpcMap, EvmRpcMap, EVM_RPC_MAP as DEFAULT_EVM_RPC_MAP } from "./pa
 const CacheSubprovider = require("web3-provider-engine/subproviders/cache");
 
 export class EVMWalletConnectWallet extends EVMWallet {
+    private readonly STORAGE_KEY: string = 'wallet-aggregator-sdk-wallet-connect';
     private walletConnectProvider?: WalletConnectProvider;
     private rpcMap: EvmRpcMap;
 
@@ -25,7 +26,8 @@ export class EVMWalletConnectWallet extends EVMWallet {
     async innerConnect(): Promise<string[]> {
         this.walletConnectProvider = new WalletConnectProvider({
             rpc: this.rpcMap,
-            chainId: this.preferredChain
+            chainId: this.preferredChain,
+            storageId: this.STORAGE_KEY
         });
 
         await this.walletConnectProvider.enable();

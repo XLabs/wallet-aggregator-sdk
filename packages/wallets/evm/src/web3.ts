@@ -13,7 +13,9 @@ export interface MetaMaskEthereumProvider {
   removeAllListeners(event?: string | symbol): this;
 }
 
-export class EVMWeb3Wallet extends EVMWallet {
+type DetectedProvider = MetaMaskEthereumProvider & { providers?: any[] };
+
+export abstract class EVMWeb3Wallet extends EVMWallet {
   private metamaskProvider?: MetaMaskEthereumProvider;
 
   getUrl(): string {
@@ -25,9 +27,19 @@ export class EVMWeb3Wallet extends EVMWallet {
   }
 
   async innerConnect(): Promise<string[]> {
-    this.metamaskProvider = await detectEthereumProvider() || undefined;
+    let detectedProvider = await detectEthereumProvider<DetectedProvider>({
+      mustBeMetaMask: true
+    }) || undefined;
 
-    if (!this.metamaskProvider) throw new Error('Failed to detect provider')
+    if (!detectedProvider) throw new Error('Failed to detect provider')
+
+    // other extensions (e.g. coinbase) might wrap the existing metamask provider
+    if (detectedProvider.providers && Array.isArray(detectedProvider.providers)) {
+      detectedProvider = detectedProvider.providers.find(p => p.isMetaMask);
+      if (!detectedProvider) throw new Error('Detected provider is not metamask');
+    }
+
+    this.metamaskProvider = detectedProvider as MetaMaskEthereumProvider;
 
     this.provider = new ethers.providers.Web3Provider(
       this.metamaskProvider,

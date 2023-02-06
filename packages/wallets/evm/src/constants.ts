@@ -1,4 +1,4 @@
-import { ChainId, ChainName, CHAINS, CHAIN_ID_ACALA, CHAIN_ID_ARBITRUM, CHAIN_ID_AURORA, CHAIN_ID_AVAX, CHAIN_ID_BSC, CHAIN_ID_CELO, CHAIN_ID_ETH, CHAIN_ID_FANTOM, CHAIN_ID_GNOSIS, CHAIN_ID_KARURA, CHAIN_ID_KLAYTN, CHAIN_ID_MOONBEAM, CHAIN_ID_NEON, CHAIN_ID_OASIS, CHAIN_ID_OPTIMISM, CHAIN_ID_POLYGON, Network } from "@xlabs-libs/wallet-aggregator-core";
+import { ChainId, ChainName, CHAINS, Network } from "@xlabs-libs/wallet-aggregator-core";
 
 export const EVM_CHAINS = {
   ethereum: 1,
@@ -79,25 +79,4 @@ export function evmChainIdToChainId(evmChainId: number, network: Network = "MAIN
 
 export function isTestnetEvm(chainId: number): boolean {
   return Object.values(EVM_CHAINS_TESTNET).includes(chainId as any);
-}
-
-export function isEVMChain(chainId: ChainId): boolean {
-  return (
-    chainId === CHAIN_ID_ETH ||
-    chainId === CHAIN_ID_BSC ||
-    chainId === CHAIN_ID_AVAX ||
-    chainId === CHAIN_ID_POLYGON ||
-    chainId === CHAIN_ID_OASIS ||
-    chainId === CHAIN_ID_AURORA ||
-    chainId === CHAIN_ID_FANTOM ||
-    chainId === CHAIN_ID_KARURA ||
-    chainId === CHAIN_ID_ACALA ||
-    chainId === CHAIN_ID_KLAYTN ||
-    chainId === CHAIN_ID_CELO ||
-    chainId === CHAIN_ID_MOONBEAM ||
-    chainId === CHAIN_ID_NEON ||
-    chainId === CHAIN_ID_ARBITRUM ||
-    chainId === CHAIN_ID_OPTIMISM ||
-    chainId === CHAIN_ID_GNOSIS
-  );
 }

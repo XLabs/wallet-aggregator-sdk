@@ -1,5 +1,5 @@
 import { useCallback, useContext, useMemo } from "react";
-import { ChainId, Wallet } from "@xlabs-libs/wallet-aggregator-core";
+import { ChainId, CHAIN_ID_ETH, isEVMChain, Wallet } from "@xlabs-libs/wallet-aggregator-core";
 import { AvailableWalletsMap, WalletContext } from "./WalletContext";
 
 
@@ -9,7 +9,11 @@ export const useWallet = (): Wallet | undefined => {
 }
 
 export const useWalletFromChain = (chainId: ChainId): Wallet | undefined => {
-    const { wallets } = useContext(WalletContext);
+    const { wallets, coalesceEvmChains } = useContext(WalletContext);
+
+    if (coalesceEvmChains && isEVMChain(chainId)) {
+        chainId = CHAIN_ID_ETH;
+    }
 
     const wallet = wallets[chainId];
     return useMemo(() => wallet, [ chainId, wallet, wallets ]);

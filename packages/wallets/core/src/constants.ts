@@ -80,3 +80,24 @@ export const CHAIN_ID_BTC = CHAINS["btc"];
 export const CHAIN_ID_WORMCHAIN = CHAINS["wormchain"];
 
 export type Network = "MAINNET" | "TESTNET" | "DEVNET";
+
+export function isEVMChain(chainId: ChainId): boolean {
+    return (
+        chainId === CHAIN_ID_ETH ||
+        chainId === CHAIN_ID_BSC ||
+        chainId === CHAIN_ID_AVAX ||
+        chainId === CHAIN_ID_POLYGON ||
+        chainId === CHAIN_ID_OASIS ||
+        chainId === CHAIN_ID_AURORA ||
+        chainId === CHAIN_ID_FANTOM ||
+        chainId === CHAIN_ID_KARURA ||
+        chainId === CHAIN_ID_ACALA ||
+        chainId === CHAIN_ID_KLAYTN ||
+        chainId === CHAIN_ID_CELO ||
+        chainId === CHAIN_ID_MOONBEAM ||
+        chainId === CHAIN_ID_NEON ||
+        chainId === CHAIN_ID_ARBITRUM ||
+        chainId === CHAIN_ID_OPTIMISM ||
+        chainId === CHAIN_ID_GNOSIS
+    );
+}

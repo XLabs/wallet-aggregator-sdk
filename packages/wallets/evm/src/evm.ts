@@ -1,9 +1,8 @@
 import { TransactionReceipt, TransactionRequest } from "@ethersproject/abstract-provider";
-import { hexlify, hexStripZeros } from "@ethersproject/bytes";
 import { Address, ChainId, CHAIN_ID_ETH, SendTransactionResult, Signature, Wallet, WalletEvents } from "@xlabs-libs/wallet-aggregator-core";
 import { ethers, utils } from "ethers";
 import { AddEthereumChainParameterMap, DEFAULT_CHAIN_PARAMETERS } from "./parameters";
-import { isTestnetEvm, evmChainIdToChainId } from "./constants";
+import { isTestnetEvm, evmChainIdToChainId, EVM_CHAINS } from "./constants";
 
 type EVMChainId = number
 
@@ -59,8 +58,10 @@ export abstract class EVMWallet extends Wallet<
 
     try {
       await this.provider.send("wallet_switchEthereumChain", [
-        { chainId: hexStripZeros(hexlify(ethChainId)) },
+        { chainId: utils.hexStripZeros(utils.hexlify(ethChainId)) },
       ]);
+
+      this.evmChainId = ethChainId;
     } catch (switchError: any) {
       // This error code indicates that the chain has not been added to MetaMask.
       if (switchError.code === ERROR_CODES.CHAIN_NOT_ADDED) {
@@ -88,7 +89,7 @@ export abstract class EVMWallet extends Wallet<
     const chainId = (await this.provider!.getNetwork()).chainId;
     await this.enforcePrefferedChain(chainId);
 
-    this.evmChainId = (await this.provider!.getNetwork()).chainId;
+    this.evmChainId = this.parseEvmChainId((await this.provider!.getNetwork()).chainId);
 
     this.emit('connect');
 
@@ -206,7 +207,7 @@ export abstract class EVMWallet extends Wallet<
       this.enforcePrefferedChain(chainId);
     }
 
-    this.evmChainId = chainId;
+    this.evmChainId = this.parseEvmChainId(chainId);
 
     this.emit('chainChanged', this.evmChainId);
   }
@@ -217,5 +218,11 @@ export abstract class EVMWallet extends Wallet<
 
     this.address = await this.provider!.getSigner().getAddress();
     this.emit('accountsChanged', this.address);
+  }
+
+  protected parseEvmChainId(id: string | number): number {
+    return utils.isHexString(id)
+      ? parseInt(id.toString().substring(2), 16)
+      : id as number;
   }
 }
