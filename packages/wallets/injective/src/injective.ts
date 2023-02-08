@@ -71,6 +71,10 @@ export class InjectiveWallet extends Wallet<
     return this.addresses;
   }
 
+  isConnected(): boolean {
+    return !!this.strategy;
+  }
+
   async disconnect(): Promise<void> {
     await this.strategy?.disconnectWallet();
     this.addresses = [];

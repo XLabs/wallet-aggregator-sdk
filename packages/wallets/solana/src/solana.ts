@@ -62,6 +62,10 @@ export class SolanaWallet extends Wallet<
     });
   }
 
+  isConnected(): boolean {
+    return this.adapter.connected;
+  }
+
   async disconnect(): Promise<void> {
     await new Promise((resolve, reject) => {
       this.adapter.on('disconnect', () => {

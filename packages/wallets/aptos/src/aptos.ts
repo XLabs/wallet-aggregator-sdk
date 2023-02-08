@@ -38,6 +38,10 @@ export class AptosWallet extends Wallet<
     return this.getAddresses()
   }
 
+  isConnected(): boolean {
+    return this.adapter.connected;
+  }
+
   disconnect(): Promise<void> {
     return this.adapter.disconnect();
   }

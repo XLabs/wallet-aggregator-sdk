@@ -72,7 +72,12 @@ export abstract class AlgorandWallet extends Wallet<
   async disconnect(): Promise<void> {
     await this.innerDisconnect();
     this.accounts = [];
+    this.account = undefined;
     this.emit('disconnect');
+  }
+
+  isConnected(): boolean {
+    return !!this.account;
   }
 
   getChainId(): ChainId {

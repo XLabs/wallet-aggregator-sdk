@@ -190,6 +190,10 @@ export class NearWallet extends Wallet<
         });
     }
 
+    isConnected(): boolean {
+        return !!this.selector?.isSignedIn();
+    }
+
     async disconnect(): Promise<void> {
         const wallet = await this.getWallet();
         if (!wallet) {

@@ -116,6 +116,10 @@ export abstract class EVMWallet extends Wallet<
     this.preferredChain = chainId;
   }
 
+  isConnected(): boolean {
+    return !!this.provider;
+  }
+
   async disconnect(): Promise<void> {
     await this.innerDisconnect();
     await this.provider?.removeAllListeners();

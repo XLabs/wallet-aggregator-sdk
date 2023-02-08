@@ -28,7 +28,6 @@ export type BaseSubmitTransactionResult = any;
 export type BaseMessage = any;
 export type SignMessageResult = any;
 
-
 export abstract class Wallet<
   BUT extends BaseUnsignedTransaction = any,
   BST extends BaseSignedTransaction = any,
@@ -50,6 +49,7 @@ export abstract class Wallet<
   abstract sendTransaction(tx: BST): Promise<SendTransactionResult<R>>;
   abstract signMessage(msg: BM): Promise<MR>;
   abstract getIcon(): IconSource;
+  abstract isConnected(): boolean;
 
   async signAndSendTransaction(tx: any): Promise<SendTransactionResult<R>> {
     const signed = await this.signTransaction(tx)
