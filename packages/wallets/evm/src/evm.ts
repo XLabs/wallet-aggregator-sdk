@@ -137,7 +137,6 @@ export abstract class EVMWallet extends Wallet<
   }
 
   getEvmChainId(): number | undefined {
-    if (!this.provider) throw new Error('Not connected');
     return this.evmChainId;
   }
 
@@ -164,13 +163,13 @@ export abstract class EVMWallet extends Wallet<
   }
 
   async signTransaction(tx: TransactionRequest): Promise<TransactionRequest> {
-    if (!this.provider) throw new Error('Not connected');
+    if (!this.isConnected()) throw new Error('Not connected');
     return tx;
   }
 
   async sendTransaction(tx: TransactionRequest): Promise<SendTransactionResult<TransactionReceipt>> {
-    if (!this.provider) throw new Error('Not connected');
-    const account = await this.getSigner().sendTransaction(tx);
+    if (!this.isConnected()) throw new Error('Not connected');
+    const account = await this.getSigner()!.sendTransaction(tx);
 
     // TODO: parameterize confirmations
     const receipt = await account.wait();
@@ -181,24 +180,22 @@ export abstract class EVMWallet extends Wallet<
   }
 
   async signMessage(msg: EthereumMessage): Promise<Signature> {
-    if (!this.provider) throw new Error('Not connected');
-    const signature = await this.getSigner().signMessage(msg);
+    if (!this.isConnected()) throw new Error('Not connected');
+    const signature = await this.getSigner()!.signMessage(msg);
     return new Uint8Array(Buffer.from(signature.substring(2), 'hex'))
   }
 
   getProvider(): ethers.providers.Web3Provider | undefined {
-    if (!this.provider) throw new Error('Not connected');
     return this.provider;
   }
 
-  getSigner(): ethers.Signer {
-    if (!this.provider) throw new Error('Not connected');
-    return this.provider.getSigner(this.address);
+  getSigner(): ethers.Signer | undefined {
+    return this.provider?.getSigner(this.address);
   }
 
   async getBalance(): Promise<string> {
-    if (!this.provider) throw new Error('Not connected');
-    const balance = await this.getSigner().getBalance();
+    if (!this.isConnected()) throw new Error('Not connected');
+    const balance = await this.getSigner()!.getBalance();
     return balance.toString();
   }
 

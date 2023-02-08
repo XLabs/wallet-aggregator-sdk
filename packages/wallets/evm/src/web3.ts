@@ -15,7 +15,7 @@ export interface MetaMaskEthereumProvider {
 
 type DetectedProvider = MetaMaskEthereumProvider & { providers?: any[] };
 
-export abstract class EVMWeb3Wallet extends EVMWallet {
+export class EVMWeb3Wallet extends EVMWallet {
   private metamaskProvider?: MetaMaskEthereumProvider;
 
   getUrl(): string {
@@ -48,7 +48,7 @@ export abstract class EVMWeb3Wallet extends EVMWallet {
 
     this.metamaskProvider!.on('accountsChanged', (accounts: string[]) => this.onAccountsChanged(accounts));
     this.metamaskProvider!.on('chainChanged', (chainId: number) => this.onChainChanged(chainId));
-    this.metamaskProvider!.on('disconnect', (chainId: number) => this.disconnect);
+    this.metamaskProvider!.on('disconnect', (chainId: number) => this.disconnect());
 
     return await this.provider.send('eth_requestAccounts', [])
   }

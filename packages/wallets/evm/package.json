@@ -1,7 +1,7 @@
 {
   "name": "@xlabs-libs/wallet-aggregator-evm",
   "repository": "https://github.com/XLabs/wallet-aggregator-sdk/tree/master/packages/wallets/evm",
-  "version": "0.0.1-alpha.9",
+  "version": "0.0.1-alpha.10",
   "license": "MIT",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -26,6 +26,7 @@
     "@coinbase/wallet-sdk": "^3.6.3",
     "@ethersproject/abstract-provider": "^5.7.0",
     "@ethersproject/bytes": "^5.7.0",
+    "@ledgerhq/connect-kit-loader": "^1.0.2",
     "@metamask/detect-provider": "^2.0.0",
     "@walletconnect/web3-provider": "^1.7.8",
     "@xlabs-libs/wallet-aggregator-core": "workspace:^",

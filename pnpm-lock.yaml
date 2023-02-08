@@ -193,6 +193,7 @@ importers:
       '@coinbase/wallet-sdk': ^3.6.3
       '@ethersproject/abstract-provider': ^5.7.0
       '@ethersproject/bytes': ^5.7.0
+      '@ledgerhq/connect-kit-loader': ^1.0.2
       '@metamask/detect-provider': ^2.0.0
       '@types/node': ^18.11.9
       '@walletconnect/web3-provider': ^1.7.8
@@ -207,6 +208,7 @@ importers:
       '@coinbase/wallet-sdk': 3.6.3
       '@ethersproject/abstract-provider': 5.7.0
       '@ethersproject/bytes': 5.7.0
+      '@ledgerhq/connect-kit-loader': 1.0.2
       '@metamask/detect-provider': 2.0.0
       '@walletconnect/web3-provider': 1.8.0
       '@xlabs-libs/wallet-aggregator-core': link:../core
@@ -3499,6 +3501,10 @@ packages:
       - bufferutil
       - encoding
       - utf-8-validate
+    dev: false
+
+  /@ledgerhq/connect-kit-loader/1.0.2:
+    resolution: {integrity: sha512-TQ21IjcZOw/scqypaVFY3jHVqI7X7Hta3qN/us6FvTol3AY06UmrhhXGww0E9xHmAbdX241ddwXEiMBSQZFr9g==}
     dev: false
 
   /@ledgerhq/cryptoassets/6.37.0:
