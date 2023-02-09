@@ -29,10 +29,15 @@ const WALLET_NAMES = {
   "cosmostation-eth": "Cosmostation (Eth)"
 }
 
+interface InjectiveNetworkInfo {
+  id: string;
+}
+
 export class InjectiveWallet extends Wallet<
   InjectiveTransaction,
   InjectiveTransaction,
-  TxResponse
+  TxResponse,
+  InjectiveNetworkInfo
 > {
   private strategy?: WalletStrategy;
   private address?: string;
@@ -41,6 +46,7 @@ export class InjectiveWallet extends Wallet<
   private readonly type?: WalletType;
   private readonly disabledWallets: WalletType[] = [];
   private readonly broadcasterOptions: BroadcasterOptions;
+  private networkInfo?: InjectiveNetworkInfo;
 
   constructor({ networkChainId, disabledWallets, type, broadcasterOptions }: InjectiveWalletConfig) {
     super()
@@ -66,9 +72,16 @@ export class InjectiveWallet extends Wallet<
       throw new Error(`No addresses found for wallet of type ${this.type}`);
     }
 
+    this.networkInfo = {
+      id: await this.strategy.getNetworkId()
+    }
     this.address = this.addresses[0];
 
     return this.addresses;
+  }
+
+  getNetworkInfo(): InjectiveNetworkInfo | undefined {
+    return this.networkInfo;
   }
 
   isConnected(): boolean {

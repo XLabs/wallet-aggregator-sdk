@@ -3,12 +3,12 @@ import { ChainId, CHAIN_ID_ETH, isEVMChain, Wallet } from "@xlabs-libs/wallet-ag
 import { AvailableWalletsMap, WalletContext } from "./WalletContext";
 
 
-export const useWallet = (): Wallet | undefined => {
+export const useWallet = <W extends Wallet = Wallet>(): W | undefined => {
     const { defaultWallet: wallet } = useContext(WalletContext);
-    return useMemo(() => wallet, [wallet]);
+    return useMemo(() => wallet as W, [wallet]);
 }
 
-export const useWalletFromChain = (chainId: ChainId): Wallet | undefined => {
+export const useWalletFromChain = <W extends Wallet = Wallet>(chainId: ChainId): W | undefined => {
     const { wallets, coalesceEvmChains } = useContext(WalletContext);
 
     if (coalesceEvmChains && isEVMChain(chainId)) {
@@ -16,7 +16,7 @@ export const useWalletFromChain = (chainId: ChainId): Wallet | undefined => {
     }
 
     const wallet = wallets[chainId];
-    return useMemo(() => wallet, [ chainId, wallet, wallets ]);
+    return useMemo(() => wallet as W, [ chainId, wallet, wallets ]);
 }
 
 export const useAvailableWallets = (): AvailableWalletsMap => {

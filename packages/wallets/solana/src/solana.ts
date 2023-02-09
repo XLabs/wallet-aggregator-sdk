@@ -17,10 +17,14 @@ export type SolanaSignedTransaction = Transaction | Transaction[];
 export type SolanaSubmitTransactionResult = TransactionSignature | TransactionSignature[];
 export type SolanaMessage = Uint8Array;
 
+export interface SolanaNetworkInfo {
+}
+
 export class SolanaWallet extends Wallet<
   SolanaUnsignedTransaction,
   SolanaSignedTransaction,
   SolanaSubmitTransactionResult,
+  SolanaNetworkInfo,
   SolanaMessage
 > {
   constructor(
@@ -60,6 +64,12 @@ export class SolanaWallet extends Wallet<
 
       this.adapter.connect();
     });
+  }
+
+  getNetworkInfo(): SolanaNetworkInfo | undefined {
+    // TODO: investigate whether there is a way to retrieve the current network
+    // See: https://solana.stackexchange.com/questions/141/what-method-should-a-dapp-use-to-detect-a-change-in-wallet-network-for-any-walle/309?noredirect=1#comment366_309
+    return {};
   }
 
   isConnected(): boolean {
@@ -128,6 +138,8 @@ export class SolanaWallet extends Wallet<
       const id = await this.adapter.sendTransaction(tx, this.connection);
       ids.push(id)
     }
+
+    await this.connection.confirmTransaction(ids[0]);
 
     return {
       id: ids[0],

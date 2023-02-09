@@ -25,6 +25,11 @@ export interface AlgorandWalletConfig {
   indexer: AlgorandIndexerConfig;
 }
 
+export interface AlgorandNetworkInfo {
+  genesisID: string;
+  genesisHash: string;
+}
+
 const DEFAULT_CONFIG: AlgorandWalletConfig = {
   node: { url: 'https://node.algoexplorerapi.io' },
   indexer: { url: 'https://indexer.algoexplorerapi.io' },
@@ -37,6 +42,7 @@ export abstract class AlgorandWallet extends Wallet<
   algosdk.Transaction,
   EncodedSignedTransaction,
   SubmittedTransactionMap,
+  AlgorandNetworkInfo,
   AlgorandMessage,
   Signature
 > {
@@ -44,6 +50,7 @@ export abstract class AlgorandWallet extends Wallet<
   protected config: AlgorandWalletConfig;
   protected accounts: Address[];
   protected account: Address | undefined;
+  protected networkInfo?: AlgorandNetworkInfo;
 
   constructor({ defaultAccount, ...config }: AlgorandWalletParams = {}) {
     super();
@@ -62,6 +69,12 @@ export abstract class AlgorandWallet extends Wallet<
 
     this.emit('connect');
 
+    const { genesisHash, genesisID } = await this.buildClient().getTransactionParams().do();
+    this.networkInfo = {
+      genesisHash,
+      genesisID
+    }
+
     return this.accounts;
   }
 
@@ -73,6 +86,7 @@ export abstract class AlgorandWallet extends Wallet<
     await this.innerDisconnect();
     this.accounts = [];
     this.account = undefined;
+    this.networkInfo = undefined;
     this.emit('disconnect');
   }
 
@@ -99,6 +113,10 @@ export abstract class AlgorandWallet extends Wallet<
     this.account = account;
   }
 
+  getNetworkInfo(): AlgorandNetworkInfo | undefined {
+    return this.networkInfo;
+  }
+
   async getBalance(): Promise<string> {
     if (this.accounts.length === 0) throw new Error('Not connected');
 
@@ -109,16 +127,20 @@ export abstract class AlgorandWallet extends Wallet<
   }
 
   async sendTransaction(signedTx: EncodedSignedTransaction): Promise<SendTransactionResult<SubmittedTransactionMap>> {
-    const algod = new algosdk.Algodv2(
-      this.config.node.token || '',
-      this.config.node.url,
-      this.config.node.port || ''
-    );
+    const algod = this.buildClient();
     const { txId } = await algod.sendRawTransaction(signedTx).do();
     const info = await algosdk.waitForConfirmation(algod, txId, this.WAIT_ROUNDS);
     return {
       id: txId,
       data: info
     };
+  }
+
+  private buildClient(): algosdk.Algodv2 {
+    return new algosdk.Algodv2(
+      this.config.node.token || '',
+      this.config.node.url,
+      this.config.node.port || ''
+    );
   }
 }

@@ -27,10 +27,6 @@ interface IWalletContextProviderProps {
   coalesceEvmChains?: boolean;
 }
 
-function coalesceEvmChainId(id: ChainId) {
-  return isEVMChain(id) ? CHAIN_ID_ETH : id;
-}
-
 export const WalletContextProvider = ({ wallets: configureWallets, children, coalesceEvmChains = true }: React.PropsWithChildren<IWalletContextProviderProps>) => {
   const [ wallets, setWallets ] = useState<WalletMap>({});
   const [ availableWallets, setAvailableWallets ] = useState<AvailableWalletsMap>({});

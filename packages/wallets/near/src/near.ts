@@ -1,4 +1,4 @@
-import { Account, Action, FinalExecutionOutcome, NetworkId, setupWalletSelector, Wallet as InternalWallet, WalletMetadata, WalletSelector } from "@near-wallet-selector/core";
+import { Account, Action, FinalExecutionOutcome, Network, NetworkId, setupWalletSelector, Wallet as InternalWallet, WalletMetadata, WalletSelector } from "@near-wallet-selector/core";
 import { setupModal } from "@near-wallet-selector/modal-ui";
 import { Address, ChainId, CHAIN_ID_NEAR, SendTransactionResult, Wallet } from "@xlabs-libs/wallet-aggregator-core";
 import { connect, ConnectConfig as NearConfig, Account as ConnectedAccount } from "near-api-js";
@@ -27,7 +27,8 @@ type NearTransactionResult = FinalExecutionOutcome[];
 export class NearWallet extends Wallet<
     NearTransactionParams,
     NearTransactionParams,
-    NearTransactionResult
+    NearTransactionResult,
+    Network
 > {
     private readonly config: NearConfig;
     private readonly modules: any[];
@@ -37,6 +38,7 @@ export class NearWallet extends Wallet<
     private selector?: WalletSelector;
     private metadata?: WalletMetadata;
     private allowRedirect: boolean;
+    private network?: Network;
 
     constructor({ config, modules, contractId, allowRedirect }: NearWalletParams) {
         super();
@@ -63,6 +65,10 @@ export class NearWallet extends Wallet<
         }
         this.selector!.setActiveAccount(id);
         this.activeAccount = account;
+    }
+
+    getNetworkInfo(): Network | undefined {
+        return this.network;
     }
 
     getName(): string {
@@ -166,6 +172,10 @@ export class NearWallet extends Wallet<
 
             modal.show();
 
+            const onSignIn = async ({ accounts }: { accounts: Account[] }) => {
+                await onConnect(accounts);
+            }
+
             const onConnect = async (accounts: Account[]) => {
                 modal.hide();
 
@@ -174,14 +184,17 @@ export class NearWallet extends Wallet<
                 this.accounts = accounts;
                 this.activeAccount = accounts[0];
                 this.metadata = wallet?.metadata;
+                this.network = {
+                    ...this.selector!.options.network,
+                }
 
-                this.selector?.off('signedIn', () => {});
+                this.selector?.on('networkChanged', this.onNetworkChange);
+
+                this.selector?.off('signedIn', onSignIn);
                 resolve(this.getAddresses());
             };
 
-            this.selector!.on('signedIn', async ({ accounts }) => {
-                await onConnect(accounts);
-            });
+            this.selector!.on('signedIn', onSignIn);
 
             const accounts = this.selector!.store.getState().accounts;
             if (accounts.length > 0) {
@@ -204,9 +217,20 @@ export class NearWallet extends Wallet<
         this.activeAccount = undefined;
         this.metadata = undefined;
         await wallet.signOut();
+
+        this.selector?.off('networkChanged', this.onNetworkChange);
+        this.selector = undefined;
     }
 
     async getWallet(): Promise<InternalWallet | undefined> {
         return this.selector?.wallet();
     }
+
+    private onNetworkChange = ({ networkId }: { networkId: string; }) => {
+        this.network = {
+            ...this.network!,
+            networkId
+        }
+        this.emit('networkChanged');
+    };
 }

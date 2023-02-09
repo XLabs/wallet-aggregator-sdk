@@ -1,5 +1,5 @@
 import { ChainId, CHAINS, SendTransactionResult, Wallet, WalletState } from "@xlabs-libs/wallet-aggregator-core";
-import { BaseWalletAdapter, SignMessagePayload, SignMessageResponse } from "@manahippo/aptos-wallet-adapter";
+import { BaseWalletAdapter, NetworkInfo, SignMessagePayload, SignMessageResponse } from "@manahippo/aptos-wallet-adapter";
 import { Types } from "aptos";
 
 export type AptosAdapter = BaseWalletAdapter;
@@ -14,6 +14,7 @@ export class AptosWallet extends Wallet<
   Types.TransactionPayload,
   Types.TransactionPayload,
   AptosSubmitResult,
+  NetworkInfo,
   AptosMessage,
   SignedAptosMessage
 > {
@@ -36,6 +37,10 @@ export class AptosWallet extends Wallet<
   async connect(): Promise<string[]> {
     await this.adapter.connect();
     return this.getAddresses()
+  }
+
+  getNetworkInfo() {
+    return this.adapter.network;
   }
 
   isConnected(): boolean {

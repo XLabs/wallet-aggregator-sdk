@@ -7,7 +7,6 @@ import { isTestnetEvm, evmChainIdToChainId, EVM_CHAINS } from "./constants";
 type EVMChainId = number
 
 interface EVMWalletEvents extends WalletEvents {
-  chainChanged(evmChainId: number): void;
   accountsChanged(address: Address): void;
 }
 
@@ -27,17 +26,23 @@ export interface EVMWalletConfig {
 
 export type EthereumMessage = string | ethers.utils.Bytes;
 
+export interface EVMNetworkInfo {
+  chainId: number;
+  name: string;
+}
+
 export abstract class EVMWallet extends Wallet<
   TransactionRequest,
   TransactionRequest,
   TransactionReceipt,
+  EVMNetworkInfo,
   EthereumMessage,
   Signature,
   EVMWalletEvents
 > {
   protected addresses: Address[] = [];
   protected address?: Address;
-  protected evmChainId?: EVMChainId;
+  protected network?: EVMNetworkInfo;
   protected preferredChain?: EVMChainId;
   protected provider?: ethers.providers.Web3Provider;
   protected chainParameters: AddEthereumChainParameterMap;
@@ -61,7 +66,7 @@ export abstract class EVMWallet extends Wallet<
         { chainId: utils.hexStripZeros(utils.hexlify(ethChainId)) },
       ]);
 
-      this.evmChainId = ethChainId;
+      this.network = await this.provider.getNetwork();
     } catch (switchError: any) {
       // This error code indicates that the chain has not been added to MetaMask.
       if (switchError.code === ERROR_CODES.CHAIN_NOT_ADDED) {
@@ -89,7 +94,7 @@ export abstract class EVMWallet extends Wallet<
     const chainId = (await this.provider!.getNetwork()).chainId;
     await this.enforcePrefferedChain(chainId);
 
-    this.evmChainId = this.parseEvmChainId((await this.provider!.getNetwork()).chainId);
+    this.network = await this.provider!.getNetwork();
 
     this.emit('connect');
 
@@ -126,7 +131,7 @@ export abstract class EVMWallet extends Wallet<
     this.provider = undefined;
     this.address = undefined;
     this.addresses = [];
-    this.evmChainId = undefined;
+    this.network = undefined;
 
     this.emit('disconnect');
   }
@@ -134,14 +139,14 @@ export abstract class EVMWallet extends Wallet<
   getChainId(): ChainId {
     if (!this.provider) return CHAIN_ID_ETH
 
-    const evmChainId = this.getEvmChainId()!;
+    const evmChainId = this.network!.chainId;
 
     const network = isTestnetEvm(evmChainId) ? "TESTNET" : "MAINNET";
     return evmChainIdToChainId(evmChainId, network);
   }
 
-  getEvmChainId(): number | undefined {
-    return this.evmChainId;
+  getNetworkInfo(): EVMNetworkInfo | undefined {
+    return this.network;
   }
 
   getAddress(): string | undefined {
@@ -173,10 +178,10 @@ export abstract class EVMWallet extends Wallet<
 
   async sendTransaction(tx: TransactionRequest): Promise<SendTransactionResult<TransactionReceipt>> {
     if (!this.isConnected()) throw new Error('Not connected');
-    const account = await this.getSigner()!.sendTransaction(tx);
+    const response = await this.getSigner()!.sendTransaction(tx);
 
     // TODO: parameterize confirmations
-    const receipt = await account.wait();
+    const receipt = await response.wait();
     return {
       id: receipt.transactionHash,
       data: receipt
@@ -208,9 +213,9 @@ export abstract class EVMWallet extends Wallet<
       this.enforcePrefferedChain(chainId);
     }
 
-    this.evmChainId = this.parseEvmChainId(chainId);
+    this.network = await this.provider!.getNetwork();
 
-    this.emit('chainChanged', this.evmChainId);
+    this.emit('networkChanged');
   }
 
   protected async onAccountsChanged(accounts: string[]): Promise<void> {

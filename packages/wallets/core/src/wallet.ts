@@ -4,6 +4,7 @@ import { ChainId } from "./constants";
 export interface WalletEvents {
   connect(): void;
   disconnect(): void;
+  networkChanged(): void;
 }
 
 export enum WalletState {
@@ -32,6 +33,7 @@ export abstract class Wallet<
   BUT extends BaseUnsignedTransaction = any,
   BST extends BaseSignedTransaction = any,
   R extends BaseSubmitTransactionResult = any,
+  NetworkInfo = any,
   BM extends BaseMessage = any,
   MR extends SignMessageResult = any,
   E extends WalletEvents = any
@@ -50,6 +52,7 @@ export abstract class Wallet<
   abstract signMessage(msg: BM): Promise<MR>;
   abstract getIcon(): IconSource;
   abstract isConnected(): boolean;
+  abstract getNetworkInfo(): NetworkInfo | undefined;
 
   async signAndSendTransaction(tx: any): Promise<SendTransactionResult<R>> {
     const signed = await this.signTransaction(tx)
