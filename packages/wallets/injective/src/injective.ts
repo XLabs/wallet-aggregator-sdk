@@ -1,5 +1,3 @@
-import { DirectSignResponse } from "@cosmjs/proto-signing";
-import { TxRaw } from '@injectivelabs/chain-api/cosmos/tx/v1beta1/tx_pb';
 import { TxResponse } from "@injectivelabs/sdk-ts";
 import { ChainId as InjectiveChainId } from "@injectivelabs/ts-types";
 import { MsgBroadcaster, MsgBroadcasterOptions, MsgBroadcasterTxOptions, Wallet as WalletType, WalletStrategy } from "@injectivelabs/wallet-ts";
@@ -9,8 +7,7 @@ type BroadcasterOptions = Omit<MsgBroadcasterOptions, 'walletStrategy'>;
 
 export interface InjectiveWalletConfig {
   networkChainId: InjectiveChainId;
-  type?: WalletType;
-  disabledWallets?: WalletType[];
+  type: WalletType;
   broadcasterOptions: BroadcasterOptions;
 }
 
@@ -39,21 +36,24 @@ export class InjectiveWallet extends Wallet<
   TxResponse,
   InjectiveNetworkInfo
 > {
+  private readonly SUPPORTED_TYPES = [WalletType.Keplr, WalletType.Cosmostation];
   private strategy?: WalletStrategy;
   private address?: string;
   private addresses: string[] = [];
   private readonly networkChainId: InjectiveChainId;
-  private readonly type?: WalletType;
-  private readonly disabledWallets: WalletType[] = [];
+  private readonly type: WalletType;
+  private readonly disabledWallets: WalletType[] = [WalletType.WalletConnect];
   private readonly broadcasterOptions: BroadcasterOptions;
-  private networkInfo?: InjectiveNetworkInfo;
 
-  constructor({ networkChainId, disabledWallets, type, broadcasterOptions }: InjectiveWalletConfig) {
+  constructor({ networkChainId, type, broadcasterOptions }: InjectiveWalletConfig) {
     super()
     this.networkChainId = networkChainId;
-    this.disabledWallets = disabledWallets || [];
     this.broadcasterOptions = broadcasterOptions;
     this.type = type;
+
+    if (!this.SUPPORTED_TYPES.includes(type)) {
+      throw new Error(`Unsupported type ${type}`);
+    }
   }
 
   getWalletStrategy(): WalletStrategy | undefined {
@@ -72,16 +72,13 @@ export class InjectiveWallet extends Wallet<
       throw new Error(`No addresses found for wallet of type ${this.type}`);
     }
 
-    this.networkInfo = {
-      id: await this.strategy.getNetworkId()
-    }
     this.address = this.addresses[0];
 
     return this.addresses;
   }
 
   getNetworkInfo(): InjectiveNetworkInfo | undefined {
-    return this.networkInfo;
+    return { id: this.networkChainId };
   }
 
   isConnected(): boolean {
@@ -160,8 +157,10 @@ export class InjectiveWallet extends Wallet<
   getWalletState(): WalletState {
     if (this.type === WalletType.Keplr) {
       return typeof (window as any).keplr !== "undefined" ? WalletState.Installed : WalletState.NotDetected;
+    } else if (this.type === WalletType.Cosmostation ||this.type === WalletType.CosmostationEth) {
+      return typeof (window as any).cosmostation !== "undefined" ? WalletState.Installed : WalletState.NotDetected;
     }
 
-    return WalletState.NotDetected;
+    return WalletState.Unsupported;
   }
 }

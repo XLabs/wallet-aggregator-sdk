@@ -3,7 +3,7 @@ import { ChainId, CHAIN_ID_ETH, isEVMChain, Wallet } from "@xlabs-libs/wallet-ag
 
 export type AvailableWalletsMap = Partial<Record<ChainId, Wallet[]>>;
 export type AvailableWalletsMapBuilderFn = () => Promise<AvailableWalletsMap>;
-export type WalletMap = { [key: number]: Wallet | undefined }
+export type WalletMap = Partial<Record<ChainId, Wallet | undefined>>;
 
 interface IWalletContext {
   wallets: WalletMap;
@@ -64,10 +64,12 @@ export const WalletContextProvider = ({ wallets: configureWallets, children, coa
     }
 
     const { [chainId]: removedWallet, ...otherWallets } = wallets;
-    setWallets(otherWallets);
+
+    const newWalletMap: WalletMap = otherWallets || {};
+    setWallets(newWalletMap);
 
     if (defaultWallet && defaultWallet.getName() === removedWallet?.getName()) {
-      const potentialDefaults = Object.values(otherWallets);
+      const potentialDefaults = Object.values(newWalletMap);
       setDefaultWallet(potentialDefaults.length ? potentialDefaults[0] : undefined);
     }
   }, [ wallets, defaultWallet ]);

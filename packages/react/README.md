@@ -4,22 +4,72 @@ A library to help integrate the sdk to a react project.
 
 ### Usage
 
-The library supplies a `WaletContextProvider` which will hold information related to the available wallets and selected wallets, as well as the [hooks](#hooks) needed to access and configure. While the context holds a "main" or "default" wallet which belongs to a single chain, it is made to keep track of wallets from multiple chains at the same time.
+The library supplies a `WaletContextProvider` which will hold information related to the available wallets and selected wallets, as well as the [hooks](#hooks) needed to access and configure. While the context holds a "main" or "default" wallet which belongs to a single chain, it allows to keep track of wallets from multiple chains at the same time.
 
-In order to use it, wrap the application in the context component and pass the wallets which will be available for the app to use.
+Wrap the application in the `WalletContextProvider` component. The provider expects a prop `wallets` which is either a map of `Wallet` arrays indexed by chain id or a function which builds such map.
+
+Using a map:
 
 ```tsx
-import { CHAINS } from "@xlabs/wallet-aggregator-core";
+import { CHAIN_ID_ALGORAND, CHAIN_ID_ETH, CHAIN_ID_SOME_CHAIN } from "@xlabs/wallet-aggregator-core";
+import { MyAlgoWallet } from "@xlabs/wallet-aggregator-algorand";
+import { EVMWeb3Wallet, EVMWalletConnectWallet } from "@xlabs/wallet-aggregator-algorand";
+import { SomeWallet } from "@xlabs/wallet-aggregator-some-chain";
 import { WalletContextProvider } from '@xlabs/wallet-aggregator-react';
 
+type AvailableWalletsMap = Partial<Record<ChainId, Wallet[]>>;
+
 const Main = () => {
-  const wallets = {
-    [CHAINS['algorand']]: [new AlgorandWallet()],
-    [CHAINS['ethereum']]: [new EthereumWeb3Wallet(), new EthereumWalletConnectWallet()],
+  const wallets: AvailableWalletsMap = {
+    [CHAIN_ID_ALGORAND]: [
+      new MyAlgoWallet()
+    ],
+    [CHAIN_ID_ETH]: [
+      new EVMWeb3Wallet(),
+      new EVMWalletConnectWallet()
+    ]
   }
 
   return (
-    <WalletContextProvider availableWallets={wallets}>
+    <WalletContextProvider wallets={wallets}>
+      <App />
+    </WalletContextProvider>
+  );
+};
+```
+
+Using a function:
+
+
+```tsx
+import { CHAIN_ID_ALGORAND, CHAIN_ID_ETH, CHAIN_ID_SOME_CHAIN } from "@xlabs/wallet-aggregator-core";
+import { MyAlgoWallet } from "@xlabs/wallet-aggregator-algorand";
+import { EVMWeb3Wallet, EVMWalletConnectWallet } from "@xlabs/wallet-aggregator-algorand";
+import { SomeWallet } from "@xlabs/wallet-aggregator-some-chain";
+import { WalletContextProvider } from '@xlabs/wallet-aggregator-react';
+
+type AvailableWalletsMap = Partial<Record<ChainId, Wallet[]>>;
+
+const Main = () => {
+  const walletsBuilder = (): Promise<AvailableWalletsMap> => {
+    const someChainParams = await fetchSomeChainParams();
+
+    return {
+      [CHAIN_ID_ALGORAND]: [
+        new MyAlgoWallet()
+      ],
+      [CHAIN_ID_ETH]: [
+        new EVMWeb3Wallet(),
+        new EVMWalletConnectWallet()
+      ],
+      [CHAIN_ID_SOME_CHAIN]: [
+        new SomeWallet(someChainParams)
+      ]
+    }
+  }
+
+  return (
+    <WalletContextProvider wallets={walletsBuilder}>
       <App />
     </WalletContextProvider>
   );
@@ -39,7 +89,6 @@ const walletFromChain: Wallet | undefined = useWalletFromChain(chainId);
 // Retrieve all available wallets for a given chain
 const walletsForChain = useWalletsForChain(chainId);
 
-type AvailableWalletsMap = { [key: number]: Wallet[] }
 // Retrieve all available Wallets
 const allWallets: AvailableWalletsMap = useAvailableWallets();
 

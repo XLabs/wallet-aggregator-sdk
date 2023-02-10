@@ -16,6 +16,8 @@ export class EVMWalletConnectWallet extends EVMWallet {
     }
 
     getName(): string {
+        // TODO: I think we can retrieve the client metadata
+        // through the walletConnectProvider.walletMeta
         return 'Eth Wallet Connect';
     }
 
