@@ -3,15 +3,21 @@ import { Address, ChainId, CHAINS, IconSource, Signature } from "@xlabs-libs/wal
 import { AlgorandMessage, AlgorandWallet, AlgorandWalletConfig, AlgorandWalletParams, EncodedSignedTransaction, UnsignedTransaction } from './algorand';
 
 export interface MyAlgoConnectConfig {
+  /** MyAlgoConnect bridge url */
   bridgeUrl?: string;
+  /** Indicates whether ledger accounts are enabled or not */
   disableLedgerNano?: boolean;
 }
 
+/** MyAlgoWallet constructor params */
 export interface MyAlgoWalletParams extends AlgorandWalletParams {
+  /** MyAlgoConnect configuration params */
   myAlgoConnect?: MyAlgoConnectConfig;
 }
 
+/** MyAlgoWallet constructor config */
 export interface MyAlgoWalletConfig extends AlgorandWalletConfig {
+  /** MyAlgoConnect configuration params */
   myAlgoConnect?: MyAlgoConnectConfig;
 }
 
@@ -59,12 +65,31 @@ export class MyAlgoWallet extends AlgorandWallet {
   }
 
   async signMessage(msg: AlgorandMessage): Promise<Signature> {
-    const pk = await this.getAddress();
+    const pk = this.getAddress();
     return this.client.signBytes(msg, pk!);
   }
 
-  async tealSign(data: Uint8Array, contractAddress: Address, signer: Address) {
+  /**
+   * Signs an arbitrary piece of data which may later be used in a teal contract through the {@link https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/#ed25519verify ed25519verify opcode}
+   * 
+   * @param data The piece of data to sign
+   * @param contractAddress The address of the contract the signature will be validated on
+   * @param signer The signer address
+   * @returns The data signature
+   */
+  async tealSign(data: Uint8Array, contractAddress: Address, signer: Address): Promise<Uint8Array> {
     return this.client.tealSign(data, contractAddress, signer)
+  }
+
+  /**
+   * Sign a teal program
+   * 
+   * @param logic The teal program to sign
+   * @param signer The signer address
+   * @returns The signed teal
+   */
+  async signLogicSig(logic: string | Uint8Array, signer: Address): Promise<Uint8Array> {
+    return this.client.signLogicSig(logic, signer);
   }
 
   getIcon(): IconSource {

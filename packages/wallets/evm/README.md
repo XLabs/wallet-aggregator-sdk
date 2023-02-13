@@ -21,17 +21,17 @@ The base EVMWallet configuration allows for the following parameters:
 
 ```ts
 import {
-    EVMWeb3Wallet,
-    EVMWalletConnectWallet,
+    MetamaskWallet,
+    WalletConnectWallet,
     CoinbaseWallet,
     LedgerWallet
 } from "@xlabs-libs/wallet-aggregator-evm";
 
-const metamask = new EVMWeb3Wallet({
+const metamask = new MetamaskWallet({
     preferredChain: 5,
     autoSwitch: true
 });
-const walletConnect = new EVMWalletConnectWallet({
+const walletConnect = new WalletConnectWallet({
     preferredChain: 43113
 });
 const coinbase = new CoinbaseWallet({

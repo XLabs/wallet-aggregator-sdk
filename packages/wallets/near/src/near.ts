@@ -1,14 +1,18 @@
 import { Account, Action, FinalExecutionOutcome, Network, NetworkId, setupWalletSelector, Wallet as InternalWallet, WalletMetadata, WalletSelector } from "@near-wallet-selector/core";
 import { setupModal } from "@near-wallet-selector/modal-ui";
-import { Address, ChainId, CHAIN_ID_NEAR, SendTransactionResult, Wallet } from "@xlabs-libs/wallet-aggregator-core";
+import { Address, ChainId, CHAIN_ID_NEAR, NotSupported, SendTransactionResult, Wallet } from "@xlabs-libs/wallet-aggregator-core";
 import { connect, ConnectConfig as NearConfig, Account as ConnectedAccount } from "near-api-js";
 import { BN } from "bn.js";
 
 
 export interface NearWalletParams {
+    /** Near configuration */
     config: NearConfig;
+    /** List of modules/wallets available */
     modules: any[];
+    /** Contract ID the wallet/application will interact with */
     contractId: string;
+    /** Allow browser wallets to redirect to another page */
     allowRedirect?: boolean;
 }
 
@@ -90,7 +94,7 @@ export class NearWallet extends Wallet<
     }
 
     getBalance(): Promise<string> {
-        throw new Error('Not supported');
+        throw new NotSupported();
     }
 
     async signTransaction(tx: NearTransactionParams): Promise<NearTransactionParams> {
@@ -147,7 +151,7 @@ export class NearWallet extends Wallet<
     }
 
     signMessage(msg: any): Promise<any> {
-        throw new Error("Sign message not supported");
+        throw new NotSupported();
     }
 
     /**
@@ -222,6 +226,7 @@ export class NearWallet extends Wallet<
         this.selector = undefined;
     }
 
+    /** Returns the active/internal wallet */
     async getWallet(): Promise<InternalWallet | undefined> {
         return this.selector?.wallet();
     }

@@ -15,7 +15,7 @@ export interface MetaMaskEthereumProvider {
 
 type DetectedProvider = MetaMaskEthereumProvider & { providers?: any[] };
 
-export class EVMWeb3Wallet extends EVMWallet {
+export class MetamaskWallet extends EVMWallet {
   private metamaskProvider?: MetaMaskEthereumProvider;
 
   getUrl(): string {

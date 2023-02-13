@@ -5,7 +5,7 @@ import { EVMWallet, EVMWalletConfig } from "./evm";
 import { buildRpcMap, EvmRpcMap, EVM_RPC_MAP as DEFAULT_EVM_RPC_MAP } from "./parameters";
 const CacheSubprovider = require("web3-provider-engine/subproviders/cache");
 
-export class EVMWalletConnectWallet extends EVMWallet {
+export class WalletConnectWallet extends EVMWallet {
     private readonly STORAGE_KEY: string = 'wallet-aggregator-sdk-wallet-connect';
     private walletConnectProvider?: WalletConnectProvider;
     private rpcMap: EvmRpcMap;

@@ -6,8 +6,11 @@ import { ChainId, CHAIN_ID_INJECTIVE, SendTransactionResult, Wallet, WalletState
 type BroadcasterOptions = Omit<MsgBroadcasterOptions, 'walletStrategy'>;
 
 export interface InjectiveWalletConfig {
+  /** Injective Network chain id to connect to */
   networkChainId: InjectiveChainId;
+  /** Injective Wallet Type */
   type: WalletType;
+  /** Message broadcaster options */
   broadcasterOptions: BroadcasterOptions;
 }
 
@@ -30,6 +33,9 @@ interface InjectiveNetworkInfo {
   id: string;
 }
 
+/**
+ * An abstraction over Injective blockchain wallets.
+ */
 export class InjectiveWallet extends Wallet<
   InjectiveTransaction,
   InjectiveTransaction,
@@ -56,6 +62,7 @@ export class InjectiveWallet extends Wallet<
     }
   }
 
+  /** Returns the underlying wallet strategy façade */
   getWalletStrategy(): WalletStrategy | undefined {
     return this.strategy;
   }
@@ -94,7 +101,6 @@ export class InjectiveWallet extends Wallet<
 
   async signTransaction(tx: InjectiveTransaction): Promise<InjectiveTransaction> {
     if (!this.strategy) throw new Error('Not connected');
-    // return this.strategy.signCosmosTransaction(tx);
     return tx;
   }
 

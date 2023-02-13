@@ -1,6 +1,6 @@
 import { AlgorandMessage, AlgorandWallet, AlgorandWalletParams, EncodedSignedTransaction, UnsignedTransaction } from "./algorand";
 import { PeraWalletConnect } from "@perawallet/connect";
-import { Address } from "@xlabs-libs/wallet-aggregator-core";
+import { Address, NotSupported } from "@xlabs-libs/wallet-aggregator-core";
 import algosdk from "algosdk";
 
 interface SignerTransaction {
@@ -10,11 +10,13 @@ interface SignerTransaction {
 type AlgorandChainIDs = 416001 | 416002 | 416003 | 4160;
 
 interface PeraWalletConnectOptions {
-  bridge?: string;
+  /** Whether it should show an informative message to the user */
   shouldShowSignTxnToast?: boolean;
+  /** Algorand chain id to use */
   chainId?: AlgorandChainIDs;
 }
 
+/** Pera Wallet constructor params */
 export interface PeraWalletParams extends AlgorandWalletParams {
   peraOptions?: PeraWalletConnectOptions;
 }
@@ -49,8 +51,8 @@ export class PeraWallet extends AlgorandWallet {
     await this.client.disconnect();
   }
 
-  signMessage(msg: AlgorandMessage): Promise<Uint8Array> {
-    throw new Error("Sign message not supported by PeraWallet");
+  signMessage(): Promise<Uint8Array> {
+    throw new NotSupported();
   }
 
   async signTransaction(tx: UnsignedTransaction): Promise<EncodedSignedTransaction>;

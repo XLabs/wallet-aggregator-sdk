@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useEffect, useMemo, useState } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { ChainId, CHAIN_ID_ETH, isEVMChain, Wallet } from "@xlabs-libs/wallet-aggregator-core";
 
 export type AvailableWalletsMap = Partial<Record<ChainId, Wallet[]>>;
@@ -23,7 +23,13 @@ export const WalletContext = createContext<IWalletContext>({
 });
 
 interface IWalletContextProviderProps {
+  /**
+   * Either a Map indexed by chain ids with Wallet arrays as values, or a function that builds such a map
+   */
   wallets: AvailableWalletsMap | AvailableWalletsMapBuilderFn;
+  /**
+   * Aggregate all EVM chains into a single one, indexed by the Ethereum chain id (eth). Enabled by default.
+   */
   coalesceEvmChains?: boolean;
 }
 
@@ -88,4 +94,14 @@ export const WalletContextProvider = ({ wallets: configureWallets, children, coa
       {children}
     </WalletContext.Provider>
   )
+}
+
+export const useWalletContext = (): IWalletContext => {
+  const context = useContext(WalletContext);
+
+  if (!context) {
+    throw new Error('No WalletContext found. Make sure you have properly set up the WalletContextProvider');
+  }
+
+  return context;
 }

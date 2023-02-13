@@ -18,19 +18,34 @@ enum ERROR_CODES {
   CHAIN_NOT_ADDED = 4902
 }
 
+/** EVMWallet config options */
 export interface EVMWalletConfig {
+  /**
+   * A map of AddEthereumChainParameter defined as in the {@link https://eips.ethereum.org/EIPS/eip-3085 EIP-3085} indexed by EVM chain ids.
+   */
   chainParameters?: AddEthereumChainParameterMap;
+  /**
+   * An EVM chain id. When connecting, the wallet will try to switch to this chain if the provider network's chain id differs.
+   */
   preferredChain?: EVMChainId;
+  /**
+   * Indicates whether the wallet should attempt to switch the network back to the preferredChain upon detecting a `chainChanged` event.
+   */
   autoSwitch?: boolean;
 }
 
 export type EthereumMessage = string | ethers.utils.Bytes;
 
 export interface EVMNetworkInfo {
+  /** Network EVM chain id */
   chainId: number;
+  /** Network name */
   name: string;
 }
 
+/**
+ * An abstraction over EVM compatible blockchain wallets
+ */
 export abstract class EVMWallet extends Wallet<
   TransactionRequest,
   TransactionRequest,
@@ -58,6 +73,16 @@ export abstract class EVMWallet extends Wallet<
   protected abstract innerConnect(): Promise<Address[]>;
   protected abstract innerDisconnect(): Promise<void>;
 
+  /**
+   * @description Try to switch the evm chain the wallet is connected to through the {@link https://eips.ethereum.org/EIPS/eip-3326 EIP-3326} `wallet_switchEthereumChain` method.
+   * 
+   * Should the chain be missing from the provider (code `4902`/`CHAIN_NOT_ADDED`), it will try to add it through the {@link https://eips.ethereum.org/EIPS/eip-3085 EIP-3085} `wallet_addEthereumChain` method, using the information stored in the map `chainParameters` injected through the constructor.
+   *
+   * @param ethChainId The EVM chain id of the chain to switch to
+   * @throws Throws an error for codes other than `4902`/`CHAIN_NOT_ADDED`
+   * @throws Throws an error when trying to add a chain no config is found for
+   * @throws May throw if the add chain request fails or is rejected
+   */
   async switchChain(ethChainId: EVMChainId): Promise<void> {
     if (!this.provider) return;
 
@@ -116,6 +141,11 @@ export abstract class EVMWallet extends Wallet<
     }
   }
 
+  /**
+   * @description Change the preferred evm chain. Calling this method will automatically trigger a switch to the new chain request. 
+   * 
+   * @param chainId The new evm chain id
+   */
   public async setPrefferedChain(chainId: EVMChainId): Promise<void> {
     await this.enforcePrefferedChain(chainId);
     this.preferredChain = chainId;
@@ -194,10 +224,20 @@ export abstract class EVMWallet extends Wallet<
     return new Uint8Array(Buffer.from(signature.substring(2), 'hex'))
   }
 
+  /**
+   * Retrieve the underlying Web3Provider
+   * 
+   * @returns {ethers.providers.Web3Provider} Returns the underlying ethers.js Web3Provider if connected, or undefined if not
+   */
   getProvider(): ethers.providers.Web3Provider | undefined {
     return this.provider;
   }
 
+  /**
+   * Retrieve the underlying Signer.
+   * 
+   * @returns {ethers.Signer} Returns the underlying ethers.js Signer if connected, or undefined if not
+   */
   getSigner(): ethers.Signer | undefined {
     return this.provider?.getSigner(this.address);
   }

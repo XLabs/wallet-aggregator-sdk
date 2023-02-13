@@ -4,24 +4,29 @@ import algosdk from 'algosdk';
 export type SubmittedTransactionMap = Record<string, string>
 export type AlgorandMessage = Uint8Array
 
+/** Algorand Node configuration */
 export interface AlgorandNodeConfig {
   url: string;
   token?: string;
   port?: string;
 }
 
+/** Algorand Indexer configuration */
 export interface AlgorandIndexerConfig {
   url: string;
 }
 
+/** Algorand Wallet constructor parameters */
 export interface AlgorandWalletParams {
   node?: AlgorandNodeConfig;
   indexer?: AlgorandIndexerConfig;
-  defaultAccount?: string;
 }
 
+/** Algorand Wallet configuration */
 export interface AlgorandWalletConfig {
+  /** Algorand Node configuration */
   node: AlgorandNodeConfig;
+  /** Algorand indexer configuration */
   indexer: AlgorandIndexerConfig;
 }
 
@@ -48,15 +53,13 @@ export abstract class AlgorandWallet extends Wallet<
 > {
   private readonly WAIT_ROUNDS = 5;
   protected config: AlgorandWalletConfig;
-  protected accounts: Address[];
+  protected accounts: Address[] = [];
   protected account: Address | undefined;
   protected networkInfo?: AlgorandNetworkInfo;
 
-  constructor({ defaultAccount, ...config }: AlgorandWalletParams = {}) {
+  constructor(config: AlgorandWalletParams = {}) {
     super();
     this.config = Object.assign({}, DEFAULT_CONFIG, config);
-    this.accounts = defaultAccount ? [ defaultAccount ] : [];
-    this.account = defaultAccount;
   }
 
   protected abstract innerConnect(): Promise<Address[]>;

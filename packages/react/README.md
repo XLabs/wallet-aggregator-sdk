@@ -13,7 +13,7 @@ Using a map:
 ```tsx
 import { CHAIN_ID_ALGORAND, CHAIN_ID_ETH, CHAIN_ID_SOME_CHAIN } from "@xlabs/wallet-aggregator-core";
 import { MyAlgoWallet } from "@xlabs/wallet-aggregator-algorand";
-import { EVMWeb3Wallet, EVMWalletConnectWallet } from "@xlabs/wallet-aggregator-algorand";
+import { MetamaskWallet, WalletConnectWallet } from "@xlabs/wallet-aggregator-algorand";
 import { SomeWallet } from "@xlabs/wallet-aggregator-some-chain";
 import { WalletContextProvider } from '@xlabs/wallet-aggregator-react';
 
@@ -25,8 +25,8 @@ const Main = () => {
       new MyAlgoWallet()
     ],
     [CHAIN_ID_ETH]: [
-      new EVMWeb3Wallet(),
-      new EVMWalletConnectWallet()
+      new MetamaskWallet(),
+      new WalletConnectWallet()
     ]
   }
 
@@ -44,7 +44,7 @@ Using a function:
 ```tsx
 import { CHAIN_ID_ALGORAND, CHAIN_ID_ETH, CHAIN_ID_SOME_CHAIN } from "@xlabs/wallet-aggregator-core";
 import { MyAlgoWallet } from "@xlabs/wallet-aggregator-algorand";
-import { EVMWeb3Wallet, EVMWalletConnectWallet } from "@xlabs/wallet-aggregator-algorand";
+import { MetamaskWallet, WalletConnectWallet } from "@xlabs/wallet-aggregator-algorand";
 import { SomeWallet } from "@xlabs/wallet-aggregator-some-chain";
 import { WalletContextProvider } from '@xlabs/wallet-aggregator-react';
 
@@ -59,8 +59,8 @@ const Main = () => {
         new MyAlgoWallet()
       ],
       [CHAIN_ID_ETH]: [
-        new EVMWeb3Wallet(),
-        new EVMWalletConnectWallet()
+        new MetamaskWallet(),
+        new WalletConnectWallet()
       ],
       [CHAIN_ID_SOME_CHAIN]: [
         new SomeWallet(someChainParams)

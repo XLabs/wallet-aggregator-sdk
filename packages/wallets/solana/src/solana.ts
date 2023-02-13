@@ -20,6 +20,19 @@ export type SolanaMessage = Uint8Array;
 export interface SolanaNetworkInfo {
 }
 
+/**
+ * An abstraction over Solana blockchain wallets.
+ * 
+ * This class works as a wrapper over the adapters provided by the `@solana/wallet-adapter-base` library. In order to use this class, simply create the adapter you wish to use and pass it as a constructor parameter:
+ * 
+ * ```ts
+ * const connection = new Connection(url)
+ * const martian = new SolanaWallet(
+ *     new PhantomWalletAdapter(),
+ *     connection
+ * )
+ * ```
+ */
 export class SolanaWallet extends Wallet<
   SolanaUnsignedTransaction,
   SolanaSignedTransaction,
@@ -34,6 +47,7 @@ export class SolanaWallet extends Wallet<
     super();
   }
 
+  /** Retrieve the underlying solana adapter */
   getAdapter(): SolanaAdapter {
     return this.adapter;
   }

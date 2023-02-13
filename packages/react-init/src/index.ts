@@ -20,7 +20,7 @@ import { clusterApiUrl, Connection } from "@solana/web3.js";
 import { AlgorandWalletConfig, MyAlgoWallet } from "@xlabs-libs/wallet-aggregator-algorand";
 import { AptosWallet } from "@xlabs-libs/wallet-aggregator-aptos";
 import { CHAINS } from "@xlabs-libs/wallet-aggregator-core";
-import { EVMWalletConnectWallet, EVMWeb3Wallet } from "@xlabs-libs/wallet-aggregator-evm";
+import { WalletConnectWallet, MetamaskWallet } from "@xlabs-libs/wallet-aggregator-evm";
 import { AddEthereumChainParameterMap } from "@xlabs-libs/wallet-aggregator-evm/dist/types/parameters";
 import { AvailableWalletsMap } from "@xlabs-libs/wallet-aggregator-react";
 import { SolanaAdapter, SolanaWallet } from "@xlabs-libs/wallet-aggregator-solana";
@@ -70,8 +70,8 @@ export const initWallets = (config?: InitWalletsConfig): AvailableWalletsMap => 
   return {
       [CHAINS['algorand']]: [new MyAlgoWallet(config?.algorand)],
       [CHAINS['ethereum']]: [
-          new EVMWeb3Wallet(config?.evm?.chainParameters),
-          new EVMWalletConnectWallet(config?.evm?.chainParameters)
+          new MetamaskWallet(config?.evm?.chainParameters),
+          new WalletConnectWallet(config?.evm?.chainParameters)
       ],
       [CHAINS['solana']]:
           solanaAdapters.map(adapter =>

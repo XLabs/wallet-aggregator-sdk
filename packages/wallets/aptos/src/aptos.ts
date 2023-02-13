@@ -1,4 +1,4 @@
-import { ChainId, CHAINS, SendTransactionResult, Wallet, WalletState } from "@xlabs-libs/wallet-aggregator-core";
+import { ChainId, CHAINS, NotSupported, SendTransactionResult, Wallet, WalletState } from "@xlabs-libs/wallet-aggregator-core";
 import { BaseWalletAdapter, NetworkInfo, SignMessagePayload, SignMessageResponse } from "@manahippo/aptos-wallet-adapter";
 import { Types } from "aptos";
 
@@ -10,6 +10,17 @@ export interface AptosSubmitResult {
 export type AptosMessage = string | SignMessagePayload | Uint8Array;
 export type SignedAptosMessage = string | SignMessageResponse;
 
+/**
+ * An abstraction over Aptos blockchain wallets.
+ * 
+ * This class works as a wrapper over the adapters provided by the `@manahippo/aptos-wallet-adapter` library. In order to use this class, simply create the adapter you wish to use and pass it as a constructor parameter:
+ * 
+ * ```ts
+ * const martian = new AptosWallet(
+    new MartianWalletAdapter()
+  )
+ * ```
+ */
 export class AptosWallet extends Wallet<
   Types.TransactionPayload,
   Types.TransactionPayload,
@@ -18,10 +29,14 @@ export class AptosWallet extends Wallet<
   AptosMessage,
   SignedAptosMessage
 > {
+  /**
+   * @param adapter The Aptos wallet adapter which will serve as the underlying connection to the wallet
+   */
   constructor(private readonly adapter: AptosAdapter) {
     super();
   }
 
+  /** Retrieve the underlying Aptos adapter */
   getAdapter(): AptosAdapter {
     return this.adapter;
   }
@@ -65,11 +80,11 @@ export class AptosWallet extends Wallet<
   }
 
   setMainAddress(address: string): void {
-    throw new Error("Not supported");
+    throw new NotSupported();
   }
 
   getBalance(): Promise<string> {
-    throw new Error("Not supported");
+    throw new NotSupported();
   }
 
   async signTransaction(tx: Types.TransactionPayload): Promise<Types.TransactionPayload> {

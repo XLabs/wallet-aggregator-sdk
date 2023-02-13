@@ -26,7 +26,9 @@ export interface CoinbaseWalletSDKOptions {
 }
 
 export interface CoinbaseWalletConfig extends EVMWalletConfig {
+    /** Coinbase Wallet SDK Options */
     options: CoinbaseWalletSDKOptions;
+    /** EVM JSON RPC url */
     rpcUrl: string;
 }
 
