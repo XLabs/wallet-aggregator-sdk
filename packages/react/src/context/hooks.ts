@@ -3,30 +3,22 @@ import { useCallback, useMemo } from "react";
 import { AvailableWalletsMap, useWalletContext } from "./WalletContext";
 
 /**
- * Retrieve the last selected wallet
- * 
- * @returns Returns the last selected wallet regardless of its chain, or undefined if none was set yet.
+ * @param chainId A chain id, or undefined
+ * @returns If the chain id is not undefined, it will return the selected wallet for that specific chain, or undefined if not set. Otherwise, it will retrieve the last configured wallet, regardless of its chain.
  */
-export const useWallet = <W extends Wallet = Wallet>(): W | undefined => {
-    const { defaultWallet: wallet } = useWalletContext();
-    return useMemo(() => wallet as W, [wallet]);
-}
+export const useWallet = <W extends Wallet = Wallet>(chainId: ChainId | undefined): W | undefined => {
+    const { wallets, coalesceEvmChains, defaultWallet } = useWalletContext();
 
-/**
- * Retrieve a wallet from a specific chain
- * 
- * @param chainId The wallet chain id
- * @returns The wallet selected for the specified chain, or undefined if none has been set yet.
- */
-export const useWalletFromChain = <W extends Wallet = Wallet>(chainId: ChainId): W | undefined => {
-    const { wallets, coalesceEvmChains } = useWalletContext();
-
-    if (coalesceEvmChains && isEVMChain(chainId)) {
-        chainId = CHAIN_ID_ETH;
+    let wallet: Wallet | undefined;
+    if (chainId) {
+        wallet = coalesceEvmChains && isEVMChain(chainId)
+            ? wallets[CHAIN_ID_ETH]
+            : wallets[chainId];
+    } else {
+        wallet = defaultWallet;
     }
 
-    const wallet = wallets[chainId];
-    return useMemo(() => wallet as W, [ chainId, wallet, wallets ]);
+    return useMemo(() => wallet as W, [wallet]);
 }
 
 /**
