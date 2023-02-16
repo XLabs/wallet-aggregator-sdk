@@ -47,8 +47,8 @@ export class MetamaskWallet extends EVMWallet {
     );
 
     this.metamaskProvider!.on('accountsChanged', (accounts: string[]) => this.onAccountsChanged(accounts));
-    this.metamaskProvider!.on('chainChanged', (chainId: number) => this.onChainChanged(chainId));
-    this.metamaskProvider!.on('disconnect', (chainId: number) => this.disconnect());
+    this.metamaskProvider!.on('chainChanged', () => this.onChainChanged());
+    this.metamaskProvider!.on('disconnect', () => this.disconnect());
 
     return await this.provider.send('eth_requestAccounts', [])
   }

@@ -26,7 +26,7 @@ export class LedgerWallet extends EVMWallet {
         this.provider = new ethers.providers.Web3Provider(this.ledgerProvider, 'any');
 
         this.ledgerProvider.on('accountsChanged', (accounts: string[]) => this.onAccountsChanged(accounts));
-        this.ledgerProvider.on('chainChanged', (chainId: number) => this.onChainChanged(chainId));
+        this.ledgerProvider.on('chainChanged', () => this.onChainChanged());
         this.ledgerProvider.on('disconnect', () => this.disconnect());
 
         return await this.provider.send('eth_requestAccounts', []);

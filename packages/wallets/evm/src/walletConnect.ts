@@ -58,7 +58,7 @@ export class WalletConnectWallet extends EVMWallet {
                 // also reset the latest block
                 this.walletConnectProvider!._blockTracker._resetCurrentBlock();
             }
-            this.onChainChanged(chainId);
+            this.onChainChanged();
         });
 
         this.walletConnectProvider.on("disconnect", () => this.disconnect());

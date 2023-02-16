@@ -55,7 +55,7 @@ export class CoinbaseWallet extends EVMWallet {
         );
 
         this.coinbaseProvider.on('accountsChanged', (accounts: string[]) => this.onAccountsChanged(accounts));
-        this.coinbaseProvider.on('chainChanged', (chainId: number) => this.onChainChanged(chainId));
+        this.coinbaseProvider.on('chainChanged', () => this.onChainChanged());
         this.coinbaseProvider.on('disconnect', () => this.disconnect());
 
         return this.provider.send('eth_requestAccounts', [])

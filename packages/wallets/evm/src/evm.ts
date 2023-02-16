@@ -116,8 +116,7 @@ export abstract class EVMWallet extends Wallet<
     this.addresses = this.checksumAddresses(await this.innerConnect());
     this.address = this.addresses[0];
 
-    const chainId = (await this.provider!.getNetwork()).chainId;
-    await this.enforcePrefferedChain(chainId);
+    await this.enforcePrefferedChain();
 
     this.network = await this.provider!.getNetwork();
 
@@ -126,18 +125,21 @@ export abstract class EVMWallet extends Wallet<
     return this.addresses;
   }
 
-  private async enforcePrefferedChain(chainId: EVMChainId): Promise<void> {
-    if (!this.preferredChain || chainId === this.preferredChain) return;
+  private async enforcePrefferedChain(): Promise<void> {
+    if (!this.provider) throw new Error('Not connected');
+    if (!this.preferredChain) return;
 
-    try {
-      await this.switchChain(this.preferredChain);
-    } catch (error: any) {
-      // enforce disconnect if the user is not willing to change to the desired chain
-      if (error.code === ERROR_CODES.USER_REJECTED) {
-        await this.disconnect()
+    let currentChain = this.getNetworkInfo()?.chainId;
+    while (currentChain !== this.preferredChain) {
+      try {
+        await this.switchChain(this.preferredChain);
+        currentChain = this.getNetworkInfo()?.chainId;
+      } catch (error: any) {
+        // ignore user rejections
+        if (error.code !== ERROR_CODES.USER_REJECTED) {
+          throw error
+        }
       }
-
-      throw error
     }
   }
 
@@ -147,8 +149,8 @@ export abstract class EVMWallet extends Wallet<
    * @param chainId The new evm chain id
    */
   public async setPrefferedChain(chainId: EVMChainId): Promise<void> {
-    await this.enforcePrefferedChain(chainId);
     this.preferredChain = chainId;
+    await this.enforcePrefferedChain();
   }
 
   isConnected(): boolean {
@@ -167,7 +169,7 @@ export abstract class EVMWallet extends Wallet<
   }
 
   getChainId(): ChainId {
-    if (!this.provider) return CHAIN_ID_ETH
+    if (!this.provider) return CHAIN_ID_ETH;
 
     const evmChainId = this.network!.chainId;
 
@@ -248,9 +250,9 @@ export abstract class EVMWallet extends Wallet<
     return balance.toString();
   }
 
-  protected async onChainChanged(chainId: number): Promise<void> {
+  protected async onChainChanged(): Promise<void> {
     if (this.autoSwitch) {
-      this.enforcePrefferedChain(chainId);
+      this.enforcePrefferedChain();
     }
 
     this.network = await this.provider!.getNetwork();
