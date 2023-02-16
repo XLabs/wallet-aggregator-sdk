@@ -1,0 +1,31 @@
+{
+  "name": "@xlabs-libs/wallet-aggregator-terra",
+  "repository": "https://github.com/XLabs/wallet-aggregator-sdk/tree/master/packages/wallets/terra",
+  "version": "0.0.1-alpha.1",
+  "sideEffects": false,
+  "license": "MIT",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
+  "scripts": {
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build": "shx rm -rf dist && npm run build:cjs && npm run build:esm",
+    "clean": "shx rm -rf dist"
+  },
+  "files": [
+    "dist/",
+    "src/"
+  ],
+  "devDependencies": {
+    "@types/node": "^18.11.9",
+    "shx": "^0.3.4",
+    "typescript": "^4.4.2"
+  },
+  "dependencies": {
+    "@terra-money/terra.js": "^3.1.7",
+    "@terra-money/wallet-provider": "^3.11.2",
+    "@xlabs-libs/wallet-aggregator-core": "workspace:^",
+    "rxjs": "^7.5.7"
+  }
+}
