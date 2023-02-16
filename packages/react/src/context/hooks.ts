@@ -43,11 +43,13 @@ export const useAvailableChains = (): ChainId[] => {
  * @returns A non-empty array of Wallet objects, or an empty array if no entry has been found for that chain id
  */
 export const useWalletsForChain = (chainId?: ChainId): Wallet[] => {
+    const { coalesceEvmChains } = useWalletContext();
     const walletsMap = useAvailableWallets();
 
     let wallets: Wallet[] = []
 
     if (chainId) {
+        chainId = coalesceEvmChains && isEVMChain(chainId) ? CHAIN_ID_ETH : chainId;
         wallets = walletsMap[chainId] || [];
     }
 
