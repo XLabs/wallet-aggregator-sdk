@@ -7,6 +7,12 @@ export class NotSupported extends Error {
   }
 }
 
+export class NotConnected extends Error {
+  constructor() {
+    super('Not connected');
+  }
+}
+
 /**
  * Events the wallet can be listened on
  */

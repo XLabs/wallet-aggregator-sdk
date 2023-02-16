@@ -101,3 +101,20 @@ export function isEVMChain(chainId: ChainId): boolean {
         chainId === CHAIN_ID_GNOSIS
     );
 }
+
+export function isCosmWasmChain(
+    chainId: ChainId
+): boolean {
+    return (
+        chainId === CHAIN_ID_TERRA ||
+        chainId === CHAIN_ID_TERRA2 ||
+        chainId === CHAIN_ID_INJECTIVE ||
+        chainId === CHAIN_ID_XPLA
+    );
+}
+
+export function isTerraChain(
+    chainId: ChainId
+): boolean {
+    return chainId === CHAIN_ID_TERRA || chainId === CHAIN_ID_TERRA2;
+}
