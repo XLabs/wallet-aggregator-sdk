@@ -1,8 +1,9 @@
 import { ExtensionOptions } from "@terra-money/terra.js";
-import { Connection, ConnectType, Installation, NetworkInfo, SignBytesResult, toConnectedWallet, TxResult, WalletController, WalletControllerOptions, WalletInfo, WalletStates, WalletStatus } from "@terra-money/wallet-provider";
+import { Connection, ConnectType, Installation, NetworkInfo, SignBytesResult, TxResult, WalletController, WalletControllerOptions, WalletStates, WalletStatus } from "@terra-money/wallet-provider";
 import { ChainId, CHAIN_ID_TERRA, CHAIN_ID_TERRA2, NotSupported, SendTransactionResult, Wallet, WalletState } from "@xlabs-libs/wallet-aggregator-core";
-import { merge, Observable, Subscription } from 'rxjs';
-import { distinct, map, reduce } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 
 export enum Network {
   Mainnet,
@@ -95,12 +96,12 @@ export const getWallets = async (network: Network, ignoredTypes: ConnectType[] =
   // available to connect
   const connections: TerraWallet[] = await waitObservable(controller.availableConnections().pipe(
     map(arr => toTerraWallet(arr, true))
-  ));
+  )) || [];
 
   // installable
   const installations: TerraWallet[] = await waitObservable(controller.availableInstallations().pipe(
     map(arr => toTerraWallet(arr, false))
-  ));
+  )) || [];
 
   return connections.concat(installations);
 }
