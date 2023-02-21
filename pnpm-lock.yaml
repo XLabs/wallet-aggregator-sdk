@@ -1,5 +1,8 @@
 lockfileVersion: 5.4
 
+overrides:
+  '@xpla/xpla.js': 0.2.3
+
 importers:
 
   .:
@@ -305,6 +308,25 @@ importers:
       '@terra-money/terra.js': 3.1.7
       '@terra-money/wallet-provider': 3.11.2_3cf6ynbn43ziagotveiykbig2q
       '@xlabs-libs/wallet-aggregator-core': link:../core
+      rxjs: 7.8.0
+    devDependencies:
+      '@types/node': 18.11.11
+      shx: 0.3.4
+      typescript: 4.9.3
+
+  packages/wallets/xpla:
+    specifiers:
+      '@types/node': ^18.11.9
+      '@xlabs-libs/wallet-aggregator-core': workspace:^
+      '@xpla/wallet-provider': ^0.3.10
+      '@xpla/xpla.js': 0.2.3
+      rxjs: ^7.5.7
+      shx: ^0.3.4
+      typescript: ^4.4.2
+    dependencies:
+      '@xlabs-libs/wallet-aggregator-core': link:../core
+      '@xpla/wallet-provider': 0.3.10
+      '@xpla/xpla.js': 0.2.3
       rxjs: 7.8.0
     devDependencies:
       '@types/node': 18.11.11
@@ -7019,6 +7041,105 @@ packages:
       tslib: 2.4.1
     dev: false
 
+  /@xpla/use-wallet/0.3.10:
+    resolution: {integrity: sha512-w0o6q7tjAWvv0t0JnVd5iDITm9NkuTlZONsaDdM4weYGqPV6ZJrAWQkNsB0kTmPhuyoRv5eU8fl77TaFZMwkWg==}
+    engines: {node: '>=16'}
+    peerDependencies:
+      react: '>=17.0.0'
+    dependencies:
+      '@xpla/wallet-types': 0.3.10
+      '@xpla/xpla.js': 0.2.3
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
+  /@xpla/wallet-controller/0.3.10:
+    resolution: {integrity: sha512-YZ5udhdTRstJB3jJtzL3bbqTlKlmV+atmVfIEaUJV8mrAUhYUCfB83sDO7s2ryJUXNOBu13cQBOlEc4bCHUgrw==}
+    engines: {node: '>=16'}
+    dependencies:
+      '@walletconnect/core': 1.8.0
+      '@walletconnect/iso-crypto': 1.8.0
+      '@walletconnect/types': 1.8.0
+      '@walletconnect/utils': 1.8.0
+      '@xpla/wallet-types': 0.3.10
+      '@xpla/web-extension-interface': 0.3.10
+      '@xpla/xpla.js': 0.2.3
+      bowser: 2.11.0
+      fast-deep-equal: 3.1.3
+      jscrypto: 1.0.3
+      mobile-detect: 1.4.5
+      qrcode: 1.5.1
+      rxjs: 7.8.0
+      secp256k1: 4.0.3
+      ws: 7.5.9
+    transitivePeerDependencies:
+      - bufferutil
+      - debug
+      - utf-8-validate
+    dev: false
+
+  /@xpla/wallet-provider/0.3.10:
+    resolution: {integrity: sha512-QeHGzwFGyh+VTf2FS2sHE5HsWtA3l2CRKHoBIErbplCCEYhikb7yKnNwPu1YjaJ46O6heM6DGhvJZCPxJ/KjZg==}
+    engines: {node: '>=16'}
+    peerDependencies:
+      react: '>=17.0.0'
+    dependencies:
+      '@xpla/use-wallet': 0.3.10
+      '@xpla/wallet-controller': 0.3.10
+      '@xpla/web-extension-interface': 0.3.10
+    transitivePeerDependencies:
+      - bufferutil
+      - debug
+      - utf-8-validate
+    dev: false
+
+  /@xpla/wallet-types/0.3.10:
+    resolution: {integrity: sha512-WqKwGhT99m3UsBvUK9RiLkNA9UzQtY/H9fHjAhja+CRMgZ8NZ2EAvEwgheB1YwIDRd8k/GI0FHsCWsIpp1fzIQ==}
+    engines: {node: '>=16'}
+    dependencies:
+      '@xpla/xpla.js': 0.2.3
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
+  /@xpla/web-extension-interface/0.3.10:
+    resolution: {integrity: sha512-F6jeYciAVn3/UdiownV4punPlXzCdh6n1fzQWsuKODoc/V/h+w0LeHYX9Ij+TziodQb8j6xxlio1TWWfCsaBKw==}
+    engines: {node: '>=16'}
+    dependencies:
+      '@xpla/xpla.js': 0.2.3
+      rxjs: 7.8.0
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
+  /@xpla/xpla.js/0.2.3:
+    resolution: {integrity: sha512-Tfk7hCGWXtwr08reY3Pi6dmzIqFbzri9jcyzJdfNmdo4cN0PMwpRJuZZcPmtxiIUnNef3AN1E/6nJUD5MKniuA==}
+    engines: {node: '>=14'}
+    dependencies:
+      '@ethersproject/bytes': 5.7.0
+      '@ethersproject/keccak256': 5.7.0
+      '@ethersproject/signing-key': 5.7.0
+      '@terra-money/legacy.proto': /@terra-money/terra.proto/0.1.7
+      '@terra-money/terra.proto': 2.1.0
+      axios: 0.26.1
+      bech32: 2.0.0
+      bip32: 2.0.6
+      bip39: 3.0.4
+      bufferutil: 4.0.7
+      crypto-addr-codec: 0.1.7
+      decimal.js: 10.4.3
+      elliptic: 6.5.4
+      ethereumjs-util: 7.1.5
+      jscrypto: 1.0.3
+      readable-stream: 3.6.0
+      secp256k1: 4.0.3
+      tmp: 0.2.1
+      utf-8-validate: 5.0.10
+      ws: 7.5.9_3cxu5zja4e2r5wmvge7mdcljwq
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
   /@xtuc/ieee754/1.2.0:
     resolution: {integrity: sha512-DX8nKgqcGwsc0eJSqYt5lwP4DH5FlHnmuWWBRy7X0NcaGR0ZtuyeESgMwTYVEtxmsNGY+qit4QYT/MIYTOTPeA==}
     dev: false
@@ -7786,6 +7907,11 @@ packages:
       check-types: 11.2.2
       hoopy: 0.1.4
       tryer: 1.0.1
+    dev: false
+
+  /big-integer/1.6.36:
+    resolution: {integrity: sha512-t70bfa7HYEA1D9idDbmuv7YbsbVkQ+Hp+8KFSul4aE5e/i1bjCNIRYJZlA8Q8p0r9T8cF/RVvwUgRA//FydEyg==}
+    engines: {node: '>=0.6'}
     dev: false
 
   /big-integer/1.6.51:
@@ -8630,6 +8756,18 @@ packages:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
+    dev: false
+
+  /crypto-addr-codec/0.1.7:
+    resolution: {integrity: sha512-X4hzfBzNhy4mAc3UpiXEC/L0jo5E8wAa9unsnA8nNXYzXjCcGk83hfC5avJWCSGT8V91xMnAS9AKMHmjw5+XCg==}
+    dependencies:
+      base-x: 3.0.9
+      big-integer: 1.6.36
+      blakejs: 1.2.1
+      bs58: 4.0.1
+      ripemd160-min: 0.0.6
+      safe-buffer: 5.2.1
+      sha3: 2.1.4
     dev: false
 
   /crypto-browserify/3.12.0:
@@ -15308,6 +15446,11 @@ packages:
       glob: 7.2.3
     dev: false
 
+  /ripemd160-min/0.0.6:
+    resolution: {integrity: sha512-+GcJgQivhs6S9qvLogusiTcS9kQUfgR75whKuy5jIhuiOfQuJ8fjqxV6EGD5duH1Y/FawFUMtMhyeq3Fbnib8A==}
+    engines: {node: '>=8'}
+    dev: false
+
   /ripemd160/2.0.2:
     resolution: {integrity: sha512-ii4iagi25WusVoiC4B4lq7pbXfAp3D9v5CwfkY33vffw2+pkDjY1D8GaN7spsxvCSx8dkPqOZCEZyfxcmJG2IA==}
     dependencies:
@@ -15724,6 +15867,12 @@ packages:
     dependencies:
       inherits: 2.0.4
       safe-buffer: 5.2.1
+    dev: false
+
+  /sha3/2.1.4:
+    resolution: {integrity: sha512-S8cNxbyb0UGUM2VhRD4Poe5N58gJnJsLJ5vC7FYWGUmGhcsj4++WaIOBFVDxlG0W3To6xBuiRh+i0Qp2oNCOtg==}
+    dependencies:
+      buffer: 6.0.3
     dev: false
 
   /shebang-command/2.0.0:

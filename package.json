@@ -15,5 +15,10 @@
   "scripts": {
     "build": "tsc --build --verbose tsconfig.all.json",
     "clean": "pnpm -r run clean"
+  },
+  "pnpm": {
+    "overrides": {
+      "@xpla/xpla.js": "0.2.3"
+    }
   }
 }
