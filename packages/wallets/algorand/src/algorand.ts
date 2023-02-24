@@ -18,9 +18,14 @@ export interface AlgorandIndexerConfig {
 
 /** Algorand Wallet constructor parameters */
 export interface AlgorandWalletParams {
+  /** Algorand Node configuration */
   node?: AlgorandNodeConfig;
+  /** Algorand indexer configuration */
   indexer?: AlgorandIndexerConfig;
+  /** Amount of rounds to wait for transaction confirmation. Defaults to 1000. */
   waitRounds?: number;
+  /** Default account. The wallet assumes this account has already been connected to/enabled. */
+  defaultAccount?: Address;
 }
 
 /** Algorand Wallet configuration */
@@ -56,13 +61,15 @@ export abstract class AlgorandWallet extends Wallet<
   Signature
 > {
   protected config: AlgorandWalletConfig;
-  protected accounts: Address[] = [];
+  protected accounts: Address[];
   protected account: Address | undefined;
   protected networkInfo?: AlgorandNetworkInfo;
 
-  constructor(config: AlgorandWalletParams = {}) {
+  constructor({ defaultAccount, ...config}: AlgorandWalletParams = {}) {
     super();
     this.config = Object.assign({}, DEFAULT_CONFIG, config);
+    this.accounts = defaultAccount ? [ defaultAccount ] : [];
+    this.account = defaultAccount;
   }
 
   protected abstract innerConnect(): Promise<Address[]>;
@@ -104,11 +111,11 @@ export abstract class AlgorandWallet extends Wallet<
     return CHAINS['algorand'];
   }
 
-  getAddress(): string | undefined {
+  getAddress(): Address | undefined {
     return this.account;
   }
 
-  getAddresses(): string[] {
+  getAddresses(): Address[] {
     return this.accounts;
   }
 
