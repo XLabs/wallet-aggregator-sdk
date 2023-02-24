@@ -20,6 +20,7 @@ export interface AlgorandIndexerConfig {
 export interface AlgorandWalletParams {
   node?: AlgorandNodeConfig;
   indexer?: AlgorandIndexerConfig;
+  waitRounds?: number;
 }
 
 /** Algorand Wallet configuration */
@@ -28,6 +29,8 @@ export interface AlgorandWalletConfig {
   node: AlgorandNodeConfig;
   /** Algorand indexer configuration */
   indexer: AlgorandIndexerConfig;
+  /** Amount of rounds to wait for transaction confirmation. Defaults to 1000. */
+  waitRounds: number;
 }
 
 export interface AlgorandNetworkInfo {
@@ -38,6 +41,7 @@ export interface AlgorandNetworkInfo {
 const DEFAULT_CONFIG: AlgorandWalletConfig = {
   node: { url: 'https://node.algoexplorerapi.io' },
   indexer: { url: 'https://indexer.algoexplorerapi.io' },
+  waitRounds: 1000
 }
 
 export type UnsignedTransaction = algosdk.Transaction | Uint8Array;
@@ -51,7 +55,6 @@ export abstract class AlgorandWallet extends Wallet<
   AlgorandMessage,
   Signature
 > {
-  private readonly WAIT_ROUNDS = 5;
   protected config: AlgorandWalletConfig;
   protected accounts: Address[] = [];
   protected account: Address | undefined;
@@ -132,7 +135,7 @@ export abstract class AlgorandWallet extends Wallet<
   async sendTransaction(signedTx: EncodedSignedTransaction): Promise<SendTransactionResult<SubmittedTransactionMap>> {
     const algod = this.buildClient();
     const { txId } = await algod.sendRawTransaction(signedTx).do();
-    const info = await algosdk.waitForConfirmation(algod, txId, this.WAIT_ROUNDS);
+    const info = await algosdk.waitForConfirmation(algod, txId, this.config.waitRounds);
     return {
       id: txId,
       data: info
