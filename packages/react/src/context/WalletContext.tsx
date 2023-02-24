@@ -1,5 +1,5 @@
+import { ChainId, CHAIN_ID_ETH, CHAIN_ID_TERRA2, isEVMChain, isTerraChain, Wallet } from "@xlabs-libs/wallet-aggregator-core";
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { ChainId, CHAIN_ID_ETH, isEVMChain, Wallet } from "@xlabs-libs/wallet-aggregator-core";
 
 export type AvailableWalletsMap = Partial<Record<ChainId, Wallet[]>>;
 export type AvailableWalletsMapBuilderFn = () => Promise<AvailableWalletsMap>;
@@ -9,9 +9,9 @@ interface IWalletContext {
   wallets: WalletMap;
   defaultWallet?: Wallet | undefined;
   availableWallets: AvailableWalletsMap;
-  coalesceEvmChains: boolean;
   changeWallet: (newWallet: Wallet) => void;
   unsetWalletFromChain: (chainId: ChainId) => void;
+  coalesceChainId: (chainId: ChainId) => ChainId;
 }
 
 export const WalletContext = createContext<IWalletContext>({
@@ -19,7 +19,7 @@ export const WalletContext = createContext<IWalletContext>({
   unsetWalletFromChain: () => {},
   availableWallets: {},
   wallets: {},
-  coalesceEvmChains: true
+  coalesceChainId: (chainId: ChainId) => chainId
 });
 
 interface IWalletContextProviderProps {
@@ -31,12 +31,28 @@ interface IWalletContextProviderProps {
    * Aggregate all EVM chains into a single one, indexed by the Ethereum chain id (eth). Enabled by default.
    */
   coalesceEvmChains?: boolean;
+  /**
+   * Aggregate all Terra chains into a single one, indexed by the Terra2 chain id. Enabled by default.
+   */
+  coalesceTerraChains?: boolean;
 }
 
-export const WalletContextProvider = ({ wallets: configureWallets, children, coalesceEvmChains = true }: React.PropsWithChildren<IWalletContextProviderProps>) => {
+export const WalletContextProvider = ({ wallets: configureWallets, children, coalesceEvmChains = true, coalesceTerraChains = true }: React.PropsWithChildren<IWalletContextProviderProps>) => {
   const [ wallets, setWallets ] = useState<WalletMap>({});
   const [ availableWallets, setAvailableWallets ] = useState<AvailableWalletsMap>({});
   const [ defaultWallet, setDefaultWallet ] = useState<Wallet | undefined>();
+
+  const coalesceChainId = useCallback((chainId: ChainId) => {
+    if (coalesceEvmChains && isEVMChain(chainId)) {
+      return CHAIN_ID_ETH;
+    }
+
+    if (coalesceTerraChains && isTerraChain(chainId)) {
+      return CHAIN_ID_TERRA2;
+    }
+
+    return chainId;
+  }, [ coalesceEvmChains, coalesceTerraChains ]);
 
   useEffect(() => {
     const initWallets = async () => {
@@ -52,10 +68,7 @@ export const WalletContextProvider = ({ wallets: configureWallets, children, coa
   const changeWallet = useCallback((newWallet: Wallet) => {
     if (!newWallet) throw new Error('Invalid wallet');
 
-    let chainId = newWallet.getChainId();
-    if (coalesceEvmChains && isEVMChain(chainId)) {
-      chainId = CHAIN_ID_ETH;
-    }
+    let chainId = coalesceChainId(newWallet.getChainId());
 
     setDefaultWallet(newWallet);
     setWallets({
@@ -65,9 +78,7 @@ export const WalletContextProvider = ({ wallets: configureWallets, children, coa
   }, [ wallets ]);
 
   const unsetWalletFromChain = useCallback((chainId: ChainId) => {
-    if (coalesceEvmChains && isEVMChain(chainId)) {
-      chainId = CHAIN_ID_ETH;
-    }
+    chainId = coalesceChainId(chainId);
 
     const { [chainId]: removedWallet, ...otherWallets } = wallets;
 
@@ -86,8 +97,14 @@ export const WalletContextProvider = ({ wallets: configureWallets, children, coa
     availableWallets,
     changeWallet,
     unsetWalletFromChain,
-    coalesceEvmChains
-  }), [ wallets, defaultWallet, availableWallets, unsetWalletFromChain ])
+    coalesceChainId
+  }), [
+    wallets,
+    defaultWallet,
+    availableWallets,
+    unsetWalletFromChain,
+    coalesceChainId
+  ])
 
   return (
     <WalletContext.Provider value={value}>

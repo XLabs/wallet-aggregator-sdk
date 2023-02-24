@@ -1,4 +1,4 @@
-import { ChainId, CHAIN_ID_ETH, isEVMChain, Wallet } from "@xlabs-libs/wallet-aggregator-core";
+import { ChainId, Wallet } from "@xlabs-libs/wallet-aggregator-core";
 import { useCallback, useMemo } from "react";
 import { AvailableWalletsMap, useWalletContext } from "./WalletContext";
 
@@ -7,13 +7,11 @@ import { AvailableWalletsMap, useWalletContext } from "./WalletContext";
  * @returns If the chain id is not undefined, it will return the selected wallet for that specific chain, or undefined if not set. Otherwise, it will retrieve the last configured wallet, regardless of its chain.
  */
 export const useWallet = <W extends Wallet = Wallet>(chainId: ChainId | undefined): W | undefined => {
-    const { wallets, coalesceEvmChains, defaultWallet } = useWalletContext();
+    const { wallets, coalesceChainId, defaultWallet } = useWalletContext();
 
     let wallet: Wallet | undefined;
     if (chainId) {
-        wallet = coalesceEvmChains && isEVMChain(chainId)
-            ? wallets[CHAIN_ID_ETH]
-            : wallets[chainId];
+        wallet = wallets[coalesceChainId(chainId)];
     } else {
         wallet = defaultWallet;
     }
@@ -43,13 +41,13 @@ export const useAvailableChains = (): ChainId[] => {
  * @returns A non-empty array of Wallet objects, or an empty array if no entry has been found for that chain id
  */
 export const useWalletsForChain = (chainId?: ChainId): Wallet[] => {
-    const { coalesceEvmChains } = useWalletContext();
+    const { coalesceChainId } = useWalletContext();
     const walletsMap = useAvailableWallets();
 
     let wallets: Wallet[] = []
 
     if (chainId) {
-        chainId = coalesceEvmChains && isEVMChain(chainId) ? CHAIN_ID_ETH : chainId;
+        chainId = coalesceChainId(chainId);
         wallets = walletsMap[chainId] || [];
     }
 
