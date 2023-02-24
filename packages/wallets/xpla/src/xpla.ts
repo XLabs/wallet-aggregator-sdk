@@ -1,44 +1,8 @@
 import { ChainId, CHAIN_ID_XPLA, NotSupported, SendTransactionResult, Wallet, WalletState } from "@xlabs-libs/wallet-aggregator-core";
-import { Connection, ConnectType, Installation, NetworkInfo, SignBytesResult, TxResult, WalletController, WalletControllerOptions, WalletStates, WalletStatus } from "@xpla/wallet-provider";
+import { Connection, ConnectType, getChainOptions, Installation, NetworkInfo, SignBytesResult, TxResult, WalletController, WalletControllerOptions, WalletStates, WalletStatus } from "@xpla/wallet-provider";
 import { CreateTxOptions } from '@xpla/xpla.js';
 import { Observable, Subscription } from 'rxjs';
-import { defaultIfEmpty, map } from 'rxjs/operators';
-
-export enum Network {
-  Mainnet,
-  Testnet,
-  Classic
-}
-
-const testnet: NetworkInfo = {
-  name: "testnet",
-  chainID: "cube_47-5",
-  lcd: "https://cube-lcd.xpla.dev",
-  walletconnectID: 0,
-};
-
-const mainnet: NetworkInfo = {
-  name: "mainnet",
-  chainID: "dimension_37-1",
-  lcd: "https://dimension-lcd.xpla.dev",
-  walletconnectID: 1,
-};
-
-const walletConnectChainIds: Record<number, NetworkInfo> = {
-  0: testnet,
-  1: mainnet
-};
-
-const getNetworkInfo = (network: Network): NetworkInfo => {
-  switch (network) {
-    case Network.Mainnet:
-      return mainnet;
-    case Network.Testnet:
-      return testnet;
-    default:
-      throw new Error('Unknown network');
-  }
-}
+import { map } from 'rxjs/operators';
 
 interface XplaWalletInfo {
   type: ConnectType;
@@ -49,11 +13,10 @@ interface XplaWalletInfo {
   url?: string;
 }
 
-export const getWallets = async (network: Network, ignoredTypes: ConnectType[] = []): Promise<XplaWallet[]> => {
-  const controllerOptions: WalletControllerOptions = {
-    defaultNetwork: getNetworkInfo(network),
-    walletConnectChainIds
-  };
+export const getWallets = async (ignoredTypes: ConnectType[] = []): Promise<XplaWallet[]> => {
+  const networks = await getChainOptions();
+
+  const controllerOptions: WalletControllerOptions = { ...networks };
 
   const controller = new WalletController(controllerOptions);
 
@@ -62,7 +25,7 @@ export const getWallets = async (network: Network, ignoredTypes: ConnectType[] =
       .map(obj => ({ ...obj, installed }))
       .filter((walletInfo: XplaWalletInfo) => !ignoredTypes.includes(walletInfo.type))
       .map((walletInfo: XplaWalletInfo) => new XplaWallet({
-        controllerOptions,
+        controller,
         walletInfo
       }));
   }
@@ -78,13 +41,13 @@ export const getWallets = async (network: Network, ignoredTypes: ConnectType[] =
       setTimeout(() => {
         sub.unsubscribe();
         resolve(value);
-      }, 500)
+      }, 1000)
     });
   };
 
   // available to connect
   const connections: XplaWallet[] = await waitObservable(controller.availableConnections().pipe(
-    map(arr => toXplaWallet(arr, true)),
+    map(arr => toXplaWallet(arr, true))
   )) || [];
 
   // installable
@@ -96,7 +59,8 @@ export const getWallets = async (network: Network, ignoredTypes: ConnectType[] =
 }
 
 export interface XplaWalletConfig {
-  controllerOptions: WalletControllerOptions;
+  controller?: WalletController;
+  options?: WalletControllerOptions;
   walletInfo: XplaWalletInfo;
 }
 
@@ -130,20 +94,22 @@ export class XplaWallet extends Wallet<
   private state: WalletStates;
   private stateSubscription?: Subscription;
 
-  constructor({ controllerOptions, walletInfo }: XplaWalletConfig) {
+  constructor({ controller, options, walletInfo }: XplaWalletConfig) {
     super();
-    this.controller = new WalletController(controllerOptions);
+    if (!controller && !options) throw new Error('Either controller or options must be provided');
+    this.controller = controller ? controller : new WalletController(options!);
     this.walletInfo = walletInfo;
     this.state = {
       status: WalletStatus.WALLET_NOT_CONNECTED,
-      network: controllerOptions.defaultNetwork
+      network: this.controller.options.defaultNetwork
     }
-    this.stateSubscription = this.controller.states().subscribe((state) => {
-      this.state = state;
-    });
   }
 
   async connect(): Promise<string[]> {
+    this.stateSubscription = this.controller.states().subscribe((state) => {
+      this.state = state;
+    });
+
     await this.controller.connect(
       this.walletInfo.type,
       this.walletInfo.identifier
@@ -157,6 +123,11 @@ export class XplaWallet extends Wallet<
   async disconnect(): Promise<void> {
     this.controller.disconnect();
     this.stateSubscription?.unsubscribe();
+    this.stateSubscription = undefined;
+    this.state = {
+      status: WalletStatus.WALLET_NOT_CONNECTED,
+      network: this.controller.options.defaultNetwork,
+    };
   }
 
   getChainId(): ChainId {

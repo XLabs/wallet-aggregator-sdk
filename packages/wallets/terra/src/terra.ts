@@ -1,55 +1,8 @@
 import { ExtensionOptions } from "@terra-money/terra.js";
-import { Connection, ConnectType, Installation, NetworkInfo, SignBytesResult, TxResult, WalletController, WalletControllerOptions, WalletStates, WalletStatus } from "@terra-money/wallet-provider";
+import { Connection, ConnectType, getChainOptions, Installation, NetworkInfo, SignBytesResult, TxResult, WalletController, WalletControllerOptions, WalletStates, WalletStatus } from "@terra-money/wallet-provider";
 import { ChainId, CHAIN_ID_TERRA, CHAIN_ID_TERRA2, NotSupported, SendTransactionResult, Wallet, WalletState } from "@xlabs-libs/wallet-aggregator-core";
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-
-export enum Network {
-  Mainnet,
-  Testnet,
-  Classic
-}
-
-const mainnet: NetworkInfo = {
-  name: "mainnet",
-  chainID: "phoenix-1",
-  lcd: "https://phoenix-lcd.terra.dev",
-  walletconnectID: 1,
-};
-
-const classic: NetworkInfo = {
-  name: "classic",
-  chainID: "columbus-5",
-  lcd: "https://columbus-lcd.terra.dev",
-  walletconnectID: 2,
-}
-
-const testnet: NetworkInfo = {
-  name: "testnet",
-  chainID: "pisco-1",
-  lcd: "https://pisco-lcd.terra.dev",
-  walletconnectID: 0,
-};
-
-const walletConnectChainIds: Record<number, NetworkInfo> = {
-  0: testnet,
-  1: mainnet,
-  2: classic,
-};
-
-const getNetworkInfo = (network: Network): NetworkInfo => {
-  switch (network) {
-    case Network.Mainnet:
-      return mainnet;
-    case Network.Testnet:
-      return testnet;
-    case Network.Classic:
-      return classic;
-    default:
-      throw new Error('Unknown network');
-  }
-}
 
 interface TerraWalletInfo {
   type: ConnectType;
@@ -60,11 +13,10 @@ interface TerraWalletInfo {
   url?: string;
 }
 
-export const getWallets = async (network: Network, ignoredTypes: ConnectType[] = []): Promise<TerraWallet[]> => {
-  const controllerOptions: WalletControllerOptions = {
-    defaultNetwork: getNetworkInfo(network),
-    walletConnectChainIds
-  };
+export const getWallets = async (ignoredTypes: ConnectType[] = []): Promise<TerraWallet[]> => {
+  const networks = await getChainOptions();
+
+  const controllerOptions: WalletControllerOptions = { ...networks };
 
   const controller = new WalletController(controllerOptions);
 
@@ -73,7 +25,7 @@ export const getWallets = async (network: Network, ignoredTypes: ConnectType[] =
       .map(obj => ({ ...obj, installed }))
       .filter((walletInfo: TerraWalletInfo) => !ignoredTypes.includes(walletInfo.type))
       .map((walletInfo: TerraWalletInfo) => new TerraWallet({
-        controllerOptions,
+        controller,
         walletInfo
       }));
   }
@@ -89,7 +41,7 @@ export const getWallets = async (network: Network, ignoredTypes: ConnectType[] =
       setTimeout(() => {
         sub.unsubscribe();
         resolve(value);
-      }, 500)
+      }, 1000)
     });
   };
 
@@ -107,7 +59,8 @@ export const getWallets = async (network: Network, ignoredTypes: ConnectType[] =
 }
 
 export interface TerraWalletConfig {
-  controllerOptions: WalletControllerOptions;
+  controller?: WalletController;
+  options?: WalletControllerOptions;
   walletInfo: TerraWalletInfo;
 }
 
@@ -144,20 +97,22 @@ export class TerraWallet extends Wallet<
   private state: WalletStates;
   private stateSubscription?: Subscription;
 
-  constructor({ controllerOptions, walletInfo }: TerraWalletConfig) {
+  constructor({ controller, options, walletInfo }: TerraWalletConfig) {
     super();
-    this.controller = new WalletController(controllerOptions);
+    if (!controller && !options) throw new Error('Either controller or options must be provided');
+    this.controller = controller ? controller : new WalletController(options!);
     this.walletInfo = walletInfo;
     this.state = {
       status: WalletStatus.WALLET_NOT_CONNECTED,
-      network: controllerOptions.defaultNetwork
+      network: this.controller.options.defaultNetwork
     }
-    this.stateSubscription = this.controller.states().subscribe((state) => {
-      this.state = state;
-    });
   }
 
   async connect(): Promise<string[]> {
+    this.stateSubscription = this.controller.states().subscribe((state) => {
+      this.state = state;
+    });
+
     await this.controller.connect(
       this.walletInfo.type,
       this.walletInfo.identifier
@@ -171,6 +126,11 @@ export class TerraWallet extends Wallet<
   async disconnect(): Promise<void> {
     this.controller.disconnect();
     this.stateSubscription?.unsubscribe();
+    this.stateSubscription = undefined;
+    this.state = {
+      status: WalletStatus.WALLET_NOT_CONNECTED,
+      network: this.controller.options.defaultNetwork,
+    };
   }
 
   getChainId(): ChainId {
