@@ -18,11 +18,19 @@
   ],
   "devDependencies": {
     "@types/node": "^18.11.9",
+    "@types/w3c-web-hid": "^1.0.3",
+    "@types/w3c-web-usb": "^1.0.6",
+    "@types/web-bluetooth": "^0.0.16",
     "shx": "^0.3.4",
     "typescript": "^4.4.2"
   },
   "dependencies": {
     "@blockshake/defly-connect": "^1.1.1",
+    "@ledgerhq/hw-app-algorand": "^6.27.12",
+    "@ledgerhq/hw-transport": "^6.28.1",
+    "@ledgerhq/hw-transport-web-ble": "^6.27.12",
+    "@ledgerhq/hw-transport-webhid": "^6.27.12",
+    "@ledgerhq/hw-transport-webusb": "^6.27.12",
     "@perawallet/connect": "^1.1.0",
     "@randlabs/myalgo-connect": "^1.4.0",
     "@xlabs-libs/wallet-aggregator-core": "workspace:^",

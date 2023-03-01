@@ -145,21 +145,37 @@ importers:
   packages/wallets/algorand:
     specifiers:
       '@blockshake/defly-connect': ^1.1.1
+      '@ledgerhq/hw-app-algorand': ^6.27.12
+      '@ledgerhq/hw-transport': ^6.28.1
+      '@ledgerhq/hw-transport-web-ble': ^6.27.12
+      '@ledgerhq/hw-transport-webhid': ^6.27.12
+      '@ledgerhq/hw-transport-webusb': ^6.27.12
       '@perawallet/connect': ^1.1.0
       '@randlabs/myalgo-connect': ^1.4.0
       '@types/node': ^18.11.9
+      '@types/w3c-web-hid': ^1.0.3
+      '@types/w3c-web-usb': ^1.0.6
+      '@types/web-bluetooth': ^0.0.16
       '@xlabs-libs/wallet-aggregator-core': workspace:^
       algosdk: ^1.24.0
       shx: ^0.3.4
       typescript: ^4.4.2
     dependencies:
       '@blockshake/defly-connect': 1.1.1_algosdk@1.24.0
+      '@ledgerhq/hw-app-algorand': 6.27.12
+      '@ledgerhq/hw-transport': 6.28.1
+      '@ledgerhq/hw-transport-web-ble': 6.27.12
+      '@ledgerhq/hw-transport-webhid': 6.27.12
+      '@ledgerhq/hw-transport-webusb': 6.27.12
       '@perawallet/connect': 1.1.0_algosdk@1.24.0
       '@randlabs/myalgo-connect': 1.4.2
       '@xlabs-libs/wallet-aggregator-core': link:../core
       algosdk: 1.24.0
     devDependencies:
       '@types/node': 18.11.11
+      '@types/w3c-web-hid': 1.0.3
+      '@types/w3c-web-usb': 1.0.6
+      '@types/web-bluetooth': 0.0.16
       shx: 0.3.4
       typescript: 4.9.3
 
@@ -3591,12 +3607,36 @@ packages:
       semver: 7.3.8
     dev: false
 
+  /@ledgerhq/devices/8.0.0:
+    resolution: {integrity: sha512-gSnRT0KPca+LIpaC6D/WZQjOAlSI5uCvK1dmxXtKhODLAj735rX5Z3SnGnLUavRCHNbUi44FzgvloF5BKTkh7A==}
+    dependencies:
+      '@ledgerhq/errors': 6.12.3
+      '@ledgerhq/logs': 6.10.1
+      rxjs: 6.6.7
+      semver: 7.3.8
+    dev: false
+
   /@ledgerhq/errors/5.50.0:
     resolution: {integrity: sha512-gu6aJ/BHuRlpU7kgVpy2vcYk6atjB4iauP2ymF7Gk0ez0Y/6VSMVSJvubeEQN+IV60+OBK0JgeIZG7OiHaw8ow==}
     dev: false
 
   /@ledgerhq/errors/6.12.2:
     resolution: {integrity: sha512-qYTkxlWHVItxPAb9pQewfVoN8nFvvFYzWEyzVRX/NuO/g3JKL5kef5lLuqTtUIFOvFROMLi3EBxU+vbvV0ktow==}
+    dev: false
+
+  /@ledgerhq/errors/6.12.3:
+    resolution: {integrity: sha512-djiMSgB/7hnK3aLR/c5ZMMivxjcI7o2+y3VKcsZZpydPoVf9+FXqeJPRfOwmJ0JxbQ//LinUfWpIfHew8LkaVw==}
+    dev: false
+
+  /@ledgerhq/hw-app-algorand/6.27.12:
+    resolution: {integrity: sha512-i7xjNn4ZdQxMj9qnfNS6bwonrNKn2JaNPlfIRyoktE+HcJhGQnHWHAiHTjxDrJCr3z3B4Rcl+pnLycEBy0FS0g==}
+    dependencies:
+      '@ledgerhq/errors': 6.12.3
+      '@ledgerhq/hw-transport': 6.28.1
+      bip32-path: 0.4.2
+      hi-base32: 0.5.1
+      js-sha512: 0.8.0
+      tweetnacl: 1.0.3
     dev: false
 
   /@ledgerhq/hw-app-eth/6.27.1:
@@ -3624,6 +3664,16 @@ packages:
       u2f-api: 0.2.7
     dev: false
 
+  /@ledgerhq/hw-transport-web-ble/6.27.12:
+    resolution: {integrity: sha512-0GNZXstgZldEsBqc3OwE+YPINY7Srd2aUukMbDVMFhaCw21FWYGxjNwwxP1oPhb8EQGoEqqwpWFcAzp1IYl7ig==}
+    dependencies:
+      '@ledgerhq/devices': 8.0.0
+      '@ledgerhq/errors': 6.12.3
+      '@ledgerhq/hw-transport': 6.28.1
+      '@ledgerhq/logs': 6.10.1
+      rxjs: 6.6.7
+    dev: false
+
   /@ledgerhq/hw-transport-webhid/6.27.1:
     resolution: {integrity: sha512-u74rBYlibpbyGblSn74fRs2pMM19gEAkYhfVibq0RE1GNFjxDMFC1n7Sb+93Jqmz8flyfB4UFJsxs8/l1tm2Kw==}
     dependencies:
@@ -3633,12 +3683,30 @@ packages:
       '@ledgerhq/logs': 6.10.1
     dev: false
 
+  /@ledgerhq/hw-transport-webhid/6.27.12:
+    resolution: {integrity: sha512-Yhy5dOKeJIU24Dh9xQjrStc++NviPjRSGHsbc1PeyEjgPEGc8q8wtvm7WFBDzmymBwMhIA5eoNj3fGLk/voXQQ==}
+    dependencies:
+      '@ledgerhq/devices': 8.0.0
+      '@ledgerhq/errors': 6.12.3
+      '@ledgerhq/hw-transport': 6.28.1
+      '@ledgerhq/logs': 6.10.1
+    dev: false
+
   /@ledgerhq/hw-transport-webusb/6.27.1:
     resolution: {integrity: sha512-n0ygJSeRpznrUfwtbDCLQOM5mA23YT/ngYY8HU46dzsVJHrHQ4jwBNJU48iKB+a9GhHyPAUpPNlWGTogvoVUxg==}
     dependencies:
       '@ledgerhq/devices': 6.27.1
       '@ledgerhq/errors': 6.12.2
       '@ledgerhq/hw-transport': 6.27.1
+      '@ledgerhq/logs': 6.10.1
+    dev: false
+
+  /@ledgerhq/hw-transport-webusb/6.27.12:
+    resolution: {integrity: sha512-U96UWLZIurD9ifHlm77PAgBbvDCe99DAJk64O2SdR41WRF3WaRq/pjrzCq2UvvammdCd1p7nS4zbhlse0wZplg==}
+    dependencies:
+      '@ledgerhq/devices': 8.0.0
+      '@ledgerhq/errors': 6.12.3
+      '@ledgerhq/hw-transport': 6.28.1
       '@ledgerhq/logs': 6.10.1
     dev: false
 
@@ -3655,6 +3723,14 @@ packages:
     dependencies:
       '@ledgerhq/devices': 6.27.1
       '@ledgerhq/errors': 6.12.2
+      events: 3.3.0
+    dev: false
+
+  /@ledgerhq/hw-transport/6.28.1:
+    resolution: {integrity: sha512-RaZe+abn0zBIz82cE9tp7Y7aZkHWWbEaE2yJpfxT8AhFz3fx+BU0kLYzuRN9fmA7vKueNJ1MTVUCY+Ex9/CHSQ==}
+    dependencies:
+      '@ledgerhq/devices': 8.0.0
+      '@ledgerhq/errors': 6.12.3
       events: 3.3.0
     dev: false
 
@@ -6411,6 +6487,18 @@ packages:
     resolution: {integrity: sha512-F5DIZ36YVLE+PN+Zwws4kJogq47hNgX3Nx6WyDJ3kcplxyke3XIzB8uK5n/Lpm1HBsbGzd6nmGehL8cPekP+Tg==}
     dev: false
 
+  /@types/w3c-web-hid/1.0.3:
+    resolution: {integrity: sha512-eTQRkPd2JukZfS9+kRtrBAaTCCb6waGh5X8BJHmH1MiVQPLMYwm4+EvhwFfOo9SDna15o9dFAwmWwN6r/YM53A==}
+    dev: true
+
+  /@types/w3c-web-usb/1.0.6:
+    resolution: {integrity: sha512-cSjhgrr8g4KbPnnijAr/KJDNKa/bBa+ixYkywFRvrhvi9n1WEl7yYbtRyzE6jqNQiSxxJxoAW3STaOQwJHndaw==}
+    dev: true
+
+  /@types/web-bluetooth/0.0.16:
+    resolution: {integrity: sha512-oh8q2Zc32S6gd/j50GowEjKLoOVOwHP/bWVjKJInBwQqdOYMdPrf1oVlelTlyfFK3CKxL1uahMDAr+vy8T7yMQ==}
+    dev: true
+
   /@types/web3/1.2.2:
     resolution: {integrity: sha512-eFiYJKggNrOl0nsD+9cMh2MLk4zVBfXfGnVeRFbpiZzBE20eet4KLA3fXcjSuHaBn0RnQzwLAGdgzgzdet4C0A==}
     deprecated: This is a stub types definition. web3 provides its own type definitions, so you do not need this installed.
@@ -7966,6 +8054,10 @@ packages:
     resolution: {integrity: sha512-p2q/t/mhvuOj/UeLlV6566GD/guowlr0hHxClI0W9m7MWYkL1F0hLo+0Aexs9HSPCtR1SXQ0TD3MMKrXZajbiQ==}
     dependencies:
       file-uri-to-path: 1.0.0
+
+  /bip32-path/0.4.2:
+    resolution: {integrity: sha512-ZBMCELjJfcNMkz5bDuJ1WrYvjlhEF5k6mQ8vUr4N7MbVRsXei7ZOg8VhhwMfNiW68NWmLkgkc6WvTickrLGprQ==}
+    dev: false
 
   /bip32/2.0.6:
     resolution: {integrity: sha512-HpV5OMLLGTjSVblmrtYRfFFKuQB+GArM0+XP8HGWfJ5vxYBqo+DesvJwOdC2WJ3bCkZShGf0QIfoIpeomVzVdA==}
