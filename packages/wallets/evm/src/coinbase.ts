@@ -1,7 +1,5 @@
+import { CoinbaseWalletConnector } from '@wagmi/core/connectors/coinbaseWallet';
 import { EVMWallet, EVMWalletConfig } from "./evm";
-import { CoinbaseWalletSDK, CoinbaseWalletProvider } from "@coinbase/wallet-sdk";
-import { EVM_CHAINS } from "./constants";
-import { ethers } from "ethers";
 
 /** Coinbase Wallet SDK Constructor Options */
 export interface CoinbaseWalletSDKOptions {
@@ -28,44 +26,23 @@ export interface CoinbaseWalletSDKOptions {
 export interface CoinbaseWalletConfig extends EVMWalletConfig {
     /** Coinbase Wallet SDK Options */
     options: CoinbaseWalletSDKOptions;
-    /** EVM JSON RPC url */
-    rpcUrl: string;
 }
 
-export class CoinbaseWallet extends EVMWallet {
-    private readonly wallet: CoinbaseWalletSDK;
-    private readonly rpcUrl: string;
-    private coinbaseProvider?: CoinbaseWalletProvider;
+export class CoinbaseWallet extends EVMWallet<CoinbaseWalletConnector> {
+    private readonly options: CoinbaseWalletSDKOptions;
 
-    constructor({ options, rpcUrl, ...config }: CoinbaseWalletConfig) {
+    constructor({ options, ...config }: CoinbaseWalletConfig) {
         super(config);
-        this.rpcUrl = rpcUrl;
-        this.wallet = new CoinbaseWalletSDK({ ...options });
+        this.options = options;
     }
 
-    protected innerConnect(): Promise<string[]> {
-        this.coinbaseProvider = this.wallet.makeWeb3Provider(
-            this.rpcUrl,
-            this.preferredChain || EVM_CHAINS['ethereum']
-        );
-
-        this.provider = new ethers.providers.Web3Provider(
-            this.coinbaseProvider as any,
-            'any'
-        );
-
-        this.coinbaseProvider.on('accountsChanged', (accounts: string[]) => this.onAccountsChanged(accounts));
-        this.coinbaseProvider.on('chainChanged', () => this.onChainChanged());
-        this.coinbaseProvider.on('disconnect', () => this.disconnect());
-
-        return this.provider.send('eth_requestAccounts', [])
-    }
-
-    async innerDisconnect(): Promise<void> {
-        await this.coinbaseProvider?.removeAllListeners();
-        await this.coinbaseProvider?.disconnect();
-        await this.wallet.disconnect();
-        this.coinbaseProvider = undefined;
+    protected createConnector(): CoinbaseWalletConnector {
+        return new CoinbaseWalletConnector({
+            chains: this.chains,
+            options: {
+                ...this.options
+            }
+        });
     }
 
     getName(): string {

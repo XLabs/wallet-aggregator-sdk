@@ -1,43 +1,11 @@
+import { LedgerConnector } from '@wagmi/core/connectors/ledger';
 import { EVMWallet } from "./evm";
-import { loadConnectKit, SupportedProviders, EthereumProvider } from '@ledgerhq/connect-kit-loader';
-import { ethers } from "ethers";
 
-export class LedgerWallet extends EVMWallet {
-    private ledgerProvider?: EthereumProvider;
-
-    async innerConnect(): Promise<string[]> {
-        const kit = await loadConnectKit();
-
-        const support = kit.checkSupport({
-            providerType: SupportedProviders.Ethereum,
-            chainId: this.preferredChain
+export class LedgerWallet extends EVMWallet<LedgerConnector> {
+    protected createConnector(): LedgerConnector {
+        return new LedgerConnector({
+            chains: this.chains
         });
-
-        if (support.isLedgerConnectSupported) {
-            throw new Error('Ledger connect is unsupported');
-        }
-
-        if (!support.isChainIdSupported) {
-            throw new Error(this.preferredChain ? `Unsupported chain id ${this.preferredChain}` : 'Unsupported chain id');
-        }
-
-        this.ledgerProvider = await kit.getProvider() as EthereumProvider;
-
-        this.provider = new ethers.providers.Web3Provider(this.ledgerProvider, 'any');
-
-        this.ledgerProvider.on('accountsChanged', (accounts: string[]) => this.onAccountsChanged(accounts));
-        this.ledgerProvider.on('chainChanged', () => this.onChainChanged());
-        this.ledgerProvider.on('disconnect', () => this.disconnect());
-
-        return await this.provider.send('eth_requestAccounts', []);
-    }
-
-    async innerDisconnect(): Promise<void> {
-        if (this.ledgerProvider && this.ledgerProvider.disconnect) {
-            await this.ledgerProvider.disconnect();
-        }
-        this.provider?.removeAllListeners();
-        this.provider = undefined;
     }
 
     getName(): string {

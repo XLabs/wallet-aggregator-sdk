@@ -4,3 +4,4 @@ export * from './coinbase';
 export * from './walletConnect';
 export * from './ledger';
 export * from './constants';
+export * from './injected';
