@@ -1,7 +1,7 @@
 import { CoinbaseWalletConnector } from '@wagmi/core/connectors/coinbaseWallet';
 import { EVMWallet, EVMWalletConfig } from "./evm";
 
-/** Coinbase Wallet SDK Constructor Options */
+/** Coinbase Wallet SDK Options */
 export interface CoinbaseWalletSDKOptions {
     /** Application name */
     appName: string;
@@ -21,27 +21,26 @@ export interface CoinbaseWalletSDKOptions {
     headlessMode?: boolean;
     /** @optional whether or not to reload dapp automatically after disconnect, defaults to true */
     reloadOnDisconnect?: boolean;
+    /** Fallback Ethereum JSON RPC URL */
+    jsonRpcUrl?: string;
+    /** Fallback Ethereum Chain ID */
+    chainId?: number;
 }
 
-export interface CoinbaseWalletConfig extends EVMWalletConfig {
+export interface CoinbaseWalletConfig extends EVMWalletConfig<CoinbaseWalletSDKOptions> {
     /** Coinbase Wallet SDK Options */
     options: CoinbaseWalletSDKOptions;
 }
 
 export class CoinbaseWallet extends EVMWallet<CoinbaseWalletConnector> {
-    private readonly options: CoinbaseWalletSDKOptions;
-
-    constructor({ options, ...config }: CoinbaseWalletConfig) {
+    constructor(config: CoinbaseWalletConfig) {
         super(config);
-        this.options = options;
     }
 
     protected createConnector(): CoinbaseWalletConnector {
         return new CoinbaseWalletConnector({
             chains: this.chains,
-            options: {
-                ...this.options
-            }
+            options: this.connectorOptions
         });
     }
 

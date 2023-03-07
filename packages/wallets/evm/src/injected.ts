@@ -1,7 +1,7 @@
 import { InjectedConnector } from '@wagmi/core/connectors/injected';
-import { EVMWallet } from "./evm";
+import { EVMWallet, EVMWalletConfig } from "./evm";
 
-enum InjectedWallets {
+export enum InjectedWallets {
     MetaMask = 'MetaMask',
     BraveWallet = 'Brave Wallet',
     KuCoinWallet = 'KuCoin Wallet',
@@ -10,9 +10,23 @@ enum InjectedWallets {
     Generic = 'Injected Wallet',
 }
 
+interface InjectedWalletOptions {
+    name?: string | ((detectedName: string | string[]) => string);
+}
+
+export interface InjectedWalletConfig extends EVMWalletConfig<InjectedWalletOptions> {
+}
+
 export class InjectedWallet extends EVMWallet<InjectedConnector> {
+    constructor(config: InjectedWalletConfig = {}) {
+        super(config);
+    }
+
     createConnector(): InjectedConnector {
-        return new InjectedConnector({ chains: this.chains, });
+        return new InjectedConnector({
+            chains: this.chains,
+            options: this.connectorOptions
+        });
     }
 
     getName(): InjectedWallets {

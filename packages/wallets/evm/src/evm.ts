@@ -1,6 +1,6 @@
 import { TransactionReceipt, TransactionRequest } from "@ethersproject/abstract-provider";
-import { Chain, Client, configureChains, Connector, ConnectorData, createClient } from "@wagmi/core";
-import { DEFAULT_CHAINS } from "./parameters";
+import { Client, configureChains, Connector, ConnectorData, createClient } from "@wagmi/core";
+import { Chain, DEFAULT_CHAINS } from "./chains";
 import { publicProvider } from "@wagmi/core/providers/public";
 import { Address, ChainId, CHAIN_ID_ETH, NotConnected, NotSupported, SendTransactionResult, Signature, Wallet, WalletEvents, WalletState } from "@xlabs-libs/wallet-aggregator-core";
 import { ethers, utils } from "ethers";
@@ -21,9 +21,10 @@ enum ERROR_CODES {
 }
 
 /** EVMWallet config options */
-export interface EVMWalletConfig {
+export interface EVMWalletConfig<COpts = any> {
   /**
-   * A map of AddEthereumChainParameter defined as in the {@link https://eips.ethereum.org/EIPS/eip-3085 EIP-3085} indexed by EVM chain ids.
+   * An array of evm chain config objects as defined by wagmi's Chain type.
+   * While the information is the same as in the {@link https://eips.ethereum.org/EIPS/eip-3085 EIP-3085}, the structure is slightly different
    */
   chains?: Chain[];
   /**
@@ -38,6 +39,10 @@ export interface EVMWalletConfig {
    * Amount of confirmations/blocks to wait a transaction for
    */
   confirmations?: number;
+  /**
+   * Options specific to the connection method
+   */
+  connectorOptions?: COpts;
 }
 
 export type EthereumMessage = string | ethers.utils.Bytes;
@@ -60,7 +65,7 @@ class SwitchChainError extends Error {
 /**
  * An abstraction over EVM compatible blockchain wallets
  */
-export abstract class EVMWallet<C extends Connector = Connector> extends Wallet<
+export abstract class EVMWallet<C extends Connector = Connector, COpts = any> extends Wallet<
   TransactionRequest,
   TransactionRequest,
   TransactionReceipt,
@@ -71,6 +76,7 @@ export abstract class EVMWallet<C extends Connector = Connector> extends Wallet<
 > {
   protected chains: Chain[];
   protected connector: C;
+  protected connectorOptions: COpts;
   protected preferredChain?: EVMChainId;
 
   private addresses: Address[] = [];
@@ -82,12 +88,15 @@ export abstract class EVMWallet<C extends Connector = Connector> extends Wallet<
   private provider?: ethers.providers.Web3Provider;
   private switchingChain = false;
 
-  constructor({ chains, confirmations, preferredChain, autoSwitch = false }: EVMWalletConfig = {}) {
+  constructor({ chains, confirmations, preferredChain, autoSwitch = false, connectorOptions }: EVMWalletConfig<COpts> = {}) {
     super();
     this.chains = chains || DEFAULT_CHAINS;
     this.preferredChain = preferredChain;
     this.autoSwitch = autoSwitch;
     this.confirmations = confirmations;
+    this.connectorOptions = connectorOptions || {} as COpts;
+
+    // create here so that injected wallets can be detected before connecting
     this.connector = this.createConnector();
   }
 
@@ -121,7 +130,6 @@ export abstract class EVMWallet<C extends Connector = Connector> extends Wallet<
   protected abstract createConnector(): C;
 
   private async enforcePrefferedChain(): Promise<void> {
-    if (!this.connector) throw new NotConnected();
     if (!this.connector.switchChain) throw new NotSupported();
     if (!this.preferredChain) return;
 
@@ -214,9 +222,17 @@ export abstract class EVMWallet<C extends Connector = Connector> extends Wallet<
     return new Uint8Array(Buffer.from(signature.substring(2), 'hex'))
   }
 
+  /**
+   * @description Try to switch the evm chain the wallet is connected to through the {@link https://eips.ethereum.org/EIPS/eip-3326 EIP-3326} `wallet_switchEthereumChain` method, or throw if the wallet does not support it.
+   * Should the chain be missing from the provider, it will try to add it through the {@link https://eips.ethereum.org/EIPS/eip-3085 EIP-3085} `wallet_addEthereumChain` method, using the information stored in the map `chainParameters` injected through the constructor.
+   * If a switch chain request is already in progress, it will ignore the new request and return without doing anything.
+   *
+   * @param ethChainId The EVM chain id of the chain to switch to
+   */
   async switchChain(ethChainId: EVMChainId): Promise<void> {
     if (!this.isConnected()) throw new NotConnected();
     if (!this.connector?.switchChain) throw new NotSupported();
+
     // some wallets like metamask throw an error if the provider makes multiple requests
     // while others will trigger as many operations as are requested
     if (this.switchingChain) return;
@@ -239,7 +255,11 @@ export abstract class EVMWallet<C extends Connector = Connector> extends Wallet<
     }
   }
 
-  private addChain(ethChainId: EVMChainId): Promise<void> {
+  /**
+   * @description Try to add a new chain to the wallet through the {@link https://eips.ethereum.org/EIPS/eip-3085 EIP-3085} `wallet_addEthereumChain` method.
+   * The chain information is looked up in the configured `chains` array.
+   */
+  public addChain(ethChainId: EVMChainId): Promise<void> {
     const chain = this.chains.find((chain) => chain.id === ethChainId);
     if (!chain) {
       throw new SwitchChainError(`Chain ${ethChainId} not configured`, ERROR_CODES.CHAIN_NOT_ADDED);
@@ -247,7 +267,7 @@ export abstract class EVMWallet<C extends Connector = Connector> extends Wallet<
 
     return this.provider!.send("wallet_addEthereumChain", [
       {
-        chainId: ethers.utils.hexlify(chain.id),
+        chainId: ethers.utils.hexValue(chain.id),
         chainName: chain.name,
         nativeCurrency: chain.nativeCurrency,
         rpcUrls: [chain.rpcUrls.public?.http[0] ?? ''],

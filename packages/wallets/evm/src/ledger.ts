@@ -1,10 +1,27 @@
 import { LedgerConnector } from '@wagmi/core/connectors/ledger';
-import { EVMWallet } from "./evm";
+import { EVMWallet, EVMWalletConfig } from "./evm";
+
+interface LedgerConnectOptions {
+    bridge?: string;
+    chainId?: number;
+    enableDebugLogs?: boolean;
+    rpc?: {
+        [chainId: number]: string;
+    }
+}
+
+export interface LedgerWalletConfig extends EVMWalletConfig<LedgerConnectOptions> {
+}
 
 export class LedgerWallet extends EVMWallet<LedgerConnector> {
+    constructor(config: LedgerWalletConfig) {
+        super(config);
+    }
+
     protected createConnector(): LedgerConnector {
         return new LedgerConnector({
-            chains: this.chains
+            chains: this.chains,
+            options: this.connectorOptions
         });
     }
 

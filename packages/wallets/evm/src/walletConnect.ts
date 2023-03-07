@@ -6,19 +6,14 @@ export enum WalletConnectVersion {
     V2 = '2'
 }
 
-interface WalletConnectWalletConfig extends EVMWalletConfig {
-    version: WalletConnectVersion,
-    projectId?: string,
+type WalletConnectOptions = (ConstructorParameters<typeof WalletConnectConnector>)[0]['options'];
+
+export interface WalletConnectWalletConfig extends EVMWalletConfig<WalletConnectOptions> {
 }
 
 export class WalletConnectWallet extends EVMWallet<WalletConnectConnector> {
-    private version: WalletConnectVersion;
-    private projectId?: string;
-
-    constructor(config: WalletConnectWalletConfig = { version: WalletConnectVersion.V1 }) {
+    constructor(config: WalletConnectWalletConfig = {}) {
         super(config);
-        this.version = config.version;
-        this.projectId = config.projectId;
     }
 
     protected createConnector(): WalletConnectConnector {
@@ -26,14 +21,14 @@ export class WalletConnectWallet extends EVMWallet<WalletConnectConnector> {
             chainId: this.preferredChain
         }
 
-        if (this.version === WalletConnectVersion.V2) {
-            if (!this.projectId) {
+        if (this.connectorOptions.version === WalletConnectVersion.V2) {
+            if (!this.connectorOptions.projectId) {
                 throw new Error("WalletConnect V2 requires a projectId");
             }
             options = {
                 ...options,
-                version: this.version,
-                projectId: this.projectId
+                version: this.connectorOptions.version,
+                projectId: this.connectorOptions.projectId
             }
         }
 
