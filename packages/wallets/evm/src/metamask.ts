@@ -1,23 +1,7 @@
-import detectEthereumProvider from "@metamask/detect-provider";
-import { ethers } from 'ethers';
 import { EVMWallet } from "./evm";
+import { MetaMaskConnector } from '@wagmi/core/connectors/metaMask';
 
-// detectEthereumProvider does not export its return type interface
-export interface MetaMaskEthereumProvider {
-  isMetaMask?: boolean;
-  once(eventName: string | symbol, listener: (...args: any[]) => void): this;
-  on(eventName: string | symbol, listener: (...args: any[]) => void): this;
-  off(eventName: string | symbol, listener: (...args: any[]) => void): this;
-  addListener(eventName: string | symbol, listener: (...args: any[]) => void): this;
-  removeListener(eventName: string | symbol, listener: (...args: any[]) => void): this;
-  removeAllListeners(event?: string | symbol): this;
-}
-
-type DetectedProvider = MetaMaskEthereumProvider & { providers?: any[] };
-
-export class MetamaskWallet extends EVMWallet {
-  private metamaskProvider?: MetaMaskEthereumProvider;
-
+export class MetamaskWallet extends EVMWallet<MetaMaskConnector> {
   getUrl(): string {
     return 'https://metamask.io';
   }
@@ -26,36 +10,10 @@ export class MetamaskWallet extends EVMWallet {
     return 'Metamask';
   }
 
-  async innerConnect(): Promise<string[]> {
-    let detectedProvider = await detectEthereumProvider<DetectedProvider>({
-      mustBeMetaMask: true
-    }) || undefined;
-
-    if (!detectedProvider) throw new Error('Failed to detect provider')
-
-    // other extensions (e.g. coinbase) might wrap the existing metamask provider
-    if (detectedProvider.providers && Array.isArray(detectedProvider.providers)) {
-      detectedProvider = detectedProvider.providers.find(p => p.isMetaMask);
-      if (!detectedProvider) throw new Error('Detected provider is not metamask');
-    }
-
-    this.metamaskProvider = detectedProvider as MetaMaskEthereumProvider;
-
-    this.provider = new ethers.providers.Web3Provider(
-      this.metamaskProvider,
-      'any'
-    );
-
-    this.metamaskProvider!.on('accountsChanged', (accounts: string[]) => this.onAccountsChanged(accounts));
-    this.metamaskProvider!.on('chainChanged', () => this.onChainChanged());
-    this.metamaskProvider!.on('disconnect', () => this.disconnect());
-
-    return await this.provider.send('eth_requestAccounts', [])
-  }
-
-  async innerDisconnect(): Promise<void> {
-    this.metamaskProvider?.removeAllListeners();
-    this.metamaskProvider = undefined;
+  protected createConnector(): MetaMaskConnector {
+    return new MetaMaskConnector({
+      chains: this.chains
+    });
   }
 
   getIcon(): string {
