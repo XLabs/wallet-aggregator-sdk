@@ -25,6 +25,7 @@ export interface EVMWalletConfig<COpts = any> {
   /**
    * An array of evm chain config objects as defined by wagmi's Chain type.
    * While the information is the same as in the {@link https://eips.ethereum.org/EIPS/eip-3085 EIP-3085}, the structure is slightly different
+   * Defaults to all chains
    */
   chains?: Chain[];
   /**
