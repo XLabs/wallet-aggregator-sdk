@@ -1,5 +1,19 @@
-import { ChainId, CHAIN_ID_ETH, CHAIN_ID_TERRA2, isEVMChain, isTerraChain, Wallet } from "@xlabs-libs/wallet-aggregator-core";
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import {
+  ChainId,
+  CHAIN_ID_ETH,
+  CHAIN_ID_TERRA2,
+  isEVMChain,
+  isTerraChain,
+  Wallet,
+} from "@xlabs-libs/wallet-aggregator-core";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 export type AvailableWalletsMap = Partial<Record<ChainId, Wallet[]>>;
 export type AvailableWalletsMapBuilderFn = () => Promise<AvailableWalletsMap>;
@@ -21,7 +35,7 @@ export const WalletContext = createContext<IWalletContext>({
   unsetWalletFromChain: () => {},
   availableWallets: {},
   wallets: {},
-  coalesceChainId: (chainId: ChainId) => chainId
+  coalesceChainId: (chainId: ChainId) => chainId,
 });
 
 interface IWalletContextProviderProps {
@@ -39,91 +53,116 @@ interface IWalletContextProviderProps {
   coalesceTerraChains?: boolean;
 }
 
-export const WalletContextProvider = ({ wallets: configureWallets, children, coalesceEvmChains = true, coalesceTerraChains = true }: React.PropsWithChildren<IWalletContextProviderProps>) => {
-  const [ wallets, setWallets ] = useState<WalletMap>({});
-  const [ availableWallets, setAvailableWallets ] = useState<AvailableWalletsMap>({});
-  const [ defaultWallet, setDefaultWallet ] = useState<Wallet | undefined>();
+export const WalletContextProvider = ({
+  wallets: configureWallets,
+  children,
+  coalesceEvmChains = true,
+  coalesceTerraChains = true,
+}: React.PropsWithChildren<IWalletContextProviderProps>) => {
+  const [wallets, setWallets] = useState<WalletMap>({});
+  const [availableWallets, setAvailableWallets] = useState<AvailableWalletsMap>(
+    {}
+  );
+  const [defaultWallet, setDefaultWallet] = useState<Wallet | undefined>();
 
-  const coalesceChainId = useCallback((chainId: ChainId) => {
-    if (coalesceEvmChains && isEVMChain(chainId)) {
-      return CHAIN_ID_ETH;
-    }
+  const coalesceChainId = useCallback(
+    (chainId: ChainId) => {
+      if (coalesceEvmChains && isEVMChain(chainId)) {
+        return CHAIN_ID_ETH;
+      }
 
-    if (coalesceTerraChains && isTerraChain(chainId)) {
-      return CHAIN_ID_TERRA2;
-    }
+      if (coalesceTerraChains && isTerraChain(chainId)) {
+        return CHAIN_ID_TERRA2;
+      }
 
-    return chainId;
-  }, [ coalesceEvmChains, coalesceTerraChains ]);
+      return chainId;
+    },
+    [coalesceEvmChains, coalesceTerraChains]
+  );
 
   useEffect(() => {
     const initWallets = async () => {
-      const available = typeof configureWallets === 'function'
-        ? await configureWallets()
-        : configureWallets;
+      const available =
+        typeof configureWallets === "function"
+          ? await configureWallets()
+          : configureWallets;
 
       setAvailableWallets(available);
-    }
+    };
 
     // TODO: maybe handle init errors by providing a flag/message to child components
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     initWallets();
-  }, [ configureWallets ])
+  }, [configureWallets]);
 
-  const changeWallet = useCallback((newWallet: Wallet) => {
-    if (!newWallet) throw new Error('Invalid wallet');
+  const changeWallet = useCallback(
+    (newWallet: Wallet) => {
+      if (!newWallet) throw new Error("Invalid wallet");
 
-    const chainId = coalesceChainId(newWallet.getChainId());
+      const chainId = coalesceChainId(newWallet.getChainId());
 
-    setDefaultWallet(newWallet);
-    setWallets({
-      ...wallets,
-      [ chainId ]: newWallet
-    });
-  }, [ wallets ]);
+      setDefaultWallet(newWallet);
+      setWallets({
+        ...wallets,
+        [chainId]: newWallet,
+      });
+    },
+    [wallets]
+  );
 
-  const unsetWalletFromChain = useCallback((chainId: ChainId) => {
-    chainId = coalesceChainId(chainId);
+  const unsetWalletFromChain = useCallback(
+    (chainId: ChainId) => {
+      chainId = coalesceChainId(chainId);
 
-    const { [chainId]: removedWallet, ...otherWallets } = wallets;
+      const { [chainId]: removedWallet, ...otherWallets } = wallets;
 
-    const newWalletMap: WalletMap = otherWallets || {};
-    setWallets(newWalletMap);
+      const newWalletMap: WalletMap = otherWallets || {};
+      setWallets(newWalletMap);
 
-    if (defaultWallet && defaultWallet.getName() === removedWallet?.getName()) {
-      const potentialDefaults = Object.values(newWalletMap);
-      setDefaultWallet(potentialDefaults.length ? potentialDefaults[0] : undefined);
-    }
-  }, [ wallets, defaultWallet ]);
+      if (
+        defaultWallet &&
+        defaultWallet.getName() === removedWallet?.getName()
+      ) {
+        const potentialDefaults = Object.values(newWalletMap);
+        setDefaultWallet(
+          potentialDefaults.length ? potentialDefaults[0] : undefined
+        );
+      }
+    },
+    [wallets, defaultWallet]
+  );
 
-  const value = useMemo(() => ({
-    wallets,
-    defaultWallet,
-    availableWallets,
-    changeWallet,
-    unsetWalletFromChain,
-    coalesceChainId
-  }), [
-    wallets,
-    defaultWallet,
-    availableWallets,
-    unsetWalletFromChain,
-    coalesceChainId
-  ])
+  const value = useMemo(
+    () => ({
+      wallets,
+      defaultWallet,
+      availableWallets,
+      changeWallet,
+      unsetWalletFromChain,
+      coalesceChainId,
+    }),
+    [
+      wallets,
+      defaultWallet,
+      availableWallets,
+      unsetWalletFromChain,
+      coalesceChainId,
+    ]
+  );
 
   return (
-    <WalletContext.Provider value={value}>
-      {children}
-    </WalletContext.Provider>
-  )
-}
+    <WalletContext.Provider value={value}>{children}</WalletContext.Provider>
+  );
+};
 
 export const useWalletContext = (): IWalletContext => {
   const context = useContext(WalletContext);
 
   if (!context) {
-    throw new Error('No WalletContext found. Make sure you have properly set up the WalletContextProvider');
+    throw new Error(
+      "No WalletContext found. Make sure you have properly set up the WalletContextProvider"
+    );
   }
 
   return context;
-}
+};

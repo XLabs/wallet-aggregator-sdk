@@ -1,12 +1,36 @@
-import { TransactionReceipt, TransactionRequest } from "@ethersproject/abstract-provider";
-import { Client, configureChains, Connector, ConnectorData, createClient, ProviderRpcError, Provider, WebSocketProvider, RpcError } from "@wagmi/core";
+import {
+  TransactionReceipt,
+  TransactionRequest,
+} from "@ethersproject/abstract-provider";
+import {
+  Client,
+  configureChains,
+  Connector,
+  ConnectorData,
+  createClient,
+  ProviderRpcError,
+  Provider,
+  WebSocketProvider,
+  RpcError,
+} from "@wagmi/core";
 import { Chain, DEFAULT_CHAINS } from "./chains";
 import { publicProvider } from "@wagmi/core/providers/public";
-import { Address, ChainId, CHAIN_ID_ETH, NotConnected, NotSupported, SendTransactionResult, Signature, Wallet, WalletEvents, WalletState } from "@xlabs-libs/wallet-aggregator-core";
+import {
+  Address,
+  ChainId,
+  CHAIN_ID_ETH,
+  NotConnected,
+  NotSupported,
+  SendTransactionResult,
+  Signature,
+  Wallet,
+  WalletEvents,
+  WalletState,
+} from "@xlabs-libs/wallet-aggregator-core";
 import { ethers, utils } from "ethers";
 import { evmChainIdToChainId, isTestnetEvm } from "./constants";
 
-type EVMChainId = number
+type EVMChainId = number;
 
 interface EVMWalletEvents extends WalletEvents {
   accountsChanged(address: Address): void;
@@ -17,7 +41,7 @@ interface EVMWalletEvents extends WalletEvents {
 // - https://docs.metamask.io/guide/rpc-api.html#returns-7
 enum ERROR_CODES {
   USER_REJECTED = 4001,
-  CHAIN_NOT_ADDED = 4902
+  CHAIN_NOT_ADDED = 4902,
 }
 
 /** EVMWallet config options */
@@ -66,7 +90,10 @@ class SwitchChainError extends Error {
 /**
  * An abstraction over EVM compatible blockchain wallets
  */
-export abstract class EVMWallet<C extends Connector = Connector, COpts = any> extends Wallet<
+export abstract class EVMWallet<
+  C extends Connector = Connector,
+  COpts = any
+> extends Wallet<
   TransactionRequest,
   TransactionRequest,
   TransactionReceipt,
@@ -89,41 +116,47 @@ export abstract class EVMWallet<C extends Connector = Connector, COpts = any> ex
   private provider?: ethers.providers.Web3Provider;
   private switchingChain = false;
 
-  constructor({ chains, confirmations, preferredChain, autoSwitch = false, connectorOptions }: EVMWalletConfig<COpts> = {}) {
+  constructor({
+    chains,
+    confirmations,
+    preferredChain,
+    autoSwitch = false,
+    connectorOptions,
+  }: EVMWalletConfig<COpts> = {}) {
     super();
     this.chains = chains || DEFAULT_CHAINS;
     this.preferredChain = preferredChain;
     this.autoSwitch = autoSwitch;
     this.confirmations = confirmations;
-    this.connectorOptions = connectorOptions || {} as COpts;
+    this.connectorOptions = connectorOptions || ({} as COpts);
 
     // create here so that injected wallets can be detected before connecting
     this.connector = this.createConnector();
   }
 
   async connect(): Promise<Address[]> {
-    const { provider } = configureChains(this.chains, [ publicProvider() ])
+    const { provider } = configureChains(this.chains, [publicProvider()]);
 
     this.client = createClient<Provider, WebSocketProvider>({
       provider,
       autoConnect: false,
-      connectors: [ this.connector ]
+      connectors: [this.connector],
     });
 
     await this.connector.connect({ chainId: this.preferredChain });
 
     this.provider = new ethers.providers.Web3Provider(
-      await this.connector.getProvider() as ethers.providers.ExternalProvider,
-      'any'
+      (await this.connector.getProvider()) as ethers.providers.ExternalProvider,
+      "any"
     );
 
-    this.connector.on('change', this.onChange.bind(this));
+    this.connector.on("change", this.onChange.bind(this));
 
     this.network = await this.fetchNetworkInfo();
     this.address = await this.connector.getAccount();
-    this.addresses = [ this.address ];
+    this.addresses = [this.address];
 
-    this.emit('connect');
+    this.emit("connect");
 
     return this.addresses;
   }
@@ -152,12 +185,12 @@ export abstract class EVMWallet<C extends Connector = Connector, COpts = any> ex
 
   private async onChange(data: ConnectorData) {
     if (data.chain) await this.onChainChanged();
-    if (data.account) await this.onAccountsChanged([ data.account ]);
+    if (data.account) await this.onAccountsChanged([data.account]);
   }
 
   /**
-   * @description Change the preferred evm chain. Calling this method will automatically trigger a switch to the new chain request. 
-   * 
+   * @description Change the preferred evm chain. Calling this method will automatically trigger a switch to the new chain request.
+   *
    * @param chainId The new evm chain id
    */
   public async setPrefferedChain(chainId: EVMChainId): Promise<void> {
@@ -173,7 +206,7 @@ export abstract class EVMWallet<C extends Connector = Connector, COpts = any> ex
     await this.connector?.disconnect();
     await this.client?.destroy();
     this.client = undefined;
-    this.emit('disconnect');
+    this.emit("disconnect");
   }
 
   getChainId(): ChainId {
@@ -198,9 +231,8 @@ export abstract class EVMWallet<C extends Connector = Connector, COpts = any> ex
   }
 
   setMainAddress(address: string): void {
-    if (!this.addresses.includes(address))
-      throw new Error('Unknown address')
-    this.address = address
+    if (!this.addresses.includes(address)) throw new Error("Unknown address");
+    this.address = address;
   }
 
   signTransaction(tx: TransactionRequest): Promise<TransactionRequest> {
@@ -208,21 +240,23 @@ export abstract class EVMWallet<C extends Connector = Connector, COpts = any> ex
     return Promise.resolve(tx);
   }
 
-  async sendTransaction(tx: TransactionRequest): Promise<SendTransactionResult<TransactionReceipt>> {
+  async sendTransaction(
+    tx: TransactionRequest
+  ): Promise<SendTransactionResult<TransactionReceipt>> {
     if (!this.isConnected()) throw new NotConnected();
     const response = await this.getSigner().sendTransaction(tx);
 
     const receipt = await response.wait(this.confirmations);
     return {
       id: receipt.transactionHash,
-      data: receipt
-    }
+      data: receipt,
+    };
   }
 
   async signMessage(msg: EthereumMessage): Promise<Signature> {
     if (!this.isConnected()) throw new NotConnected();
     const signature = await this.getSigner().signMessage(msg);
-    return new Uint8Array(Buffer.from(signature.substring(2), 'hex'))
+    return new Uint8Array(Buffer.from(signature.substring(2), "hex"));
   }
 
   /**
@@ -244,10 +278,11 @@ export abstract class EVMWallet<C extends Connector = Connector, COpts = any> ex
       this.switchingChain = true;
       await this.connector.switchChain(ethChainId);
       this.network = await this.fetchNetworkInfo();
-    } catch(err) {
+    } catch (err) {
       const isChainNotAddedError =
         (err as RpcError).code === ERROR_CODES.CHAIN_NOT_ADDED ||
-        (err as RpcError<{ originalError?: { code: number }}>).data?.originalError?.code === ERROR_CODES.CHAIN_NOT_ADDED;
+        (err as RpcError<{ originalError?: { code: number } }>).data
+          ?.originalError?.code === ERROR_CODES.CHAIN_NOT_ADDED;
 
       // wagmi only does this for injected wallets and not for walletconnect
       if (isChainNotAddedError) {
@@ -270,33 +305,36 @@ export abstract class EVMWallet<C extends Connector = Connector, COpts = any> ex
 
     const chain = this.chains.find((chain) => chain.id === ethChainId);
     if (!chain) {
-      throw new SwitchChainError(`Chain ${ethChainId} not configured`, ERROR_CODES.CHAIN_NOT_ADDED);
+      throw new SwitchChainError(
+        `Chain ${ethChainId} not configured`,
+        ERROR_CODES.CHAIN_NOT_ADDED
+      );
     }
 
-    return await this.provider.send("wallet_addEthereumChain", [
+    return (await this.provider.send("wallet_addEthereumChain", [
       {
         chainId: ethers.utils.hexValue(chain.id),
         chainName: chain.name,
         nativeCurrency: chain.nativeCurrency,
-        rpcUrls: [chain.rpcUrls.public?.http[0] ?? ''],
+        rpcUrls: [chain.rpcUrls.public?.http[0] ?? ""],
         blockExplorerUrls: this.getBlockExplorerUrls(chain),
       },
-    ]) as Chain;
+    ])) as Chain;
   }
 
   protected getBlockExplorerUrls(chain: Chain) {
     const { default: blockExplorer, ...blockExplorers } =
-      chain.blockExplorers ?? {}
+      chain.blockExplorers ?? {};
     if (blockExplorer)
       return [
         blockExplorer.url,
         ...Object.values(blockExplorers).map((x) => x.url),
-      ]
+      ];
   }
 
   /**
    * Retrieve the underlying Web3Provider
-   * 
+   *
    * @returns {ethers.providers.Web3Provider} Returns the underlying ethers.js Web3Provider if connected, or undefined if not
    */
   getProvider(): ethers.providers.Web3Provider | undefined {
@@ -305,7 +343,7 @@ export abstract class EVMWallet<C extends Connector = Connector, COpts = any> ex
 
   /**
    * Retrieve the underlying Signer.
-   * 
+   *
    * @returns {ethers.Signer} Returns the underlying ethers.js Signer if connected, or undefined if not
    */
   getSigner(): ethers.Signer {
@@ -314,7 +352,9 @@ export abstract class EVMWallet<C extends Connector = Connector, COpts = any> ex
   }
 
   getWalletState(): WalletState {
-    return this.connector.ready ? WalletState.Loadable : WalletState.NotDetected;
+    return this.connector.ready
+      ? WalletState.Loadable
+      : WalletState.NotDetected;
   }
 
   async getBalance(): Promise<string> {
@@ -330,27 +370,27 @@ export abstract class EVMWallet<C extends Connector = Connector, COpts = any> ex
 
     this.network = await this.fetchNetworkInfo();
 
-    this.emit('networkChanged');
+    this.emit("networkChanged");
   }
 
   protected async onAccountsChanged(accounts: string[]): Promise<void> {
     // no new accounts === wallet disconnected
-    if (!accounts.length) return this.disconnect()
+    if (!accounts.length) return this.disconnect();
 
     this.address = await this.connector.getAccount();
-    this.emit('accountsChanged', this.address);
+    this.emit("accountsChanged", this.address);
   }
 
   private async fetchNetworkInfo(): Promise<EVMNetworkInfo | undefined> {
     if (!this.isConnected()) return;
     return {
-      chainId: await this.connector.getChainId()
-    }
+      chainId: await this.connector.getChainId(),
+    };
   }
 
   protected parseEvmChainId(id: string | number): number {
     return utils.isHexString(id)
       ? parseInt(id.toString().substring(2), 16)
-      : id as number;
+      : (id as number);
   }
 }

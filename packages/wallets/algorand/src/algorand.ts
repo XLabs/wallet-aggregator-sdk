@@ -1,8 +1,15 @@
-import { Address, ChainId, CHAINS, SendTransactionResult, Signature, Wallet } from "@xlabs-libs/wallet-aggregator-core";
-import algosdk from 'algosdk';
+import {
+  Address,
+  ChainId,
+  CHAINS,
+  SendTransactionResult,
+  Signature,
+  Wallet,
+} from "@xlabs-libs/wallet-aggregator-core";
+import algosdk from "algosdk";
 
-export type SubmittedTransactionMap = Record<string, string>
-export type AlgorandMessage = Uint8Array
+export type SubmittedTransactionMap = Record<string, string>;
+export type AlgorandMessage = Uint8Array;
 
 /** Algorand Node configuration */
 export interface AlgorandNodeConfig {
@@ -44,15 +51,15 @@ export interface AlgorandNetworkInfo {
 }
 
 const DEFAULT_CONFIG: AlgorandWalletConfig = {
-  node: { url: 'https://node.algoexplorerapi.io' },
-  indexer: { url: 'https://indexer.algoexplorerapi.io' },
-  waitRounds: 1000
-}
+  node: { url: "https://node.algoexplorerapi.io" },
+  indexer: { url: "https://indexer.algoexplorerapi.io" },
+  waitRounds: 1000,
+};
 
 interface AccountDataResponse {
   account: {
     amount: number;
-  }
+  };
 }
 
 interface SendTransactionResponse {
@@ -75,10 +82,10 @@ export abstract class AlgorandWallet extends Wallet<
   protected account: Address | undefined;
   protected networkInfo?: AlgorandNetworkInfo;
 
-  constructor({ defaultAccount, ...config}: AlgorandWalletParams = {}) {
+  constructor({ defaultAccount, ...config }: AlgorandWalletParams = {}) {
     super();
     this.config = Object.assign({}, DEFAULT_CONFIG, config);
-    this.accounts = defaultAccount ? [ defaultAccount ] : [];
+    this.accounts = defaultAccount ? [defaultAccount] : [];
     this.account = defaultAccount;
   }
 
@@ -90,27 +97,35 @@ export abstract class AlgorandWallet extends Wallet<
     this.accounts = accounts;
     this.account = this.accounts[0];
 
-    this.emit('connect');
+    this.emit("connect");
 
-    const { genesisHash, genesisID } = await this.buildClient().getTransactionParams().do();
+    const { genesisHash, genesisID } = await this.buildClient()
+      .getTransactionParams()
+      .do();
     this.networkInfo = {
       genesisHash,
-      genesisID
-    }
+      genesisID,
+    };
 
     return this.accounts;
   }
 
-  abstract signTransaction(tx: UnsignedTransaction): Promise<EncodedSignedTransaction>;
-  abstract signTransaction(tx: UnsignedTransaction[]): Promise<EncodedSignedTransaction[]>;
-  abstract signTransaction(tx: UnsignedTransaction | UnsignedTransaction[]): Promise<EncodedSignedTransaction | EncodedSignedTransaction[]>;
+  abstract signTransaction(
+    tx: UnsignedTransaction
+  ): Promise<EncodedSignedTransaction>;
+  abstract signTransaction(
+    tx: UnsignedTransaction[]
+  ): Promise<EncodedSignedTransaction[]>;
+  abstract signTransaction(
+    tx: UnsignedTransaction | UnsignedTransaction[]
+  ): Promise<EncodedSignedTransaction | EncodedSignedTransaction[]>;
 
   async disconnect(): Promise<void> {
     await this.innerDisconnect();
     this.accounts = [];
     this.account = undefined;
     this.networkInfo = undefined;
-    this.emit('disconnect');
+    this.emit("disconnect");
   }
 
   isConnected(): boolean {
@@ -118,7 +133,7 @@ export abstract class AlgorandWallet extends Wallet<
   }
 
   getChainId(): ChainId {
-    return CHAINS['algorand'];
+    return CHAINS["algorand"];
   }
 
   getAddress(): Address | undefined {
@@ -131,7 +146,7 @@ export abstract class AlgorandWallet extends Wallet<
 
   setMainAddress(account: Address): void {
     if (!this.accounts.includes(account)) {
-      throw new Error('Unknown address')
+      throw new Error("Unknown address");
     }
     this.account = account;
   }
@@ -141,28 +156,38 @@ export abstract class AlgorandWallet extends Wallet<
   }
 
   async getBalance(): Promise<string> {
-    if (!this.account) throw new Error('Not connected');
+    if (!this.account) throw new Error("Not connected");
 
-    const res = await fetch(`${this.config.indexer.url}/v2/accounts/${this.account}`);
-    const json = await res.json() as AccountDataResponse;
+    const res = await fetch(
+      `${this.config.indexer.url}/v2/accounts/${this.account}`
+    );
+    const json = (await res.json()) as AccountDataResponse;
     return json.account.amount.toString();
   }
 
-  async sendTransaction(signedTx: EncodedSignedTransaction): Promise<SendTransactionResult<SubmittedTransactionMap>> {
+  async sendTransaction(
+    signedTx: EncodedSignedTransaction
+  ): Promise<SendTransactionResult<SubmittedTransactionMap>> {
     const algod = this.buildClient();
-    const { txId } = await algod.sendRawTransaction(signedTx).do() as SendTransactionResponse;
-    const info = await algosdk.waitForConfirmation(algod, txId, this.config.waitRounds);
+    const { txId } = (await algod
+      .sendRawTransaction(signedTx)
+      .do()) as SendTransactionResponse;
+    const info = await algosdk.waitForConfirmation(
+      algod,
+      txId,
+      this.config.waitRounds
+    );
     return {
       id: txId,
-      data: info
+      data: info,
     };
   }
 
   private buildClient(): algosdk.Algodv2 {
     return new algosdk.Algodv2(
-      this.config.node.token || '',
+      this.config.node.token || "",
       this.config.node.url,
-      this.config.node.port || ''
+      this.config.node.port || ""
     );
   }
 }

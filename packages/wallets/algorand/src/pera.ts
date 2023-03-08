@@ -1,7 +1,12 @@
 import { PeraWalletConnect } from "@perawallet/connect";
 import { Address, NotSupported } from "@xlabs-libs/wallet-aggregator-core";
 import algosdk from "algosdk";
-import { AlgorandWallet, AlgorandWalletParams, EncodedSignedTransaction, UnsignedTransaction } from "./algorand";
+import {
+  AlgorandWallet,
+  AlgorandWalletParams,
+  EncodedSignedTransaction,
+  UnsignedTransaction,
+} from "./algorand";
 
 interface SignerTransaction {
   txn: algosdk.Transaction;
@@ -38,16 +43,18 @@ export class PeraWallet extends AlgorandWallet {
   }
 
   async innerConnect(): Promise<Address[]> {
-    const accounts =
-      await this.client.reconnectSession()
-        .then(async (accounts: string[]) => accounts.length > 0 ? accounts : this.client.connect())
-        .catch(() => this.client.connect());
-    this.client.connector?.on('disconnect', () => this.disconnect());
+    const accounts = await this.client
+      .reconnectSession()
+      .then(async (accounts: string[]) =>
+        accounts.length > 0 ? accounts : this.client.connect()
+      )
+      .catch(() => this.client.connect());
+    this.client.connector?.on("disconnect", () => this.disconnect());
     return accounts;
   }
 
   async innerDisconnect(): Promise<void> {
-    this.client.connector?.off('disconnect');
+    this.client.connector?.off("disconnect");
     await this.client.disconnect();
   }
 
@@ -55,11 +62,17 @@ export class PeraWallet extends AlgorandWallet {
     throw new NotSupported();
   }
 
-  async signTransaction(tx: UnsignedTransaction): Promise<EncodedSignedTransaction>;
-  async signTransaction(tx: UnsignedTransaction[]): Promise<EncodedSignedTransaction[]>;
-  async signTransaction(tx: UnsignedTransaction | UnsignedTransaction[]): Promise<EncodedSignedTransaction | EncodedSignedTransaction[]> {
+  async signTransaction(
+    tx: UnsignedTransaction
+  ): Promise<EncodedSignedTransaction>;
+  async signTransaction(
+    tx: UnsignedTransaction[]
+  ): Promise<EncodedSignedTransaction[]>;
+  async signTransaction(
+    tx: UnsignedTransaction | UnsignedTransaction[]
+  ): Promise<EncodedSignedTransaction | EncodedSignedTransaction[]> {
     const toSign: SignerTransaction[][] = this.prepareTxs(
-      Array.isArray(tx) ? tx : [ tx ]
+      Array.isArray(tx) ? tx : [tx]
     );
 
     const signed = await this.client.signTransaction(toSign);
@@ -73,17 +86,23 @@ export class PeraWallet extends AlgorandWallet {
     let prev: algosdk.Transaction | undefined;
     for (let i = 0; i < txs.length; i++) {
       const tx = txs[i];
-      const decoded: algosdk.Transaction = tx instanceof Uint8Array ? algosdk.decodeUnsignedTransaction(tx) : tx;
+      const decoded: algosdk.Transaction =
+        tx instanceof Uint8Array ? algosdk.decodeUnsignedTransaction(tx) : tx;
 
       if (groups.length === 0) {
-        groups.push([ { txn: decoded } ]);
+        groups.push([{ txn: decoded }]);
       } else {
-        if (prev && prev.group && decoded.group && prev.group.equals(decoded.group)) {
+        if (
+          prev &&
+          prev.group &&
+          decoded.group &&
+          prev.group.equals(decoded.group)
+        ) {
           // same group
-          groups[groups.length - 1].push({ txn: decoded })
+          groups[groups.length - 1].push({ txn: decoded });
         } else {
           // different group
-          groups.push([ { txn: decoded } ])
+          groups.push([{ txn: decoded }]);
         }
       }
 

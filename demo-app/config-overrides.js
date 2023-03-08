@@ -21,10 +21,10 @@ module.exports = function override(config, env) {
         // },
         {
           test: /\.m?js$/,
-            resolve: {
-              fullySpecified: false,
-            }
-        }
+          resolve: {
+            fullySpecified: false,
+          },
+        },
       ],
     },
     plugins: [
@@ -50,6 +50,6 @@ module.exports = function override(config, env) {
     experiments: {
       asyncWebAssembly: true,
     },
-    ignoreWarnings: [/Failed to parse source map/]
+    ignoreWarnings: [/Failed to parse source map/],
   };
 };

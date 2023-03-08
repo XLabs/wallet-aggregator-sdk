@@ -1,18 +1,18 @@
 import { EVMWallet } from "./evm";
-import { MetaMaskConnector } from '@wagmi/core/connectors/metaMask';
+import { MetaMaskConnector } from "@wagmi/core/connectors/metaMask";
 
 export class MetamaskWallet extends EVMWallet<MetaMaskConnector> {
   getUrl(): string {
-    return 'https://metamask.io';
+    return "https://metamask.io";
   }
 
   getName(): string {
-    return 'Metamask';
+    return "Metamask";
   }
 
   protected createConnector(): MetaMaskConnector {
     return new MetaMaskConnector({
-      chains: this.chains
+      chains: this.chains,
     });
   }
 

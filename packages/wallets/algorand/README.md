@@ -4,10 +4,10 @@ Implements the base abstractions for the [Algorand](https://www.algorand.com/) b
 
 Wallets implemented so far:
 
-| Wallet | Link |
-| - | - |
+| Wallet        | Link                      |
+| ------------- | ------------------------- |
 | MyAlgo Wallet | https://wallet.myalgo.com |
-| Pera Wallet | https://perawallet.app |
+| Pera Wallet   | https://perawallet.app    |
 
 ### Usage
 
@@ -16,22 +16,25 @@ The base Algorand wallet configuration allows setting the algorand node and inde
 Example:
 
 ```ts
-import { MyAlgoWallet, PeraWallet } from "@xlabs-libs/wallet-aggregator-algorand";
+import {
+  MyAlgoWallet,
+  PeraWallet,
+} from "@xlabs-libs/wallet-aggregator-algorand";
 
 const myAlgo = new MyAlgoWallet({
-    node: {
-        url: 'https://algo.node.io',
-        token: 'a_token'
-    }
+  node: {
+    url: "https://algo.node.io",
+    token: "a_token",
+  },
 });
 
 const pera = new PeraWallet({
-    node: {
-        url: 'https://algo.node.io',
-        token: 'a_token'
-    },
-    peraOptions: {
-        chainId: 416002
-    }
+  node: {
+    url: "https://algo.node.io",
+    token: "a_token",
+  },
+  peraOptions: {
+    chainId: 416002,
+  },
 });
 ```

@@ -1,10 +1,15 @@
 import { DeflyWalletConnect } from "@blockshake/defly-connect";
-import { AlgorandWallet, AlgorandWalletParams, EncodedSignedTransaction, UnsignedTransaction } from "./algorand";
+import {
+  AlgorandWallet,
+  AlgorandWalletParams,
+  EncodedSignedTransaction,
+  UnsignedTransaction,
+} from "./algorand";
 import algosdk from "algosdk";
 import { Address, NotSupported } from "@xlabs-libs/wallet-aggregator-core";
 
 interface SignerTransaction {
-    txn: algosdk.Transaction;
+  txn: algosdk.Transaction;
 }
 
 type AlgorandChainIDs = 416001 | 416002 | 416003 | 4160;
@@ -25,8 +30,8 @@ export class DeflyWallet extends AlgorandWallet {
   private client: DeflyWalletConnect;
 
   constructor(config: DeflyWalletParams) {
-      super(config);
-      this.client = new DeflyWalletConnect({ ...config?.deflyOptions });
+    super(config);
+    this.client = new DeflyWalletConnect({ ...config?.deflyOptions });
   }
 
   getName(): string {
@@ -38,16 +43,18 @@ export class DeflyWallet extends AlgorandWallet {
   }
 
   async innerConnect(): Promise<Address[]> {
-    const accounts =
-      await this.client.reconnectSession()
-        .then(async (accounts: string[]) => accounts.length > 0 ? accounts : this.client.connect())
-        .catch(() => this.client.connect());
-    this.client.connector?.on('disconnect', () => this.disconnect());
+    const accounts = await this.client
+      .reconnectSession()
+      .then(async (accounts: string[]) =>
+        accounts.length > 0 ? accounts : this.client.connect()
+      )
+      .catch(() => this.client.connect());
+    this.client.connector?.on("disconnect", () => this.disconnect());
     return accounts;
   }
 
   async innerDisconnect(): Promise<void> {
-    this.client.connector?.off('disconnect');
+    this.client.connector?.off("disconnect");
     await this.client.disconnect();
   }
 
@@ -55,11 +62,17 @@ export class DeflyWallet extends AlgorandWallet {
     throw new NotSupported();
   }
 
-  async signTransaction(tx: UnsignedTransaction): Promise<EncodedSignedTransaction>;
-  async signTransaction(tx: UnsignedTransaction[]): Promise<EncodedSignedTransaction[]>;
-  async signTransaction(tx: UnsignedTransaction | UnsignedTransaction[]): Promise<EncodedSignedTransaction | EncodedSignedTransaction[]> {
+  async signTransaction(
+    tx: UnsignedTransaction
+  ): Promise<EncodedSignedTransaction>;
+  async signTransaction(
+    tx: UnsignedTransaction[]
+  ): Promise<EncodedSignedTransaction[]>;
+  async signTransaction(
+    tx: UnsignedTransaction | UnsignedTransaction[]
+  ): Promise<EncodedSignedTransaction | EncodedSignedTransaction[]> {
     const toSign: SignerTransaction[][] = this.prepareTxs(
-      Array.isArray(tx) ? tx : [ tx ]
+      Array.isArray(tx) ? tx : [tx]
     );
 
     const signed = await this.client.signTransaction(toSign);
@@ -73,17 +86,23 @@ export class DeflyWallet extends AlgorandWallet {
     let prev: algosdk.Transaction | undefined;
     for (let i = 0; i < txs.length; i++) {
       const tx = txs[i];
-      const decoded: algosdk.Transaction = tx instanceof Uint8Array ? algosdk.decodeUnsignedTransaction(tx) : tx;
+      const decoded: algosdk.Transaction =
+        tx instanceof Uint8Array ? algosdk.decodeUnsignedTransaction(tx) : tx;
 
       if (groups.length === 0) {
-        groups.push([ { txn: decoded } ]);
+        groups.push([{ txn: decoded }]);
       } else {
-        if (prev && prev.group && decoded.group && prev.group.equals(decoded.group)) {
+        if (
+          prev &&
+          prev.group &&
+          decoded.group &&
+          prev.group.equals(decoded.group)
+        ) {
           // same group
-          groups[groups.length - 1].push({ txn: decoded })
+          groups[groups.length - 1].push({ txn: decoded });
         } else {
           // different group
-          groups.push([ { txn: decoded } ])
+          groups.push([{ txn: decoded }]);
         }
       }
 
@@ -94,6 +113,6 @@ export class DeflyWallet extends AlgorandWallet {
   }
 
   getIcon(): string {
-    return "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzQwIiBoZWlnaHQ9IjMyMCIgdmlld0JveD0iMCAwIDM0MCAzMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0zMjcuMDQ5IDI4MC4xOTJMMTY5LjUyNCAxM0wxMiAyODAuMTkyTDE2OS41MjQgMTg5LjA4NEwzMjcuMDQ5IDI4MC4xOTJaIiBmaWxsPSJibGFjayIvPgo8cGF0aCBkPSJNMjk5LjU0NiAzMDdMMTY5LjUyNSAyMzguNDczTDM5LjUwMzkgMzA3TDE2OS41MjUgMjY0LjY3TDI5OS41NDYgMzA3WiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg=="
+    return "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzQwIiBoZWlnaHQ9IjMyMCIgdmlld0JveD0iMCAwIDM0MCAzMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0zMjcuMDQ5IDI4MC4xOTJMMTY5LjUyNCAxM0wxMiAyODAuMTkyTDE2OS41MjQgMTg5LjA4NEwzMjcuMDQ5IDI4MC4xOTJaIiBmaWxsPSJibGFjayIvPgo8cGF0aCBkPSJNMjk5LjU0NiAzMDdMMTY5LjUyNSAyMzguNDczTDM5LjUwMzkgMzA3TDE2OS41MjUgMjY0LjY3TDI5OS41NDYgMzA3WiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==";
   }
 }

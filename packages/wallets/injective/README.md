@@ -17,23 +17,23 @@ const network = InjectiveChainId.Mainnet;
 const networkInfo = getNetworkInfo(Network.MainnetK8s);
 
 const opts = {
-    networkChainId: network,
-    broadcasterOptions: {
-        network,
-        endpoints: {
-            indexerApi: networkInfo.indexerApi,
-            sentryGrpcApi: networkInfo.sentryGrpcApi,
-            sentryHttpApi: networkInfo.sentryHttpApi,
-        }
-    }
-}
+  networkChainId: network,
+  broadcasterOptions: {
+    network,
+    endpoints: {
+      indexerApi: networkInfo.indexerApi,
+      sentryGrpcApi: networkInfo.sentryGrpcApi,
+      sentryHttpApi: networkInfo.sentryHttpApi,
+    },
+  },
+};
 
 const keplr = new InjectiveWallet({
-    ...opts,
-    type: InjectiveWalletType.Keplr
-})
+  ...opts,
+  type: InjectiveWalletType.Keplr,
+});
 const cosmostation = new InjectiveWallet({
-    ...opts,
-    type: InjectiveWalletType.Cosmostation
-})
+  ...opts,
+  type: InjectiveWalletType.Cosmostation,
+});
 ```

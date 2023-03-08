@@ -1,52 +1,52 @@
 // From: https://github.com/wormhole-foundation/wormhole/blob/dev.v2/sdk/js/src/utils/consts.ts#L1
 export const CHAINS = {
-    unset: 0,
-    solana: 1,
-    ethereum: 2,
-    terra: 3,
-    bsc: 4,
-    polygon: 5,
-    avalanche: 6,
-    oasis: 7,
-    algorand: 8,
-    aurora: 9,
-    fantom: 10,
-    karura: 11,
-    acala: 12,
-    klaytn: 13,
-    celo: 14,
-    near: 15,
-    moonbeam: 16,
-    neon: 17,
-    terra2: 18,
-    injective: 19,
-    osmosis: 20,
-    sui: 21,
-    aptos: 22,
-    arbitrum: 23,
-    optimism: 24,
-    gnosis: 25,
-    pythnet: 26,
-    xpla: 28,
-    btc: 29,
-    wormchain: 3104,
+  unset: 0,
+  solana: 1,
+  ethereum: 2,
+  terra: 3,
+  bsc: 4,
+  polygon: 5,
+  avalanche: 6,
+  oasis: 7,
+  algorand: 8,
+  aurora: 9,
+  fantom: 10,
+  karura: 11,
+  acala: 12,
+  klaytn: 13,
+  celo: 14,
+  near: 15,
+  moonbeam: 16,
+  neon: 17,
+  terra2: 18,
+  injective: 19,
+  osmosis: 20,
+  sui: 21,
+  aptos: 22,
+  arbitrum: 23,
+  optimism: 24,
+  gnosis: 25,
+  pythnet: 26,
+  xpla: 28,
+  btc: 29,
+  wormchain: 3104,
 } as const;
 
 export type ChainName = keyof typeof CHAINS;
 
-export type ChainId = typeof CHAINS[ChainName];
+export type ChainId = (typeof CHAINS)[ChainName];
 
 export type ChainIdToName = {
-    -readonly [key in keyof typeof CHAINS as typeof CHAINS[key]]: key;
+  -readonly [key in keyof typeof CHAINS as (typeof CHAINS)[key]]: key;
 };
 
 export const CHAIN_ID_TO_NAME: ChainIdToName = Object.entries(CHAINS).reduce(
-    (obj, [name, id]) => {
-        obj[id] = name; // eslint-disable-line
-        return obj; // eslint-disable-line
-    },
-    {} as any // eslint-disable-line
-) as ChainIdToName
+  (obj, [name, id]) => {
+    obj[id] = name; // eslint-disable-line
+    return obj; // eslint-disable-line
+  },
+  {} as any // eslint-disable-line
+) as ChainIdToName;
 
 export const CHAIN_ID_UNSET = CHAINS["unset"];
 export const CHAIN_ID_SOLANA = CHAINS["solana"];
@@ -82,39 +82,35 @@ export const CHAIN_ID_WORMCHAIN = CHAINS["wormchain"];
 export type Network = "MAINNET" | "TESTNET" | "DEVNET";
 
 export function isEVMChain(chainId: ChainId): boolean {
-    return (
-        chainId === CHAIN_ID_ETH ||
-        chainId === CHAIN_ID_BSC ||
-        chainId === CHAIN_ID_AVAX ||
-        chainId === CHAIN_ID_POLYGON ||
-        chainId === CHAIN_ID_OASIS ||
-        chainId === CHAIN_ID_AURORA ||
-        chainId === CHAIN_ID_FANTOM ||
-        chainId === CHAIN_ID_KARURA ||
-        chainId === CHAIN_ID_ACALA ||
-        chainId === CHAIN_ID_KLAYTN ||
-        chainId === CHAIN_ID_CELO ||
-        chainId === CHAIN_ID_MOONBEAM ||
-        chainId === CHAIN_ID_NEON ||
-        chainId === CHAIN_ID_ARBITRUM ||
-        chainId === CHAIN_ID_OPTIMISM ||
-        chainId === CHAIN_ID_GNOSIS
-    );
+  return (
+    chainId === CHAIN_ID_ETH ||
+    chainId === CHAIN_ID_BSC ||
+    chainId === CHAIN_ID_AVAX ||
+    chainId === CHAIN_ID_POLYGON ||
+    chainId === CHAIN_ID_OASIS ||
+    chainId === CHAIN_ID_AURORA ||
+    chainId === CHAIN_ID_FANTOM ||
+    chainId === CHAIN_ID_KARURA ||
+    chainId === CHAIN_ID_ACALA ||
+    chainId === CHAIN_ID_KLAYTN ||
+    chainId === CHAIN_ID_CELO ||
+    chainId === CHAIN_ID_MOONBEAM ||
+    chainId === CHAIN_ID_NEON ||
+    chainId === CHAIN_ID_ARBITRUM ||
+    chainId === CHAIN_ID_OPTIMISM ||
+    chainId === CHAIN_ID_GNOSIS
+  );
 }
 
-export function isCosmWasmChain(
-    chainId: ChainId
-): boolean {
-    return (
-        chainId === CHAIN_ID_TERRA ||
-        chainId === CHAIN_ID_TERRA2 ||
-        chainId === CHAIN_ID_INJECTIVE ||
-        chainId === CHAIN_ID_XPLA
-    );
+export function isCosmWasmChain(chainId: ChainId): boolean {
+  return (
+    chainId === CHAIN_ID_TERRA ||
+    chainId === CHAIN_ID_TERRA2 ||
+    chainId === CHAIN_ID_INJECTIVE ||
+    chainId === CHAIN_ID_XPLA
+  );
 }
 
-export function isTerraChain(
-    chainId: ChainId
-): boolean {
-    return chainId === CHAIN_ID_TERRA || chainId === CHAIN_ID_TERRA2;
+export function isTerraChain(chainId: ChainId): boolean {
+  return chainId === CHAIN_ID_TERRA || chainId === CHAIN_ID_TERRA2;
 }

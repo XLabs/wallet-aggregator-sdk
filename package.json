@@ -13,16 +13,24 @@
     "@typescript-eslint/eslint-plugin": "^5.54.1",
     "@typescript-eslint/parser": "^5.54.1",
     "eslint": "^8.35.0",
+    "eslint-config-prettier": "^8.7.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.2",
+    "prettier": "2.8.4",
     "typescript": "^4.4.2"
   },
   "scripts": {
     "build": "tsc --build --verbose tsconfig.all.json",
     "clean": "pnpm -r run clean",
-    "lint": "npx eslint ."
+    "lint": "npx eslint .",
+    "prepare": "husky install"
   },
   "pnpm": {
     "overrides": {
       "@xpla/xpla.js": "0.2.3"
     }
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
   }
 }

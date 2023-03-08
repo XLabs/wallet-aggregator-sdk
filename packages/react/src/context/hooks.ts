@@ -6,33 +6,38 @@ import { AvailableWalletsMap, useWalletContext } from "./WalletContext";
  * @param chainId A chain id, or undefined
  * @returns If the chain id is not undefined, it will return the selected wallet for that specific chain, or undefined if not set. Otherwise, it will retrieve the last configured wallet, regardless of its chain.
  */
-export const useWallet = <W extends Wallet = Wallet>(chainId: ChainId | undefined): W | undefined => {
-    const { wallets, coalesceChainId, defaultWallet } = useWalletContext();
+export const useWallet = <W extends Wallet = Wallet>(
+  chainId: ChainId | undefined
+): W | undefined => {
+  const { wallets, coalesceChainId, defaultWallet } = useWalletContext();
 
-    let wallet: Wallet | undefined;
-    if (chainId) {
-        wallet = wallets[coalesceChainId(chainId)];
-    } else {
-        wallet = defaultWallet;
-    }
+  let wallet: Wallet | undefined;
+  if (chainId) {
+    wallet = wallets[coalesceChainId(chainId)];
+  } else {
+    wallet = defaultWallet;
+  }
 
-    return useMemo(() => wallet as W, [wallet]);
-}
+  return useMemo(() => wallet as W, [wallet]);
+};
 
 /**
  * Retrieve the available wallets configured for the context
  */
 export const useAvailableWallets = (): AvailableWalletsMap => {
-    const { availableWallets } = useWalletContext();
-    return useMemo(() => availableWallets, [availableWallets]);
-}
+  const { availableWallets } = useWalletContext();
+  return useMemo(() => availableWallets, [availableWallets]);
+};
 
 /**
  * Retrieve a list of chain ids, computed from the available wallets configured for the context
  */
 export const useAvailableChains = (): ChainId[] => {
-    const walletsMap = useAvailableWallets();
-    return useMemo(() => Object.keys(walletsMap).map(id => +id as ChainId), [ walletsMap ])
+  const walletsMap = useAvailableWallets();
+  return useMemo(
+    () => Object.keys(walletsMap).map((id) => +id as ChainId),
+    [walletsMap]
+  );
 };
 
 /**
@@ -41,41 +46,47 @@ export const useAvailableChains = (): ChainId[] => {
  * @returns A non-empty array of Wallet objects, or an empty array if no entry has been found for that chain id
  */
 export const useWalletsForChain = (chainId?: ChainId): Wallet[] => {
-    const { coalesceChainId } = useWalletContext();
-    const walletsMap = useAvailableWallets();
+  const { coalesceChainId } = useWalletContext();
+  const walletsMap = useAvailableWallets();
 
-    let wallets: Wallet[] = []
+  let wallets: Wallet[] = [];
 
-    if (chainId) {
-        chainId = coalesceChainId(chainId);
-        wallets = walletsMap[chainId] || [];
-    }
+  if (chainId) {
+    chainId = coalesceChainId(chainId);
+    wallets = walletsMap[chainId] || [];
+  }
 
-    return useMemo(() => wallets, [ wallets, walletsMap ])
+  return useMemo(() => wallets, [wallets, walletsMap]);
 };
 
 /**
  * Returns a function that takes a `Wallet` as an argument and selects it as the current wallet for its chain (as indicated by the wallet's `getChainId`) and replacing the previous, should there be one. The selected wallet can then be retrieved through the useWallet and useWalletFromChain hooks
- * 
+ *
  * The returned function does not attempt to connect the selected wallet, nor disconnect the replaced wallet.
  */
 export const useChangeWallet = () => {
-    const { changeWallet } = useWalletContext();
+  const { changeWallet } = useWalletContext();
 
-    return useCallback((wallet: Wallet) => {
-        changeWallet(wallet);
-    }, [ changeWallet ]);
-}
+  return useCallback(
+    (wallet: Wallet) => {
+      changeWallet(wallet);
+    },
+    [changeWallet]
+  );
+};
 
 /**
  * Returns a function that takes a `ChainId` as an argument and removes the current wallet for that chain.
- * 
+ *
  * The returned function does not attempt to disconnect the current wallet before removing it
  */
 export const useUnsetWalletFromChain = () => {
-    const { unsetWalletFromChain } = useWalletContext();
+  const { unsetWalletFromChain } = useWalletContext();
 
-    return useCallback((chainId: ChainId) => {
-        unsetWalletFromChain(chainId);
-    }, [ unsetWalletFromChain ]);
-}
+  return useCallback(
+    (chainId: ChainId) => {
+      unsetWalletFromChain(chainId);
+    },
+    [unsetWalletFromChain]
+  );
+};

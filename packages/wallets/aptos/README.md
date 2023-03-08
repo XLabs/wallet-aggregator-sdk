@@ -13,12 +13,10 @@ import {
 } from "@manahippo/aptos-wallet-adapter";
 import { AptosWallet } from "@xlabs-libs/wallet-aggregator-aptos";
 
-const martian = new AptosWallet(
-    new MartianWalletAdapter()
-)
+const martian = new AptosWallet(new MartianWalletAdapter());
 
 const aptosWallets: AptosWallet[] = [
-    new MartianWalletAdapter(),
-    new NightlyWalletAdapter()
-].map(adapter => new AptosWallet(adapter))
+  new MartianWalletAdapter(),
+  new NightlyWalletAdapter(),
+].map((adapter) => new AptosWallet(adapter));
 ```

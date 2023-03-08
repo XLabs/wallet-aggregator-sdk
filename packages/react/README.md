@@ -11,24 +11,26 @@ Wrap the application in the `WalletContextProvider` component. The provider expe
 Using a map:
 
 ```tsx
-import { CHAIN_ID_ALGORAND, CHAIN_ID_ETH, CHAIN_ID_SOME_CHAIN } from "@xlabs/wallet-aggregator-core";
+import {
+  CHAIN_ID_ALGORAND,
+  CHAIN_ID_ETH,
+  CHAIN_ID_SOME_CHAIN,
+} from "@xlabs/wallet-aggregator-core";
 import { MyAlgoWallet } from "@xlabs/wallet-aggregator-algorand";
-import { MetamaskWallet, WalletConnectWallet } from "@xlabs/wallet-aggregator-algorand";
+import {
+  MetamaskWallet,
+  WalletConnectWallet,
+} from "@xlabs/wallet-aggregator-algorand";
 import { SomeWallet } from "@xlabs/wallet-aggregator-some-chain";
-import { WalletContextProvider } from '@xlabs/wallet-aggregator-react';
+import { WalletContextProvider } from "@xlabs/wallet-aggregator-react";
 
 type AvailableWalletsMap = Partial<Record<ChainId, Wallet[]>>;
 
 const Main = () => {
   const wallets: AvailableWalletsMap = {
-    [CHAIN_ID_ALGORAND]: [
-      new MyAlgoWallet()
-    ],
-    [CHAIN_ID_ETH]: [
-      new MetamaskWallet(),
-      new WalletConnectWallet()
-    ]
-  }
+    [CHAIN_ID_ALGORAND]: [new MyAlgoWallet()],
+    [CHAIN_ID_ETH]: [new MetamaskWallet(), new WalletConnectWallet()],
+  };
 
   return (
     <WalletContextProvider wallets={wallets}>
@@ -40,13 +42,19 @@ const Main = () => {
 
 Using a function:
 
-
 ```tsx
-import { CHAIN_ID_ALGORAND, CHAIN_ID_ETH, CHAIN_ID_SOME_CHAIN } from "@xlabs/wallet-aggregator-core";
+import {
+  CHAIN_ID_ALGORAND,
+  CHAIN_ID_ETH,
+  CHAIN_ID_SOME_CHAIN,
+} from "@xlabs/wallet-aggregator-core";
 import { MyAlgoWallet } from "@xlabs/wallet-aggregator-algorand";
-import { MetamaskWallet, WalletConnectWallet } from "@xlabs/wallet-aggregator-algorand";
+import {
+  MetamaskWallet,
+  WalletConnectWallet,
+} from "@xlabs/wallet-aggregator-algorand";
 import { SomeWallet } from "@xlabs/wallet-aggregator-some-chain";
-import { WalletContextProvider } from '@xlabs/wallet-aggregator-react';
+import { WalletContextProvider } from "@xlabs/wallet-aggregator-react";
 
 type AvailableWalletsMap = Partial<Record<ChainId, Wallet[]>>;
 
@@ -55,18 +63,11 @@ const Main = () => {
     const someChainParams = await fetchSomeChainParams();
 
     return {
-      [CHAIN_ID_ALGORAND]: [
-        new MyAlgoWallet()
-      ],
-      [CHAIN_ID_ETH]: [
-        new MetamaskWallet(),
-        new WalletConnectWallet()
-      ],
-      [CHAIN_ID_SOME_CHAIN]: [
-        new SomeWallet(someChainParams)
-      ]
-    }
-  }
+      [CHAIN_ID_ALGORAND]: [new MyAlgoWallet()],
+      [CHAIN_ID_ETH]: [new MetamaskWallet(), new WalletConnectWallet()],
+      [CHAIN_ID_SOME_CHAIN]: [new SomeWallet(someChainParams)],
+    };
+  };
 
   return (
     <WalletContextProvider wallets={walletsBuilder}>

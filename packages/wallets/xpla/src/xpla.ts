@@ -1,8 +1,27 @@
-import { ChainId, CHAIN_ID_XPLA, NotSupported, SendTransactionResult, Wallet, WalletState } from "@xlabs-libs/wallet-aggregator-core";
-import { Connection, ConnectType, getChainOptions, Installation, NetworkInfo, SignBytesResult, TxResult, WalletController, WalletControllerOptions, WalletStates, WalletStatus } from "@xpla/wallet-provider";
-import { CreateTxOptions } from '@xpla/xpla.js';
-import { Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {
+  ChainId,
+  CHAIN_ID_XPLA,
+  NotSupported,
+  SendTransactionResult,
+  Wallet,
+  WalletState,
+} from "@xlabs-libs/wallet-aggregator-core";
+import {
+  Connection,
+  ConnectType,
+  getChainOptions,
+  Installation,
+  NetworkInfo,
+  SignBytesResult,
+  TxResult,
+  WalletController,
+  WalletControllerOptions,
+  WalletStates,
+  WalletStatus,
+} from "@xpla/wallet-provider";
+import { CreateTxOptions } from "@xpla/xpla.js";
+import { Observable, Subscription } from "rxjs";
+import { map } from "rxjs/operators";
 
 interface XplaWalletInfo {
   type: ConnectType;
@@ -13,22 +32,32 @@ interface XplaWalletInfo {
   url?: string;
 }
 
-export const getWallets = async (ignoredTypes: ConnectType[] = []): Promise<XplaWallet[]> => {
+export const getWallets = async (
+  ignoredTypes: ConnectType[] = []
+): Promise<XplaWallet[]> => {
   const networks = await getChainOptions();
 
   const controllerOptions: WalletControllerOptions = { ...networks };
 
   const controller = new WalletController(controllerOptions);
 
-  const toXplaWallet = (objs: Connection[] | Installation[], installed: boolean) => {
+  const toXplaWallet = (
+    objs: Connection[] | Installation[],
+    installed: boolean
+  ) => {
     return objs
-      .map(obj => ({ ...obj, installed }))
-      .filter((walletInfo: XplaWalletInfo) => !ignoredTypes.includes(walletInfo.type))
-      .map((walletInfo: XplaWalletInfo) => new XplaWallet({
-        controller,
-        walletInfo
-      }));
-  }
+      .map((obj) => ({ ...obj, installed }))
+      .filter(
+        (walletInfo: XplaWalletInfo) => !ignoredTypes.includes(walletInfo.type)
+      )
+      .map(
+        (walletInfo: XplaWalletInfo) =>
+          new XplaWallet({
+            controller,
+            walletInfo,
+          })
+      );
+  };
 
   const waitObservable = <T>(observable: Observable<T>): Promise<T> => {
     return new Promise((resolve) => {
@@ -41,22 +70,28 @@ export const getWallets = async (ignoredTypes: ConnectType[] = []): Promise<Xpla
       setTimeout(() => {
         sub.unsubscribe();
         resolve(value);
-      }, 1000)
+      }, 1000);
     });
   };
 
   // available to connect
-  const connections: XplaWallet[] = await waitObservable(controller.availableConnections().pipe(
-    map(arr => toXplaWallet(arr, true))
-  )) || [];
+  const connections: XplaWallet[] =
+    (await waitObservable(
+      controller
+        .availableConnections()
+        .pipe(map((arr) => toXplaWallet(arr, true)))
+    )) || [];
 
   // installable
-  const installations: XplaWallet[] = await waitObservable(controller.availableInstallations().pipe(
-    map(arr => toXplaWallet(arr, false)),
-  )) || [];
+  const installations: XplaWallet[] =
+    (await waitObservable(
+      controller
+        .availableInstallations()
+        .pipe(map((arr) => toXplaWallet(arr, false)))
+    )) || [];
 
   return connections.concat(installations);
-}
+};
 
 export interface XplaWalletConfig {
   controller: WalletController;
@@ -77,7 +112,7 @@ const waitFor = (fn: () => boolean) => {
       while (!fn()) {
         await sleep(500);
       }
-    }
+    };
 
     loop().then(resolve).catch(reject);
   });
@@ -102,8 +137,8 @@ export class XplaWallet extends Wallet<
     this.walletInfo = walletInfo;
     this.state = {
       status: WalletStatus.WALLET_NOT_CONNECTED,
-      network: this.controller.options.defaultNetwork
-    }
+      network: this.controller.options.defaultNetwork,
+    };
   }
 
   async connect(): Promise<string[]> {
@@ -138,12 +173,14 @@ export class XplaWallet extends Wallet<
   }
 
   signTransaction(tx: CreateTxOptions): Promise<CreateTxOptions> {
-    if (!this.isConnected()) throw new Error('Not Connected');
+    if (!this.isConnected()) throw new Error("Not Connected");
     return Promise.resolve(tx);
   }
 
-  async sendTransaction(tx: CreateTxOptions): Promise<SendTransactionResult<TxResult>> {
-    if (!this.isConnected()) throw new Error('Not Connected');
+  async sendTransaction(
+    tx: CreateTxOptions
+  ): Promise<SendTransactionResult<TxResult>> {
+    if (!this.isConnected()) throw new Error("Not Connected");
     const result = await this.controller.post(tx);
 
     if (!result.success) {
@@ -152,12 +189,12 @@ export class XplaWallet extends Wallet<
 
     return {
       id: result.result.txhash,
-      data: result
-    }
+      data: result,
+    };
   }
 
   signMessage(msg: UnsignedXplaMessage): Promise<SignBytesResult> {
-    if (!this.isConnected()) throw new Error('Not Connected');
+    if (!this.isConnected()) throw new Error("Not Connected");
 
     const toSign = Buffer.isBuffer(msg) ? msg : Buffer.from(msg);
     return this.controller.signBytes(toSign);
@@ -168,7 +205,7 @@ export class XplaWallet extends Wallet<
   }
 
   getUrl(): string {
-    return this.walletInfo.url || 'https://xpla.io';
+    return this.walletInfo.url || "https://xpla.io";
   }
 
   getAddress(): string | undefined {
@@ -178,7 +215,7 @@ export class XplaWallet extends Wallet<
 
   getAddresses(): string[] {
     return this.state.status === WalletStatus.WALLET_CONNECTED
-      ? this.state.wallets.map(w => w.xplaAddress)
+      ? this.state.wallets.map((w) => w.xplaAddress)
       : [];
   }
 
@@ -203,6 +240,8 @@ export class XplaWallet extends Wallet<
   }
 
   getWalletState(): WalletState {
-    return this.walletInfo.installed ? WalletState.Installed : WalletState.NotDetected;
+    return this.walletInfo.installed
+      ? WalletState.Installed
+      : WalletState.NotDetected;
   }
 }

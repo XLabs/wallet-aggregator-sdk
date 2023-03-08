@@ -16,7 +16,7 @@ export const EVM_CHAINS = {
   arbitrum: 42161,
   moonbeam: 1284,
   optimism: 10,
-  gnosis: 100
+  gnosis: 100,
 } as const;
 
 export const EVM_CHAINS_TESTNET = {
@@ -33,7 +33,7 @@ export const EVM_CHAINS_TESTNET = {
   celo: 44787,
   neon: 245022926,
   arbitrum: 421613,
-  optimism: 420
+  optimism: 420,
 } as const;
 
 export type EVMChainName =
@@ -56,25 +56,33 @@ export type EVMChainName =
 
 type Indexable = string | number | symbol;
 
-const invertMap = <K extends Indexable, V extends Indexable>(map: Record<K, V>) =>
-  Object.entries(map).reduce(
-    (obj, [name, id]) => {
-      return Object.assign(obj, { [id as Indexable]: name });
-    },
-    {} as Record<V, K>
-  );
+const invertMap = <K extends Indexable, V extends Indexable>(
+  map: Record<K, V>
+) =>
+  Object.entries(map).reduce((obj, [name, id]) => {
+    return Object.assign(obj, { [id as Indexable]: name });
+  }, {} as Record<V, K>);
 
-export const EVM_CHAIN_ID_TO_NAME: Record<number, EVMChainName> = invertMap<EVMChainName, number>(EVM_CHAINS);
-export const EVM_TESTNET_CHAIN_ID_TO_NAME: Record<number, EVMChainName> = invertMap(EVM_CHAINS_TESTNET);
+export const EVM_CHAIN_ID_TO_NAME: Record<number, EVMChainName> = invertMap<
+  EVMChainName,
+  number
+>(EVM_CHAINS);
+export const EVM_TESTNET_CHAIN_ID_TO_NAME: Record<number, EVMChainName> =
+  invertMap(EVM_CHAINS_TESTNET);
 
-export function evmChainIdToChainId(evmChainId: number, network: Network = "MAINNET"): ChainId {
+export function evmChainIdToChainId(
+  evmChainId: number,
+  network: Network = "MAINNET"
+): ChainId {
   let chainName;
 
   if (network === "MAINNET") chainName = EVM_CHAIN_ID_TO_NAME[evmChainId];
-  if (network === "TESTNET") chainName = EVM_TESTNET_CHAIN_ID_TO_NAME[evmChainId];
+  if (network === "TESTNET")
+    chainName = EVM_TESTNET_CHAIN_ID_TO_NAME[evmChainId];
 
-  if (chainName === undefined) throw new Error(`No chain found for evm chain id ${evmChainId}`)
-  return CHAINS[chainName]
+  if (chainName === undefined)
+    throw new Error(`No chain found for evm chain id ${evmChainId}`);
+  return CHAINS[chainName];
 }
 
 export function isTestnetEvm(chainId: number): boolean {

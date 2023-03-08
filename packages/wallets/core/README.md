@@ -6,10 +6,10 @@ In order to implement a wallet for a given chain through the sdk, simply import 
 
 The `Wallet` class implements the `EventEmitter` interface, letting the client subscribe to the following events:
 
-| Event | Description |
-| - | - |
-| `connect` | Signals the wallet has succesfully connected |
-| `disconnect` | Signals the wallet has succesfully disconnected |
+| Event            | Description                                                                                |
+| ---------------- | ------------------------------------------------------------------------------------------ |
+| `connect`        | Signals the wallet has succesfully connected                                               |
+| `disconnect`     | Signals the wallet has succesfully disconnected                                            |
 | `networkChanged` | Signals whether a change in the network was detected. Useful for working with EVM wallets. |
 
 New events can be added by extending the `WalletEvents` class.

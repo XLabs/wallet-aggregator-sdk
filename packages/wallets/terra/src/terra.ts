@@ -1,8 +1,28 @@
 import { ExtensionOptions } from "@terra-money/terra.js";
-import { Connection, ConnectType, getChainOptions, Installation, NetworkInfo, SignBytesResult, TxResult, WalletController, WalletControllerOptions, WalletStates, WalletStatus } from "@terra-money/wallet-provider";
-import { ChainId, CHAIN_ID_TERRA, CHAIN_ID_TERRA2, NotSupported, SendTransactionResult, Wallet, WalletState } from "@xlabs-libs/wallet-aggregator-core";
-import { Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {
+  Connection,
+  ConnectType,
+  getChainOptions,
+  Installation,
+  NetworkInfo,
+  SignBytesResult,
+  TxResult,
+  WalletController,
+  WalletControllerOptions,
+  WalletStates,
+  WalletStatus,
+} from "@terra-money/wallet-provider";
+import {
+  ChainId,
+  CHAIN_ID_TERRA,
+  CHAIN_ID_TERRA2,
+  NotSupported,
+  SendTransactionResult,
+  Wallet,
+  WalletState,
+} from "@xlabs-libs/wallet-aggregator-core";
+import { Observable, Subscription } from "rxjs";
+import { map } from "rxjs/operators";
 
 interface TerraWalletInfo {
   type: ConnectType;
@@ -13,22 +33,32 @@ interface TerraWalletInfo {
   url?: string;
 }
 
-export const getWallets = async (ignoredTypes: ConnectType[] = []): Promise<TerraWallet[]> => {
+export const getWallets = async (
+  ignoredTypes: ConnectType[] = []
+): Promise<TerraWallet[]> => {
   const networks = await getChainOptions();
 
   const controllerOptions: WalletControllerOptions = { ...networks };
 
   const controller = new WalletController(controllerOptions);
 
-  const toTerraWallet = (objs: Connection[] | Installation[], installed: boolean) => {
+  const toTerraWallet = (
+    objs: Connection[] | Installation[],
+    installed: boolean
+  ) => {
     return objs
-      .map(obj => ({ ...obj, installed }))
-      .filter((walletInfo: TerraWalletInfo) => !ignoredTypes.includes(walletInfo.type))
-      .map((walletInfo: TerraWalletInfo) => new TerraWallet({
-        controller,
-        walletInfo
-      }));
-  }
+      .map((obj) => ({ ...obj, installed }))
+      .filter(
+        (walletInfo: TerraWalletInfo) => !ignoredTypes.includes(walletInfo.type)
+      )
+      .map(
+        (walletInfo: TerraWalletInfo) =>
+          new TerraWallet({
+            controller,
+            walletInfo,
+          })
+      );
+  };
 
   const waitObservable = <T>(observable: Observable<T>): Promise<T> => {
     return new Promise((resolve) => {
@@ -41,22 +71,28 @@ export const getWallets = async (ignoredTypes: ConnectType[] = []): Promise<Terr
       setTimeout(() => {
         sub.unsubscribe();
         resolve(value);
-      }, 1000)
+      }, 1000);
     });
   };
 
   // available to connect
-  const connections: TerraWallet[] = await waitObservable(controller.availableConnections().pipe(
-    map(arr => toTerraWallet(arr, true))
-  )) || [];
+  const connections: TerraWallet[] =
+    (await waitObservable(
+      controller
+        .availableConnections()
+        .pipe(map((arr) => toTerraWallet(arr, true)))
+    )) || [];
 
   // installable
-  const installations: TerraWallet[] = await waitObservable(controller.availableInstallations().pipe(
-    map(arr => toTerraWallet(arr, false))
-  )) || [];
+  const installations: TerraWallet[] =
+    (await waitObservable(
+      controller
+        .availableInstallations()
+        .pipe(map((arr) => toTerraWallet(arr, false)))
+    )) || [];
 
   return connections.concat(installations);
-}
+};
 
 export interface TerraWalletConfig {
   controller: WalletController;
@@ -65,8 +101,8 @@ export interface TerraWalletConfig {
 
 type UnsignedTerraMessage = Uint8Array | Buffer;
 
-const TERRA_CHAINS = ['columbus-5', 'bombay-12'];
-const TERRA2_CHAINS = ['phoenix-1', 'pisco-1'];
+const TERRA_CHAINS = ["columbus-5", "bombay-12"];
+const TERRA2_CHAINS = ["phoenix-1", "pisco-1"];
 
 const sleep = (ms: number) => {
   return new Promise((resolve) => {
@@ -80,11 +116,9 @@ const waitFor = (fn: () => boolean) => {
       while (!fn()) {
         await sleep(500);
       }
-    }
+    };
 
-    loop()
-      .then(resolve)
-      .catch(reject);
+    loop().then(resolve).catch(reject);
   });
 };
 
@@ -107,8 +141,8 @@ export class TerraWallet extends Wallet<
     this.walletInfo = walletInfo;
     this.state = {
       status: WalletStatus.WALLET_NOT_CONNECTED,
-      network: this.controller.options.defaultNetwork
-    }
+      network: this.controller.options.defaultNetwork,
+    };
   }
 
   async connect(): Promise<string[]> {
@@ -143,16 +177,18 @@ export class TerraWallet extends Wallet<
 
     if (TERRA_CHAINS.includes(chainId)) return CHAIN_ID_TERRA;
     else if (TERRA2_CHAINS.includes(chainId)) return CHAIN_ID_TERRA2;
-    else throw new Error(`Unknown terra chain ${chainId}`)
+    else throw new Error(`Unknown terra chain ${chainId}`);
   }
 
   signTransaction(tx: ExtensionOptions): Promise<ExtensionOptions> {
-    if (!this.isConnected()) throw new Error('Not Connected');
+    if (!this.isConnected()) throw new Error("Not Connected");
     return Promise.resolve(tx);
   }
 
-  async sendTransaction(tx: ExtensionOptions): Promise<SendTransactionResult<TxResult>> {
-    if (!this.isConnected()) throw new Error('Not Connected');
+  async sendTransaction(
+    tx: ExtensionOptions
+  ): Promise<SendTransactionResult<TxResult>> {
+    if (!this.isConnected()) throw new Error("Not Connected");
     const result = await this.controller.post(tx);
 
     if (!result.success) {
@@ -161,12 +197,12 @@ export class TerraWallet extends Wallet<
 
     return {
       id: result.result.txhash,
-      data: result
-    }
+      data: result,
+    };
   }
 
   signMessage(msg: UnsignedTerraMessage): Promise<SignBytesResult> {
-    if (!this.isConnected()) throw new Error('Not Connected');
+    if (!this.isConnected()) throw new Error("Not Connected");
 
     const toSign = Buffer.isBuffer(msg) ? msg : Buffer.from(msg);
     return this.controller.signBytes(toSign);
@@ -177,7 +213,7 @@ export class TerraWallet extends Wallet<
   }
 
   getUrl(): string {
-    return this.walletInfo.url || 'https://terra.money';
+    return this.walletInfo.url || "https://terra.money";
   }
 
   getAddress(): string | undefined {
@@ -187,7 +223,7 @@ export class TerraWallet extends Wallet<
 
   getAddresses(): string[] {
     return this.state.status === WalletStatus.WALLET_CONNECTED
-      ? this.state.wallets.map(w => w.terraAddress)
+      ? this.state.wallets.map((w) => w.terraAddress)
       : [];
   }
 
@@ -212,6 +248,8 @@ export class TerraWallet extends Wallet<
   }
 
   getWalletState(): WalletState {
-    return this.walletInfo.installed ? WalletState.Installed : WalletState.NotDetected;
+    return this.walletInfo.installed
+      ? WalletState.Installed
+      : WalletState.NotDetected;
   }
 }

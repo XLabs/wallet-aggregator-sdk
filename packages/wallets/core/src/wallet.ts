@@ -3,13 +3,13 @@ import { ChainId } from "./constants";
 
 export class NotSupported extends Error {
   constructor() {
-    super('Not supported');
+    super("Not supported");
   }
 }
 
 export class NotConnected extends Error {
   constructor() {
-    super('Not connected');
+    super("Not connected");
   }
 }
 
@@ -23,10 +23,10 @@ export interface WalletEvents {
 }
 
 export enum WalletState {
-  Installed = 'Installed',
-  NotDetected = 'NotDetected',
-  Loadable = 'Loadable',
-  Unsupported = 'Unsupported'
+  Installed = "Installed",
+  NotDetected = "NotDetected",
+  Loadable = "Loadable",
+  Unsupported = "Unsupported",
 }
 
 export interface SendTransactionResult<R> {
@@ -109,7 +109,7 @@ export abstract class Wallet<
    * @throws Throws if the address can not be set as the main address
    * @throws {NotSupported} May throw NotSupported error if the wallet does not implement it
    */
-  abstract setMainAddress(address: Address): void
+  abstract setMainAddress(address: Address): void;
 
   /**
    * @async

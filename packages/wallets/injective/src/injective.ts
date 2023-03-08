@@ -1,8 +1,24 @@
 import { TxResponse } from "@injectivelabs/sdk-ts";
 import { ChainId as InjectiveChainId } from "@injectivelabs/ts-types";
-import { MsgBroadcaster, Wallet as WalletType, WalletStrategy } from "@injectivelabs/wallet-ts";
-import { ChainId, CHAIN_ID_INJECTIVE, SendTransactionResult, Wallet } from "@xlabs-libs/wallet-aggregator-core";
-import { BroadcasterOptions, InjectiveEIP712Message, InjectiveNetworkInfo, InjectiveSignedEIP712Message, InjectiveTransaction, InjectiveWalletConfig } from "./types";
+import {
+  MsgBroadcaster,
+  Wallet as WalletType,
+  WalletStrategy,
+} from "@injectivelabs/wallet-ts";
+import {
+  ChainId,
+  CHAIN_ID_INJECTIVE,
+  SendTransactionResult,
+  Wallet,
+} from "@xlabs-libs/wallet-aggregator-core";
+import {
+  BroadcasterOptions,
+  InjectiveEIP712Message,
+  InjectiveNetworkInfo,
+  InjectiveSignedEIP712Message,
+  InjectiveTransaction,
+  InjectiveWalletConfig,
+} from "./types";
 
 /**
  * An abstraction over Injective blockchain wallets.
@@ -23,8 +39,13 @@ export abstract class InjectiveWallet extends Wallet<
   private readonly disabledWallets: WalletType[];
   private readonly broadcasterOptions: BroadcasterOptions;
 
-  constructor({ networkChainId, type, broadcasterOptions, disabledWallets }: InjectiveWalletConfig) {
-    super()
+  constructor({
+    networkChainId,
+    type,
+    broadcasterOptions,
+    disabledWallets,
+  }: InjectiveWalletConfig) {
+    super();
     this.networkChainId = networkChainId;
     this.broadcasterOptions = broadcasterOptions;
     this.disabledWallets = disabledWallets || [];
@@ -40,7 +61,7 @@ export abstract class InjectiveWallet extends Wallet<
     this.strategy = new WalletStrategy({
       chainId: this.networkChainId,
       disabledWallets: this.disabledWallets,
-      wallet: this.type
+      wallet: this.type,
     });
 
     this.addresses = await this.strategy.getAddresses();
@@ -69,24 +90,26 @@ export abstract class InjectiveWallet extends Wallet<
   }
 
   signTransaction(tx: InjectiveTransaction): Promise<InjectiveTransaction> {
-    if (!this.strategy) throw new Error('Not connected');
+    if (!this.strategy) throw new Error("Not connected");
     return Promise.resolve(tx);
   }
 
-  async sendTransaction(tx: InjectiveTransaction): Promise<SendTransactionResult<TxResponse>> {
-    if (!this.strategy) throw new Error('Not connected');
+  async sendTransaction(
+    tx: InjectiveTransaction
+  ): Promise<SendTransactionResult<TxResponse>> {
+    if (!this.strategy) throw new Error("Not connected");
 
     const broadcaster = new MsgBroadcaster({
       walletStrategy: this.strategy,
-      ...this.broadcasterOptions
+      ...this.broadcasterOptions,
     });
 
     const result = await broadcaster.broadcast(tx);
 
     return {
       id: result.txHash,
-      data: result
-    }
+      data: result,
+    };
   }
 
   getChainId(): ChainId {
@@ -103,17 +126,19 @@ export abstract class InjectiveWallet extends Wallet<
 
   setMainAddress(address: string): void {
     if (!this.addresses.includes(address)) {
-      throw new Error('Unknown address')
+      throw new Error("Unknown address");
     }
     this.address = address;
   }
 
   getBalance(): Promise<string> {
-    throw new Error('Not supported');
+    throw new Error("Not supported");
   }
 
-  signMessage(msg: InjectiveEIP712Message): Promise<InjectiveSignedEIP712Message> {
-    if (!this.strategy || !this.address) throw new Error('Not connected');
+  signMessage(
+    msg: InjectiveEIP712Message
+  ): Promise<InjectiveSignedEIP712Message> {
+    if (!this.strategy || !this.address) throw new Error("Not connected");
     return this.strategy.signEip712TypedData(msg, this.address);
   }
 }

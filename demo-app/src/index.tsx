@@ -1,10 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { WalletContextProvider } from '@xlabs-libs/wallet-aggregator-react';
-import { initWallets } from '@xlabs-libs/wallet-aggregator-react-init';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { WalletContextProvider } from "@xlabs-libs/wallet-aggregator-react";
+import { initWallets } from "@xlabs-libs/wallet-aggregator-react-init";
 
 const wallets = initWallets();
 
@@ -14,8 +14,8 @@ ReactDOM.render(
       <App />
     </WalletContextProvider>
   </React.StrictMode>,
-  document.getElementById('root') as HTMLElement
-)
+  document.getElementById("root") as HTMLElement
+);
 
 // const root = ReactDOM.createRoot(
 //   document.getElementById('root') as HTMLElement

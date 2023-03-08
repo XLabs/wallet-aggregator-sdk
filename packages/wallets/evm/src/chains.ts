@@ -49,10 +49,10 @@ import {
   telosTestnet,
   zkSync,
   zkSyncTestnet,
-  Chain
-} from '@wagmi/core/chains'
+  Chain,
+} from "@wagmi/core/chains";
 
-export type { Chain } from '@wagmi/core/chains';
+export type { Chain } from "@wagmi/core/chains";
 
 const karuraTestnet = {
   id: 596,
@@ -60,12 +60,15 @@ const karuraTestnet = {
   network: "karura-testnet",
   nativeCurrency: { name: "Karura Token", symbol: "KAR", decimals: 18 },
   rpcUrls: {
-    default: { http: [ "https://karura-dev.aca-dev.network/eth/http" ] },
-    public: { http: [ "https://karura-dev.aca-dev.network/eth/http" ] }
+    default: { http: ["https://karura-dev.aca-dev.network/eth/http"] },
+    public: { http: ["https://karura-dev.aca-dev.network/eth/http"] },
   },
   blockExplorers: {
-    default: { name: "Blockscout", url: "https://blockscout.karura-dev.aca-dev.network" }
-  }
+    default: {
+      name: "Blockscout",
+      url: "https://blockscout.karura-dev.aca-dev.network",
+    },
+  },
 } as const satisfies Chain;
 
 const acalaTestnet = {
@@ -74,12 +77,15 @@ const acalaTestnet = {
   network: "acala-testnet",
   nativeCurrency: { name: "Acala Token", symbol: "ACA", decimals: 18 },
   rpcUrls: {
-    default: { http: [ "https://acala-dev.aca-dev.network/eth/http" ] },
-    public: { http: [ "https://acala-dev.aca-dev.network/eth/http" ] }
+    default: { http: ["https://acala-dev.aca-dev.network/eth/http"] },
+    public: { http: ["https://acala-dev.aca-dev.network/eth/http"] },
   },
   blockExplorers: {
-    default: { name: "Blockscout", url: "https://blockscout.acala-dev.aca-dev.network" }
-  }
+    default: {
+      name: "Blockscout",
+      url: "https://blockscout.acala-dev.aca-dev.network",
+    },
+  },
 } as const satisfies Chain;
 
 const karura = {
@@ -88,12 +94,12 @@ const karura = {
   network: "karura",
   nativeCurrency: { name: "Karura Token", symbol: "KAR", decimals: 18 },
   rpcUrls: {
-    default: { http: [ "https://eth-rpc-karura.aca-api.network" ] },
-    public: { http: [ "https://eth-rpc-karura.aca-api.network" ] }
+    default: { http: ["https://eth-rpc-karura.aca-api.network"] },
+    public: { http: ["https://eth-rpc-karura.aca-api.network"] },
   },
   blockExplorers: {
-    default: { name: "Blockscout", url: "https://blockscout.karura.network" }
-  }
+    default: { name: "Blockscout", url: "https://blockscout.karura.network" },
+  },
 } as const satisfies Chain;
 
 const acala = {
@@ -102,12 +108,12 @@ const acala = {
   network: "acala",
   nativeCurrency: { name: "Acala Token", symbol: "ACA", decimals: 18 },
   rpcUrls: {
-    default: { http: [ "https://eth-rpc-acala.aca-api.network" ] },
-    public: { http: [ "https://eth-rpc-acala.aca-api.network" ] }
+    default: { http: ["https://eth-rpc-acala.aca-api.network"] },
+    public: { http: ["https://eth-rpc-acala.aca-api.network"] },
   },
   blockExplorers: {
-    default: { name: "Blockscout", url: "https://blockscout.acala.network" }
-  }
+    default: { name: "Blockscout", url: "https://blockscout.acala.network" },
+  },
 } as const satisfies Chain;
 
 const klaytn = {
@@ -116,12 +122,12 @@ const klaytn = {
   network: "klaytn",
   nativeCurrency: { name: "Klay", symbol: "KLAY", decimals: 18 },
   rpcUrls: {
-    default: { http: [ "https://public-node-api.klaytnapi.com/v1/cypress" ] },
-    public: { http: [ "https://public-node-api.klaytnapi.com/v1/cypress" ] }
+    default: { http: ["https://public-node-api.klaytnapi.com/v1/cypress"] },
+    public: { http: ["https://public-node-api.klaytnapi.com/v1/cypress"] },
   },
   blockExplorers: {
-    default: { name: "KlaytnScope", url: "https://scope.klaytn.com" }
-  }
+    default: { name: "KlaytnScope", url: "https://scope.klaytn.com" },
+  },
 } as const satisfies Chain;
 
 const klaytnBaobab = {
@@ -130,12 +136,12 @@ const klaytnBaobab = {
   network: "klaytn-baobab",
   nativeCurrency: { name: "Klay", symbol: "KLAY", decimals: 18 },
   rpcUrls: {
-    default: { http: [ "https://api.baobab.klaytn.net:8651" ] },
-    public: { http: [ "https://api.baobab.klaytn.net:8651" ] }
+    default: { http: ["https://api.baobab.klaytn.net:8651"] },
+    public: { http: ["https://api.baobab.klaytn.net:8651"] },
   },
   blockExplorers: {
-    default: { name: "KlaytnScope", url: "https://baobab.scope.klaytn.com" }
-  }
+    default: { name: "KlaytnScope", url: "https://baobab.scope.klaytn.com" },
+  },
 } as const satisfies Chain;
 
 const emeraldTestnet = {
@@ -144,12 +150,15 @@ const emeraldTestnet = {
   network: "emerald-testnet",
   nativeCurrency: { name: "Emerald Rose", symbol: "ROSE", decimals: 18 },
   rpcUrls: {
-    default: { http: [ "https://testnet.emerald.oasis.dev" ] },
-    public: { http: [ "https://testnet.emerald.oasis.dev" ] }
+    default: { http: ["https://testnet.emerald.oasis.dev"] },
+    public: { http: ["https://testnet.emerald.oasis.dev"] },
   },
   blockExplorers: {
-    default: { name: "Oasis", url: "https://testnet.explorer.emerald.oasis.dev" }
-  }
+    default: {
+      name: "Oasis",
+      url: "https://testnet.explorer.emerald.oasis.dev",
+    },
+  },
 } as const satisfies Chain;
 
 const emerald = {
@@ -158,12 +167,12 @@ const emerald = {
   network: "emerald-testnet",
   nativeCurrency: { name: "Emerald Rose", symbol: "ROSE", decimals: 18 },
   rpcUrls: {
-    default: { http: [ "https://emerald.oasis.dev" ] },
-    public: { http: [ "https://emerald.oasis.dev" ] }
+    default: { http: ["https://emerald.oasis.dev"] },
+    public: { http: ["https://emerald.oasis.dev"] },
   },
   blockExplorers: {
-    default: { name: "Oasis", url: "https://explorer.emerald.oasis.dev" }
-  }
+    default: { name: "Oasis", url: "https://explorer.emerald.oasis.dev" },
+  },
 } as const satisfies Chain;
 
 export const DEFAULT_CHAINS: Chain[] = [

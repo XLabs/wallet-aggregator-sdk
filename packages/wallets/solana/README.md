@@ -9,23 +9,20 @@ The package leverages on `@solana/wallet-adapter-base`, which already provides a
 ```ts
 import {
   PhantomWalletAdapter,
-  SolflareWalletAdapter
+  SolflareWalletAdapter,
 } from "@solana/wallet-adapter-wallets";
 import { clusterApiUrl } from "@solana/web3.js";
 import { SolanaWallet } from "@xlabs-libs/wallet-aggregator-solana";
 
-const cluster = 'mainnet';
-const url = clusterApiUrl('mainnet-beta');
+const cluster = "mainnet";
+const url = clusterApiUrl("mainnet-beta");
 
-const connection = new Connection(url)
+const connection = new Connection(url);
 
-const martian = new SolanaWallet(
-    new PhantomWalletAdapter(),
-    connection
-)
+const martian = new SolanaWallet(new PhantomWalletAdapter(), connection);
 
 const solanaWallets: SolanaWallet[] = [
-    new PhantomWalletAdapter(),
-    new SolflareWalletAdapter()
-].map(adapter => new SolanaWallet(adapter, connection))
+  new PhantomWalletAdapter(),
+  new SolflareWalletAdapter(),
+].map((adapter) => new SolanaWallet(adapter, connection));
 ```

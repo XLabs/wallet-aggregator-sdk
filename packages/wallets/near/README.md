@@ -14,25 +14,25 @@ import { setupNightly } from "@near-wallet-selector/nightly";
 import { setupMeteorWallet } from "@near-wallet-selector/meteor-wallet";
 import "@near-wallet-selector/modal-ui/styles.css";
 
-const contractId = 'contract.dapp.near';
+const contractId = "contract.dapp.near";
 
 const config = {
-    networkId: "mainnet",
-    keyStore: nearKeyStore,
-    nodeUrl: "https://rpc.mainnet.near.org",
-    walletUrl: "https://wallet.mainnet.near.org",
-    helperUrl: "https://helper.mainnet.near.org",
-    headers: {},
-}
+  networkId: "mainnet",
+  keyStore: nearKeyStore,
+  nodeUrl: "https://rpc.mainnet.near.org",
+  walletUrl: "https://wallet.mainnet.near.org",
+  helperUrl: "https://helper.mainnet.near.org",
+  headers: {},
+};
 
 new NearWallet({
-    config,
-    contractId,
-    modules: [
-        ...(await setupDefaultWallets()),
-        setupMyNearWallet(),
-        setupNightly(),
-        setupMeteorWallet(),
-    ]
-})
+  config,
+  contractId,
+  modules: [
+    ...(await setupDefaultWallets()),
+    setupMyNearWallet(),
+    setupNightly(),
+    setupMeteorWallet(),
+  ],
+});
 ```

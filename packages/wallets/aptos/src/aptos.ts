@@ -1,10 +1,22 @@
-import { ChainId, CHAINS, NotSupported, SendTransactionResult, Wallet, WalletState } from "@xlabs-libs/wallet-aggregator-core";
-import { BaseWalletAdapter, NetworkInfo, SignMessagePayload, SignMessageResponse } from "@manahippo/aptos-wallet-adapter";
+import {
+  ChainId,
+  CHAINS,
+  NotSupported,
+  SendTransactionResult,
+  Wallet,
+  WalletState,
+} from "@xlabs-libs/wallet-aggregator-core";
+import {
+  BaseWalletAdapter,
+  NetworkInfo,
+  SignMessagePayload,
+  SignMessageResponse,
+} from "@manahippo/aptos-wallet-adapter";
 import { Types } from "aptos";
 
 export type AptosAdapter = BaseWalletAdapter;
 export interface AptosSubmitResult {
-  hash: Types.HexEncodedBytes
+  hash: Types.HexEncodedBytes;
 }
 
 export type AptosMessage = string | SignMessagePayload | Uint8Array;
@@ -51,7 +63,7 @@ export class AptosWallet extends Wallet<
 
   async connect(): Promise<string[]> {
     await this.adapter.connect();
-    return this.getAddresses()
+    return this.getAddresses();
   }
 
   getNetworkInfo() {
@@ -67,7 +79,7 @@ export class AptosWallet extends Wallet<
   }
 
   getChainId(): ChainId {
-    return CHAINS['aptos'];
+    return CHAINS["aptos"];
   }
 
   getAddress(): string | undefined {
@@ -75,8 +87,8 @@ export class AptosWallet extends Wallet<
   }
 
   getAddresses(): string[] {
-    const address = this.getAddress()
-    return address ? [ address ] : []
+    const address = this.getAddress();
+    return address ? [address] : [];
   }
 
   setMainAddress(): void {
@@ -87,16 +99,20 @@ export class AptosWallet extends Wallet<
     throw new NotSupported();
   }
 
-  signTransaction(tx: Types.TransactionPayload): Promise<Types.TransactionPayload> {
+  signTransaction(
+    tx: Types.TransactionPayload
+  ): Promise<Types.TransactionPayload> {
     return Promise.resolve(tx);
   }
 
-  async sendTransaction(tx: Types.TransactionPayload): Promise<SendTransactionResult<AptosSubmitResult>> {
+  async sendTransaction(
+    tx: Types.TransactionPayload
+  ): Promise<SendTransactionResult<AptosSubmitResult>> {
     const result = await this.adapter.signAndSubmitTransaction(tx);
     return {
       id: result.hash,
-      data: result
-    }
+      data: result,
+    };
   }
 
   signMessage(msg: AptosMessage): Promise<SignedAptosMessage> {
