@@ -25,7 +25,7 @@ export class CosmostationWallet extends InjectiveWallet {
   }
 
   getWalletState(): WalletState {
-    return typeof (window as any).cosmostation !== "undefined"
+    return typeof window.cosmostation !== "undefined"
       ? WalletState.Installed
       : WalletState.NotDetected;
   }

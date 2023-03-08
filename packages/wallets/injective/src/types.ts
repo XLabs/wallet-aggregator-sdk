@@ -20,4 +20,15 @@ export interface InjectiveNetworkInfo {
   id: string;
 }
 
+export type InjectiveEIP712Message = string;
+export type InjectiveSignedEIP712Message = string;
+
 export type ConcreteWalletConfig = Omit<InjectiveWalletConfig, 'type' | 'disabledWallets'>;
+
+declare global {
+  interface Window {
+    keplr: object;
+    leap: object;
+    cosmostation: object;
+  }
+}

@@ -15,7 +15,9 @@ interface IWalletContext {
 }
 
 export const WalletContext = createContext<IWalletContext>({
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   changeWallet: () => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   unsetWalletFromChain: () => {},
   availableWallets: {},
   wallets: {},
@@ -62,13 +64,16 @@ export const WalletContextProvider = ({ wallets: configureWallets, children, coa
 
       setAvailableWallets(available);
     }
+
+    // TODO: maybe handle init errors by providing a flag/message to child components
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     initWallets();
   }, [ configureWallets ])
 
   const changeWallet = useCallback((newWallet: Wallet) => {
     if (!newWallet) throw new Error('Invalid wallet');
 
-    let chainId = coalesceChainId(newWallet.getChainId());
+    const chainId = coalesceChainId(newWallet.getChainId());
 
     setDefaultWallet(newWallet);
     setWallets({

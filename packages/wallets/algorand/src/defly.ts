@@ -70,7 +70,7 @@ export class DeflyWallet extends AlgorandWallet {
   private prepareTxs(txs: UnsignedTransaction[]): SignerTransaction[][] {
     const groups: SignerTransaction[][] = [];
 
-    let prev: algosdk.Transaction;
+    let prev: algosdk.Transaction | undefined;
     for (let i = 0; i < txs.length; i++) {
       const tx = txs[i];
       const decoded: algosdk.Transaction = tx instanceof Uint8Array ? algosdk.decodeUnsignedTransaction(tx) : tx;
@@ -78,7 +78,7 @@ export class DeflyWallet extends AlgorandWallet {
       if (groups.length === 0) {
         groups.push([ { txn: decoded } ]);
       } else {
-        if (prev!.group && decoded.group && prev!.group.equals(decoded.group)) {
+        if (prev && prev.group && decoded.group && prev.group.equals(decoded.group)) {
           // same group
           groups[groups.length - 1].push({ txn: decoded })
         } else {

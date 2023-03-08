@@ -1,4 +1,4 @@
-import { ChainId, ChainName, CHAINS, Network } from "@xlabs-libs/wallet-aggregator-core";
+import { ChainId, CHAINS, Network } from "@xlabs-libs/wallet-aggregator-core";
 
 export const EVM_CHAINS = {
   ethereum: 1,
@@ -32,7 +32,8 @@ export const EVM_CHAINS_TESTNET = {
   klaytn: 1001,
   celo: 44787,
   neon: 245022926,
-  arbitrum: 421613
+  arbitrum: 421613,
+  optimism: 420
 } as const;
 
 export type EVMChainName =
@@ -53,30 +54,30 @@ export type EVMChainName =
   | "optimism"
   | "gnosis";
 
-export type EVMChainId = typeof CHAINS[EVMChainName]
+type Indexable = string | number | symbol;
 
-const invertMap = (map: Record<string, number>) =>
+const invertMap = <K extends Indexable, V extends Indexable>(map: Record<K, V>) =>
   Object.entries(map).reduce(
     (obj, [name, id]) => {
-        obj[id] = name;
-        return obj;
+      return Object.assign(obj, { [id as Indexable]: name });
     },
-    {} as any
+    {} as Record<V, K>
   );
 
-export const EVM_CHAIN_ID_TO_NAME: { [key: number]: ChainName } = invertMap(EVM_CHAINS);
-export const EVM_TESTNET_CHAIN_ID_TO_NAME: { [key: number]: ChainName } = invertMap(EVM_CHAINS_TESTNET);
+export const EVM_CHAIN_ID_TO_NAME: Record<number, EVMChainName> = invertMap<EVMChainName, number>(EVM_CHAINS);
+export const EVM_TESTNET_CHAIN_ID_TO_NAME: Record<number, EVMChainName> = invertMap(EVM_CHAINS_TESTNET);
 
 export function evmChainIdToChainId(evmChainId: number, network: Network = "MAINNET"): ChainId {
   let chainName;
 
-  if (network === "MAINNET") chainName = EVM_CHAIN_ID_TO_NAME[evmChainId as EVMChainId];
-  if (network === "TESTNET") chainName = EVM_TESTNET_CHAIN_ID_TO_NAME[evmChainId as EVMChainId];
+  if (network === "MAINNET") chainName = EVM_CHAIN_ID_TO_NAME[evmChainId];
+  if (network === "TESTNET") chainName = EVM_TESTNET_CHAIN_ID_TO_NAME[evmChainId];
 
   if (chainName === undefined) throw new Error(`No chain found for evm chain id ${evmChainId}`)
   return CHAINS[chainName]
 }
 
 export function isTestnetEvm(chainId: number): boolean {
-  return Object.values(EVM_CHAINS_TESTNET).includes(chainId as any);
+  const ids = Object.values(EVM_CHAINS_TESTNET) as number[];
+  return ids.includes(chainId);
 }

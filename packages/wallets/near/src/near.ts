@@ -1,8 +1,8 @@
 import { Account, Action, FinalExecutionOutcome, Network, NetworkId, setupWalletSelector, Wallet as InternalWallet, WalletMetadata, WalletSelector } from "@near-wallet-selector/core";
 import { setupModal } from "@near-wallet-selector/modal-ui";
 import { Address, ChainId, CHAIN_ID_NEAR, NotSupported, SendTransactionResult, Wallet } from "@xlabs-libs/wallet-aggregator-core";
-import { connect, ConnectConfig as NearConfig, Account as ConnectedAccount } from "near-api-js";
 import { BN } from "bn.js";
+import { Account as ConnectedAccount, connect, ConnectConfig as NearConfig } from "near-api-js";
 
 
 export interface NearWalletParams {
@@ -35,6 +35,9 @@ export class NearWallet extends Wallet<
     Network
 > {
     private readonly config: NearConfig;
+    // Keep as any[] for now to avoid build errors due to mismatching @near-wallet-selector/* wallets
+    // and the package's @near-wallet-selector/core version
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private readonly modules: any[];
     private readonly contractId: string;
     private accounts: Account[] = [];
@@ -67,7 +70,7 @@ export class NearWallet extends Wallet<
         if (!account) {
             throw new Error('Account not found/enabled');
         }
-        this.selector!.setActiveAccount(id);
+        this.selector?.setActiveAccount(id);
         this.activeAccount = account;
     }
 
@@ -150,7 +153,7 @@ export class NearWallet extends Wallet<
         }
     }
 
-    signMessage(msg: any): Promise<any> {
+    signMessage(): Promise<never> {
         throw new NotSupported();
     }
 
@@ -159,13 +162,15 @@ export class NearWallet extends Wallet<
      * the type through constructor or as an argument for connect()
      */
     async connect(): Promise<Address[]> {
-        this.selector = await setupWalletSelector({
+        const selector = await setupWalletSelector({
             network: this.config.networkId as NetworkId,
-            modules: this.modules
+            modules: this.modules // eslint-disable-line
         });
 
-        return new Promise(async (resolve, reject) => {
-            const modal = await setupModal(this.selector!, {
+        this.selector = selector;
+
+        return new Promise((resolve, reject) => {
+            const modal = setupModal(selector, {
                 contractId: this.contractId,
                 onHide: (reason) => {
                     if (reason === 'user-triggered') {
@@ -183,26 +188,26 @@ export class NearWallet extends Wallet<
             const onConnect = async (accounts: Account[]) => {
                 modal.hide();
 
-                const wallet = await this.selector!.wallet();
+                const wallet = await selector.wallet();
                 
                 this.accounts = accounts;
                 this.activeAccount = accounts[0];
                 this.metadata = wallet?.metadata;
                 this.network = {
-                    ...this.selector!.options.network,
+                    ...selector.options.network,
                 }
 
-                this.selector?.on('networkChanged', this.onNetworkChange);
+                selector?.on('networkChanged', this.onNetworkChange);
 
-                this.selector?.off('signedIn', onSignIn);
+                selector?.off('signedIn', onSignIn);
                 resolve(this.getAddresses());
             };
 
-            this.selector!.on('signedIn', onSignIn);
+            selector.on('signedIn', onSignIn);
 
-            const accounts = this.selector!.store.getState().accounts;
+            const accounts = selector.store.getState().accounts;
             if (accounts.length > 0) {
-                onConnect(accounts);
+                onConnect(accounts).catch(reject);
             }
         });
     }
@@ -232,10 +237,13 @@ export class NearWallet extends Wallet<
     }
 
     private onNetworkChange = ({ networkId }: { networkId: string; }) => {
+        if (!this.network) return;
+
         this.network = {
-            ...this.network!,
+            ...this.network,
             networkId
         }
+
         this.emit('networkChanged');
     };
 }

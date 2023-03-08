@@ -1,5 +1,5 @@
 import MyAlgoConnect from '@randlabs/myalgo-connect';
-import { Address, ChainId, CHAINS, IconSource, Signature } from "@xlabs-libs/wallet-aggregator-core";
+import { Address, ChainId, CHAINS, IconSource, NotConnected, Signature } from "@xlabs-libs/wallet-aggregator-core";
 import { AlgorandMessage, AlgorandWallet, AlgorandWalletConfig, AlgorandWalletParams, EncodedSignedTransaction, UnsignedTransaction } from './algorand';
 
 export interface MyAlgoConnectConfig {
@@ -42,7 +42,8 @@ export class MyAlgoWallet extends AlgorandWallet {
     return accounts.map(a => a.address);
   }
 
-  async innerDisconnect(): Promise<void> {
+  innerDisconnect(): Promise<void> {
+    return Promise.resolve();
   }
 
   getChainId(): ChainId {
@@ -52,6 +53,8 @@ export class MyAlgoWallet extends AlgorandWallet {
   async signTransaction(tx: UnsignedTransaction): Promise<EncodedSignedTransaction>;
   async signTransaction(tx: UnsignedTransaction[]): Promise<EncodedSignedTransaction[]>;
   async signTransaction(tx: UnsignedTransaction | UnsignedTransaction[]): Promise<EncodedSignedTransaction | EncodedSignedTransaction[]> {
+    if (!this.account) throw new NotConnected();
+
     const toSend = Array.isArray(tx) ? tx : [ tx ]
     const result = await this.client.signTransaction(
       toSend.map(t => t instanceof Uint8Array ? t : t.toByte())
@@ -59,14 +62,14 @@ export class MyAlgoWallet extends AlgorandWallet {
 
     if (Array.isArray(tx)) {
       return result.map(res => res.blob)
-    };
+    }
 
     return result[0].blob;
   }
 
   async signMessage(msg: AlgorandMessage): Promise<Signature> {
-    const pk = this.getAddress();
-    return this.client.signBytes(msg, pk!);
+    if (!this.account) throw new NotConnected();
+    return this.client.signBytes(msg, this.account);
   }
 
   /**

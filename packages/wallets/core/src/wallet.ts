@@ -38,11 +38,12 @@ export type Address = string;
 export type IconSource = string;
 export type Signature = Uint8Array;
 
-export type BaseUnsignedTransaction = any;
-export type BaseSignedTransaction = any;
-export type BaseSubmitTransactionResult = any;
-export type BaseMessage = any;
-export type BaseSignedMessage = any;
+export type BaseUnsignedTransaction = any; // eslint-disable-line @typescript-eslint/no-explicit-any
+export type BaseSignedTransaction = any; // eslint-disable-line @typescript-eslint/no-explicit-any
+export type BaseSubmitTransactionResult = any; // eslint-disable-line @typescript-eslint/no-explicit-any
+export type BaseMessage = any; // eslint-disable-line @typescript-eslint/no-explicit-any
+export type BaseSignedMessage = any; // eslint-disable-line @typescript-eslint/no-explicit-any
+export type NetworkInfo = any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
 /**
  * Base Wallet abstraction.
@@ -57,12 +58,12 @@ export type BaseSignedMessage = any;
  *  * `WalletEvents` (E) - Object type which describes the events the wallet can be listened on
  */
 export abstract class Wallet<
-  BUT extends BaseUnsignedTransaction = any,
-  BST extends BaseSignedTransaction = any,
-  R extends BaseSubmitTransactionResult = any,
-  NetworkInfo = any,
-  BM extends BaseMessage = any,
-  BSM extends BaseSignedMessage = any,
+  BUT extends BaseUnsignedTransaction = BaseUnsignedTransaction,
+  BST extends BaseSignedTransaction = BaseSignedTransaction,
+  R extends BaseSubmitTransactionResult = BaseSubmitTransactionResult,
+  N extends NetworkInfo = NetworkInfo,
+  BM extends BaseMessage = BaseMessage,
+  BSM extends BaseSignedMessage = BaseSignedMessage,
   E extends WalletEvents = any
 > extends EventEmitter<E> {
   /** Retrieve the wallet's name */
@@ -164,7 +165,7 @@ export abstract class Wallet<
    * Retrieve the wallet's blockchain's network info.
    * @returns An object holding the network information (e.g. chainId for EVM chains), if possible. If the value is undefined it does not strictly mean the wallet is not connected.
    */
-  abstract getNetworkInfo(): NetworkInfo | undefined;
+  abstract getNetworkInfo(): N | undefined;
 
   /**
    * Wraps the `signTransaction` and `sendTransaction` methods into one operation

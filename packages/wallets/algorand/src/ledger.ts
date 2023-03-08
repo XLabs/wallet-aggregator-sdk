@@ -106,14 +106,14 @@ export class AlgorandLedgerWallet extends AlgorandWallet {
   }
 
   protected async innerDisconnect(): Promise<void> {
-    this.app?.transport.close();
+    await this.app?.transport.close();
     this.app = undefined;
   }
 
   async signTransaction(tx: UnsignedTransaction): Promise<EncodedSignedTransaction>;
   async signTransaction(tx: UnsignedTransaction[]): Promise<EncodedSignedTransaction[]>;
   async signTransaction(tx: UnsignedTransaction | UnsignedTransaction[]): Promise<EncodedSignedTransaction | EncodedSignedTransaction[]> {
-    if (!this.app) throw new Error("Not connected");
+    if (!this.app || !this.account) throw new Error("Not connected");
 
     const txs = Array.isArray(tx) ? tx : [ tx ];
 
@@ -130,7 +130,7 @@ export class AlgorandLedgerWallet extends AlgorandWallet {
       }
 
       if (algosdk.encodeAddress(decodedTx.from.publicKey) !== this.account) {
-        signedTx.sgnr = Buffer.from(algosdk.decodeAddress(this.account!).publicKey);
+        signedTx.sgnr = Buffer.from(algosdk.decodeAddress(this.account).publicKey);
       }
 
       signed.push(algosdk.encodeObj(signedTx));
@@ -139,7 +139,7 @@ export class AlgorandLedgerWallet extends AlgorandWallet {
     return Array.isArray(tx) ? signed : signed[0];
   }
 
-  signMessage(msg: Uint8Array): Promise<Uint8Array> {
+  signMessage(): Promise<Uint8Array> {
     throw new NotSupported();
   }
 

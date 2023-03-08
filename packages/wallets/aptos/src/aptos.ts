@@ -79,7 +79,7 @@ export class AptosWallet extends Wallet<
     return address ? [ address ] : []
   }
 
-  setMainAddress(address: string): void {
+  setMainAddress(): void {
     throw new NotSupported();
   }
 
@@ -87,8 +87,8 @@ export class AptosWallet extends Wallet<
     throw new NotSupported();
   }
 
-  async signTransaction(tx: Types.TransactionPayload): Promise<Types.TransactionPayload> {
-    return tx;
+  signTransaction(tx: Types.TransactionPayload): Promise<Types.TransactionPayload> {
+    return Promise.resolve(tx);
   }
 
   async sendTransaction(tx: Types.TransactionPayload): Promise<SendTransactionResult<AptosSubmitResult>> {

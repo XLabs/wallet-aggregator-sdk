@@ -10,10 +10,9 @@ interface LedgerConnectOptions {
     }
 }
 
-export interface LedgerWalletConfig extends EVMWalletConfig<LedgerConnectOptions> {
-}
+export type LedgerWalletConfig = EVMWalletConfig<LedgerConnectOptions>
 
-export class LedgerWallet extends EVMWallet<LedgerConnector> {
+export class LedgerWallet extends EVMWallet<LedgerConnector, LedgerConnectOptions> {
     constructor(config: LedgerWalletConfig) {
         super(config);
     }

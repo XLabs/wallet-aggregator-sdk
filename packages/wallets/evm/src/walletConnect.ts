@@ -8,16 +8,15 @@ export enum WalletConnectVersion {
 
 type WalletConnectOptions = (ConstructorParameters<typeof WalletConnectConnector>)[0]['options'];
 
-export interface WalletConnectWalletConfig extends EVMWalletConfig<WalletConnectOptions> {
-}
+export type WalletConnectWalletConfig = EVMWalletConfig<WalletConnectOptions>
 
-export class WalletConnectWallet extends EVMWallet<WalletConnectConnector> {
+export class WalletConnectWallet extends EVMWallet<WalletConnectConnector, WalletConnectOptions> {
     constructor(config: WalletConnectWalletConfig = {}) {
         super(config);
     }
 
     protected createConnector(): WalletConnectConnector {
-        let options: any = {
+        let options: WalletConnectOptions = {
             chainId: this.preferredChain
         }
 

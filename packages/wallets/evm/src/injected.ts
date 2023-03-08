@@ -14,10 +14,9 @@ interface InjectedWalletOptions {
     name?: string | ((detectedName: string | string[]) => string);
 }
 
-export interface InjectedWalletConfig extends EVMWalletConfig<InjectedWalletOptions> {
-}
+export type InjectedWalletConfig = EVMWalletConfig<InjectedWalletOptions>
 
-export class InjectedWallet extends EVMWallet<InjectedConnector> {
+export class InjectedWallet extends EVMWallet<InjectedConnector, InjectedWalletOptions> {
     constructor(config: InjectedWalletConfig = {}) {
         super(config);
     }
@@ -29,11 +28,9 @@ export class InjectedWallet extends EVMWallet<InjectedConnector> {
         });
     }
 
-    getName(): InjectedWallets {
-        const names: string | string[] = this.connector.name;
-        const name = Array.isArray(names) ? names[0] : names;
-        if (name === 'Injected') return InjectedWallets.Generic;
-        return name;
+    getName(): string {
+        const name = this.connector.name;
+        return name === 'Injected' ? InjectedWallets.Generic : name;
     }
 
     getUrl(): string {

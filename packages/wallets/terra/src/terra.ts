@@ -59,8 +59,7 @@ export const getWallets = async (ignoredTypes: ConnectType[] = []): Promise<Terr
 }
 
 export interface TerraWalletConfig {
-  controller?: WalletController;
-  options?: WalletControllerOptions;
+  controller: WalletController;
   walletInfo: TerraWalletInfo;
 }
 
@@ -76,11 +75,16 @@ const sleep = (ms: number) => {
 };
 
 const waitFor = (fn: () => boolean) => {
-  return new Promise(async (resolve) => {
-    while (!fn()) {
-      await sleep(500);
+  return new Promise((resolve, reject) => {
+    const loop = async () => {
+      while (!fn()) {
+        await sleep(500);
+      }
     }
-    resolve(undefined);
+
+    loop()
+      .then(resolve)
+      .catch(reject);
   });
 };
 
@@ -97,10 +101,9 @@ export class TerraWallet extends Wallet<
   private state: WalletStates;
   private stateSubscription?: Subscription;
 
-  constructor({ controller, options, walletInfo }: TerraWalletConfig) {
+  constructor({ controller, walletInfo }: TerraWalletConfig) {
     super();
-    if (!controller && !options) throw new Error('Either controller or options must be provided');
-    this.controller = controller ? controller : new WalletController(options!);
+    this.controller = controller;
     this.walletInfo = walletInfo;
     this.state = {
       status: WalletStatus.WALLET_NOT_CONNECTED,
@@ -123,7 +126,7 @@ export class TerraWallet extends Wallet<
     return this.getAddresses();
   }
 
-  async disconnect(): Promise<void> {
+  disconnect(): Promise<void> {
     this.controller.disconnect();
     this.stateSubscription?.unsubscribe();
     this.stateSubscription = undefined;
@@ -131,6 +134,8 @@ export class TerraWallet extends Wallet<
       status: WalletStatus.WALLET_NOT_CONNECTED,
       network: this.controller.options.defaultNetwork,
     };
+
+    return Promise.resolve();
   }
 
   getChainId(): ChainId {
@@ -141,9 +146,9 @@ export class TerraWallet extends Wallet<
     else throw new Error(`Unknown terra chain ${chainId}`)
   }
 
-  async signTransaction(tx: ExtensionOptions): Promise<ExtensionOptions> {
+  signTransaction(tx: ExtensionOptions): Promise<ExtensionOptions> {
     if (!this.isConnected()) throw new Error('Not Connected');
-    return tx;
+    return Promise.resolve(tx);
   }
 
   async sendTransaction(tx: ExtensionOptions): Promise<SendTransactionResult<TxResult>> {
@@ -186,7 +191,7 @@ export class TerraWallet extends Wallet<
       : [];
   }
 
-  setMainAddress(address: string): void {
+  setMainAddress(): void {
     throw new NotSupported();
   }
 

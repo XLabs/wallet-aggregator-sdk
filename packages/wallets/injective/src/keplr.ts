@@ -25,7 +25,7 @@ export class KeplrWallet extends InjectiveWallet {
   }
 
   getWalletState(): WalletState {
-    return typeof (window as any).keplr !== "undefined"
+    return typeof window.keplr !== "undefined"
       ? WalletState.Installed
       : WalletState.NotDetected;
   }

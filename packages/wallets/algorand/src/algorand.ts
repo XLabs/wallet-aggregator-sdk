@@ -49,6 +49,16 @@ const DEFAULT_CONFIG: AlgorandWalletConfig = {
   waitRounds: 1000
 }
 
+interface AccountDataResponse {
+  account: {
+    amount: number;
+  }
+}
+
+interface SendTransactionResponse {
+  txId: string;
+}
+
 export type UnsignedTransaction = algosdk.Transaction | Uint8Array;
 export type EncodedSignedTransaction = Uint8Array;
 
@@ -131,17 +141,16 @@ export abstract class AlgorandWallet extends Wallet<
   }
 
   async getBalance(): Promise<string> {
-    if (this.accounts.length === 0) throw new Error('Not connected');
+    if (!this.account) throw new Error('Not connected');
 
-    const address = this.getAddress();
-    const res = await fetch(`${this.config.indexer.url}/v2/accounts/${address}`);
-    const json = await res.json();
+    const res = await fetch(`${this.config.indexer.url}/v2/accounts/${this.account}`);
+    const json = await res.json() as AccountDataResponse;
     return json.account.amount.toString();
   }
 
   async sendTransaction(signedTx: EncodedSignedTransaction): Promise<SendTransactionResult<SubmittedTransactionMap>> {
     const algod = this.buildClient();
-    const { txId } = await algod.sendRawTransaction(signedTx).do();
+    const { txId } = await algod.sendRawTransaction(signedTx).do() as SendTransactionResponse;
     const info = await algosdk.waitForConfirmation(algod, txId, this.config.waitRounds);
     return {
       id: txId,

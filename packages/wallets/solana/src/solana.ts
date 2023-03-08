@@ -17,6 +17,7 @@ export type SolanaSignedTransaction = Transaction | Transaction[];
 export type SolanaSubmitTransactionResult = TransactionSignature | TransactionSignature[];
 export type SolanaMessage = Uint8Array;
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface SolanaNetworkInfo {
 }
 
@@ -76,7 +77,7 @@ export class SolanaWallet extends Wallet<
         reject();
       });
 
-      this.adapter.connect();
+      this.adapter.connect().catch(reject);
     });
   }
 
@@ -104,7 +105,7 @@ export class SolanaWallet extends Wallet<
         reject();
       });
 
-      this.adapter.disconnect();
+      this.adapter.disconnect().catch(reject);
     });
 
     this.emit('disconnect');
@@ -123,7 +124,7 @@ export class SolanaWallet extends Wallet<
     return address ? [ address ] : []
   }
 
-  setMainAddress(address: string): void {
+  setMainAddress(): void {
     throw new Error('Not supported')
   }
 

@@ -42,11 +42,11 @@ export type ChainIdToName = {
 
 export const CHAIN_ID_TO_NAME: ChainIdToName = Object.entries(CHAINS).reduce(
     (obj, [name, id]) => {
-        obj[id] = name;
-        return obj;
+        obj[id] = name; // eslint-disable-line
+        return obj; // eslint-disable-line
     },
-    {} as any
-)
+    {} as any // eslint-disable-line
+) as ChainIdToName
 
 export const CHAIN_ID_UNSET = CHAINS["unset"];
 export const CHAIN_ID_SOLANA = CHAINS["solana"];

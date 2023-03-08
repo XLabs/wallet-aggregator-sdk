@@ -32,7 +32,7 @@ export interface CoinbaseWalletConfig extends EVMWalletConfig<CoinbaseWalletSDKO
     options: CoinbaseWalletSDKOptions;
 }
 
-export class CoinbaseWallet extends EVMWallet<CoinbaseWalletConnector> {
+export class CoinbaseWallet extends EVMWallet<CoinbaseWalletConnector, CoinbaseWalletSDKOptions> {
     constructor(config: CoinbaseWalletConfig) {
         super(config);
     }

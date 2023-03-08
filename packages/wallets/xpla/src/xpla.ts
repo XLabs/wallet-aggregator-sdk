@@ -59,8 +59,7 @@ export const getWallets = async (ignoredTypes: ConnectType[] = []): Promise<Xpla
 }
 
 export interface XplaWalletConfig {
-  controller?: WalletController;
-  options?: WalletControllerOptions;
+  controller: WalletController;
   walletInfo: XplaWalletInfo;
 }
 
@@ -73,11 +72,14 @@ const sleep = (ms: number) => {
 };
 
 const waitFor = (fn: () => boolean) => {
-  return new Promise(async (resolve) => {
-    while (!fn()) {
-      await sleep(500);
+  return new Promise((resolve, reject) => {
+    const loop = async () => {
+      while (!fn()) {
+        await sleep(500);
+      }
     }
-    resolve(undefined);
+
+    loop().then(resolve).catch(reject);
   });
 };
 
@@ -94,10 +96,9 @@ export class XplaWallet extends Wallet<
   private state: WalletStates;
   private stateSubscription?: Subscription;
 
-  constructor({ controller, options, walletInfo }: XplaWalletConfig) {
+  constructor({ controller, walletInfo }: XplaWalletConfig) {
     super();
-    if (!controller && !options) throw new Error('Either controller or options must be provided');
-    this.controller = controller ? controller : new WalletController(options!);
+    this.controller = controller;
     this.walletInfo = walletInfo;
     this.state = {
       status: WalletStatus.WALLET_NOT_CONNECTED,
@@ -120,7 +121,7 @@ export class XplaWallet extends Wallet<
     return this.getAddresses();
   }
 
-  async disconnect(): Promise<void> {
+  disconnect(): Promise<void> {
     this.controller.disconnect();
     this.stateSubscription?.unsubscribe();
     this.stateSubscription = undefined;
@@ -128,15 +129,17 @@ export class XplaWallet extends Wallet<
       status: WalletStatus.WALLET_NOT_CONNECTED,
       network: this.controller.options.defaultNetwork,
     };
+
+    return Promise.resolve();
   }
 
   getChainId(): ChainId {
     return CHAIN_ID_XPLA;
   }
 
-  async signTransaction(tx: CreateTxOptions): Promise<CreateTxOptions> {
+  signTransaction(tx: CreateTxOptions): Promise<CreateTxOptions> {
     if (!this.isConnected()) throw new Error('Not Connected');
-    return tx;
+    return Promise.resolve(tx);
   }
 
   async sendTransaction(tx: CreateTxOptions): Promise<SendTransactionResult<TxResult>> {
@@ -179,7 +182,7 @@ export class XplaWallet extends Wallet<
       : [];
   }
 
-  setMainAddress(address: string): void {
+  setMainAddress(): void {
     throw new NotSupported();
   }
 

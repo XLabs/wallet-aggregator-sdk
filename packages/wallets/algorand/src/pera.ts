@@ -1,7 +1,7 @@
-import { AlgorandMessage, AlgorandWallet, AlgorandWalletParams, EncodedSignedTransaction, UnsignedTransaction } from "./algorand";
 import { PeraWalletConnect } from "@perawallet/connect";
 import { Address, NotSupported } from "@xlabs-libs/wallet-aggregator-core";
 import algosdk from "algosdk";
+import { AlgorandWallet, AlgorandWalletParams, EncodedSignedTransaction, UnsignedTransaction } from "./algorand";
 
 interface SignerTransaction {
   txn: algosdk.Transaction;
@@ -70,7 +70,7 @@ export class PeraWallet extends AlgorandWallet {
   private prepareTxs(txs: UnsignedTransaction[]): SignerTransaction[][] {
     const groups: SignerTransaction[][] = [];
 
-    let prev: algosdk.Transaction;
+    let prev: algosdk.Transaction | undefined;
     for (let i = 0; i < txs.length; i++) {
       const tx = txs[i];
       const decoded: algosdk.Transaction = tx instanceof Uint8Array ? algosdk.decodeUnsignedTransaction(tx) : tx;
@@ -78,7 +78,7 @@ export class PeraWallet extends AlgorandWallet {
       if (groups.length === 0) {
         groups.push([ { txn: decoded } ]);
       } else {
-        if (prev!.group && decoded.group && prev!.group.equals(decoded.group)) {
+        if (prev && prev.group && decoded.group && prev.group.equals(decoded.group)) {
           // same group
           groups[groups.length - 1].push({ txn: decoded })
         } else {

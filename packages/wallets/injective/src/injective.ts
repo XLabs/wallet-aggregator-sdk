@@ -2,7 +2,7 @@ import { TxResponse } from "@injectivelabs/sdk-ts";
 import { ChainId as InjectiveChainId } from "@injectivelabs/ts-types";
 import { MsgBroadcaster, Wallet as WalletType, WalletStrategy } from "@injectivelabs/wallet-ts";
 import { ChainId, CHAIN_ID_INJECTIVE, SendTransactionResult, Wallet } from "@xlabs-libs/wallet-aggregator-core";
-import { BroadcasterOptions, InjectiveNetworkInfo, InjectiveTransaction, InjectiveWalletConfig } from "./types";
+import { BroadcasterOptions, InjectiveEIP712Message, InjectiveNetworkInfo, InjectiveSignedEIP712Message, InjectiveTransaction, InjectiveWalletConfig } from "./types";
 
 /**
  * An abstraction over Injective blockchain wallets.
@@ -11,7 +11,9 @@ export abstract class InjectiveWallet extends Wallet<
   InjectiveTransaction,
   InjectiveTransaction,
   TxResponse,
-  InjectiveNetworkInfo
+  InjectiveNetworkInfo,
+  InjectiveEIP712Message,
+  InjectiveSignedEIP712Message
 > {
   private strategy?: WalletStrategy;
   private address?: string;
@@ -66,9 +68,9 @@ export abstract class InjectiveWallet extends Wallet<
     this.strategy = undefined;
   }
 
-  async signTransaction(tx: InjectiveTransaction): Promise<InjectiveTransaction> {
+  signTransaction(tx: InjectiveTransaction): Promise<InjectiveTransaction> {
     if (!this.strategy) throw new Error('Not connected');
-    return tx;
+    return Promise.resolve(tx);
   }
 
   async sendTransaction(tx: InjectiveTransaction): Promise<SendTransactionResult<TxResponse>> {
@@ -110,8 +112,8 @@ export abstract class InjectiveWallet extends Wallet<
     throw new Error('Not supported');
   }
 
-  signMessage(msg: any): Promise<any> {
-    if (!this.strategy) throw new Error('Not connected');
-    return this.strategy.signEip712TypedData(msg, this.address!);
+  signMessage(msg: InjectiveEIP712Message): Promise<InjectiveSignedEIP712Message> {
+    if (!this.strategy || !this.address) throw new Error('Not connected');
+    return this.strategy.signEip712TypedData(msg, this.address);
   }
 }

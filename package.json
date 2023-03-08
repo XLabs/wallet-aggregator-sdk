@@ -4,17 +4,21 @@
   "repository": "https://github.com/xlabs/wallet-aggregator-sdk",
   "license": "Apache-2.0",
   "engines": {
-      "node": ">=16",
-      "pnpm": ">=7"
+    "node": ">=16",
+    "pnpm": ">=7"
   },
   "type": "module",
   "sideEffects": false,
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.54.1",
+    "@typescript-eslint/parser": "^5.54.1",
+    "eslint": "^8.35.0",
     "typescript": "^4.4.2"
   },
   "scripts": {
     "build": "tsc --build --verbose tsconfig.all.json",
-    "clean": "pnpm -r run clean"
+    "clean": "pnpm -r run clean",
+    "lint": "npx eslint ."
   },
   "pnpm": {
     "overrides": {

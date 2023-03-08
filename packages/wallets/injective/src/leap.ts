@@ -25,7 +25,7 @@ export class LeapWallet extends InjectiveWallet {
   }
 
   getWalletState(): WalletState {
-    return typeof (window as any).leap !== "undefined"
+    return typeof window.leap !== "undefined"
       ? WalletState.Installed
       : WalletState.NotDetected;
   }
