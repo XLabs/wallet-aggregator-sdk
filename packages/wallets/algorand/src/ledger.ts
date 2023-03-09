@@ -1,9 +1,4 @@
-import {
-  AlgorandWallet,
-  AlgorandWalletParams,
-  EncodedSignedTransaction,
-  UnsignedTransaction,
-} from "./algorand";
+import { AlgorandWallet } from "./algorand";
 import Transport from "@ledgerhq/hw-transport";
 import WebUSBTransport from "@ledgerhq/hw-transport-webusb";
 import WebHIDTransport from "@ledgerhq/hw-transport-webhid";
@@ -11,6 +6,11 @@ import WebBLETransport from "@ledgerhq/hw-transport-web-ble";
 import Algorand from "@ledgerhq/hw-app-algorand";
 import { NotSupported, WalletState } from "@xlabs-libs/wallet-aggregator-core";
 import algosdk from "algosdk";
+import {
+  AlgorandWalletParams,
+  SignerTransaction,
+  SignTransactionResult,
+} from "./types";
 
 export enum TransportType {
   WebUSB = "WebUSB",
@@ -124,21 +124,22 @@ export class AlgorandLedgerWallet extends AlgorandWallet {
   }
 
   async signTransaction(
-    tx: UnsignedTransaction
-  ): Promise<EncodedSignedTransaction>;
-  async signTransaction(
-    tx: UnsignedTransaction[]
-  ): Promise<EncodedSignedTransaction[]>;
-  async signTransaction(
-    tx: UnsignedTransaction | UnsignedTransaction[]
-  ): Promise<EncodedSignedTransaction | EncodedSignedTransaction[]> {
+    tx: SignerTransaction | SignerTransaction[]
+  ): Promise<SignTransactionResult> {
     if (!this.app || !this.account) throw new Error("Not connected");
 
     const txs = Array.isArray(tx) ? tx : [tx];
 
     const signed = [];
     for (const t of txs) {
-      const bytes = Buffer.from(t instanceof Uint8Array ? t : t.toByte());
+      // ARC-0001 states that if signers array is empty, the tx should not be signed
+      if (t.signers && t.signers.length === 0) {
+        // if stxn is present use that as the signature
+        signed.push(t.stxn ? t.stxn : null);
+        continue;
+      }
+
+      const bytes = Buffer.from(t.txn, "base64");
       const { signature } = await this.app.sign(
         this.path,
         bytes.toString("hex")
@@ -158,10 +159,10 @@ export class AlgorandLedgerWallet extends AlgorandWallet {
         );
       }
 
-      signed.push(algosdk.encodeObj(signedTx));
+      signed.push(Buffer.from(algosdk.encodeObj(signedTx)).toString("base64"));
     }
 
-    return Array.isArray(tx) ? signed : signed[0];
+    return signed;
   }
 
   signMessage(): Promise<Uint8Array> {

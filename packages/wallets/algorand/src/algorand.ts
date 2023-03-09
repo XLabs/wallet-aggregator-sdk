@@ -7,48 +7,17 @@ import {
   Wallet,
 } from "@xlabs-libs/wallet-aggregator-core";
 import algosdk from "algosdk";
-
-export type SubmittedTransactionMap = Record<string, string>;
-export type AlgorandMessage = Uint8Array;
-
-/** Algorand Node configuration */
-export interface AlgorandNodeConfig {
-  url: string;
-  token?: string;
-  port?: string;
-}
-
-/** Algorand Indexer configuration */
-export interface AlgorandIndexerConfig {
-  url: string;
-}
-
-/** Algorand Wallet constructor parameters */
-export interface AlgorandWalletParams {
-  /** Algorand Node configuration */
-  node?: AlgorandNodeConfig;
-  /** Algorand indexer configuration */
-  indexer?: AlgorandIndexerConfig;
-  /** Amount of rounds to wait for transaction confirmation. Defaults to 1000. */
-  waitRounds?: number;
-  /** Default account. The wallet assumes this account has already been connected to/enabled. */
-  defaultAccount?: Address;
-}
-
-/** Algorand Wallet configuration */
-export interface AlgorandWalletConfig {
-  /** Algorand Node configuration */
-  node: AlgorandNodeConfig;
-  /** Algorand indexer configuration */
-  indexer: AlgorandIndexerConfig;
-  /** Amount of rounds to wait for transaction confirmation. Defaults to 1000. */
-  waitRounds: number;
-}
-
-export interface AlgorandNetworkInfo {
-  genesisID: string;
-  genesisHash: string;
-}
+import {
+  AccountDataResponse,
+  AlgorandMessage,
+  AlgorandNetworkInfo,
+  AlgorandWalletConfig,
+  AlgorandWalletParams,
+  SendTransactionResponse,
+  SignerTransaction,
+  SignTransactionResult,
+  SubmittedTransactionMap,
+} from "./types";
 
 const DEFAULT_CONFIG: AlgorandWalletConfig = {
   node: { url: "https://node.algoexplorerapi.io" },
@@ -56,22 +25,13 @@ const DEFAULT_CONFIG: AlgorandWalletConfig = {
   waitRounds: 1000,
 };
 
-interface AccountDataResponse {
-  account: {
-    amount: number;
-  };
-}
-
-interface SendTransactionResponse {
-  txId: string;
-}
-
-export type UnsignedTransaction = algosdk.Transaction | Uint8Array;
-export type EncodedSignedTransaction = Uint8Array;
+const notNull = <T>(t: T | null): t is T => {
+  return t !== null;
+};
 
 export abstract class AlgorandWallet extends Wallet<
-  algosdk.Transaction,
-  EncodedSignedTransaction,
+  SignerTransaction,
+  SignTransactionResult,
   SubmittedTransactionMap,
   AlgorandNetworkInfo,
   AlgorandMessage,
@@ -111,14 +71,8 @@ export abstract class AlgorandWallet extends Wallet<
   }
 
   abstract signTransaction(
-    tx: UnsignedTransaction
-  ): Promise<EncodedSignedTransaction>;
-  abstract signTransaction(
-    tx: UnsignedTransaction[]
-  ): Promise<EncodedSignedTransaction[]>;
-  abstract signTransaction(
-    tx: UnsignedTransaction | UnsignedTransaction[]
-  ): Promise<EncodedSignedTransaction | EncodedSignedTransaction[]>;
+    tx: SignerTransaction | SignerTransaction[]
+  ): Promise<SignTransactionResult>;
 
   async disconnect(): Promise<void> {
     await this.innerDisconnect();
@@ -166,11 +120,18 @@ export abstract class AlgorandWallet extends Wallet<
   }
 
   async sendTransaction(
-    signedTx: EncodedSignedTransaction
+    signedTx: SignTransactionResult
   ): Promise<SendTransactionResult<SubmittedTransactionMap>> {
     const algod = this.buildClient();
+
+    // the null filter should not be needed, since all txs should be signed
+    // by this point, but since we can't assume so, we filter them out
+    // the sdk will raise an error need it be
+    const toSend = signedTx
+      .filter(notNull)
+      .map((t) => Buffer.from(t, "base64"));
     const { txId } = (await algod
-      .sendRawTransaction(signedTx)
+      .sendRawTransaction(toSend)
       .do()) as SendTransactionResponse;
     const info = await algosdk.waitForConfirmation(
       algod,

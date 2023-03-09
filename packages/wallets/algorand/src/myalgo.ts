@@ -9,12 +9,12 @@ import {
 } from "@xlabs-libs/wallet-aggregator-core";
 import {
   AlgorandMessage,
-  AlgorandWallet,
   AlgorandWalletConfig,
   AlgorandWalletParams,
-  EncodedSignedTransaction,
-  UnsignedTransaction,
-} from "./algorand";
+  SignerTransaction,
+  SignTransactionResult,
+} from "./types";
+import { AlgorandWallet } from "./algorand";
 
 export interface MyAlgoConnectConfig {
   /** MyAlgoConnect bridge url */
@@ -65,26 +65,12 @@ export class MyAlgoWallet extends AlgorandWallet {
   }
 
   async signTransaction(
-    tx: UnsignedTransaction
-  ): Promise<EncodedSignedTransaction>;
-  async signTransaction(
-    tx: UnsignedTransaction[]
-  ): Promise<EncodedSignedTransaction[]>;
-  async signTransaction(
-    tx: UnsignedTransaction | UnsignedTransaction[]
-  ): Promise<EncodedSignedTransaction | EncodedSignedTransaction[]> {
+    tx: SignerTransaction | SignerTransaction[]
+  ): Promise<SignTransactionResult> {
     if (!this.account) throw new NotConnected();
 
     const toSend = Array.isArray(tx) ? tx : [tx];
-    const result = await this.client.signTransaction(
-      toSend.map((t) => (t instanceof Uint8Array ? t : t.toByte()))
-    );
-
-    if (Array.isArray(tx)) {
-      return result.map((res) => res.blob);
-    }
-
-    return result[0].blob;
+    return await this.client.signTxns(toSend);
   }
 
   async signMessage(msg: AlgorandMessage): Promise<Signature> {

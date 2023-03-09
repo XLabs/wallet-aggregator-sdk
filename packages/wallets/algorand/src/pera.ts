@@ -1,16 +1,16 @@
 import { PeraWalletConnect } from "@perawallet/connect";
 import { Address, NotSupported } from "@xlabs-libs/wallet-aggregator-core";
 import algosdk from "algosdk";
+import { AlgorandWallet } from "./algorand";
 import {
-  AlgorandWallet,
   AlgorandWalletParams,
-  EncodedSignedTransaction,
-  UnsignedTransaction,
-} from "./algorand";
+  SignerTransaction,
+  SignTransactionResult,
+} from "./types";
 
-interface SignerTransaction {
+type PeraSignerTransaction = Omit<SignerTransaction, "txn"> & {
   txn: algosdk.Transaction;
-}
+};
 
 type AlgorandChainIDs = 416001 | 416002 | 416003 | 4160;
 
@@ -63,34 +63,51 @@ export class PeraWallet extends AlgorandWallet {
   }
 
   async signTransaction(
-    tx: UnsignedTransaction
-  ): Promise<EncodedSignedTransaction>;
-  async signTransaction(
-    tx: UnsignedTransaction[]
-  ): Promise<EncodedSignedTransaction[]>;
-  async signTransaction(
-    tx: UnsignedTransaction | UnsignedTransaction[]
-  ): Promise<EncodedSignedTransaction | EncodedSignedTransaction[]> {
-    const toSign: SignerTransaction[][] = this.prepareTxs(
+    tx: SignerTransaction | SignerTransaction[]
+  ): Promise<SignTransactionResult> {
+    const toSign: PeraSignerTransaction[][] = this.prepareTxs(
       Array.isArray(tx) ? tx : [tx]
     );
 
-    const signed = await this.client.signTransaction(toSign);
-
-    return Array.isArray(tx) ? signed : signed[0];
+    const result = await this.client.signTransaction(toSign);
+    return this.completeMissingSignatures(toSign, result);
   }
 
-  private prepareTxs(txs: UnsignedTransaction[]): SignerTransaction[][] {
-    const groups: SignerTransaction[][] = [];
+  private completeMissingSignatures(
+    toSign: PeraSignerTransaction[][],
+    signatures: Uint8Array[]
+  ): SignTransactionResult {
+    // The ARC-0001 standard states that some transactions may not be signed by the wallet
+    // instead returning null as a signature. However, pera skip these null signatures
+    // from the returned signatures list. So, in order to keep it consistent we fill them in
+    // by checking for each tx if it needs a signature or not
+    const signed = [];
+    let i = 0;
+    for (const group of toSign) {
+      for (const tx of group) {
+        signed.push(
+          tx.signers && tx.signers.length === 0
+            ? null
+            : Buffer.from(signatures[i++]).toString("base64")
+        );
+      }
+    }
+
+    return signed;
+  }
+
+  private prepareTxs(txs: SignerTransaction[]): PeraSignerTransaction[][] {
+    const groups: PeraSignerTransaction[][] = [];
 
     let prev: algosdk.Transaction | undefined;
     for (let i = 0; i < txs.length; i++) {
       const tx = txs[i];
-      const decoded: algosdk.Transaction =
-        tx instanceof Uint8Array ? algosdk.decodeUnsignedTransaction(tx) : tx;
+      const decoded: algosdk.Transaction = algosdk.decodeUnsignedTransaction(
+        Buffer.from(tx.txn, "base64")
+      );
 
       if (groups.length === 0) {
-        groups.push([{ txn: decoded }]);
+        groups.push([{ ...tx, txn: decoded }]);
       } else {
         if (
           prev &&
@@ -99,10 +116,10 @@ export class PeraWallet extends AlgorandWallet {
           prev.group.equals(decoded.group)
         ) {
           // same group
-          groups[groups.length - 1].push({ txn: decoded });
+          groups[groups.length - 1].push({ ...tx, txn: decoded });
         } else {
           // different group
-          groups.push([{ txn: decoded }]);
+          groups.push([{ ...tx, txn: decoded }]);
         }
       }
 

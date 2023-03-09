@@ -8,6 +8,8 @@ Wallets implemented so far:
 | ------------- | ------------------------- |
 | MyAlgo Wallet | https://wallet.myalgo.com |
 | Pera Wallet   | https://perawallet.app    |
+| Defly Wallet  | https://defly.app         |
+| Ledger        | https://ledger.com        |
 
 ### Usage
 
@@ -38,3 +40,7 @@ const pera = new PeraWallet({
   },
 });
 ```
+
+### Note on Transaction signing
+
+The Algorand wallet transaction signing interface complies with the [ARC-0001](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0001.md). While the base cases are supported by all wallets, some of them might implement the ARC only partially (e.g: they don't support signing multisig transactions). Some features can be implemented at adapter level (i.e. in the concrete wallet classes, like skipping transaction with empty `signers` in the ledger HW wallet), but do not expect all functionalities to be there.
