@@ -37,7 +37,7 @@ import {
   WalletConnectWallet,
   MetamaskWallet,
 } from "@xlabs-libs/wallet-aggregator-evm";
-import { AddEthereumChainParameterMap } from "@xlabs-libs/wallet-aggregator-evm/dist/types/parameters";
+import { Chain } from "@xlabs-libs/wallet-aggregator-evm";
 import { AvailableWalletsMap } from "@xlabs-libs/wallet-aggregator-react";
 import {
   SolanaAdapter,
@@ -50,7 +50,7 @@ interface InitWalletsConfig {
   };
   algorand?: AlgorandWalletConfig;
   evm?: {
-    chainParameters?: AddEthereumChainParameterMap;
+    chains?: Chain[];
   };
 }
 
@@ -90,8 +90,8 @@ export const initWallets = (
   return {
     [CHAINS["algorand"]]: [new MyAlgoWallet(config?.algorand)],
     [CHAINS["ethereum"]]: [
-      new MetamaskWallet(config?.evm?.chainParameters),
-      new WalletConnectWallet(config?.evm?.chainParameters),
+      new MetamaskWallet(config?.evm),
+      new WalletConnectWallet(config?.evm),
     ],
     [CHAINS["solana"]]: solanaAdapters.map(
       (adapter) =>
