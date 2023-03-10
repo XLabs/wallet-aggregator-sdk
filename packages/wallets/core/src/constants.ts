@@ -29,6 +29,7 @@ export const CHAINS = {
   pythnet: 26,
   xpla: 28,
   btc: 29,
+  base: 30,
   wormchain: 3104,
 } as const;
 
@@ -78,6 +79,7 @@ export const CHAIN_ID_PYTHNET = CHAINS["pythnet"];
 export const CHAIN_ID_XPLA = CHAINS["xpla"];
 export const CHAIN_ID_BTC = CHAINS["btc"];
 export const CHAIN_ID_WORMCHAIN = CHAINS["wormchain"];
+export const CHAIN_ID_BASE = CHAINS["base"];
 
 export type Network = "MAINNET" | "TESTNET" | "DEVNET";
 
@@ -98,7 +100,8 @@ export function isEVMChain(chainId: ChainId): boolean {
     chainId === CHAIN_ID_NEON ||
     chainId === CHAIN_ID_ARBITRUM ||
     chainId === CHAIN_ID_OPTIMISM ||
-    chainId === CHAIN_ID_GNOSIS
+    chainId === CHAIN_ID_GNOSIS ||
+    chainId === CHAIN_ID_BASE
   );
 }
 

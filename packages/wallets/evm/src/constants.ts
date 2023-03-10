@@ -17,6 +17,7 @@ export const EVM_CHAINS = {
   moonbeam: 1284,
   optimism: 10,
   gnosis: 100,
+  base: 8453,
 } as const;
 
 export const EVM_CHAINS_TESTNET = {
@@ -34,6 +35,7 @@ export const EVM_CHAINS_TESTNET = {
   neon: 245022926,
   arbitrum: 421613,
   optimism: 420,
+  base: 84531,
 } as const;
 
 export type EVMChainName =
@@ -52,7 +54,8 @@ export type EVMChainName =
   | "neon"
   | "arbitrum"
   | "optimism"
-  | "gnosis";
+  | "gnosis"
+  | "base";
 
 type Indexable = string | number | symbol;
 
