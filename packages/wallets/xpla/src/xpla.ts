@@ -21,7 +21,7 @@ import {
 } from "@xpla/wallet-provider";
 import { CreateTxOptions } from "@xpla/xpla.js";
 import { Observable, Subscription } from "rxjs";
-import { map } from "rxjs/operators";
+import { map, timeout } from "rxjs/operators";
 
 interface XplaWalletInfo {
   type: ConnectType;
@@ -33,7 +33,8 @@ interface XplaWalletInfo {
 }
 
 export const getWallets = async (
-  ignoredTypes: ConnectType[] = []
+  ignoredTypes: ConnectType[] = [],
+  delayBetweenEach = 500
 ): Promise<XplaWallet[]> => {
   const networks = await getChainOptions();
 
@@ -41,6 +42,7 @@ export const getWallets = async (
 
   const controller = new WalletController(controllerOptions);
 
+  // filter out ignored types and map to XplaWallet object
   const toXplaWallet = (
     objs: Connection[] | Installation[],
     installed: boolean
@@ -59,36 +61,47 @@ export const getWallets = async (
       );
   };
 
-  const waitObservable = <T>(observable: Observable<T>): Promise<T> => {
+  // since the observables provided by the controller do not complete, we use a timeout
+  // utility operator to wait until there's a certain delay between each emission
+  // then we take the last value (tracked through a variable in the scope, since the lastValue from the timeout
+  // `with` setting was always yielding undefined) and map it to the XplaWallet arrat
+  const waitObservable = <T extends Connection[] | Installation[]>(
+    observable: Observable<T>,
+    isInstalled: boolean
+  ): Promise<XplaWallet[]> => {
     return new Promise((resolve) => {
-      let value: T;
-
-      const sub = observable.subscribe((val: T) => {
-        value = val;
-      });
-
-      setTimeout(() => {
-        sub.unsubscribe();
-        resolve(value);
-      }, 1000);
+      let value: XplaWallet[] = [];
+      observable
+        .pipe(
+          timeout({
+            each: delayBetweenEach,
+          }),
+          map((arr) => {
+            console.log("Mapping", arr);
+            return toXplaWallet(arr, isInstalled);
+          })
+        )
+        .subscribe({
+          next: (val) => {
+            console.log("val", val);
+            value = val;
+          },
+          error: () => {
+            resolve(value);
+          },
+          complete: () => resolve(value),
+        });
     });
   };
 
-  // available to connect
-  const connections: XplaWallet[] =
-    (await waitObservable(
-      controller
-        .availableConnections()
-        .pipe(map((arr) => toXplaWallet(arr, true)))
-    )) || [];
-
-  // installable
-  const installations: XplaWallet[] =
-    (await waitObservable(
-      controller
-        .availableInstallations()
-        .pipe(map((arr) => toXplaWallet(arr, false)))
-    )) || [];
+  const connections = await waitObservable(
+    controller.availableConnections(),
+    true
+  );
+  const installations = await waitObservable(
+    controller.availableInstallations(),
+    false
+  );
 
   return connections.concat(installations);
 };
