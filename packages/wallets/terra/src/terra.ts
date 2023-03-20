@@ -78,13 +78,11 @@ export const getWallets = async (
             each: delayBetweenEach,
           }),
           map((arr) => {
-            console.log("Mapping", arr);
             return toTerraWallet(arr, isInstalled);
           })
         )
         .subscribe({
           next: (val) => {
-            console.log("val", val);
             value = val;
           },
           error: () => {

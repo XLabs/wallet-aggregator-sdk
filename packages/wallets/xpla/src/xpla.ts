@@ -77,13 +77,11 @@ export const getWallets = async (
             each: delayBetweenEach,
           }),
           map((arr) => {
-            console.log("Mapping", arr);
             return toXplaWallet(arr, isInstalled);
           })
         )
         .subscribe({
           next: (val) => {
-            console.log("val", val);
             value = val;
           },
           error: () => {
