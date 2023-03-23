@@ -165,8 +165,8 @@ export abstract class EVMWallet<
   protected abstract createConnector(): C;
 
   private async enforcePrefferedChain(): Promise<void> {
-    if (!this.connector.switchChain) throw new NotSupported();
     if (!this.preferredChain) return;
+    if (!this.connector.switchChain) throw new NotSupported();
 
     let currentChain = this.getNetworkInfo()?.chainId;
     while (currentChain !== this.preferredChain) {
@@ -234,8 +234,9 @@ export abstract class EVMWallet<
     this.address = address;
   }
 
-  signTransaction(tx: TransactionRequest): Promise<TransactionRequest> {
+  async signTransaction(tx: TransactionRequest): Promise<TransactionRequest> {
     if (!this.isConnected()) throw new NotConnected();
+    await this.enforcePrefferedChain();
     return Promise.resolve(tx);
   }
 
@@ -243,8 +244,10 @@ export abstract class EVMWallet<
     tx: TransactionRequest
   ): Promise<SendTransactionResult<TransactionReceipt>> {
     if (!this.isConnected()) throw new NotConnected();
-    const response = await this.getSigner().sendTransaction(tx);
 
+    await this.enforcePrefferedChain();
+
+    const response = await this.getSigner().sendTransaction(tx);
     const receipt = await response.wait(this.confirmations);
     return {
       id: receipt.transactionHash,
@@ -254,6 +257,7 @@ export abstract class EVMWallet<
 
   async signMessage(msg: EthereumMessage): Promise<Signature> {
     if (!this.isConnected()) throw new NotConnected();
+    await this.enforcePrefferedChain();
     const signature = await this.getSigner().signMessage(msg);
     return new Uint8Array(Buffer.from(signature.substring(2), "hex"));
   }
