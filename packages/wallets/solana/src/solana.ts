@@ -1,4 +1,4 @@
-import { WalletAdapter } from "@solana/wallet-adapter-base";
+import { WalletAdapter, WalletError } from "@solana/wallet-adapter-base";
 import { Connection, Transaction, TransactionSignature } from "@solana/web3.js";
 import {
   ChainId,
@@ -66,23 +66,26 @@ export class SolanaWallet extends Wallet<
   }
 
   async connect(): Promise<string[]> {
-    return new Promise((resolve, reject) => {
+    const addresses = await new Promise<string[]>((resolve, reject) => {
       this.adapter.on("connect", () => {
         this.adapter.off("connect");
         this.adapter.off("error");
 
         resolve(this.getAddresses());
-        this.emit("connect");
       });
 
-      this.adapter.on("error", () => {
+      this.adapter.on("error", (error: WalletError) => {
         this.adapter.off("connect");
         this.adapter.off("error");
-        reject();
+        reject(error);
       });
 
       this.adapter.connect().catch(reject);
     });
+
+    this.emit("connect");
+    this.adapter.on("disconnect", () => this.emit("disconnect"));
+    return addresses;
   }
 
   getNetworkInfo(): SolanaNetworkInfo | undefined {
@@ -103,15 +106,16 @@ export class SolanaWallet extends Wallet<
         resolve(undefined);
       });
 
-      this.adapter.on("error", () => {
+      this.adapter.on("error", (error: WalletError) => {
         this.adapter.off("disconnect");
         this.adapter.off("error");
-        reject();
+        reject(error);
       });
 
       this.adapter.disconnect().catch(reject);
     });
 
+    this.adapter.removeAllListeners();
     this.emit("disconnect");
   }
 
