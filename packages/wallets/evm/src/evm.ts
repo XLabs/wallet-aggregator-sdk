@@ -151,6 +151,7 @@ export abstract class EVMWallet<
     );
 
     this.connector.on("change", this.onChange.bind(this));
+    this.connector.on("disconnect", this.onDisconnect.bind(this));
 
     this.network = await this.fetchNetworkInfo();
     this.address = await this.connector.getAccount();
@@ -204,9 +205,7 @@ export abstract class EVMWallet<
 
   async disconnect(): Promise<void> {
     await this.connector?.disconnect();
-    await this.client?.destroy();
-    this.client = undefined;
-    this.emit("disconnect");
+    await this.onDisconnect();
   }
 
   getChainId(): ChainId {
@@ -379,6 +378,13 @@ export abstract class EVMWallet<
 
     this.address = await this.connector.getAccount();
     this.emit("accountsChanged", this.address);
+  }
+
+  protected async onDisconnect(): Promise<void> {
+    this.connector.removeAllListeners();
+    await this.client?.destroy();
+    this.client = undefined;
+    this.emit("disconnect");
   }
 
   private async fetchNetworkInfo(): Promise<EVMNetworkInfo | undefined> {
