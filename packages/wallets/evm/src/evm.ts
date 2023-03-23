@@ -44,28 +44,28 @@ enum ERROR_CODES {
   CHAIN_NOT_ADDED = 4902,
 }
 
-/** EVMWallet config options */
+/** @description EVMWallet config options */
 export interface EVMWalletConfig<COpts = any> {
   /**
-   * An array of evm chain config objects as defined by wagmi's Chain type.
+   * @description An array of evm chain config objects as defined by wagmi's Chain type.
    * While the information is the same as in the {@link https://eips.ethereum.org/EIPS/eip-3085 EIP-3085}, the structure is slightly different
    * Defaults to all chains
    */
   chains?: Chain[];
   /**
-   * An EVM chain id. When connecting, the wallet will try to switch to this chain if the provider network's chain id differs.
+   * @description An EVM chain id. When connecting, the wallet will try to switch to this chain if the provider network's chain id differs.
    */
   preferredChain?: EVMChainId;
   /**
-   * Indicates whether the wallet should attempt to switch the network back to the preferredChain upon detecting a `chainChanged` event.
+   * @description Indicates whether the wallet should attempt to switch the network back to the preferredChain upon detecting a `chainChanged` event.
    */
   autoSwitch?: boolean;
   /**
-   * Amount of confirmations/blocks to wait a transaction for
+   * @description Amount of confirmations/blocks to wait a transaction for
    */
   confirmations?: number;
   /**
-   * Options specific to the connection method
+   * @description Options specific to the connection method
    */
   connectorOptions?: COpts;
 }
@@ -73,7 +73,7 @@ export interface EVMWalletConfig<COpts = any> {
 export type EthereumMessage = string | ethers.utils.Bytes;
 
 export interface EVMNetworkInfo {
-  /** Network EVM chain id */
+  /** @description Network EVM chain id */
   chainId: number;
 }
 
@@ -88,7 +88,7 @@ class SwitchChainError extends Error {
 }
 
 /**
- * An abstraction over EVM compatible blockchain wallets
+ * @description An abstraction over EVM compatible blockchain wallets
  */
 export abstract class EVMWallet<
   C extends Connector = Connector,
