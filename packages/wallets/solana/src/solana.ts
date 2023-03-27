@@ -66,6 +66,8 @@ export class SolanaWallet extends Wallet<
   }
 
   async connect(): Promise<string[]> {
+    if (this.isConnected()) return this.getAddresses();
+
     const addresses = await new Promise<string[]>((resolve, reject) => {
       this.adapter.on("connect", () => {
         this.adapter.off("connect");
@@ -99,6 +101,8 @@ export class SolanaWallet extends Wallet<
   }
 
   async disconnect(): Promise<void> {
+    if (!this.isConnected()) return;
+
     await new Promise((resolve, reject) => {
       this.adapter.on("disconnect", () => {
         this.adapter.off("disconnect");
