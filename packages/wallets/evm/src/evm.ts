@@ -33,7 +33,7 @@ import { evmChainIdToChainId, isTestnetEvm } from "./constants";
 type EVMChainId = number;
 
 interface EVMWalletEvents extends WalletEvents {
-  accountsChanged(address: Address): void;
+  accountsChanged(address: Address[]): void;
 }
 
 // See:
@@ -381,7 +381,7 @@ export abstract class EVMWallet<
     if (!accounts.length) return this.disconnect();
 
     this.address = await this.connector.getAccount();
-    this.emit("accountsChanged", this.address);
+    this.emit("accountsChanged", accounts);
   }
 
   protected async onDisconnect(): Promise<void> {
