@@ -83,6 +83,30 @@ export const CHAIN_ID_BASE = CHAINS["base"];
 
 export type Network = "MAINNET" | "TESTNET" | "DEVNET";
 
+export function isChain(chain: number | string): chain is ChainId | ChainName {
+  if (typeof chain === "number") {
+    return chain in CHAIN_ID_TO_NAME;
+  } else {
+    return chain in CHAINS;
+  }
+}
+
+export function toChainId(chainName: ChainName): ChainId {
+  return CHAINS[chainName];
+}
+
+export function toChainName(chainId: ChainId): ChainName {
+  return CHAIN_ID_TO_NAME[chainId];
+}
+
+export function coalesceChainId(chain: ChainId | ChainName): ChainId {
+  return typeof chain === "number" && isChain(chain) ? chain : toChainId(chain);
+}
+
+export function coalesceChainName(chain: ChainId | ChainName): ChainName {
+  return toChainName(coalesceChainId(chain));
+}
+
 export function isEVMChain(chainId: ChainId): boolean {
   return (
     chainId === CHAIN_ID_ETH ||
