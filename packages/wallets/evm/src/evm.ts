@@ -70,6 +70,17 @@ export interface EVMWalletConfig<COpts = any> {
   connectorOptions?: COpts;
 }
 
+export interface WatchAssetParams {
+  type: string;
+  options: {
+    address: string;
+    symbol: string;
+    decimals?: number;
+    image?: string;
+    chainId?: number;
+  };
+}
+
 export type EthereumMessage = string | ethers.utils.Bytes;
 
 export interface EVMNetworkInfo {
@@ -323,6 +334,18 @@ export abstract class EVMWallet<
         blockExplorerUrls: this.getBlockExplorerUrls(chain),
       },
     ])) as Chain;
+  }
+
+  /**
+   * @description Try to add a new token to the wallet through the {@link https://eips.ethereum.org/EIPS/eip-747 EIP-747} `wallet_watchAsset` method.
+   *
+   * @param params The observed asset's information
+   * @returns True if the request is recognized by the wallet, false otherwise. If the wallet does not support this method, it will always return false.
+   */
+  public async watchAsset(params: WatchAssetParams): Promise<boolean> {
+    if (!this.provider) throw new NotConnected();
+    if (!this.connector?.watchAsset) return false;
+    return this.connector.watchAsset(params.options);
   }
 
   protected getBlockExplorerUrls(chain: Chain) {
