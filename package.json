@@ -23,7 +23,8 @@
     "build": "tsc --build --verbose tsconfig.all.json",
     "clean": "pnpm -r run clean",
     "lint": "npx eslint .",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "prettier": "prettier --write --ignore-unknown **/*"
   },
   "pnpm": {
     "overrides": {
