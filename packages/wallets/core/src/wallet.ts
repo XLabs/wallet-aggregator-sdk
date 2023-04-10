@@ -40,6 +40,7 @@ export type Signature = Uint8Array;
 
 export type BaseUnsignedTransaction = any; // eslint-disable-line @typescript-eslint/no-explicit-any
 export type BaseSignedTransaction = any; // eslint-disable-line @typescript-eslint/no-explicit-any
+export type BaseSubmitTransactionInput = any; // eslint-disable-line @typescript-eslint/no-explicit-any
 export type BaseSubmitTransactionResult = any; // eslint-disable-line @typescript-eslint/no-explicit-any
 export type BaseMessage = any; // eslint-disable-line @typescript-eslint/no-explicit-any
 export type BaseSignedMessage = any; // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -56,6 +57,7 @@ export type NetworkInfo = any; // eslint-disable-line @typescript-eslint/no-expl
  *  * `BaseMessage` (BM) - Message to sign object type
  *  * `BaseSignedMessage` (BSM) - Signed message object type
  *  * `WalletEvents` (E) - Object type which describes the events the wallet can be listened on
+ *  * `BaseSubmitTransactionInput` (E) - Transaction information to send to the network. DEfaults to `BaseSignedTransaction`. If overriden might involve a signed transaction or not, it is left to the implementor.
  */
 export abstract class Wallet<
   BUT extends BaseUnsignedTransaction = BaseUnsignedTransaction,
@@ -64,7 +66,8 @@ export abstract class Wallet<
   N extends NetworkInfo = NetworkInfo,
   BM extends BaseMessage = BaseMessage,
   BSM extends BaseSignedMessage = BaseSignedMessage,
-  E extends WalletEvents = any
+  E extends WalletEvents = any,
+  BSTI extends BaseSubmitTransactionInput = BST
 > extends EventEmitter<E> {
   /** Retrieve the wallet's name */
   abstract getName(): string;
@@ -144,7 +147,7 @@ export abstract class Wallet<
    * @param {BST} tx The signed transaction to send to the network
    * @returns {SendTransactionResult<R>} A SendTransactionResult object, comprised of a string `id` field, which indicates the resulting transaction/receipt id/hash, and a `data` field, which holds details on the operation result (e.g. a transaction receipt)
    */
-  abstract sendTransaction(tx: BST): Promise<SendTransactionResult<R>>;
+  abstract sendTransaction(tx: BSTI): Promise<SendTransactionResult<R>>;
 
   /**
    * @async
@@ -174,7 +177,7 @@ export abstract class Wallet<
    * @see See {@link signTransaction} and {@link sendTransaction} for a detailed description on each step
    */
   async signAndSendTransaction(tx: BUT): Promise<SendTransactionResult<R>> {
-    const signed = await this.signTransaction(tx);
+    const signed = (await this.signTransaction(tx)) as BSTI;
     return this.sendTransaction(signed);
   }
 
