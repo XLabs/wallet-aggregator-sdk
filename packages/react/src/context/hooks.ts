@@ -51,7 +51,7 @@ export const useWalletsForChain = (chainId?: ChainId): Wallet[] => {
 
   let wallets: Wallet[] = [];
 
-  if (chainId) {
+  if (chainId !== undefined && chainId !== null) {
     chainId = coalesceChainId(chainId);
     wallets = walletsMap[chainId] || [];
   }
