@@ -1,0 +1,32 @@
+{
+  "name": "@xlabs-libs/wallet-aggregator-sei",
+  "repository": "https://github.com/XLabs/wallet-aggregator-sdk/tree/master/packages/wallets/sei",
+  "version": "0.0.1-alpha.1",
+  "license": "MIT",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
+  "scripts": {
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build": "shx rm -rf dist && npm run build:cjs && npm run build:esm",
+    "clean": "shx rm -rf dist"
+  },
+  "files": [
+    "dist/",
+    "src/"
+  ],
+  "devDependencies": {
+    "@types/node": "^18.11.9",
+    "buffer": "^6.0.3",
+    "shx": "^0.3.4",
+    "typescript": "^4.4.2",
+    "@cosmjs/proto-signing": "0.29.5",
+    "@cosmjs/amino": "0.29.5",
+    "@cosmjs/stargate": "0.29.5"
+  },
+  "dependencies": {
+    "@sei-js/core": "^1.3.2",
+    "@xlabs-libs/wallet-aggregator-core": "workspace:^"
+  }
+}
