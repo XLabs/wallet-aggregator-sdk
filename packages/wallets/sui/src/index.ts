@@ -1,8 +1,8 @@
+import { Connection, JsonRpcProvider, devnetConnection } from "@mysten/sui.js";
 import {
   StandardConnectMethod,
   StandardDisconnectMethod,
   Wallet as StandardWallet,
-  SuiSignAndExecuteTransactionBlockInput,
   SuiSignAndExecuteTransactionBlockMethod,
   SuiSignAndExecuteTransactionBlockOutput,
   SuiSignMessageInput,
@@ -23,11 +23,6 @@ import {
   Wallet,
   WalletEvents,
 } from "@xlabs-libs/wallet-aggregator-core";
-
-export type {
-  SuiSignMessageInput,
-  SuiSignMessageOutput,
-} from "@mysten/wallet-standard";
 
 export enum FeatureName {
   STANDARD__CONNECT = "standard:connect",
@@ -95,13 +90,15 @@ export default class SuiWallet extends Wallet<
   any,
   SuiSignMessageInput,
   SuiSignMessageOutput,
-  WalletEvents,
-  SuiSignAndExecuteTransactionBlockInput
+  WalletEvents
 > {
   private accounts: WalletAccount[] = [];
   private activeAccount?: WalletAccount;
 
-  constructor(private readonly wallet: StandardWallet) {
+  constructor(
+    private readonly wallet: StandardWallet,
+    private readonly connection?: Connection
+  ) {
     super();
   }
 
@@ -140,14 +137,31 @@ export default class SuiWallet extends Wallet<
   ): Promise<SuiSignTransactionBlockOutput> {
     const { signTransactionBlock } =
       this.getFeature<SignTransactionBlockFeature>(
-        FeatureName.SUI__SIGN_AND_EXECUTE_TRANSACTION_BLOCK
+        FeatureName.SUI__SIGN_TRANSACTION_BLOCK
       );
 
     return signTransactionBlock(tx);
   }
 
   async sendTransaction(
-    tx: SuiSignAndExecuteTransactionBlockInput
+    tx: SuiSignTransactionBlockOutput
+  ): Promise<SendTransactionResult<SuiSignAndExecuteTransactionBlockOutput>> {
+    if (!this.connection) throw new Error("Connection not provided");
+    const provider = new JsonRpcProvider(this.connection);
+
+    const result = await provider.executeTransactionBlock({
+      signature: tx.signature,
+      transactionBlock: tx.transactionBlockBytes,
+    });
+
+    return {
+      id: result.digest,
+      data: result,
+    };
+  }
+
+  async signAndSendTransaction(
+    tx: SuiSignTransactionBlockInput
   ): Promise<SendTransactionResult<SuiSignAndExecuteTransactionBlockOutput>> {
     const { signAndExecuteTransactionBlock } =
       this.getFeature<SignAndExecuteTransactionBlockFeature>(
