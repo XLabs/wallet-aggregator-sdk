@@ -60,14 +60,18 @@ export type NetworkInfo = any; // eslint-disable-line @typescript-eslint/no-expl
  *  * `BaseSubmitTransactionInput` (E) - Transaction information to send to the network. DEfaults to `BaseSignedTransaction`. If overriden might involve a signed transaction or not, it is left to the implementor.
  */
 export abstract class Wallet<
-  BUT extends BaseUnsignedTransaction = BaseUnsignedTransaction,
-  BST extends BaseSignedTransaction = BaseSignedTransaction,
-  R extends BaseSubmitTransactionResult = BaseSubmitTransactionResult,
-  N extends NetworkInfo = NetworkInfo,
-  BM extends BaseMessage = BaseMessage,
-  BSM extends BaseSignedMessage = BaseSignedMessage,
-  E extends WalletEvents = any,
-  BSTI extends BaseSubmitTransactionInput = BST
+  CID extends ChainId = ChainId,
+  ConnectOptions = void,
+  SignTransactionInput = any,
+  SignTransactionResult = any,
+  SendTransactionInput = any,
+  SendTransactionResultData = any,
+  SignAndSendTransactionInput = SignTransactionInput,
+  SignAndSendTransactionResultData = SendTransactionResultData,
+  SignMessageInput = any,
+  SignMessageResult = any,
+  NetworkInfo = any,
+  E extends WalletEvents = WalletEvents
 > extends EventEmitter<E> {
   /** Retrieve the wallet's name */
   abstract getName(): string;
@@ -80,7 +84,7 @@ export abstract class Wallet<
    * @description Connect to the wallet. Implementors are expected to emmit a `connect` event upon success
    * @returns A list of connected addresses
    */
-  abstract connect(): Promise<Address[]>;
+  abstract connect(opts: ConnectOptions): Promise<Address[]>;
 
   /**
    * @async
@@ -92,7 +96,7 @@ export abstract class Wallet<
    * @description Retrieve the wallet's blockchain's wormhole chain id
    * @see The {@link https://github.com/XLabs/wallet-aggregator-sdk/blob/e00efc8aba5fcea1f65b54bf8953a405bdeaf52b/packages/wallets/core/src/constants.ts constants} file for a detailed map of the available chains
    */
-  abstract getChainId(): ChainId;
+  abstract getChainId(): CID;
 
   /**
    * @description Returns the connected wallet's address
@@ -138,7 +142,9 @@ export abstract class Wallet<
    * @param {BUT} tx The transaction object or parameters to sign
    * @returns {BST} A signed transaction object, ready to send to the network
    */
-  abstract signTransaction(tx: BUT): Promise<BST>;
+  abstract signTransaction(
+    tx: SignTransactionInput
+  ): Promise<SignTransactionResult>;
 
   /**
    * @async
@@ -147,7 +153,9 @@ export abstract class Wallet<
    * @param {BST} tx The signed transaction to send to the network
    * @returns {SendTransactionResult<R>} A SendTransactionResult object, comprised of a string `id` field, which indicates the resulting transaction/receipt id/hash, and a `data` field, which holds details on the operation result (e.g. a transaction receipt)
    */
-  abstract sendTransaction(tx: BSTI): Promise<SendTransactionResult<R>>;
+  abstract sendTransaction(
+    tx: SendTransactionInput
+  ): Promise<SendTransactionResult<SendTransactionResultData>>;
 
   /**
    * @async
@@ -156,7 +164,7 @@ export abstract class Wallet<
    * @returns {BSM} A signature of the message, signed by the connected account
    * @throws {NotSupported} May throw NotSupported error if the wallet does not implement it
    */
-  abstract signMessage(msg: BM): Promise<BSM>;
+  abstract signMessage(msg: SignMessageInput): Promise<SignMessageResult>;
 
   /** Retrieve the wallet's icon encoded as a base64 string */
   abstract getIcon(): IconSource;
@@ -168,7 +176,7 @@ export abstract class Wallet<
    * Retrieve the wallet's blockchain's network info.
    * @returns An object holding the network information (e.g. chainId for EVM chains), if possible. If the value is undefined it does not strictly mean the wallet is not connected.
    */
-  abstract getNetworkInfo(): N | undefined;
+  abstract getNetworkInfo(): NetworkInfo | undefined;
 
   /**
    * Wraps the `signTransaction` and `sendTransaction` methods into one operation
@@ -176,10 +184,9 @@ export abstract class Wallet<
    * @returns {SendTransactionResult<R>} A SendTransactionResult object
    * @see See {@link signTransaction} and {@link sendTransaction} for a detailed description on each step
    */
-  async signAndSendTransaction(tx: BUT): Promise<SendTransactionResult<R>> {
-    const signed = (await this.signTransaction(tx)) as BSTI;
-    return this.sendTransaction(signed);
-  }
+  abstract signAndSendTransaction(
+    tx: SignAndSendTransactionInput
+  ): Promise<SendTransactionResult<SignAndSendTransactionResultData>>;
 
   /**
    * Retrieve the wallet's current state

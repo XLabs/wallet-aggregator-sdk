@@ -4,6 +4,7 @@ import {
   MsgBroadcaster,
   Wallet as WalletType,
   WalletStrategy,
+  MsgBroadcasterTxOptions,
 } from "@injectivelabs/wallet-ts";
 import {
   ChainId,
@@ -24,12 +25,17 @@ import {
  * An abstraction over Injective blockchain wallets.
  */
 export abstract class InjectiveWallet extends Wallet<
+  typeof CHAIN_ID_INJECTIVE,
+  void,
+  InjectiveTransaction,
   InjectiveTransaction,
   InjectiveTransaction,
   TxResponse,
-  InjectiveNetworkInfo,
+  InjectiveTransaction,
+  TxResponse,
   InjectiveEIP712Message,
-  InjectiveSignedEIP712Message
+  InjectiveSignedEIP712Message,
+  InjectiveNetworkInfo
 > {
   private strategy?: WalletStrategy;
   private address?: string;
@@ -112,7 +118,13 @@ export abstract class InjectiveWallet extends Wallet<
     };
   }
 
-  getChainId(): ChainId {
+  signAndSendTransaction(
+    tx: MsgBroadcasterTxOptions
+  ): Promise<SendTransactionResult<TxResponse>> {
+    return this.sendTransaction(tx);
+  }
+
+  getChainId() {
     return CHAIN_ID_INJECTIVE;
   }
 

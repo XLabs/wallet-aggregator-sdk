@@ -1,8 +1,7 @@
 import { WalletAdapter, WalletError } from "@solana/wallet-adapter-base";
 import { Connection, Transaction, TransactionSignature } from "@solana/web3.js";
 import {
-  ChainId,
-  CHAINS,
+  CHAIN_ID_SOLANA,
   SendTransactionResult,
   Signature,
   Wallet,
@@ -39,11 +38,17 @@ export interface SolanaNetworkInfo {}
  * ```
  */
 export class SolanaWallet extends Wallet<
+  typeof CHAIN_ID_SOLANA,
+  void,
   SolanaUnsignedTransaction,
   SolanaSignedTransaction,
+  SolanaSignedTransaction,
   SolanaSubmitTransactionResult,
-  SolanaNetworkInfo,
-  SolanaMessage
+  SolanaUnsignedTransaction,
+  SolanaSubmitTransactionResult,
+  SolanaMessage,
+  Signature,
+  SolanaNetworkInfo
 > {
   constructor(
     private readonly adapter: SolanaAdapter,
@@ -123,8 +128,8 @@ export class SolanaWallet extends Wallet<
     this.emit("disconnect");
   }
 
-  getChainId(): ChainId {
-    return CHAINS["solana"];
+  getChainId() {
+    return CHAIN_ID_SOLANA;
   }
 
   getAddress(): string | undefined {
@@ -144,9 +149,9 @@ export class SolanaWallet extends Wallet<
     throw new Error("Not supported");
   }
 
-  signTransaction(tx: Transaction): Promise<Transaction>;
-  signTransaction(tx: Transaction[]): Promise<Transaction[]>;
-  signTransaction(
+  async signTransaction(tx: Transaction): Promise<Transaction>;
+  async signTransaction(tx: Transaction[]): Promise<Transaction[]>;
+  async signTransaction(
     tx: SolanaUnsignedTransaction
   ): Promise<SolanaSignedTransaction> {
     if (!this.adapter.signTransaction || !this.adapter.signAllTransactions)
@@ -156,10 +161,10 @@ export class SolanaWallet extends Wallet<
       : this.adapter.signTransaction(tx);
   }
 
-  sendTransaction(
+  async sendTransaction(
     tx: Transaction
   ): Promise<SendTransactionResult<TransactionSignature>>;
-  sendTransaction(
+  async sendTransaction(
     tx: Transaction[]
   ): Promise<SendTransactionResult<TransactionSignature[]>>;
   async sendTransaction(
@@ -183,6 +188,15 @@ export class SolanaWallet extends Wallet<
       id: ids[0],
       data: ids.length === 1 ? ids[0] : ids,
     };
+  }
+
+  async signAndSendTransaction(
+    tx: SolanaUnsignedTransaction
+  ): Promise<SendTransactionResult<SolanaSubmitTransactionResult>> {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const signed = await this.signTransaction(tx);
+    return this.sendTransaction(signed);
   }
 
   signMessage(msg: SolanaMessage): Promise<Signature> {

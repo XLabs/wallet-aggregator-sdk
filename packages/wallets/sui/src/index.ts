@@ -1,4 +1,10 @@
-import { Connection, JsonRpcProvider, devnetConnection } from "@mysten/sui.js";
+import {
+  Connection,
+  ExecuteTransactionRequestType,
+  JsonRpcProvider,
+  SuiTransactionBlockResponseOptions,
+  TransactionBlock,
+} from "@mysten/sui.js";
 import {
   StandardConnectMethod,
   StandardDisconnectMethod,
@@ -8,7 +14,6 @@ import {
   SuiSignMessageInput,
   SuiSignMessageMethod,
   SuiSignMessageOutput,
-  SuiSignTransactionBlockInput,
   SuiSignTransactionBlockMethod,
   SuiSignTransactionBlockOutput,
   WalletAccount,
@@ -17,7 +22,7 @@ import {
 } from "@mysten/wallet-standard";
 import {
   CHAIN_ID_UNSET,
-  ChainId,
+  NotConnected,
   NotSupported,
   SendTransactionResult,
   Wallet,
@@ -37,6 +42,13 @@ const WALLET_DETECT_TIMEOUT = 250;
 
 interface GetWalletsOptions {
   timeout?: number;
+  connection?: Connection;
+}
+
+interface SignAndSendTransactionOptions {
+  transactionBlock: TransactionBlock;
+  requestType?: ExecuteTransactionRequestType;
+  options?: SuiTransactionBlockResponseOptions;
 }
 
 type ConnectFeature = { connect: StandardConnectMethod };
@@ -48,6 +60,9 @@ type SignTransactionBlockFeature = {
   signTransactionBlock: SuiSignTransactionBlockMethod;
 };
 type SignMessageFeature = { signMessage: SuiSignMessageMethod };
+type SuiNetworkInfo = {
+  chain: string;
+};
 
 const supportsSui = (wallet: StandardWallet): boolean => {
   const { features } = wallet;
@@ -60,7 +75,7 @@ const supportsSui = (wallet: StandardWallet): boolean => {
 export const getWallets = async (
   options: GetWalletsOptions = {}
 ): Promise<SuiWallet[]> => {
-  const timeout = options.timeout || WALLET_DETECT_TIMEOUT;
+  const { timeout = WALLET_DETECT_TIMEOUT, connection } = options;
   const detector: Wallets = getSuiWallets();
 
   const wallets: StandardWallet[] = [...detector.get()];
@@ -70,7 +85,9 @@ export const getWallets = async (
     const createResolutionTimeout = () =>
       setTimeout(() => {
         if (removeListener) removeListener();
-        resolve(wallets.filter(supportsSui).map((w) => new SuiWallet(w)));
+        resolve(
+          wallets.filter(supportsSui).map((w) => new SuiWallet(w, connection))
+        );
       }, timeout);
 
     let resolution = createResolutionTimeout();
@@ -84,12 +101,17 @@ export const getWallets = async (
 };
 
 export default class SuiWallet extends Wallet<
-  SuiSignTransactionBlockInput,
+  typeof CHAIN_ID_UNSET,
+  void,
+  TransactionBlock,
+  SuiSignTransactionBlockOutput,
   SuiSignTransactionBlockOutput,
   SuiSignAndExecuteTransactionBlockOutput,
-  any,
+  SignAndSendTransactionOptions,
+  SuiSignAndExecuteTransactionBlockOutput,
   SuiSignMessageInput,
   SuiSignMessageOutput,
+  SuiNetworkInfo,
   WalletEvents
 > {
   private accounts: WalletAccount[] = [];
@@ -133,14 +155,20 @@ export default class SuiWallet extends Wallet<
   }
 
   signTransaction(
-    tx: SuiSignTransactionBlockInput
+    transactionBlock: TransactionBlock
   ): Promise<SuiSignTransactionBlockOutput> {
+    if (!this.activeAccount) throw new NotConnected();
+
     const { signTransactionBlock } =
       this.getFeature<SignTransactionBlockFeature>(
         FeatureName.SUI__SIGN_TRANSACTION_BLOCK
       );
 
-    return signTransactionBlock(tx);
+    return signTransactionBlock({
+      transactionBlock,
+      account: this.activeAccount,
+      chain: this.activeAccount.chains[0],
+    });
   }
 
   async sendTransaction(
@@ -161,14 +189,20 @@ export default class SuiWallet extends Wallet<
   }
 
   async signAndSendTransaction(
-    tx: SuiSignTransactionBlockInput
+    options: SignAndSendTransactionOptions
   ): Promise<SendTransactionResult<SuiSignAndExecuteTransactionBlockOutput>> {
+    if (!this.activeAccount) throw new NotConnected();
+
     const { signAndExecuteTransactionBlock } =
       this.getFeature<SignAndExecuteTransactionBlockFeature>(
         FeatureName.SUI__SIGN_AND_EXECUTE_TRANSACTION_BLOCK
       );
 
-    const result = await signAndExecuteTransactionBlock(tx);
+    const result = await signAndExecuteTransactionBlock({
+      ...options,
+      account: this.activeAccount,
+      chain: this.activeAccount.chains[0],
+    });
 
     return {
       id: result.digest,
@@ -184,7 +218,7 @@ export default class SuiWallet extends Wallet<
     return "https://sui.io";
   }
 
-  getChainId(): ChainId {
+  getChainId(): typeof CHAIN_ID_UNSET {
     // TODO: change to correct chain id when available
     return CHAIN_ID_UNSET;
   }
@@ -223,8 +257,10 @@ export default class SuiWallet extends Wallet<
     return this.accounts.length > 0;
   }
 
-  getNetworkInfo() {
-    throw new Error("Method not implemented.");
+  getNetworkInfo(): SuiNetworkInfo | undefined {
+    return this.activeAccount
+      ? { chain: this.activeAccount.chains[0] }
+      : undefined;
   }
 
   private getFeature<T>(name: FeatureName, mustSupport = true): T {
