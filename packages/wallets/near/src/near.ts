@@ -25,9 +25,16 @@ export interface NearTransactionParams {
 export type NearTransactionResult = FinalExecutionOutcome[];
 
 export abstract class NearWallet extends Wallet<
+  typeof CHAIN_ID_NEAR,
+  void,
+  NearTransactionParams,
   NearTransactionParams,
   NearTransactionParams,
   NearTransactionResult,
+  NearTransactionParams,
+  NearTransactionResult,
+  never,
+  never,
   Network
 > {
   abstract signTransaction(
@@ -38,6 +45,13 @@ export abstract class NearWallet extends Wallet<
     txs: NearTransactionParams
   ): Promise<SendTransactionResult<NearTransactionResult>>;
 
+  async signAndSendTransaction(
+    tx: NearTransactionParams
+  ): Promise<SendTransactionResult<NearTransactionResult>> {
+    const signed = await this.signTransaction(tx);
+    return this.sendTransaction(signed);
+  }
+
   signMessage(): Promise<never> {
     throw new NotSupported();
   }
@@ -47,7 +61,7 @@ export abstract class NearWallet extends Wallet<
    */
   abstract getWallet(): Promise<InternalWallet | undefined>;
 
-  getChainId(): ChainId {
+  getChainId() {
     return CHAIN_ID_NEAR;
   }
 }

@@ -60,10 +60,6 @@ export class MyAlgoWallet extends AlgorandWallet {
     return Promise.resolve();
   }
 
-  getChainId(): ChainId {
-    return CHAINS["algorand"];
-  }
-
   async signTransaction(
     tx: SignerTransaction | SignerTransaction[]
   ): Promise<SignTransactionResult> {

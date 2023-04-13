@@ -134,12 +134,17 @@ const waitFor = (fn: () => boolean) => {
 };
 
 export class TerraWallet extends Wallet<
+  ChainId,
+  void,
+  ExtensionOptions,
   ExtensionOptions,
   ExtensionOptions,
   TxResult,
-  NetworkInfo,
+  ExtensionOptions,
+  TxResult,
   UnsignedTerraMessage,
-  SignBytesResult
+  SignBytesResult,
+  NetworkInfo
 > {
   private readonly controller: WalletController;
   private readonly walletInfo: TerraWalletInfo;
@@ -210,6 +215,12 @@ export class TerraWallet extends Wallet<
       id: result.result.txhash,
       data: result,
     };
+  }
+
+  signAndSendTransaction(
+    tx: ExtensionOptions
+  ): Promise<SendTransactionResult<TxResult>> {
+    return this.sendTransaction(tx);
   }
 
   signMessage(msg: UnsignedTerraMessage): Promise<SignBytesResult> {

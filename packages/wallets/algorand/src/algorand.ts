@@ -1,5 +1,6 @@
 import {
   Address,
+  CHAIN_ID_ALGORAND,
   ChainId,
   CHAINS,
   SendTransactionResult,
@@ -30,12 +31,17 @@ const notNull = <T>(t: T | null): t is T => {
 };
 
 export abstract class AlgorandWallet extends Wallet<
+  typeof CHAIN_ID_ALGORAND,
+  void,
   SignerTransaction,
   SignTransactionResult,
+  SignTransactionResult,
   SubmittedTransactionMap,
-  AlgorandNetworkInfo,
+  SignerTransaction,
+  SubmittedTransactionMap,
   AlgorandMessage,
-  Signature
+  Signature,
+  AlgorandNetworkInfo
 > {
   protected config: AlgorandWalletConfig;
   protected accounts: Address[];
@@ -86,8 +92,8 @@ export abstract class AlgorandWallet extends Wallet<
     return !!this.account;
   }
 
-  getChainId(): ChainId {
-    return CHAINS["algorand"];
+  getChainId() {
+    return CHAIN_ID_ALGORAND;
   }
 
   getAddress(): Address | undefined {
@@ -142,6 +148,13 @@ export abstract class AlgorandWallet extends Wallet<
       id: txId,
       data: info,
     };
+  }
+
+  async signAndSendTransaction(
+    tx: SignerTransaction
+  ): Promise<SendTransactionResult<SubmittedTransactionMap>> {
+    const signed = await this.signTransaction(tx);
+    return this.sendTransaction(signed);
   }
 
   private buildClient(): algosdk.Algodv2 {

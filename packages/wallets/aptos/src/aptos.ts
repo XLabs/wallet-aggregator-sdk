@@ -1,4 +1,5 @@
 import {
+  CHAIN_ID_APTOS,
   ChainId,
   CHAINS,
   NotSupported,
@@ -12,13 +13,18 @@ import {
   SignMessagePayload,
   SignMessageResponse,
 } from "@manahippo/aptos-wallet-adapter";
-import { Types } from "aptos";
+import { Types, AptosClient } from "aptos";
 
 export type AptosAdapter = BaseWalletAdapter;
+export interface AptosClientConfig {
+  nodeUrl: string;
+  openApiConfig: any;
+}
 export interface AptosSubmitResult {
   hash: Types.HexEncodedBytes;
 }
 
+export type SignedAptosTransaction = Uint8Array;
 export type AptosMessage = string | SignMessagePayload | Uint8Array;
 export type SignedAptosMessage = string | SignMessageResponse;
 
@@ -34,17 +40,25 @@ export type SignedAptosMessage = string | SignMessageResponse;
  * ```
  */
 export class AptosWallet extends Wallet<
+  typeof CHAIN_ID_APTOS,
+  void,
   Types.TransactionPayload,
+  SignedAptosTransaction,
+  SignedAptosTransaction,
+  AptosSubmitResult,
   Types.TransactionPayload,
   AptosSubmitResult,
-  NetworkInfo,
   AptosMessage,
-  SignedAptosMessage
+  SignedAptosMessage,
+  NetworkInfo
 > {
   /**
    * @param adapter The Aptos wallet adapter which will serve as the underlying connection to the wallet
    */
-  constructor(private readonly adapter: AptosAdapter) {
+  constructor(
+    private readonly adapter: AptosAdapter,
+    private readonly clientConfig?: AptosClientConfig
+  ) {
     super();
   }
 
@@ -78,8 +92,8 @@ export class AptosWallet extends Wallet<
     return this.adapter.disconnect();
   }
 
-  getChainId(): ChainId {
-    return CHAINS["aptos"];
+  getChainId() {
+    return CHAIN_ID_APTOS;
   }
 
   getAddress(): string | undefined {
@@ -101,14 +115,33 @@ export class AptosWallet extends Wallet<
 
   signTransaction(
     tx: Types.TransactionPayload
-  ): Promise<Types.TransactionPayload> {
-    return Promise.resolve(tx);
+  ): Promise<SignedAptosTransaction> {
+    return this.adapter.signTransaction(tx);
   }
 
   async sendTransaction(
+    tx: SignedAptosTransaction
+  ): Promise<SendTransactionResult<AptosSubmitResult>> {
+    if (!this.clientConfig) throw new Error("No aptos client config provided");
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    const client = new AptosClient(
+      this.clientConfig.nodeUrl,
+      this.clientConfig.openApiConfig
+    );
+    const result = await client.submitTransaction(tx);
+
+    return {
+      id: result.hash,
+      data: { hash: result.hash },
+    };
+  }
+
+  async signAndSendTransaction(
     tx: Types.TransactionPayload
   ): Promise<SendTransactionResult<AptosSubmitResult>> {
     const result = await this.adapter.signAndSubmitTransaction(tx);
+
     return {
       id: result.hash,
       data: result,

@@ -130,12 +130,17 @@ const waitFor = (fn: () => boolean) => {
 };
 
 export class XplaWallet extends Wallet<
+  typeof CHAIN_ID_XPLA,
+  void,
+  CreateTxOptions,
   CreateTxOptions,
   CreateTxOptions,
   TxResult,
-  NetworkInfo,
+  CreateTxOptions,
+  TxResult,
   UnsignedXplaMessage,
-  SignBytesResult
+  SignBytesResult,
+  NetworkInfo
 > {
   private readonly controller: WalletController;
   private readonly walletInfo: XplaWalletInfo;
@@ -179,7 +184,7 @@ export class XplaWallet extends Wallet<
     return Promise.resolve();
   }
 
-  getChainId(): ChainId {
+  getChainId() {
     return CHAIN_ID_XPLA;
   }
 
@@ -202,6 +207,12 @@ export class XplaWallet extends Wallet<
       id: result.result.txhash,
       data: result,
     };
+  }
+
+  signAndSendTransaction(
+    tx: CreateTxOptions
+  ): Promise<SendTransactionResult<TxResult>> {
+    return this.sendTransaction(tx);
   }
 
   signMessage(msg: UnsignedXplaMessage): Promise<SignBytesResult> {

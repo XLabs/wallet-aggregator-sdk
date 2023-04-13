@@ -4,21 +4,20 @@ import {
 } from "@ethersproject/abstract-provider";
 import {
   Client,
-  configureChains,
   Connector,
   ConnectorData,
-  createClient,
-  ProviderRpcError,
   Provider,
-  WebSocketProvider,
+  ProviderRpcError,
   RpcError,
+  WebSocketProvider,
+  configureChains,
+  createClient,
 } from "@wagmi/core";
-import { Chain, DEFAULT_CHAINS } from "./chains";
 import { publicProvider } from "@wagmi/core/providers/public";
 import {
   Address,
-  ChainId,
   CHAIN_ID_ETH,
+  ChainId,
   NotConnected,
   NotSupported,
   SendTransactionResult,
@@ -28,6 +27,7 @@ import {
   WalletState,
 } from "@xlabs-libs/wallet-aggregator-core";
 import { ethers, utils } from "ethers";
+import { Chain, DEFAULT_CHAINS } from "./chains";
 import { evmChainIdToChainId, isTestnetEvm } from "./constants";
 
 type EVMChainId = number;
@@ -105,12 +105,17 @@ export abstract class EVMWallet<
   C extends Connector = Connector,
   COpts = any
 > extends Wallet<
+  ChainId,
+  void,
+  TransactionRequest,
   TransactionRequest,
   TransactionRequest,
   TransactionReceipt,
-  EVMNetworkInfo,
+  TransactionRequest,
+  TransactionReceipt,
   EthereumMessage,
   Signature,
+  EVMNetworkInfo,
   EVMWalletEvents
 > {
   protected chains: Chain[];
@@ -219,7 +224,7 @@ export abstract class EVMWallet<
     await this.onDisconnect();
   }
 
-  getChainId(): ChainId {
+  getChainId() {
     if (!this.isConnected() || !this.network) return CHAIN_ID_ETH;
 
     const evmChainId = this.network.chainId;
@@ -264,6 +269,12 @@ export abstract class EVMWallet<
       id: receipt.transactionHash,
       data: receipt,
     };
+  }
+
+  async signAndSendTransaction(
+    tx: TransactionRequest
+  ): Promise<SendTransactionResult<TransactionReceipt>> {
+    return this.sendTransaction(tx);
   }
 
   async signMessage(msg: EthereumMessage): Promise<Signature> {

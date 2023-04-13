@@ -12,7 +12,7 @@ export const useWallet = <W extends Wallet = Wallet>(
   const { wallets, coalesceChainId, defaultWallet } = useWalletContext();
 
   let wallet: Wallet | undefined;
-  if (chainId) {
+  if (chainId !== undefined && chainId !== null) {
     wallet = wallets[coalesceChainId(chainId)];
   } else {
     wallet = defaultWallet;
