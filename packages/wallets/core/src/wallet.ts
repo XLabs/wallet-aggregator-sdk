@@ -71,7 +71,7 @@ export abstract class Wallet<
   SignMessageInput = any,
   SignMessageResult = any,
   NetworkInfo = any,
-  E extends WalletEvents = WalletEvents
+  E extends WalletEvents = any
 > extends EventEmitter<E> {
   /** Retrieve the wallet's name */
   abstract getName(): string;
