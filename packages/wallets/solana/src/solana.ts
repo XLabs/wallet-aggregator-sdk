@@ -1,4 +1,9 @@
-import { WalletAdapter, WalletError } from "@solana/wallet-adapter-base";
+import {
+  SendTransactionOptions,
+  WalletAdapter,
+  WalletError,
+} from "@solana/wallet-adapter-base";
+import { Commitment, ConfirmOptions } from "@solana/web3.js";
 import { Connection, Transaction, TransactionSignature } from "@solana/web3.js";
 import {
   CHAIN_ID_SOLANA,
@@ -24,6 +29,18 @@ export type SolanaMessage = Uint8Array;
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface SolanaNetworkInfo {}
 
+interface BaseSendOptions {
+  options?: ConfirmOptions;
+}
+
+export interface SolanaSendTransactionParams extends BaseSendOptions {
+  transaction: SolanaSignedTransaction;
+}
+
+export interface SolanaSignAndSendTransactionParams extends BaseSendOptions {
+  transaction: SolanaUnsignedTransaction;
+}
+
 /**
  * An abstraction over Solana blockchain wallets.
  *
@@ -42,9 +59,9 @@ export class SolanaWallet extends Wallet<
   void,
   SolanaUnsignedTransaction,
   SolanaSignedTransaction,
-  SolanaSignedTransaction,
+  SolanaSendTransactionParams,
   SolanaSubmitTransactionResult,
-  SolanaUnsignedTransaction,
+  SolanaSendTransactionParams,
   SolanaSubmitTransactionResult,
   SolanaMessage,
   Signature,
@@ -162,14 +179,9 @@ export class SolanaWallet extends Wallet<
   }
 
   async sendTransaction(
-    tx: Transaction
-  ): Promise<SendTransactionResult<TransactionSignature>>;
-  async sendTransaction(
-    tx: Transaction[]
-  ): Promise<SendTransactionResult<TransactionSignature[]>>;
-  async sendTransaction(
-    toSign: SolanaSignedTransaction
+    opts: SolanaSendTransactionParams
   ): Promise<SendTransactionResult<SolanaSubmitTransactionResult>> {
+    const { transaction: toSign } = opts;
     const txs = Array.isArray(toSign) ? toSign : [toSign];
 
     if (txs.length === 0) {
@@ -178,11 +190,13 @@ export class SolanaWallet extends Wallet<
 
     const ids: TransactionSignature[] = [];
     for (const tx of txs) {
-      const id = await this.adapter.sendTransaction(tx, this.connection);
+      const id = await this.adapter.sendTransaction(tx, this.connection, {
+        ...opts.options,
+      });
       ids.push(id);
     }
 
-    await this.connection.confirmTransaction(ids[0]);
+    await this.connection.confirmTransaction(ids[0], opts.options?.commitment);
 
     return {
       id: ids[0],
@@ -191,12 +205,15 @@ export class SolanaWallet extends Wallet<
   }
 
   async signAndSendTransaction(
-    tx: SolanaUnsignedTransaction
+    options: SolanaSignAndSendTransactionParams
   ): Promise<SendTransactionResult<SolanaSubmitTransactionResult>> {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const signed = await this.signTransaction(tx);
-    return this.sendTransaction(signed);
+    const signed = await this.signTransaction(options.transaction);
+    return this.sendTransaction({
+      ...options,
+      transaction: signed,
+    });
   }
 
   signMessage(msg: SolanaMessage): Promise<Signature> {
