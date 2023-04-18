@@ -11,6 +11,7 @@
     { "path": "./packages/wallets/terra/tsconfig.json" },
     { "path": "./packages/wallets/xpla/tsconfig.json" },
     { "path": "./packages/wallets/sui/tsconfig.json" },
+    { "path": "./packages/wallets/sei/tsconfig.json" },
     { "path": "./packages/react/tsconfig.json" },
     { "path": "./packages/react-init/tsconfig.json" }
   ]
