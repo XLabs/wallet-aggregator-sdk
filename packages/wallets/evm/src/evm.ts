@@ -355,8 +355,17 @@ export abstract class EVMWallet<
    */
   public async watchAsset(params: WatchAssetParams): Promise<boolean> {
     if (!this.provider) throw new NotConnected();
-    if (!this.connector?.watchAsset) return false;
-    return this.connector.watchAsset(params.options);
+    if (this.connector.watchAsset) this.connector.watchAsset(params.options);
+
+    // some connectors might not have a watchAsset method, like WalletConnect,
+    // but the underlying wallet it is connected to might support it
+    try {
+      // ugly cast since wallet_watchAsset expects an object and not an array of parameters
+      await this.provider.send("wallet_watchAsset", params as any);
+      return true;
+    } catch (err) {
+      return false;
+    }
   }
 
   protected getBlockExplorerUrls(chain: Chain) {
