@@ -18,9 +18,16 @@ export class WalletConnectLegacyWallet extends BaseWalletConnectWallet<
   }
 
   protected createConnector(): WalletConnectLegacyConnector {
+    const options = Object.assign(
+      {
+        storageId: "wallet-aggregator-sdk-evm-walletconnect-legacy",
+      },
+      this.connectorOptions
+    );
+
     return new WalletConnectLegacyConnector({
       chains: this.chains,
-      options: this.connectorOptions,
+      options,
     });
   }
 }
