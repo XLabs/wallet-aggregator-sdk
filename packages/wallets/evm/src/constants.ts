@@ -35,6 +35,7 @@ export const EVM_CHAINS_TESTNET = {
   neon: 245022926,
   arbitrum: 421613,
   optimism: 420,
+  moonbeam: 1287,
   base: 84531,
 } as const;
 
