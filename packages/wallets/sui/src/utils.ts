@@ -8,9 +8,12 @@ import { SuiWallet } from "./sui";
 
 const WALLET_DETECT_TIMEOUT = 250;
 
-interface GetWalletsOptions {
-  timeout?: number;
+interface GetReadyWalletsOptions {
+  /** SUI connection */
   connection?: Connection;
+}
+interface GetWalletsOptions extends GetReadyWalletsOptions {
+  timeout?: number;
 }
 
 const supportsSui = (wallet: StandardWallet): boolean => {
@@ -21,6 +24,26 @@ const supportsSui = (wallet: StandardWallet): boolean => {
   );
 };
 
+/**
+ * Retrieve already detected wallets that support SUI
+ * @param options
+ * @returns An array of SuiWallet instances
+ */
+export const getReadyWallets = (
+  options: GetReadyWalletsOptions = {}
+): SuiWallet[] => {
+  const wallets: Wallets = getSuiWallets();
+  return wallets
+    .get()
+    .filter(supportsSui)
+    .map((w: StandardWallet) => new SuiWallet(w, options.connection));
+};
+
+/**
+ * Wait for wallets to be detected until a timeout and return them
+ * @param options
+ * @returns An array of SuiWallet instances
+ */
 export const getWallets = async (
   options: GetWalletsOptions = {}
 ): Promise<SuiWallet[]> => {
