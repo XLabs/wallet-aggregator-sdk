@@ -325,7 +325,7 @@ importers:
 
   packages/wallets/sui:
     specifiers:
-      '@mysten/sui.js': ^0.32.0
+      '@mysten/sui.js': ^0.32.2
       '@mysten/wallet-standard': ^0.5.4
       '@types/bn.js': ^5.1.1
       '@types/node': ^18.11.9
