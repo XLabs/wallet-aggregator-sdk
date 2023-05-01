@@ -30,7 +30,9 @@ export const CHAINS = {
   xpla: 28,
   btc: 29,
   base: 30,
+  sei: 32,
   wormchain: 3104,
+  sepolia: 10002,
 } as const;
 
 export type ChainName = keyof typeof CHAINS;
