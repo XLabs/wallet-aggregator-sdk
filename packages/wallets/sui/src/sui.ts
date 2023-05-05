@@ -167,7 +167,7 @@ export class SuiWallet extends Wallet<
   }
 
   getName(): string {
-    return this.wallet.name;
+    return this.wallet.name.replace("Wallet", "").trim();
   }
 
   getUrl(): string {
