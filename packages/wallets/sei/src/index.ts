@@ -1,11 +1,12 @@
 import { AccountData, StdFee, StdSignature } from "@cosmjs/amino";
 import { EncodeObject, OfflineSigner } from "@cosmjs/proto-signing";
-import { DeliverTxResponse } from "@cosmjs/stargate";
+import { DeliverTxResponse, Coin } from "@cosmjs/stargate";
 import {
   SUPPORTED_WALLETS,
   WalletWindowKey,
   connect,
   getSigningClient,
+  getSigningCosmWasmClient,
   walletSignArbitrary,
 } from "@sei-js/core";
 import {
@@ -15,6 +16,12 @@ import {
   Wallet,
   WalletState,
 } from "@xlabs-libs/wallet-aggregator-core";
+import {
+  JsonObject,
+  MsgExecuteContractEncodeObject,
+  ExecuteInstruction,
+  ExecuteResult,
+} from "@cosmjs/cosmwasm-stargate";
 
 type SeiWalletType = WalletWindowKey;
 type SeiChainId = "sei-devnet-3" | "atlantic-2";
@@ -23,6 +30,11 @@ interface SeiTransaction {
   msgs: EncodeObject[];
   fee: StdFee;
   memo: string;
+}
+interface SeiExecuteTransaction {
+  instructions: ExecuteInstruction[];
+  fee: StdFee;
+  memo?: string;
 }
 
 export interface TxRaw {
@@ -76,6 +88,35 @@ const WALLETS: Partial<Record<SeiWalletType, WalletInfo>> = {
   },
 };
 
+/**
+ * Helper method to build messages for smart contract execution to use along
+ * sign transaction methods. The SeiWallet class also provides an executeMultiple
+ * method which can be used instead.
+ */
+export const buildExecuteMessage = (
+  senderAddress: string,
+  contractAddress: string,
+  msg: JsonObject,
+  funds?: readonly Coin[]
+): MsgExecuteContractEncodeObject => {
+  return {
+    typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
+    value: {
+      sender: senderAddress,
+      contract: contractAddress,
+      msg: new TextEncoder().encode(JSON.stringify(msg)),
+      funds: [...(funds || [])].map((coin) => ({ ...coin })),
+    },
+  };
+};
+
+/**
+ * A class to interact with the Sei blockchain.
+ *
+ * Caveat on smart contract execution: sendTransaction and signAndSendTransaction
+ * do not parse logs and events. You can parse them through the utility methods
+ * offered by cosmjs libraries, or use the executeMultiple method instead.
+ */
 export class SeiWallet extends Wallet<
   typeof CHAIN_ID_UNSET,
   void,
@@ -201,10 +242,27 @@ export class SeiWallet extends Wallet<
       tx.fee,
       tx.memo
     );
-
     return {
       id: response.transactionHash,
       data: response,
+    };
+  }
+
+  async executeMultiple(
+    tx: SeiExecuteTransaction
+  ): Promise<SendTransactionResult<ExecuteResult>> {
+    if (!this.signer || !this.activeAccount) throw new NotConnected();
+    const signer = await getSigningCosmWasmClient(this.rpcUrl, this.signer);
+    const res = await signer.executeMultiple(
+      this.activeAccount.address,
+      tx.instructions,
+      tx.fee,
+      tx.memo
+    );
+
+    return {
+      id: res.transactionHash,
+      data: res,
     };
   }
 
