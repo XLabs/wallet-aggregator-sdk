@@ -1,20 +1,19 @@
 import { AccountData, StdFee, StdSignature } from "@cosmjs/amino";
-import { DeliverTxResponse } from "@cosmjs/stargate";
 import { EncodeObject, OfflineSigner } from "@cosmjs/proto-signing";
+import { DeliverTxResponse } from "@cosmjs/stargate";
 import {
   SUPPORTED_WALLETS,
   WalletWindowKey,
   connect,
   getSigningClient,
-  getStargateClient,
   walletSignArbitrary,
 } from "@sei-js/core";
 import {
   CHAIN_ID_UNSET,
   NotConnected,
-  NotSupported,
   SendTransactionResult,
   Wallet,
+  WalletState,
 } from "@xlabs-libs/wallet-aggregator-core";
 
 type SeiWalletType = WalletWindowKey;
@@ -217,5 +216,10 @@ export class SeiWallet extends Wallet<
       this.activeAccount.address,
       msg
     );
+  }
+
+  getWalletState(): WalletState {
+    if (!window) return WalletState.Unsupported;
+    return window[this.type] ? WalletState.Installed : WalletState.NotDetected;
   }
 }
