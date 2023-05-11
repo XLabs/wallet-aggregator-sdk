@@ -34,7 +34,7 @@ export class WalletConnectLegacyWallet extends BaseWalletConnectWallet<
   async connect(): Promise<string[]> {
     const accounts = await super.connect();
 
-    // hotfix: when no preferred chain is set, the provider will not configure an http/rpc endpoint
+    // hacky fix: when no preferred chain is set, the provider will not configure an http/rpc endpoint
     // only when changing the network, it'll detect it through the networkChanged event and configure
     // it accordingly
     if (this.network?.chainId) {
