@@ -81,6 +81,10 @@ export interface WatchAssetParams {
   };
 }
 
+export interface ConnectParams {
+  evmChainId?: number;
+}
+
 export type EthereumMessage = string | ethers.utils.Bytes;
 
 export interface EVMNetworkInfo {
@@ -106,7 +110,7 @@ export abstract class EVMWallet<
   COpts = any
 > extends Wallet<
   ChainId,
-  void,
+  ConnectParams,
   TransactionRequest,
   TransactionRequest,
   TransactionRequest,
@@ -122,10 +126,10 @@ export abstract class EVMWallet<
   protected connector: C;
   protected connectorOptions: COpts;
   protected preferredChain?: EVMChainId;
+  protected network?: EVMNetworkInfo;
 
   private addresses: Address[] = [];
   private address?: Address;
-  private network?: EVMNetworkInfo;
   private autoSwitch: boolean;
   private confirmations?: number;
   private client?: Client<Provider, WebSocketProvider>;
@@ -150,7 +154,7 @@ export abstract class EVMWallet<
     this.connector = this.createConnector();
   }
 
-  async connect(): Promise<Address[]> {
+  async connect({ evmChainId }: ConnectParams = {}): Promise<Address[]> {
     const { provider } = configureChains(this.chains, [publicProvider()]);
 
     this.client = createClient<Provider, WebSocketProvider>({
@@ -159,7 +163,9 @@ export abstract class EVMWallet<
       connectors: [this.connector],
     });
 
-    await this.connector.connect({ chainId: this.preferredChain });
+    await this.connector.connect({
+      chainId: evmChainId || this.preferredChain,
+    });
 
     this.provider = new ethers.providers.Web3Provider(
       (await this.connector.getProvider()) as ethers.providers.ExternalProvider,
@@ -355,7 +361,8 @@ export abstract class EVMWallet<
    */
   public async watchAsset(params: WatchAssetParams): Promise<boolean> {
     if (!this.provider) throw new NotConnected();
-    if (this.connector.watchAsset) this.connector.watchAsset(params.options);
+    if (this.connector.watchAsset)
+      return this.connector.watchAsset(params.options);
 
     // some connectors might not have a watchAsset method, like WalletConnect,
     // but the underlying wallet it is connected to might support it

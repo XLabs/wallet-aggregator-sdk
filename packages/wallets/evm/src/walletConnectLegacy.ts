@@ -30,4 +30,20 @@ export class WalletConnectLegacyWallet extends BaseWalletConnectWallet<
       options,
     });
   }
+
+  async connect(): Promise<string[]> {
+    const accounts = await super.connect();
+
+    // hotfix: when no preferred chain is set, the provider will not configure an http/rpc endpoint
+    // only when changing the network, it'll detect it through the networkChanged event and configure
+    // it accordingly
+    if (this.network?.chainId) {
+      // @eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      const innerProvider = (await this.connector.getProvider()) as any;
+      // @eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      innerProvider.http = innerProvider.setHttpProvider(this.network.chainId);
+    }
+
+    return accounts;
+  }
 }
