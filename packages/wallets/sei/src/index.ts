@@ -10,7 +10,7 @@ import {
   walletSignArbitrary,
 } from "@sei-js/core";
 import {
-  CHAIN_ID_UNSET,
+  CHAIN_ID_SEI,
   NotConnected,
   SendTransactionResult,
   Wallet,
@@ -118,7 +118,7 @@ export const buildExecuteMessage = (
  * offered by cosmjs libraries, or use the executeMultiple method instead.
  */
 export class SeiWallet extends Wallet<
-  typeof CHAIN_ID_UNSET,
+  typeof CHAIN_ID_SEI,
   void,
   SeiTransaction,
   TxRaw,
@@ -153,8 +153,8 @@ export class SeiWallet extends Wallet<
     return WALLETS[this.type]?.icon || "";
   }
 
-  getChainId(): 0 {
-    return CHAIN_ID_UNSET;
+  getChainId() {
+    return CHAIN_ID_SEI;
   }
 
   getAddresses(): string[] {
