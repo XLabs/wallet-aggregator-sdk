@@ -80,8 +80,10 @@ export const CHAIN_ID_GNOSIS = CHAINS["gnosis"];
 export const CHAIN_ID_PYTHNET = CHAINS["pythnet"];
 export const CHAIN_ID_XPLA = CHAINS["xpla"];
 export const CHAIN_ID_BTC = CHAINS["btc"];
-export const CHAIN_ID_WORMCHAIN = CHAINS["wormchain"];
 export const CHAIN_ID_BASE = CHAINS["base"];
+export const CHAIN_ID_SEI = CHAINS["sei"];
+export const CHAIN_ID_WORMCHAIN = CHAINS["wormchain"];
+export const CHAIN_ID_SEPOLIA = CHAINS["sepolia"];
 
 export type Network = "MAINNET" | "TESTNET" | "DEVNET";
 
@@ -136,7 +138,8 @@ export function isCosmWasmChain(chainId: ChainId): boolean {
     chainId === CHAIN_ID_TERRA ||
     chainId === CHAIN_ID_TERRA2 ||
     chainId === CHAIN_ID_INJECTIVE ||
-    chainId === CHAIN_ID_XPLA
+    chainId === CHAIN_ID_XPLA ||
+    chainId === CHAIN_ID_SEI
   );
 }
 
