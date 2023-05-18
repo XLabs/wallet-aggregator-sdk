@@ -23,27 +23,37 @@ import {
   ExecuteResult,
 } from "@cosmjs/cosmwasm-stargate";
 
-type SeiWalletType = WalletWindowKey;
-type SeiChainId = "sei-devnet-3" | "atlantic-2";
-type GetWalletsOptions = Omit<SeiWalletConfig, "type">;
-interface SeiTransaction {
+export type SeiWalletType = WalletWindowKey;
+export type SeiChainId = "sei-devnet-3" | "atlantic-2";
+export type GetWalletsOptions = Omit<SeiWalletConfig, "type">;
+export interface SeiTransaction {
   msgs: EncodeObject[];
   fee: StdFee;
   memo: string;
 }
-interface SeiExecuteTransaction {
+export interface SeiExecuteTransaction {
   instructions: ExecuteInstruction[];
   fee: StdFee;
   memo?: string;
 }
 
-export interface TxRaw {
+interface TxRaw {
   bodyBytes: Uint8Array;
   authInfoBytes: Uint8Array;
   signatures: Uint8Array[];
 }
 
-export const getWallets = (config: GetWalletsOptions): SeiWallet[] => {
+export const getSupportedWallets = (config: GetWalletsOptions): SeiWallet[] => {
+  return SUPPORTED_WALLETS.map(
+    (w) =>
+      new SeiWallet({
+        ...config,
+        type: w.windowKey,
+      })
+  );
+};
+
+export const getInstalledWallets = (config: GetWalletsOptions): SeiWallet[] => {
   return SUPPORTED_WALLETS.filter((w) => !!window[w.windowKey]).map(
     (w) =>
       new SeiWallet({
@@ -53,7 +63,7 @@ export const getWallets = (config: GetWalletsOptions): SeiWallet[] => {
   );
 };
 
-interface SeiWalletConfig {
+export interface SeiWalletConfig {
   type: SeiWalletType;
   chainId: SeiChainId;
   rpcUrl: string;
