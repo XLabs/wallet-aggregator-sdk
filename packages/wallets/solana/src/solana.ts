@@ -179,9 +179,9 @@ export class SolanaWallet extends Wallet<
   }
 
   async sendTransaction(
-    opts: SolanaSendTransactionParams
+    params: SolanaSendTransactionParams
   ): Promise<SendTransactionResult<SolanaSubmitTransactionResult>> {
-    const { transaction: toSign } = opts;
+    const { transaction: toSign } = params;
     const txs = Array.isArray(toSign) ? toSign : [toSign];
 
     if (txs.length === 0) {
@@ -191,12 +191,15 @@ export class SolanaWallet extends Wallet<
     const ids: TransactionSignature[] = [];
     for (const tx of txs) {
       const id = await this.adapter.sendTransaction(tx, this.connection, {
-        ...opts.options,
+        ...params.options,
       });
       ids.push(id);
     }
 
-    await this.connection.confirmTransaction(ids[0], opts.options?.commitment);
+    await this.connection.confirmTransaction(
+      ids[0],
+      params.options?.commitment
+    );
 
     return {
       id: ids[0],
@@ -205,13 +208,13 @@ export class SolanaWallet extends Wallet<
   }
 
   async signAndSendTransaction(
-    options: SolanaSignAndSendTransactionParams
+    params: SolanaSignAndSendTransactionParams
   ): Promise<SendTransactionResult<SolanaSubmitTransactionResult>> {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const signed = await this.signTransaction(options.transaction);
+    const signed = await this.signTransaction(params.transaction);
     return this.sendTransaction({
-      ...options,
+      ...params,
       transaction: signed,
     });
   }
