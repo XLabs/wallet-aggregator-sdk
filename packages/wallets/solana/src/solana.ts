@@ -210,13 +210,7 @@ export class SolanaWallet extends Wallet<
   async signAndSendTransaction(
     params: SolanaSignAndSendTransactionParams
   ): Promise<SendTransactionResult<SolanaSubmitTransactionResult>> {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const signed = await this.signTransaction(params.transaction);
-    return this.sendTransaction({
-      ...params,
-      transaction: signed,
-    });
+    return this.sendTransaction(params);
   }
 
   signMessage(msg: SolanaMessage): Promise<Signature> {
