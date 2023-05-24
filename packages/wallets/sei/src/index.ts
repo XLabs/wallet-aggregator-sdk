@@ -24,7 +24,7 @@ import {
 } from "@cosmjs/cosmwasm-stargate";
 
 export type SeiWalletType = WalletWindowKey;
-export type SeiChainId = "sei-devnet-3" | "atlantic-2";
+export type SeiChainId = "pacific-1" | "atlantic-2" | "sei-devnet-3";
 export type GetWalletsOptions = Omit<SeiWalletConfig, "type">;
 export interface SeiTransaction {
   msgs: EncodeObject[];
