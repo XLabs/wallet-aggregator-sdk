@@ -1,10 +1,11 @@
 import { AccountData, StdFee, StdSignature } from "@cosmjs/amino";
 import { EncodeObject, OfflineSigner } from "@cosmjs/proto-signing";
-import { DeliverTxResponse, Coin } from "@cosmjs/stargate";
+import { DeliverTxResponse, Coin, QueryClient } from "@cosmjs/stargate";
 import {
   SUPPORTED_WALLETS,
   WalletWindowKey,
   connect,
+  getQueryClient,
   getSigningClient,
   getSigningCosmWasmClient,
   walletSignArbitrary,
@@ -299,5 +300,16 @@ export class SeiWallet extends Wallet<
   getWalletState(): WalletState {
     if (!window) return WalletState.Unsupported;
     return window[this.type] ? WalletState.Installed : WalletState.NotDetected;
+  }
+
+  async calculateFee(tx: SeiTransaction): Promise<string> {
+    if (!this.signer || !this.activeAccount) throw new NotConnected();
+    const signer = await getSigningClient(this.rpcUrl, this.signer);
+    const fee = await signer.simulate(
+      this.activeAccount.address,
+      tx.msgs,
+      tx.memo
+    );
+    return fee.toString();
   }
 }
