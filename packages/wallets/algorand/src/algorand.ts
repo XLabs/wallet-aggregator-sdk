@@ -21,8 +21,8 @@ import {
 } from "./types";
 
 const DEFAULT_CONFIG: AlgorandWalletConfig = {
-  node: { url: "https://node.algoexplorerapi.io" },
-  indexer: { url: "https://indexer.algoexplorerapi.io" },
+  node: { url: "https://xna-mainnet-api.algonode.cloud" },
+  indexer: { url: "https://mainnet-idx.algonode.cloud" },
   waitRounds: 1000,
 };
 
@@ -119,7 +119,7 @@ export abstract class AlgorandWallet extends Wallet<
     if (!this.account) throw new Error("Not connected");
 
     const res = await fetch(
-      `${this.config.indexer.url}/v2/accounts/${this.account}`
+      `${this.config.indexer.url}/accounts/${this.account}`
     );
     const json = (await res.json()) as AccountDataResponse;
     return json.account.amount.toString();
