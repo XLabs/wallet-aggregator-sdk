@@ -23,6 +23,7 @@ interface IWalletContext {
   wallets: WalletMap;
   defaultWallet?: Wallet | undefined;
   availableWallets: AvailableWalletsMap;
+  isDetectingWallets: boolean;
   changeWallet: (newWallet: Wallet) => void;
   unsetWalletFromChain: (chainId: ChainId) => void;
   coalesceChainId: (chainId: ChainId) => ChainId;
@@ -34,6 +35,7 @@ export const WalletContext = createContext<IWalletContext>({
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   unsetWalletFromChain: () => {},
   availableWallets: {},
+  isDetectingWallets: false,
   wallets: {},
   coalesceChainId: (chainId: ChainId) => chainId,
 });
@@ -60,6 +62,7 @@ export const WalletContextProvider = ({
   coalesceTerraChains = true,
 }: React.PropsWithChildren<IWalletContextProviderProps>) => {
   const [wallets, setWallets] = useState<WalletMap>({});
+  const [isDetectingWallets, setDetectingWallets] = useState(false);
   const [availableWallets, setAvailableWallets] = useState<AvailableWalletsMap>(
     {}
   );
@@ -86,12 +89,13 @@ export const WalletContextProvider = ({
         typeof configureWallets === "function"
           ? await configureWallets()
           : configureWallets;
-
       setAvailableWallets(available);
+      setDetectingWallets(false);
     };
 
     // TODO: maybe handle init errors by providing a flag/message to child components
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    setDetectingWallets(true);
     initWallets();
   }, [configureWallets]);
 
@@ -137,6 +141,7 @@ export const WalletContextProvider = ({
       wallets,
       defaultWallet,
       availableWallets,
+      isDetectingWallets,
       changeWallet,
       unsetWalletFromChain,
       coalesceChainId,
@@ -145,6 +150,7 @@ export const WalletContextProvider = ({
       wallets,
       defaultWallet,
       availableWallets,
+      isDetectingWallets,
       unsetWalletFromChain,
       coalesceChainId,
     ]

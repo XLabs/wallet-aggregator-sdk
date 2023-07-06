@@ -60,6 +60,23 @@ export const useWalletsForChain = (chainId?: ChainId): Wallet[] => {
 };
 
 /**
+ * Retrieve the list of available wallets for a specific chain, computed from the available wallets configured for the context
+ * @param chainId A chain id
+ * @returns An object with a wallets property and isDetectingWallets, where isDetectingWallets switch between true and false
+ * and wallets is a non-empty array of Wallet objects, or an empty array if no entry has been found for that chain id
+ */
+export const useWalletsForChainWithStatus = (
+  chainId?: ChainId
+): { wallets: Wallet[]; isDetectingWallets: boolean } => {
+  const wallets = useWalletsForChain(chainId);
+  const { isDetectingWallets } = useWalletContext();
+  return useMemo(
+    () => ({ wallets, isDetectingWallets }),
+    [wallets, isDetectingWallets]
+  );
+};
+
+/**
  * Returns a function that takes a `Wallet` as an argument and selects it as the current wallet for its chain (as indicated by the wallet's `getChainId`) and replacing the previous, should there be one. The selected wallet can then be retrieved through the useWallet and useWalletFromChain hooks
  *
  * The returned function does not attempt to connect the selected wallet, nor disconnect the replaced wallet.
