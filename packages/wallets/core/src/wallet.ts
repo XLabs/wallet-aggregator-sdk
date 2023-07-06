@@ -61,7 +61,7 @@ export type NetworkInfo = any; // eslint-disable-line @typescript-eslint/no-expl
  */
 export abstract class Wallet<
   CID extends ChainId = ChainId,
-  ConnectOptions = void,
+  ConnectOptions = any,
   SignTransactionInput = any,
   SignTransactionResult = any,
   SendTransactionInput = any,
@@ -84,7 +84,7 @@ export abstract class Wallet<
    * @description Connect to the wallet. Implementors are expected to emmit a `connect` event upon success
    * @returns A list of connected addresses
    */
-  abstract connect(opts: ConnectOptions): Promise<Address[]>;
+  abstract connect(opts?: ConnectOptions): Promise<Address[]>;
 
   /**
    * @async
