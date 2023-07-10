@@ -1,3 +1,5 @@
+import { BaseFeatures } from "@xlabs-libs/wallet-aggregator-core";
+
 export interface AccountDataResponse {
   account: {
     amount: number;
@@ -112,3 +114,12 @@ export interface SignTxnsError<T = unknown> extends Error {
   code: number;
   data?: T;
 }
+
+enum Features {
+  TealSign = "TealSign",
+}
+export type AlgorandFeatures = BaseFeatures | Features;
+export const AlgorandFeatures = {
+  ...BaseFeatures,
+  ...Features,
+};

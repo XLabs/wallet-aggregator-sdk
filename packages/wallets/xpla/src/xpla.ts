@@ -5,6 +5,7 @@ import {
   SendTransactionResult,
   Wallet,
   WalletState,
+  BaseFeatures,
 } from "@xlabs-libs/wallet-aggregator-core";
 import {
   Connection,
@@ -265,5 +266,9 @@ export class XplaWallet extends Wallet<
     return this.walletInfo.installed
       ? WalletState.Installed
       : WalletState.NotDetected;
+  }
+
+  getFeatures(): BaseFeatures[] {
+    return Object.values(BaseFeatures);
   }
 }

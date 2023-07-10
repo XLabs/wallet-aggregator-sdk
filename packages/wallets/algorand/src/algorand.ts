@@ -1,8 +1,7 @@
 import {
   Address,
+  BaseFeatures,
   CHAIN_ID_ALGORAND,
-  ChainId,
-  CHAINS,
   SendTransactionResult,
   Signature,
   Wallet,
@@ -10,6 +9,7 @@ import {
 import algosdk from "algosdk";
 import {
   AccountDataResponse,
+  AlgorandFeatures,
   AlgorandMessage,
   AlgorandNetworkInfo,
   AlgorandWalletConfig,
@@ -41,7 +41,8 @@ export abstract class AlgorandWallet extends Wallet<
   SubmittedTransactionMap,
   AlgorandMessage,
   Signature,
-  AlgorandNetworkInfo
+  AlgorandNetworkInfo,
+  AlgorandFeatures
 > {
   protected config: AlgorandWalletConfig;
   protected accounts: Address[];
@@ -163,5 +164,13 @@ export abstract class AlgorandWallet extends Wallet<
       this.config.node.url,
       this.config.node.port || ""
     );
+  }
+
+  getFeatures(): AlgorandFeatures[] {
+    return [
+      BaseFeatures.SendTransaction,
+      BaseFeatures.SignTransaction,
+      BaseFeatures.SignAndSendTransaction,
+    ];
   }
 }

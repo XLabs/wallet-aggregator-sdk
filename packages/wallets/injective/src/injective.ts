@@ -11,6 +11,7 @@ import {
   CHAIN_ID_INJECTIVE,
   SendTransactionResult,
   Wallet,
+  BaseFeatures,
 } from "@xlabs-libs/wallet-aggregator-core";
 import {
   BroadcasterOptions,
@@ -152,5 +153,9 @@ export abstract class InjectiveWallet extends Wallet<
   ): Promise<InjectiveSignedEIP712Message> {
     if (!this.strategy || !this.address) throw new Error("Not connected");
     return this.strategy.signEip712TypedData(msg, this.address);
+  }
+
+  getFeatures(): BaseFeatures[] {
+    return Object.values(BaseFeatures);
   }
 }

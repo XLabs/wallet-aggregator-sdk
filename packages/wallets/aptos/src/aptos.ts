@@ -5,6 +5,7 @@ import {
   SignMessageResponse,
 } from "@manahippo/aptos-wallet-adapter";
 import {
+  BaseFeatures,
   CHAIN_ID_APTOS,
   NotSupported,
   SendTransactionResult,
@@ -167,5 +168,9 @@ export class AptosWallet extends Wallet<
       throw new Error(`Unknown wallet state ${state}`);
     }
     return WalletState[state];
+  }
+
+  getFeatures(): BaseFeatures[] {
+    return Object.values(BaseFeatures);
   }
 }

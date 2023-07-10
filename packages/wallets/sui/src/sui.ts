@@ -19,6 +19,7 @@ import {
   WalletAccount,
 } from "@mysten/wallet-standard";
 import {
+  BaseFeatures,
   CHAIN_ID_SUI,
   NotConnected,
   NotSupported,
@@ -68,6 +69,7 @@ export class SuiWallet extends Wallet<
   SuiSignMessageInput,
   SuiSignMessageOutput,
   SuiNetworkInfo,
+  BaseFeatures,
   WalletEvents
 > {
   private accounts: WalletAccount[] = [];
@@ -224,5 +226,21 @@ export class SuiWallet extends Wallet<
     const feature = this.wallet.features[name];
     if (!feature && mustSupport) throw new NotSupported();
     return feature as T;
+  }
+
+  getFeatures(): BaseFeatures[] {
+    const features = [BaseFeatures.SendTransaction];
+    if (this.wallet.features[FeatureName.SUI__SIGN_TRANSACTION_BLOCK]) {
+      features.push(BaseFeatures.SignTransaction);
+    }
+    if (
+      this.wallet.features[FeatureName.SUI__SIGN_AND_EXECUTE_TRANSACTION_BLOCK]
+    ) {
+      features.push(BaseFeatures.SignAndSendTransaction);
+    }
+    if (this.wallet.features[FeatureName.SUI__SIGN_MESSAGE]) {
+      features.push(BaseFeatures.SignMessage);
+    }
+    return features;
   }
 }

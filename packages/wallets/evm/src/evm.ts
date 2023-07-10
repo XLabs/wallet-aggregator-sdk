@@ -16,6 +16,7 @@ import {
 import { publicProvider } from "@wagmi/core/providers/public";
 import {
   Address,
+  BaseFeatures,
   CHAIN_ID_ETH,
   ChainId,
   NotConnected,
@@ -120,6 +121,7 @@ export abstract class EVMWallet<
   EthereumMessage,
   Signature,
   EVMNetworkInfo,
+  BaseFeatures,
   EVMWalletEvents
 > {
   protected chains: Chain[];
@@ -452,5 +454,9 @@ export abstract class EVMWallet<
     return utils.isHexString(id)
       ? parseInt(id.toString().substring(2), 16)
       : (id as number);
+  }
+
+  getFeatures(): BaseFeatures[] {
+    return Object.values(BaseFeatures);
   }
 }

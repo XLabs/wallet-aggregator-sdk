@@ -20,6 +20,7 @@ import {
   SendTransactionResult,
   Wallet,
   WalletState,
+  BaseFeatures,
 } from "@xlabs-libs/wallet-aggregator-core";
 import { Observable, Subscription } from "rxjs";
 import { map, timeout } from "rxjs/operators";
@@ -273,5 +274,9 @@ export class TerraWallet extends Wallet<
     return this.walletInfo.installed
       ? WalletState.Installed
       : WalletState.NotDetected;
+  }
+
+  getFeatures(): BaseFeatures[] {
+    return Object.values(BaseFeatures);
   }
 }

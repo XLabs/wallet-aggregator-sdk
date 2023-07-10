@@ -13,6 +13,13 @@ export class NotConnected extends Error {
   }
 }
 
+export enum BaseFeatures {
+  SignTransaction = "SignTransaction",
+  SendTransaction = "SendTransaction",
+  SignAndSendTransaction = "SignAndSendTransaction",
+  SignMessage = "SignMessage",
+}
+
 /**
  * Events the wallet can be listened on
  */
@@ -50,14 +57,19 @@ export type NetworkInfo = any; // eslint-disable-line @typescript-eslint/no-expl
  * Base Wallet abstraction.
  *
  * Generic arguments (all of them `any` by default):
- *  * `BaseUnsignedTransaction` (BUT) - Transaction parameters to sign object type
- *  * `BaseSignedTransaction` (BST) - Signed transaction object type
- *  * `BaseSubmitTransactionResult` (R) - Object type expected after submitting a signed tx to the network
+ *  * `ChainId` - The Wormhole chain id for the network
+ *  * `ConnectOptions` - Options to pass to the `connect` method
+ *  * `SignTransactionInput` - Transaction object to sign
+ *  * `SignTransactionResult` - Result of the `signTransaction` method
+ *  * `SendTransactionInput` - Transaction object to send. Might be signed or not, depending on the wallet implementation
+ *  * `SendTransactionResultData` - Result of the `sendTransaction` method
+ *  * `SignAndSendTransactionInput` - Transaction object to sign and send
+ *  * `SignAndSendTransactionResultData` - Result of the `signAndSendTransaction` method
+ *  * `SignMessageInput` - Message to sign
+ *  * `SignMessageResult` - Result of the `signMessage` method
  *  * `NetworkInfo` - Object type that describes the blockchain's network information or state
- *  * `BaseMessage` (BM) - Message to sign object type
- *  * `BaseSignedMessage` (BSM) - Signed message object type
- *  * `WalletEvents` (E) - Object type which describes the events the wallet can be listened on
- *  * `BaseSubmitTransactionInput` (E) - Transaction information to send to the network. DEfaults to `BaseSignedTransaction`. If overriden might involve a signed transaction or not, it is left to the implementor.
+ *  * `WalletFeatures` - Object type which describes the features the wallet implements
+ *  * `WalletEvents` - Object type which describes the events the wallet can be listened on
  */
 export abstract class Wallet<
   CID extends ChainId = ChainId,
@@ -71,6 +83,7 @@ export abstract class Wallet<
   SignMessageInput = any,
   SignMessageResult = any,
   NetworkInfo = any,
+  WalletFeatures = any,
   E extends WalletEvents = any
 > extends EventEmitter<E> {
   /** Retrieve the wallet's name */
@@ -202,5 +215,20 @@ export abstract class Wallet<
   getWalletState(): WalletState {
     // default
     return WalletState.Installed;
+  }
+
+  abstract getFeatures(): WalletFeatures[];
+
+  /**
+   * Query whether a feature or set of features is supported by the wallet.
+   * For a list of features see {@link BaseFeatures}.
+   * Some chains might add additional features of their own.
+   */
+  public supportsFeature(feature: WalletFeatures | WalletFeatures[]): boolean {
+    const features = this.getFeatures();
+
+    return Array.isArray(feature)
+      ? feature.every((f) => features.includes(f))
+      : features.includes(feature);
   }
 }

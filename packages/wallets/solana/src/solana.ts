@@ -6,6 +6,7 @@ import {
 import { Commitment, ConfirmOptions } from "@solana/web3.js";
 import { Connection, Transaction, TransactionSignature } from "@solana/web3.js";
 import {
+  BaseFeatures,
   CHAIN_ID_SOLANA,
   SendTransactionResult,
   Signature,
@@ -228,5 +229,19 @@ export class SolanaWallet extends Wallet<
       throw new Error(`Unknown wallet state ${state}`);
     }
     return WalletState[state];
+  }
+
+  getFeatures(): BaseFeatures[] {
+    const features = [
+      BaseFeatures.SendTransaction,
+      BaseFeatures.SignAndSendTransaction,
+    ];
+
+    if (this.adapter.signTransaction && this.adapter.signAllTransactions) {
+      features.push(BaseFeatures.SignTransaction);
+    }
+    if (this.adapter.signMessage) features.push(BaseFeatures.SignMessage);
+
+    return features;
   }
 }

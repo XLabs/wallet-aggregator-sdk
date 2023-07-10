@@ -11,6 +11,7 @@ import {
   walletSignArbitrary,
 } from "@sei-js/core";
 import {
+  BaseFeatures,
   CHAIN_ID_SEI,
   NotConnected,
   SendTransactionResult,
@@ -311,5 +312,9 @@ export class SeiWallet extends Wallet<
       tx.memo
     );
     return fee.toString();
+  }
+
+  getFeatures(): BaseFeatures[] {
+    return Object.values(BaseFeatures);
   }
 }

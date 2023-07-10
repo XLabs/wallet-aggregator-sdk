@@ -10,6 +10,7 @@ import {
   NotSupported,
   SendTransactionResult,
   Wallet,
+  BaseFeatures,
 } from "@xlabs-libs/wallet-aggregator-core";
 
 export interface NearTransaction {
@@ -63,5 +64,13 @@ export abstract class NearWallet extends Wallet<
 
   getChainId() {
     return CHAIN_ID_NEAR;
+  }
+
+  getFeatures(): BaseFeatures[] {
+    return [
+      BaseFeatures.SignTransaction,
+      BaseFeatures.SendTransaction,
+      BaseFeatures.SignAndSendTransaction,
+    ];
   }
 }
