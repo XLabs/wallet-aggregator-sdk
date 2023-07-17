@@ -1,5 +1,5 @@
 import { WalletConnectConnector } from "@wagmi/core/connectors/walletConnect";
-import { EVMWalletConfig } from "./evm";
+import { EVMWalletConfig, EVMWalletType } from "./evm";
 import { BaseWalletConnectWallet } from "./walletConnectBase";
 
 type WalletConnectOptions = ConstructorParameters<

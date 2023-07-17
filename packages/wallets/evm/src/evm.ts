@@ -71,6 +71,14 @@ export interface EVMWalletConfig<COpts = any> {
   connectorOptions?: COpts;
 }
 
+export enum EVMWalletType {
+  Coinbase = "coinbase",
+  Injected = "injected",
+  Ledger = "ledger",
+  Metamask = "metamask",
+  WalletConnect = "walletconnect",
+}
+
 export interface WatchAssetParams {
   type: string;
   options: {

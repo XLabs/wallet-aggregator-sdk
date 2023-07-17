@@ -1,5 +1,5 @@
 import { CoinbaseWalletConnector } from "@wagmi/core/connectors/coinbaseWallet";
-import { EVMWallet, EVMWalletConfig } from "./evm";
+import { EVMWallet, EVMWalletConfig, EVMWalletType } from "./evm";
 
 /** Coinbase Wallet SDK Options */
 export interface CoinbaseWalletSDKOptions {
@@ -58,5 +58,9 @@ export class CoinbaseWallet extends EVMWallet<
 
   getIcon(): string {
     return "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAyNCIgaGVpZ2h0PSIxMDI0IiB2aWV3Qm94PSIwIDAgMTAyNCAxMDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iMTAyNCIgaGVpZ2h0PSIxMDI0IiBmaWxsPSIjMDA1MkZGIi8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTUyIDUxMkMxNTIgNzEwLjgyMyAzMTMuMTc3IDg3MiA1MTIgODcyQzcxMC44MjMgODcyIDg3MiA3MTAuODIzIDg3MiA1MTJDODcyIDMxMy4xNzcgNzEwLjgyMyAxNTIgNTEyIDE1MkMzMTMuMTc3IDE1MiAxNTIgMzEzLjE3NyAxNTIgNTEyWk00MjAgMzk2QzQwNi43NDUgMzk2IDM5NiA0MDYuNzQ1IDM5NiA0MjBWNjA0QzM5NiA2MTcuMjU1IDQwNi43NDUgNjI4IDQyMCA2MjhINjA0QzYxNy4yNTUgNjI4IDYyOCA2MTcuMjU1IDYyOCA2MDRWNDIwQzYyOCA0MDYuNzQ1IDYxNy4yNTUgMzk2IDYwNCAzOTZINDIwWiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cg==";
+  }
+
+  static getWalletType(): EVMWalletType {
+    return EVMWalletType.Coinbase;
   }
 }

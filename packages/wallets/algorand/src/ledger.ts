@@ -8,6 +8,7 @@ import { NotSupported, WalletState } from "@xlabs-libs/wallet-aggregator-core";
 import algosdk from "algosdk";
 import {
   AlgorandWalletParams,
+  AlgorandWalletType,
   SignerTransaction,
   SignTransactionResult,
 } from "./types";
@@ -185,5 +186,9 @@ export class AlgorandLedgerWallet extends AlgorandWallet {
     return this.getAvailableTransportTypes().length > 0
       ? WalletState.Loadable
       : WalletState.Unsupported;
+  }
+
+  static getWalletType(): AlgorandWalletType {
+    return AlgorandWalletType.Ledger;
   }
 }

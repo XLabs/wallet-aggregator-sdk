@@ -13,6 +13,7 @@ import {
   AlgorandMessage,
   AlgorandWalletConfig,
   AlgorandWalletParams,
+  AlgorandWalletType,
   SignerTransaction,
   SignTransactionResult,
 } from "./types";
@@ -118,5 +119,9 @@ export class MyAlgoWallet extends AlgorandWallet {
       BaseFeatures.SignMessage,
       AlgorandFeatures.TealSign,
     ];
+  }
+
+  static getWalletType(): AlgorandWalletType {
+    return AlgorandWalletType.MyAlgo;
   }
 }
