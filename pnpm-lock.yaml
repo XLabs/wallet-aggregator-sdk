@@ -225,8 +225,10 @@ importers:
 
   packages/wallets/evm:
     specifiers:
+      '@ethersproject/abi': ^5.7.0
       '@ethersproject/abstract-provider': ^5.7.0
       '@ethersproject/bytes': ^5.7.0
+      '@ethersproject/providers': ^5.7.2
       '@types/node': ^18.11.9
       '@wagmi/core': ^0.10.8
       '@web3modal/standalone': ^2.2.1
@@ -238,8 +240,10 @@ importers:
       versions: ^10.4.1
       web3-provider-engine: ^16.0.4
     dependencies:
+      '@ethersproject/abi': 5.7.0
       '@ethersproject/abstract-provider': 5.7.0
       '@ethersproject/bytes': 5.7.0
+      '@ethersproject/providers': 5.7.2
       '@wagmi/core': 0.10.8_65tc2bvq2varijld44l2syuse4
       '@web3modal/standalone': 2.2.1
       '@xlabs-libs/wallet-aggregator-core': link:../core

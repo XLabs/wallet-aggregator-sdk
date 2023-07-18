@@ -116,14 +116,27 @@ export abstract class AlgorandWallet extends Wallet<
     return this.networkInfo;
   }
 
-  async getBalance(): Promise<string> {
+  async getBalance(assetAddress?: string): Promise<string> {
     if (!this.account) throw new Error("Not connected");
 
-    const res = await fetch(
-      `${this.config.indexer.url}/accounts/${this.account}`
-    );
-    const json = (await res.json()) as AccountDataResponse;
-    return json.account.amount.toString();
+    const indexer = new algosdk.Indexer("", this.config.indexer.url);
+
+    if (assetAddress) {
+      const id =
+        typeof assetAddress === "number"
+          ? assetAddress
+          : Number.parseInt(assetAddress);
+      const response = (await indexer
+        .lookupAccountAssets(this.account)
+        .assetId(id)
+        .do()) as algosdk.indexerModels.AssetHoldingsResponse;
+      return response.assets[0]?.amount.toString() || "0";
+    }
+
+    const response = (await indexer
+      .lookupAccountByID(this.account)
+      .do()) as algosdk.indexerModels.AccountResponse;
+    return response.account?.amount.toString() || "0";
   }
 
   async sendTransaction(

@@ -27,9 +27,10 @@ import {
   WalletEvents,
   WalletState,
 } from "@xlabs-libs/wallet-aggregator-core";
-import { ethers, utils } from "ethers";
+import { BigNumber, ethers, utils } from "ethers";
 import { Chain, DEFAULT_CHAINS } from "./chains";
 import { evmChainIdToChainId, isTestnetEvm } from "./constants";
+import { ERC20 } from "./contracts/ERC20";
 
 type EVMChainId = number;
 
@@ -420,10 +421,27 @@ export abstract class EVMWallet<
       : WalletState.NotDetected;
   }
 
-  async getBalance(): Promise<string> {
+  async getBalance(assetAddress?: string): Promise<string> {
     if (!this.isConnected()) throw new NotConnected();
-    const balance = await this.getSigner()?.getBalance();
-    return balance.toString();
+    const signer = this.getSigner();
+    if (!signer) throw new Error("Signer not found");
+
+    if (assetAddress) {
+      const erc20: ERC20 = new ethers.Contract(
+        assetAddress,
+        [
+          "function balanceOf(address) view returns (uint)",
+          "function decimals() public view returns (uint8)",
+        ],
+        signer
+      ) as ERC20;
+      const decimals: number = await erc20.decimals();
+      const balance: BigNumber = await erc20.balanceOf(assetAddress);
+      return utils.formatUnits(balance, decimals);
+    }
+
+    const balance = await signer.getBalance();
+    return utils.formatEther(balance);
   }
 
   protected async onChainChanged(): Promise<void> {

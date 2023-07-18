@@ -134,9 +134,10 @@ export abstract class Wallet<
   /**
    * @async
    * @description Retrieve the connected account's balance
+   * @param [assetAddress] The asset address to retrieve the balance from. If not provided, the balance of the native asset will be returned
    * @throws {NotSupported} May throw NotSupported error if the wallet does not implement it
    */
-  abstract getBalance(): Promise<string>;
+  abstract getBalance(assetAddress?: string): Promise<string>;
 
   /**
    * @async
