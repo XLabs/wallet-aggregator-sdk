@@ -127,17 +127,26 @@ export abstract class AlgorandWallet extends Wallet<
         typeof assetAddress === "number"
           ? assetAddress
           : Number.parseInt(assetAddress);
-      const response = (await indexer
+      const holdingResponse = (await indexer
         .lookupAccountAssets(this.account)
         .assetId(id)
         .do()) as algosdk.indexerModels.AssetHoldingsResponse;
-      return response.assets[0]?.amount.toString() || "0";
+      const balance = BigInt(holdingResponse.assets[0]?.amount || 0);
+
+      const assetResponse = (await indexer
+        .lookupAssetByID(id)
+        .do()) as algosdk.indexerModels.AssetResponse;
+      const decimals = BigInt(assetResponse.asset.params.decimals);
+
+      return (balance / BigInt(10) ** decimals).toString();
     }
 
     const response = (await indexer
       .lookupAccountByID(this.account)
       .do()) as algosdk.indexerModels.AccountResponse;
-    return response.account?.amount.toString() || "0";
+    return algosdk
+      .microalgosToAlgos(Number(response.account?.amount || 0))
+      .toString();
   }
 
   async sendTransaction(
