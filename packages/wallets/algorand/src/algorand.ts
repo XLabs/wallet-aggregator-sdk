@@ -2,6 +2,7 @@ import {
   Address,
   BaseFeatures,
   CHAIN_ID_ALGORAND,
+  ChainId,
   SendTransactionResult,
   Signature,
   Wallet,
@@ -185,5 +186,9 @@ export abstract class AlgorandWallet extends Wallet<
       BaseFeatures.SignTransaction,
       BaseFeatures.SignAndSendTransaction,
     ];
+  }
+
+  supportsChain(chainId: ChainId): boolean {
+    return chainId === CHAIN_ID_ALGORAND;
   }
 }

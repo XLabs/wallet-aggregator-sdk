@@ -8,6 +8,7 @@ import { Connection, Transaction, TransactionSignature } from "@solana/web3.js";
 import {
   BaseFeatures,
   CHAIN_ID_SOLANA,
+  ChainId,
   SendTransactionResult,
   Signature,
   Wallet,
@@ -243,5 +244,9 @@ export class SolanaWallet extends Wallet<
     if (this.adapter.signMessage) features.push(BaseFeatures.SignMessage);
 
     return features;
+  }
+
+  supportsChain(chainId: ChainId): boolean {
+    return chainId === CHAIN_ID_SOLANA;
   }
 }

@@ -158,4 +158,8 @@ export abstract class InjectiveWallet extends Wallet<
   getFeatures(): BaseFeatures[] {
     return Object.values(BaseFeatures);
   }
+
+  supportsChain(chainId: ChainId): boolean {
+    return chainId === CHAIN_ID_INJECTIVE;
+  }
 }

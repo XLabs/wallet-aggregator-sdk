@@ -21,6 +21,7 @@ import {
 import {
   BaseFeatures,
   CHAIN_ID_SUI,
+  ChainId,
   NotConnected,
   NotSupported,
   SendTransactionResult,
@@ -242,5 +243,9 @@ export class SuiWallet extends Wallet<
       features.push(BaseFeatures.SignMessage);
     }
     return features;
+  }
+
+  supportsChain(chainId: ChainId): boolean {
+    return chainId === CHAIN_ID_SUI;
   }
 }

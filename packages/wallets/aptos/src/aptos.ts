@@ -7,6 +7,7 @@ import {
 import {
   BaseFeatures,
   CHAIN_ID_APTOS,
+  ChainId,
   NotSupported,
   SendTransactionResult,
   Wallet,
@@ -172,5 +173,9 @@ export class AptosWallet extends Wallet<
 
   getFeatures(): BaseFeatures[] {
     return Object.values(BaseFeatures);
+  }
+
+  supportsChain(chainId: ChainId): boolean {
+    return chainId === CHAIN_ID_APTOS;
   }
 }

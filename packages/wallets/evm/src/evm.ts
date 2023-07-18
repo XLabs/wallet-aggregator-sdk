@@ -26,6 +26,7 @@ import {
   Wallet,
   WalletEvents,
   WalletState,
+  isEVMChain,
 } from "@xlabs-libs/wallet-aggregator-core";
 import { BigNumber, ethers, utils } from "ethers";
 import { Chain, DEFAULT_CHAINS } from "./chains";
@@ -484,5 +485,9 @@ export abstract class EVMWallet<
 
   getFeatures(): BaseFeatures[] {
     return Object.values(BaseFeatures);
+  }
+
+  supportsChain(chainId: ChainId): boolean {
+    return isTestnetEvm(chainId) || isEVMChain(chainId);
   }
 }

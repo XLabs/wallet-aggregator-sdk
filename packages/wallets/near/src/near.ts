@@ -73,4 +73,8 @@ export abstract class NearWallet extends Wallet<
       BaseFeatures.SignAndSendTransaction,
     ];
   }
+
+  supportsChain(chainId: ChainId): boolean {
+    return chainId === CHAIN_ID_NEAR;
+  }
 }

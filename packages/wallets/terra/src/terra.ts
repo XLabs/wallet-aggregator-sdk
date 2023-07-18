@@ -21,6 +21,7 @@ import {
   Wallet,
   WalletState,
   BaseFeatures,
+  isTerraChain,
 } from "@xlabs-libs/wallet-aggregator-core";
 import { Observable, Subscription } from "rxjs";
 import { map, timeout } from "rxjs/operators";
@@ -278,5 +279,9 @@ export class TerraWallet extends Wallet<
 
   getFeatures(): BaseFeatures[] {
     return Object.values(BaseFeatures);
+  }
+
+  supportsChain(chainId: ChainId): boolean {
+    return isTerraChain(chainId);
   }
 }

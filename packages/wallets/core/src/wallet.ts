@@ -232,4 +232,10 @@ export abstract class Wallet<
       ? feature.every((f) => features.includes(f))
       : features.includes(feature);
   }
+
+  /**
+   * Checks whether the wallet supports a given chain id
+   * @param chainId The chain id to check support for
+   */
+  abstract supportsChain(chainId: ChainId): boolean;
 }
