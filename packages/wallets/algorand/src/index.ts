@@ -7,7 +7,6 @@ export * from "./ledger";
 export type {
   AlgorandWalletConfig,
   AlgorandWalletParams,
-  AlgorandWalletType,
   SignerTransaction,
   MultisigMetadata,
   EncodedSignedTransaction,
@@ -19,3 +18,4 @@ export type {
   AlgorandIndexerConfig,
   SignTxnsError,
 } from "./types";
+export { AlgorandWalletType } from "./types";
