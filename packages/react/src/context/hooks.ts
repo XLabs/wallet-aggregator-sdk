@@ -7,7 +7,7 @@ import { AvailableWalletsMap, useWalletContext } from "./WalletContext";
  * @returns If the chain id is not undefined, it will return the selected wallet for that specific chain, or undefined if not set. Otherwise, it will retrieve the last configured wallet, regardless of its chain.
  */
 export const useWallet = <W extends Wallet = Wallet>(
-  chainId: ChainId | undefined
+  chainId?: ChainId | undefined
 ): W | undefined => {
   const { wallets, coalesceChainId, defaultWallet } = useWalletContext();
 
