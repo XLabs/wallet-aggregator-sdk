@@ -107,3 +107,16 @@ export const useUnsetWalletFromChain = () => {
     [unsetWalletFromChain]
   );
 };
+
+/**
+ * Returns a function that removes removes all current wallets for all chains.
+ *
+ * The returned function does not attempt to disconnect wallets before removing them
+ */
+export const useUnsetAllWallets = () => {
+  const { unsetAllWallets } = useWalletContext();
+
+  return useCallback(() => {
+    unsetAllWallets();
+  }, [unsetAllWallets]);
+};

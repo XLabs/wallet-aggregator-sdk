@@ -26,6 +26,7 @@ interface IWalletContext {
   isDetectingWallets: boolean;
   changeWallet: (newWallet: Wallet) => void;
   unsetWalletFromChain: (chainId: ChainId) => void;
+  unsetAllWallets: () => void;
   coalesceChainId: (chainId: ChainId) => ChainId;
 }
 
@@ -34,6 +35,8 @@ export const WalletContext = createContext<IWalletContext>({
   changeWallet: () => {},
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   unsetWalletFromChain: () => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  unsetAllWallets: () => {},
   availableWallets: {},
   isDetectingWallets: false,
   wallets: {},
@@ -93,9 +96,10 @@ export const WalletContextProvider = ({
       setDetectingWallets(false);
     };
 
+    setDetectingWallets(true);
+
     // TODO: maybe handle init errors by providing a flag/message to child components
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    setDetectingWallets(true);
     initWallets();
   }, [configureWallets]);
 
@@ -136,6 +140,11 @@ export const WalletContextProvider = ({
     [wallets, defaultWallet]
   );
 
+  const unsetAllWallets = useCallback(() => {
+    setWallets({});
+    setDefaultWallet(undefined);
+  }, [wallets]);
+
   const value = useMemo(
     () => ({
       wallets,
@@ -144,6 +153,7 @@ export const WalletContextProvider = ({
       isDetectingWallets,
       changeWallet,
       unsetWalletFromChain,
+      unsetAllWallets,
       coalesceChainId,
     }),
     [
@@ -152,6 +162,7 @@ export const WalletContextProvider = ({
       availableWallets,
       isDetectingWallets,
       unsetWalletFromChain,
+      unsetAllWallets,
       coalesceChainId,
     ]
   );
