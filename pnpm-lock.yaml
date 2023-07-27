@@ -223,6 +223,29 @@ importers:
       shx: 0.3.4
       typescript: 4.9.3
 
+  packages/wallets/cosmos:
+    specifiers:
+      '@cosmjs/amino': 0.29.5
+      '@cosmjs/cosmwasm-stargate': 0.29.5
+      '@cosmjs/proto-signing': 0.29.5
+      '@cosmjs/stargate': 0.29.5
+      '@types/node': ^18.11.9
+      '@xlabs-libs/wallet-aggregator-core': workspace:^
+      buffer: ^6.0.3
+      shx: ^0.3.4
+      typescript: ^4.4.2
+    dependencies:
+      '@xlabs-libs/wallet-aggregator-core': link:../core
+    devDependencies:
+      '@cosmjs/amino': 0.29.5
+      '@cosmjs/cosmwasm-stargate': 0.29.5
+      '@cosmjs/proto-signing': 0.29.5
+      '@cosmjs/stargate': 0.29.5
+      '@types/node': 18.11.11
+      buffer: 6.0.3
+      shx: 0.3.4
+      typescript: 4.9.3
+
   packages/wallets/evm:
     specifiers:
       '@ethersproject/abi': ^5.7.0
@@ -9691,7 +9714,7 @@ packages:
     resolution: {integrity: sha512-gxGWBrTT1JuMx6R+o5PTXMmUnhnVzLQ9SNutD4YqKtI6ap897t3tKECYla6gCWEkplXnlNybEkZg9GEGxKFCgw==}
     dependencies:
       pascal-case: 3.1.2
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
 
   /camelcase-css/2.0.1:
@@ -10830,7 +10853,7 @@ packages:
     resolution: {integrity: sha512-Kv5nKlh6yRrdrGvxeJ2e5y2eRUpkUosIW4A2AS38zwSz27zu7ufDwQPi5Jhs3XAlGNetl3bmnGhQsMtkKJnj3w==}
     dependencies:
       no-case: 3.0.4
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
 
   /dotenv-expand/5.1.0:
@@ -10861,7 +10884,7 @@ packages:
     dependencies:
       end-of-stream: 1.4.4
       inherits: 2.0.4
-      readable-stream: 3.6.0
+      readable-stream: 3.6.2
       stream-shift: 1.0.1
     dev: false
 
@@ -12556,7 +12579,7 @@ packages:
     engines: {node: '>=4'}
     dependencies:
       inherits: 2.0.4
-      readable-stream: 3.6.0
+      readable-stream: 3.6.2
       safe-buffer: 5.2.1
     dev: false
 
@@ -14466,7 +14489,7 @@ packages:
   /lower-case/2.0.2:
     resolution: {integrity: sha512-7fm3l3NAF9WfN6W3JOmf5drwpVqX78JtoGJ3A6W0a6ZnldM41w2fV5D490psKFTpMds8TJse/eHLFFsNHHjHgg==}
     dependencies:
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
 
   /lru-cache/6.0.0:
@@ -14820,7 +14843,7 @@ packages:
     resolution: {integrity: sha512-fgAN3jGAh+RoxUGZHTSOLJIqUc2wmoBwGR4tbpNAKmmovFoWq0OdRkb0VkldReO2a2iBT/OEulG9XSUc10r3zg==}
     dependencies:
       lower-case: 2.0.2
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
 
   /node-addon-api/2.0.2:
@@ -15151,7 +15174,7 @@ packages:
     resolution: {integrity: sha512-RXlj7zCYokReqWpOPH9oYivUzLYZ5vAPIfEmCTNViosC78F8F0H9y7T7gG2M39ymgutxF5gcFEsyZQSph9Bp3A==}
     dependencies:
       dot-case: 3.0.4
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
 
   /parent-module/1.0.1:
@@ -15197,7 +15220,7 @@ packages:
     resolution: {integrity: sha512-uWlGT3YSnK9x3BQJaOdcZwrnV6hPpd8jFH1/ucpiLRPh/2zCVJKS19E4GvYHvaCcACn3foXZ0cLB9Wrx1KGe5g==}
     dependencies:
       no-case: 3.0.4
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
 
   /path-exists/3.0.0:
