@@ -1,7 +1,7 @@
 {
   "name": "@xlabs-libs/wallet-aggregator-cosmos",
   "repository": "https://github.com/XLabs/wallet-aggregator-sdk/tree/master/packages/wallets/cosmos",
-  "version": "0.0.1-alpha.1",
+  "version": "0.0.1-alpha.2",
   "license": "MIT",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -17,10 +17,10 @@
     "src/"
   ],
   "devDependencies": {
-    "@cosmjs/amino": "0.29.5",
-    "@cosmjs/proto-signing": "0.29.5",
-    "@cosmjs/stargate": "0.29.5",
-    "@cosmjs/cosmwasm-stargate": "0.29.5",
+    "@cosmjs/amino": "^0.31.0",
+    "@cosmjs/proto-signing": "^0.31.0",
+    "@cosmjs/stargate": "^0.31.0",
+    "@cosmjs/cosmwasm-stargate": "^0.31.0",
     "@types/node": "^18.11.9",
     "buffer": "^6.0.3",
     "shx": "^0.3.4",
