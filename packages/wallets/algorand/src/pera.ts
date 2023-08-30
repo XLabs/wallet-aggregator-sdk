@@ -1,12 +1,14 @@
 import { PeraWalletConnect } from "@perawallet/connect";
 import {
   Address,
+  BaseFeatures,
   NotConnected,
   NotSupported,
 } from "@xlabs-libs/wallet-aggregator-core";
 import algosdk from "algosdk";
 import { AlgorandWallet } from "./algorand";
 import {
+  AlgorandFeatures,
   AlgorandMessage,
   AlgorandWalletParams,
   AlgorandWalletType,
@@ -147,5 +149,14 @@ export class PeraWallet extends AlgorandWallet {
 
   static getWalletType(): AlgorandWalletType {
     return AlgorandWalletType.Pera;
+  }
+
+  getFeatures(): AlgorandFeatures[] {
+    return [
+      BaseFeatures.SendTransaction,
+      BaseFeatures.SignTransaction,
+      BaseFeatures.SignAndSendTransaction,
+      BaseFeatures.SignMessage,
+    ];
   }
 }
