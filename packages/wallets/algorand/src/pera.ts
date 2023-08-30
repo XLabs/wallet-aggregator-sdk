@@ -1,8 +1,13 @@
 import { PeraWalletConnect } from "@perawallet/connect";
-import { Address, NotSupported } from "@xlabs-libs/wallet-aggregator-core";
+import {
+  Address,
+  NotConnected,
+  NotSupported,
+} from "@xlabs-libs/wallet-aggregator-core";
 import algosdk from "algosdk";
 import { AlgorandWallet } from "./algorand";
 import {
+  AlgorandMessage,
   AlgorandWalletParams,
   AlgorandWalletType,
   SignerTransaction,
@@ -59,8 +64,14 @@ export class PeraWallet extends AlgorandWallet {
     await this.client.disconnect();
   }
 
-  signMessage(): Promise<Uint8Array> {
-    throw new NotSupported();
+  async signMessage(data: AlgorandMessage): Promise<Uint8Array> {
+    if (!this.account) throw new NotConnected();
+    const signatures = await this.client.signData(
+      [{ data, message: "Message signature request" }],
+      this.account
+    );
+    if (signatures.length !== 1) throw new Error("Failed to sign message");
+    return signatures[0];
   }
 
   async signTransaction(
