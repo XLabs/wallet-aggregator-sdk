@@ -1,7 +1,7 @@
 {
   "name": "@xlabs-libs/wallet-aggregator-sei",
   "repository": "https://github.com/XLabs/wallet-aggregator-sdk/tree/master/packages/wallets/sei",
-  "version": "0.0.1-alpha.8",
+  "version": "0.0.1-alpha.9",
   "license": "MIT",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -18,16 +18,16 @@
   ],
   "devDependencies": {
     "@cosmjs/amino": "0.29.5",
+    "@cosmjs/cosmwasm-stargate": "0.29.5",
     "@cosmjs/proto-signing": "0.29.5",
     "@cosmjs/stargate": "0.29.5",
-    "@cosmjs/cosmwasm-stargate": "0.29.5",
     "@types/node": "^18.11.9",
     "buffer": "^6.0.3",
     "shx": "^0.3.4",
     "typescript": "^4.4.2"
   },
   "dependencies": {
-    "@sei-js/core": "^1.3.6",
+    "@sei-js/core": "^3.0.2",
     "@xlabs-libs/wallet-aggregator-core": "workspace:^"
   }
 }

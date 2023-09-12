@@ -1,6 +1,4 @@
-import { WalletWindowKey } from "@sei-js/core";
-
-export type SeiWalletType = WalletWindowKey;
+export type SeiWalletType = string;
 
 export interface WalletInfo {
   name: string;

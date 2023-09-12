@@ -9,10 +9,9 @@ import { EncodeObject, OfflineSigner } from "@cosmjs/proto-signing";
 import { Coin, DeliverTxResponse } from "@cosmjs/stargate";
 import {
   SUPPORTED_WALLETS,
-  connect,
   getSigningClient,
   getSigningCosmWasmClient,
-  walletSignArbitrary,
+  SeiWallet as SeiInnerWallet,
 } from "@sei-js/core";
 import {
   BaseFeatures,
@@ -23,10 +22,10 @@ import {
   Wallet,
   WalletState,
 } from "@xlabs-libs/wallet-aggregator-core";
-import { SeiWalletType, WALLETS } from "./wallets";
+import { WALLETS } from "./wallets";
 
 export type SeiChainId = "pacific-1" | "atlantic-2" | "sei-devnet-3";
-export type GetWalletsOptions = Omit<SeiWalletConfig, "type">;
+export type GetWalletsOptions = Omit<SeiWalletConfig, "wallet">;
 export interface SeiTransaction {
   msgs: EncodeObject[];
   fee: StdFee;
@@ -44,28 +43,35 @@ interface TxRaw {
   signatures: Uint8Array[];
 }
 
+interface Window {
+  // eslint-disable-next-line
+  [key: string]: any;
+}
+
 export const getSupportedWallets = (config: GetWalletsOptions): SeiWallet[] => {
   return SUPPORTED_WALLETS.map(
-    (w) =>
+    (wallet) =>
       new SeiWallet({
         ...config,
-        type: w.windowKey,
+        wallet,
       })
   );
 };
 
 export const getInstalledWallets = (config: GetWalletsOptions): SeiWallet[] => {
-  return SUPPORTED_WALLETS.filter((w) => !!window[w.windowKey]).map(
-    (w) =>
+  return SUPPORTED_WALLETS.filter(
+    (wallet) => !!(window as Window)[wallet.walletInfo.windowKey]
+  ).map(
+    (wallet) =>
       new SeiWallet({
         ...config,
-        type: w.windowKey,
+        wallet,
       })
   );
 };
 
 export interface SeiWalletConfig {
-  type: SeiWalletType;
+  wallet: SeiInnerWallet;
   chainId: SeiChainId;
   rpcUrl: string;
 }
@@ -109,7 +115,7 @@ export class SeiWallet extends Wallet<
   SeiTransaction,
   DeliverTxResponse
 > {
-  private type: SeiWalletType;
+  private wallet: SeiInnerWallet;
   private chainId: SeiChainId;
   private rpcUrl: string;
   private activeAccount?: AccountData;
@@ -118,21 +124,25 @@ export class SeiWallet extends Wallet<
 
   constructor(config: SeiWalletConfig) {
     super();
-    this.type = config.type;
+    this.wallet = config.wallet;
     this.chainId = config.chainId;
     this.rpcUrl = config.rpcUrl;
   }
 
   getName(): string {
-    return WALLETS[this.type]?.name || this.type;
+    return this.wallet.walletInfo.name;
+    // return WALLETS[this.type]?.name || this.type;
   }
 
   getUrl(): string {
-    return WALLETS[this.type]?.url || "https://www.seinetwork.io/";
+    return this.wallet.walletInfo.website;
   }
 
   getIcon(): string {
-    return WALLETS[this.type]?.icon || "";
+    return (
+      WALLETS[this.wallet.walletInfo.windowKey]?.icon ||
+      this.wallet.walletInfo.icon
+    );
   }
 
   getChainId() {
@@ -164,18 +174,18 @@ export class SeiWallet extends Wallet<
   }
 
   async connect(): Promise<string[]> {
-    const { offlineSigner, accounts } = await connect(this.type, this.chainId);
-    this.signer = offlineSigner;
-    this.accounts = [...accounts];
-    this.activeAccount = accounts[0];
-    return accounts.map((a) => a.address);
+    await this.wallet.connect(this.chainId);
+    this.signer = await this.wallet.getOfflineSigner(this.chainId);
+    this.accounts = [...(await this.wallet.getAccounts(this.chainId))];
+    this.activeAccount = this.accounts[0];
+    return this.accounts.map((a) => a.address);
   }
 
   disconnect(): Promise<void> {
     this.accounts = [];
     this.activeAccount = undefined;
     this.signer = undefined;
-    return Promise.resolve();
+    return this.wallet.disconnect(this.chainId);
   }
 
   getAccounts(): string[] {
@@ -248,10 +258,10 @@ export class SeiWallet extends Wallet<
     };
   }
 
-  async signMessage(msg: Uint8Array): Promise<StdSignature> {
+  async signMessage(msg: string): Promise<StdSignature | undefined> {
     if (!this.signer || !this.activeAccount) throw new NotConnected();
-    return await walletSignArbitrary(
-      this.type,
+    if (!this.wallet.signArbitrary) throw new Error("Method not supported");
+    return this.wallet.signArbitrary(
       this.chainId,
       this.activeAccount.address,
       msg
@@ -260,7 +270,10 @@ export class SeiWallet extends Wallet<
 
   getWalletState(): WalletState {
     if (!window) return WalletState.Unsupported;
-    return window[this.type] ? WalletState.Installed : WalletState.NotDetected;
+    const key: string = this.wallet.walletInfo.windowKey;
+    return (window as Window)[key]
+      ? WalletState.Installed
+      : WalletState.NotDetected;
   }
 
   async calculateFee(tx: SeiTransaction): Promise<string> {
@@ -275,7 +288,13 @@ export class SeiWallet extends Wallet<
   }
 
   getFeatures(): BaseFeatures[] {
-    return Object.values(BaseFeatures);
+    const features = [
+      BaseFeatures.SignTransaction,
+      BaseFeatures.SendTransaction,
+      BaseFeatures.SignAndSendTransaction,
+    ];
+    if (this.wallet.signArbitrary) features.push(BaseFeatures.SignMessage);
+    return features;
   }
 
   supportsChain(chainId: ChainId): boolean {
