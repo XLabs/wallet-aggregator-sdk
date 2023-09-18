@@ -114,6 +114,10 @@ export class CosmosWallet extends Wallet<
     return this.accounts.map((a) => a.address);
   }
 
+  async switchChain(chainId: string): Promise<void> {
+    await this.connect({ chainId });
+  }
+
   disconnect(): Promise<void> {
     this.accounts = [];
     this.activeAccount = undefined;
