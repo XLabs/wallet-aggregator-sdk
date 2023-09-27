@@ -4,6 +4,7 @@ import {
   ExecuteResult,
   JsonObject,
   MsgExecuteContractEncodeObject,
+  SigningCosmWasmClientOptions,
 } from "@cosmjs/cosmwasm-stargate";
 import { EncodeObject, OfflineSigner } from "@cosmjs/proto-signing";
 import { Coin, DeliverTxResponse } from "@cosmjs/stargate";
@@ -241,10 +242,15 @@ export class SeiWallet extends Wallet<
   }
 
   async executeMultiple(
-    tx: SeiExecuteTransaction
+    tx: SeiExecuteTransaction,
+    clientOptions?: SigningCosmWasmClientOptions
   ): Promise<SendTransactionResult<ExecuteResult>> {
     if (!this.signer || !this.activeAccount) throw new NotConnected();
-    const signer = await getSigningCosmWasmClient(this.rpcUrl, this.signer);
+    const signer = await getSigningCosmWasmClient(
+      this.rpcUrl,
+      this.signer,
+      clientOptions
+    );
     const res = await signer.executeMultiple(
       this.activeAccount.address,
       tx.instructions,
