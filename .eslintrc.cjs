@@ -14,7 +14,7 @@ module.exports = {
       "./packages/react/tsconfig.esm.json",
     ],
   },
-  ignorePatterns: ["node_modules", "dist", "build", "coverage", "react-init"],
+  ignorePatterns: ["node_modules", "dist", "build", "coverage"],
   rules: {
     "@typescript-eslint/no-misused-promises": [
       "error",

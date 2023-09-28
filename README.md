@@ -32,4 +32,3 @@ For more information, check each package README:
 | [@xlabs/wallet-aggregator-solana](./packages/wallets/solana)       | Wallet implementation for Solana                         |
 | [@xlabs/wallet-aggregator-xpla](./packages/wallets/xpla)           | Wallet implementation for XPLA                           |
 | [@xlabs/wallet-aggregator-terra](./packages/wallets/terra)         | Wallet implementation for Terra                          |
-| [@xlabs/wallet-aggregator-react-init](./packages/react-init)       | A utility package to initalize all available wallets     |
