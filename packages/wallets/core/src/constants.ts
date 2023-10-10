@@ -32,6 +32,9 @@ export const CHAINS = {
   base: 30,
   sei: 32,
   wormchain: 3104,
+  cosmoshub: 4000,
+  evmos: 4001,
+  kujira: 4002,
   sepolia: 10002,
 } as const;
 
@@ -83,6 +86,9 @@ export const CHAIN_ID_BTC = CHAINS["btc"];
 export const CHAIN_ID_BASE = CHAINS["base"];
 export const CHAIN_ID_SEI = CHAINS["sei"];
 export const CHAIN_ID_WORMCHAIN = CHAINS["wormchain"];
+export const CHAIN_ID_COSMOSHUB = CHAINS["cosmoshub"];
+export const CHAIN_ID_EVMOS = CHAINS["evmos"];
+export const CHAIN_ID_KUJIRA = CHAINS["kujira"];
 export const CHAIN_ID_SEPOLIA = CHAINS["sepolia"];
 
 export type Network = "MAINNET" | "TESTNET" | "DEVNET";
@@ -139,7 +145,11 @@ export function isCosmWasmChain(chainId: ChainId): boolean {
     chainId === CHAIN_ID_TERRA2 ||
     chainId === CHAIN_ID_INJECTIVE ||
     chainId === CHAIN_ID_XPLA ||
-    chainId === CHAIN_ID_SEI
+    chainId === CHAIN_ID_SEI ||
+    chainId === CHAIN_ID_WORMCHAIN ||
+    chainId === CHAIN_ID_COSMOSHUB ||
+    chainId === CHAIN_ID_EVMOS ||
+    chainId === CHAIN_ID_KUJIRA
   );
 }
 

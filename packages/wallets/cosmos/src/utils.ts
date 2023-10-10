@@ -5,7 +5,7 @@ import {
 import { Coin } from "@cosmjs/stargate";
 import { CosmosWallet } from "./cosmos";
 import { WALLETS } from "./wallets";
-import { RpcMap } from "./types";
+import { ResourceMap } from "./types";
 
 /**
  * Helper method to build messages for smart contract execution to use along
@@ -28,12 +28,16 @@ export const buildExecuteMessage = (
   };
 };
 
-export const getWallets = (rpcs?: RpcMap): CosmosWallet[] => {
+export const getWallets = (
+  rpcs?: ResourceMap,
+  rests?: ResourceMap
+): CosmosWallet[] => {
   return Object.values(WALLETS).map(
     (w) =>
       new CosmosWallet({
         walletInfo: w,
         rpcs: rpcs,
+        rests: rests,
       })
   );
 };

@@ -1,5 +1,10 @@
 import { StdSignature } from "@cosmjs/amino";
-import { OfflineSigner } from "@cosmjs/proto-signing";
+import {
+  DirectSignResponse,
+  OfflineDirectSigner,
+  OfflineSigner,
+} from "@cosmjs/proto-signing";
+import Long from "long";
 
 declare global {
   interface Window {
@@ -17,13 +22,45 @@ declare global {
   }
 }
 
-interface ExtensionWallet {
+export interface AccountKey {
+  name: string;
+  algo: string;
+  pubKey: Uint8Array;
+  address: Uint8Array;
+  bech32Address: string;
+}
+
+export interface SignDirectParams {
+  /** SignDoc bodyBytes */
+  bodyBytes?: Uint8Array | null;
+  /** SignDoc authInfoBytes */
+  authInfoBytes?: Uint8Array | null;
+  /** SignDoc chainId */
+  chainId?: string | null;
+  /** SignDoc accountNumber */
+  accountNumber?: Long | null;
+}
+
+export interface ExtensionWallet {
   getOfflineSignerAuto: (chainId: string) => Promise<OfflineSigner>;
+  getOfflineDirectSigner: (chainId: string) => Promise<OfflineDirectSigner>;
+  getOfflineSigner: (chainId: string) => Promise<OfflineDirectSigner>;
+  sendTx(
+    chainId: string,
+    tx: Uint8Array,
+    mode: "async" | "sync" | "block"
+  ): Promise<Uint8Array>;
   signArbitrary(
     chainId: string,
     signer: string,
     data: string | Uint8Array
   ): Promise<StdSignature>;
+  signDirect(
+    chainId: string,
+    signer: string,
+    signDoc: SignDirectParams
+  ): Promise<DirectSignResponse>;
+  getKey: (chainId: string) => Promise<AccountKey>;
 }
 
 type LocateFn = () => ExtensionWallet | undefined;

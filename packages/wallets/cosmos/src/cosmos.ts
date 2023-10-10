@@ -4,7 +4,18 @@ import {
   SigningCosmWasmClient,
 } from "@cosmjs/cosmwasm-stargate";
 import { OfflineSigner } from "@cosmjs/proto-signing";
-import { DeliverTxResponse, SigningStargateClient } from "@cosmjs/stargate";
+import {
+  AuthExtension,
+  DeliverTxResponse,
+  QueryClient,
+  SigningStargateClient,
+  setupAuthExtension,
+} from "@cosmjs/stargate";
+import {
+  Tendermint34Client,
+  Tendermint37Client,
+  TendermintClient,
+} from "@cosmjs/tendermint-rpc";
 import {
   BaseFeatures,
   CHAIN_ID_WORMCHAIN,
@@ -20,12 +31,13 @@ import {
   CosmosExecuteTransaction,
   CosmosTransaction,
   CosmosWalletConfig,
-  RpcMap,
+  ResourceMap,
   TxRaw,
 } from "./types";
 import { WalletInfo } from "./wallets";
 
-const DEFAULT_RPCS: RpcMap = {};
+const DEFAULT_RPCS: ResourceMap = {};
+const DEFAULT_RESTS: ResourceMap = {};
 
 /**
  * A class to interact with Cosmos blockchains.
@@ -44,17 +56,19 @@ export class CosmosWallet extends Wallet<
   CosmosTransaction,
   DeliverTxResponse
 > {
-  private chainId?: string;
-  private rpcs: RpcMap;
-  private walletInfo: WalletInfo;
-  private signer?: OfflineSigner;
-  private activeAccount?: AccountData;
-  private accounts: AccountData[] = [];
+  protected chainId?: string;
+  protected rpcs: ResourceMap;
+  protected rests: ResourceMap;
+  protected walletInfo: WalletInfo;
+  protected signer?: OfflineSigner;
+  protected accounts: AccountData[] = [];
+  protected activeAccount?: AccountData;
 
-  constructor({ chainId, rpcs, walletInfo }: CosmosWalletConfig) {
+  constructor({ chainId, rpcs, rests, walletInfo }: CosmosWalletConfig) {
     super();
     this.chainId = chainId;
     this.rpcs = Object.assign({}, DEFAULT_RPCS, rpcs);
+    this.rests = Object.assign({}, DEFAULT_RESTS, rests);
     this.walletInfo = walletInfo;
   }
 
@@ -163,14 +177,11 @@ export class CosmosWallet extends Wallet<
   async signAndSendTransaction(
     tx: CosmosTransaction
   ): Promise<SendTransactionResult<DeliverTxResponse>> {
-    const signer = await this.getSigningStargateClient();
+    const signed = await this.signTransaction(tx);
 
-    const response = await signer.signAndBroadcast(
-      this.activeAccount!.address,
-      tx.msgs,
-      tx.fee,
-      tx.memo
-    );
+    const signer = await this.getSigningStargateClient();
+    const response = await signer.broadcastTx(signed.bodyBytes);
+
     return {
       id: response.transactionHash,
       data: response,
@@ -251,5 +262,30 @@ export class CosmosWallet extends Wallet<
     if (!rpc) throw new Error(`Missing RPC for chain ${this.chainId}`);
 
     return SigningCosmWasmClient.connectWithSigner(rpc, this.signer);
+  }
+
+  async getQueryClient(): Promise<QueryClient & AuthExtension> {
+    const tmClient = await this.getTmClient();
+    return QueryClient.withExtensions(tmClient, setupAuthExtension);
+  }
+
+  protected async getTmClient(): Promise<
+    Tendermint34Client | Tendermint37Client
+  > {
+    if (!this.chainId) throw new Error("Chain id not set");
+    const rpc = this.rpcs[this.chainId];
+
+    // from cosmjs: https://github.com/cosmos/cosmjs/blob/358260bff71c9d3e7ad6644fcf64dc00325cdfb9/packages/stargate/src/stargateclient.ts#L218
+    let tmClient: TendermintClient;
+    const tm37Client = await Tendermint37Client.connect(rpc);
+    const version = (await tm37Client.status()).nodeInfo.version;
+    if (version.startsWith("0.37.")) {
+      tmClient = tm37Client;
+    } else {
+      tm37Client.disconnect();
+      tmClient = await Tendermint34Client.connect(rpc);
+    }
+
+    return tmClient;
   }
 }
