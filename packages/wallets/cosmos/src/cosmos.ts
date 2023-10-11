@@ -32,9 +32,9 @@ import {
   CosmosTransaction,
   CosmosWalletConfig,
   ResourceMap,
-  TxRaw,
 } from "./types";
 import { WalletInfo } from "./wallets";
+import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
 const DEFAULT_RPCS: ResourceMap = {};
 const DEFAULT_RESTS: ResourceMap = {};
@@ -167,7 +167,8 @@ export class CosmosWallet extends Wallet<
   ): Promise<SendTransactionResult<DeliverTxResponse>> {
     const signer = await this.getSigningStargateClient();
 
-    const response = await signer.broadcastTx(tx.bodyBytes);
+    const response = await signer.broadcastTx(TxRaw.encode(tx).finish());
+
     return {
       id: response.transactionHash,
       data: response,
@@ -178,14 +179,7 @@ export class CosmosWallet extends Wallet<
     tx: CosmosTransaction
   ): Promise<SendTransactionResult<DeliverTxResponse>> {
     const signed = await this.signTransaction(tx);
-
-    const signer = await this.getSigningStargateClient();
-    const response = await signer.broadcastTx(signed.bodyBytes);
-
-    return {
-      id: response.transactionHash,
-      data: response,
-    };
+    return await this.sendTransaction(signed);
   }
 
   async executeMultiple(

@@ -1,7 +1,7 @@
 {
   "name": "@xlabs-libs/wallet-aggregator-cosmos",
   "repository": "https://github.com/XLabs/wallet-aggregator-sdk/tree/master/packages/wallets/cosmos",
-  "version": "0.0.1-alpha.5",
+  "version": "0.0.1-alpha.6",
   "license": "MIT",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -10,7 +10,8 @@
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "build:esm": "tsc -p tsconfig.esm.json",
     "build": "shx rm -rf dist && npm run build:cjs && npm run build:esm",
-    "clean": "shx rm -rf dist"
+    "clean": "shx rm -rf dist",
+    "prepublish": "npm run build"
   },
   "files": [
     "dist/",
@@ -24,6 +25,7 @@
     "@cosmjs/tendermint-rpc": "^0.31.0",
     "@types/node": "^18.11.9",
     "buffer": "^6.0.3",
+    "cosmjs-types": "^0.8.0",
     "long": "^5.2.3",
     "shx": "^0.3.4",
     "typescript": "^4.4.2"
