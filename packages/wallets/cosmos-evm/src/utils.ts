@@ -38,7 +38,7 @@ export function mapMsgTransfer(msgTransfer: CosmosMsgTransfer): MsgTransfer {
     port: msgTransfer.sourcePort,
     channelId: msgTransfer.sourceChannel,
     sender: msgTransfer.sender,
-    height: msgTransfer
+    height: msgTransfer.timeoutHeight
       ? {
           revisionHeight:
             msgTransfer.timeoutHeight?.revisionHeight.toInt() || 0,
@@ -47,7 +47,7 @@ export function mapMsgTransfer(msgTransfer: CosmosMsgTransfer): MsgTransfer {
         }
       : undefined,
     memo: msgTransfer.memo,
-    timeout: msgTransfer.timeoutTimestamp?.toInt() || 0,
+    timeout: msgTransfer.timeoutTimestamp?.toNumber() || 0,
   });
 }
 
