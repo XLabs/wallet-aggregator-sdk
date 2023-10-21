@@ -41,9 +41,9 @@ export function mapMsgTransfer(msgTransfer: CosmosMsgTransfer): MsgTransfer {
     height: msgTransfer.timeoutHeight
       ? {
           revisionHeight:
-            msgTransfer.timeoutHeight?.revisionHeight.toInt() || 0,
+            msgTransfer.timeoutHeight?.revisionHeight.toNumber() || 0,
           revisionNumber:
-            msgTransfer.timeoutHeight?.revisionNumber.toInt() || 0,
+            msgTransfer.timeoutHeight?.revisionNumber.toNumber() || 0,
         }
       : undefined,
     memo: msgTransfer.memo,

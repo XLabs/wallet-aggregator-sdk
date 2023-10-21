@@ -38,6 +38,7 @@ import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
 const DEFAULT_RPCS: ResourceMap = {};
 const DEFAULT_RESTS: ResourceMap = {};
+const DEFAULT_CHAIN_ID = "cosmoshub-4";
 
 /**
  * A class to interact with Cosmos blockchains.
@@ -66,7 +67,7 @@ export class CosmosWallet extends Wallet<
 
   constructor({ chainId, rpcs, rests, walletInfo }: CosmosWalletConfig) {
     super();
-    this.chainId = chainId;
+    this.chainId = chainId || DEFAULT_CHAIN_ID;
     this.rpcs = Object.assign({}, DEFAULT_RPCS, rpcs);
     this.rests = Object.assign({}, DEFAULT_RESTS, rests);
     this.walletInfo = walletInfo;
