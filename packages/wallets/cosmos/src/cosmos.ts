@@ -43,7 +43,7 @@ const DEFAULT_CHAIN_ID = "cosmoshub-4";
 
 const NO_CHAIN_MESSAGES = [
   "There is no chain info",
-  "Invalid chain Id",
+  "Invalid chain id",
   "No account found",
 ];
 

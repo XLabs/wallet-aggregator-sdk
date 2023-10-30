@@ -1,7 +1,7 @@
 {
   "name": "@xlabs-libs/wallet-aggregator-cosmos-evm",
   "repository": "https://github.com/XLabs/wallet-aggregator-sdk/tree/master/packages/wallets/cosmos",
-  "version": "0.0.1-alpha.4",
+  "version": "0.0.1-alpha.5",
   "license": "MIT",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
