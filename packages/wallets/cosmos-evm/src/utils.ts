@@ -41,13 +41,13 @@ export function mapMsgTransfer(msgTransfer: CosmosMsgTransfer): MsgTransfer {
     height: msgTransfer.timeoutHeight
       ? {
           revisionHeight:
-            msgTransfer.timeoutHeight?.revisionHeight.toNumber() || 0,
+            Number(msgTransfer.timeoutHeight?.revisionHeight) || 0,
           revisionNumber:
-            msgTransfer.timeoutHeight?.revisionNumber.toNumber() || 0,
+            Number(msgTransfer.timeoutHeight?.revisionNumber) || 0,
         }
       : undefined,
     memo: msgTransfer.memo,
-    timeout: msgTransfer.timeoutTimestamp?.toNumber() || 0,
+    timeout: Number(msgTransfer.timeoutTimestamp) || 0,
   });
 }
 
