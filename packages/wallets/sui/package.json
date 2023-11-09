@@ -26,11 +26,12 @@
     "@types/bn.js": "^5.1.1",
     "@types/node": "^18.11.9",
     "shx": "^0.3.4",
-    "typescript": "^4.4.2"
+    "typescript": "^5.1.6"
   },
   "dependencies": {
-    "@mysten/sui.js": "^0.32.2",
-    "@mysten/wallet-standard": "^0.5.4",
+    "@kunalabs-io/sui-snap-wallet": "^0.4.1",
+    "@mysten/sui.js": "^0.45.1",
+    "@mysten/wallet-standard": "^0.8.7",
     "@xlabs-libs/wallet-aggregator-core": "workspace:^"
   }
 }

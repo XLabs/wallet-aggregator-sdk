@@ -1,10 +1,10 @@
+import { TransactionBlock } from "@mysten/sui.js/transactions";
 import {
-  Connection,
   ExecuteTransactionRequestType,
-  JsonRpcProvider,
+  SuiClient,
+  SuiClientOptions,
   SuiTransactionBlockResponseOptions,
-  TransactionBlock,
-} from "@mysten/sui.js";
+} from "@mysten/sui.js/client";
 import {
   StandardConnectMethod,
   StandardDisconnectMethod,
@@ -29,6 +29,7 @@ import {
   WalletEvents,
 } from "@xlabs-libs/wallet-aggregator-core";
 import { DEFAULTS, SuiWalletName, WalletInfo } from "./walletsInfo";
+import { registerSuiSnapWallet } from "@kunalabs-io/sui-snap-wallet";
 
 export enum FeatureName {
   STANDARD__CONNECT = "standard:connect",
@@ -58,6 +59,8 @@ type SuiNetworkInfo = {
   chain: string;
 };
 
+registerSuiSnapWallet();
+
 export class SuiWallet extends Wallet<
   typeof CHAIN_ID_SUI,
   void,
@@ -78,7 +81,7 @@ export class SuiWallet extends Wallet<
 
   constructor(
     private readonly wallet: StandardWallet,
-    private readonly connection?: Connection
+    private readonly clientOptions?: SuiClientOptions
   ) {
     super();
   }
@@ -133,10 +136,10 @@ export class SuiWallet extends Wallet<
   async sendTransaction(
     tx: SuiSignTransactionBlockOutput
   ): Promise<SendTransactionResult<SuiSignAndExecuteTransactionBlockOutput>> {
-    if (!this.connection) throw new Error("Connection not provided");
-    const provider = new JsonRpcProvider(this.connection);
+    if (!this.clientOptions) throw new Error("Connection not provided");
+    const client = new SuiClient(this.clientOptions);
 
-    const result = await provider.executeTransactionBlock({
+    const result = await client.executeTransactionBlock({
       signature: tx.signature,
       transactionBlock: tx.transactionBlockBytes,
     });

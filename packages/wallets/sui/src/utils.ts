@@ -1,16 +1,16 @@
-import { Connection } from "@mysten/sui.js";
 import {
   Wallet as StandardWallet,
   Wallets,
   getWallets as getSuiWallets,
 } from "@mysten/wallet-standard";
 import { SuiWallet } from "./sui";
+import { SuiClientOptions } from "@mysten/sui.js/client";
 
 const WALLET_DETECT_TIMEOUT = 250;
 
 interface GetReadyWalletsOptions {
-  /** SUI connection */
-  connection?: Connection;
+  /** SUI client */
+  clientOptions?: SuiClientOptions;
 }
 interface GetWalletsOptions extends GetReadyWalletsOptions {
   timeout?: number;
@@ -36,7 +36,7 @@ export const getReadyWallets = (
   return wallets
     .get()
     .filter(supportsSui)
-    .map((w: StandardWallet) => new SuiWallet(w, options.connection));
+    .map((w: StandardWallet) => new SuiWallet(w, options.clientOptions));
 };
 
 /**
@@ -47,7 +47,7 @@ export const getReadyWallets = (
 export const getWallets = async (
   options: GetWalletsOptions = {}
 ): Promise<SuiWallet[]> => {
-  const { timeout = WALLET_DETECT_TIMEOUT, connection } = options;
+  const { timeout = WALLET_DETECT_TIMEOUT, clientOptions } = options;
   const detector: Wallets = getSuiWallets();
 
   const wallets: StandardWallet[] = [...detector.get()];
@@ -58,7 +58,9 @@ export const getWallets = async (
       setTimeout(() => {
         if (removeListener) removeListener();
         resolve(
-          wallets.filter(supportsSui).map((w) => new SuiWallet(w, connection))
+          wallets
+            .filter(supportsSui)
+            .map((w) => new SuiWallet(w, clientOptions))
         );
       }, timeout);
 
