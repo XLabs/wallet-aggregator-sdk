@@ -8,3 +8,4 @@ export * from "./walletConnectLegacy";
 export * from "./constants";
 export * from "./injected";
 export * from "./chains";
+export * from "./okx";

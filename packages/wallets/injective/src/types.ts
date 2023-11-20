@@ -37,5 +37,6 @@ declare global {
     keplr: object;
     leap: object;
     cosmostation: object;
+    okxwallet: Record<string, object>;
   }
 }
