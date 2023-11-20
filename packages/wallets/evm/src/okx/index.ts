@@ -1,5 +1,5 @@
-import { EVMWallet, EVMWalletType } from "./evm";
-import { OKXWalletConnector } from "okx-wallet-connector";
+import { EVMWallet, EVMWalletType } from "../evm";
+import { OKXWalletConnector } from "./connector";
 
 export class OKXWallet extends EVMWallet<OKXWalletConnector> {
   getUrl(): string {
