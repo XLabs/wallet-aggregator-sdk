@@ -7,3 +7,4 @@ export * from "./ledger";
 export * from "./constants";
 export * from "./injected";
 export * from "./chains";
+export * from "./okx";
