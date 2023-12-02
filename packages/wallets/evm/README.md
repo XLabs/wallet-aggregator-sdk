@@ -9,6 +9,7 @@ Wallets implemented so far:
 | Injected wallets (e.g: Brave) |                                 |
 | Metamask                      | https://metamask.io             |
 | WalletConnect                 | https://walletconnect.com       |
+| Bitget Wallet                 | https://web3.bitget.com         |
 | Coinbase Wallet               | https://www.coinbase.com/wallet |
 | Ledger Connect                | https://www.ledger.com          |
 
@@ -27,6 +28,7 @@ Additionally, each specific wallet has its own specific options.
 import {
   MetamaskWallet,
   WalletConnectWallet,
+  BitgetWallet,
   CoinbaseWallet,
   LedgerWallet,
   InjectedWallet,
@@ -39,6 +41,11 @@ const metamask = new MetamaskWallet({
 });
 const walletConnect = new WalletConnectWallet({
   preferredChain: 43113,
+});
+const bitgetWallet = new BitgetWallet({
+  options: {
+    appName: "My App",
+  },
 });
 const coinbase = new CoinbaseWallet({
   options: {
