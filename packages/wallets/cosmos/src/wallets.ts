@@ -5,6 +5,7 @@ import {
   OfflineSigner,
 } from "@cosmjs/proto-signing";
 import Long from "long";
+import { ChainInfo } from "./types";
 
 declare global {
   interface Window {
@@ -61,6 +62,7 @@ export interface ExtensionWallet {
     signDoc: SignDirectParams
   ): Promise<DirectSignResponse>;
   getKey: (chainId: string) => Promise<AccountKey>;
+  experimentalSuggestChain?(chainInfo: ChainInfo): Promise<void>;
 }
 
 type LocateFn = () => ExtensionWallet | undefined;

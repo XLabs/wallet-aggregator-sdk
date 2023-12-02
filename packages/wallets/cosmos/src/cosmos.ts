@@ -26,6 +26,7 @@ import {
   WalletState,
   isCosmWasmChain,
 } from "@xlabs-libs/wallet-aggregator-core";
+import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import {
   CosmosConnectOptions,
   CosmosExecuteTransaction,
@@ -34,11 +35,17 @@ import {
   ResourceMap,
 } from "./types";
 import { WalletInfo } from "./wallets";
-import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
+import { COSMOS_CHAIN_INFOS } from "./chains";
 
 const DEFAULT_RPCS: ResourceMap = {};
 const DEFAULT_RESTS: ResourceMap = {};
 const DEFAULT_CHAIN_ID = "cosmoshub-4";
+
+const NO_CHAIN_MESSAGES = [
+  "There is no chain info",
+  "Invalid chain id",
+  "No account found",
+];
 
 /**
  * A class to interact with Cosmos blockchains.
@@ -118,15 +125,54 @@ export class CosmosWallet extends Wallet<
   }
 
   async connect({ chainId }: CosmosConnectOptions = {}): Promise<string[]> {
-    if (chainId) this.chainId = chainId;
-    if (!this.chainId) throw new Error("Chain id not set");
+    if (chainId) {
+      const chainAdded = await this.hasChain(chainId);
+      if (!chainAdded) {
+        await this.addChain(chainId);
+      }
+    }
+
+    const id = chainId || this.chainId;
+    if (!id) throw new Error("Chain id not set");
     const extension = this.walletInfo.locate();
     if (!extension) throw new Error("Wallet not found");
 
-    this.signer = await extension.getOfflineSignerAuto(this.chainId);
+    this.signer = await extension.getOfflineSignerAuto(id);
     this.accounts = [...(await this.signer.getAccounts())];
     this.activeAccount = this.accounts[0];
+    this.chainId = chainId;
     return this.accounts.map((a) => a.address);
+  }
+
+  private async hasChain(chainId: string): Promise<boolean> {
+    const extension = this.walletInfo.locate();
+    if (!extension) throw new Error("Wallet not found");
+
+    try {
+      const key = await extension.getKey(chainId);
+      return !!key;
+    } catch (e: any) {
+      const isExpectedError = NO_CHAIN_MESSAGES.some((m) =>
+        e.message.includes(m)
+      );
+      if (!isExpectedError) {
+        throw e;
+      }
+      return false;
+    }
+  }
+
+  private async addChain(chainId: string): Promise<void> {
+    const extension = this.walletInfo.locate();
+    if (!extension) throw new Error("Wallet not found");
+    const info = COSMOS_CHAIN_INFOS[chainId];
+    if (!info) throw new Error(`No chain info found for ${chainId}`);
+    if (!extension.experimentalSuggestChain) {
+      throw new Error(
+        `Chain suggestions are not supported by ${this.walletInfo.name}`
+      );
+    }
+    return extension.experimentalSuggestChain(info);
   }
 
   async switchChain(chainId: string): Promise<void> {
