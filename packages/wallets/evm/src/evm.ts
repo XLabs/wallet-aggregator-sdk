@@ -3,15 +3,12 @@ import {
   TransactionRequest,
 } from "@ethersproject/abstract-provider";
 import {
-  Client,
+  Config,
   Connector,
   ConnectorData,
-  Provider,
-  ProviderRpcError,
-  RpcError,
-  WebSocketProvider,
+  PublicClient,
   configureChains,
-  createClient,
+  createConfig,
 } from "@wagmi/core";
 import { publicProvider } from "@wagmi/core/providers/public";
 import {
@@ -32,6 +29,7 @@ import { BigNumber, ethers, utils } from "ethers";
 import { Chain, DEFAULT_CHAINS } from "./chains";
 import { evmChainIdToChainId, isTestnetEvm } from "./constants";
 import { ERC20 } from "./contracts/ERC20";
+import { RpcError } from "viem";
 
 type EVMChainId = number;
 
@@ -145,7 +143,7 @@ export abstract class EVMWallet<
   private address?: Address;
   private autoSwitch: boolean;
   private confirmations?: number;
-  private client?: Client<Provider, WebSocketProvider>;
+  private wagmiConfig?: Config<PublicClient>;
   private provider?: ethers.providers.Web3Provider;
   private switchingChain = false;
 
@@ -168,10 +166,10 @@ export abstract class EVMWallet<
   }
 
   async connect({ evmChainId }: ConnectParams = {}): Promise<Address[]> {
-    const { provider } = configureChains(this.chains, [publicProvider()]);
+    const { publicClient } = configureChains(this.chains, [publicProvider()]);
 
-    this.client = createClient<Provider, WebSocketProvider>({
-      provider,
+    this.wagmiConfig = createConfig<PublicClient>({
+      publicClient,
       autoConnect: false,
       connectors: [this.connector],
     });
@@ -209,7 +207,7 @@ export abstract class EVMWallet<
         await this.connector.switchChain(this.preferredChain);
         currentChain = this.getNetworkInfo()?.chainId;
       } catch (error) {
-        const { code } = error as ProviderRpcError;
+        const { code } = error as RpcError;
         // ignore user rejections
         if (code === ERROR_CODES.USER_REJECTED) {
           return;
@@ -324,9 +322,7 @@ export abstract class EVMWallet<
       this.network = await this.fetchNetworkInfo();
     } catch (err) {
       const isChainNotAddedError =
-        (err as RpcError).code === ERROR_CODES.CHAIN_NOT_ADDED ||
-        (err as RpcError<{ originalError?: { code: number } }>).data
-          ?.originalError?.code === ERROR_CODES.CHAIN_NOT_ADDED;
+        (err as RpcError).code === ERROR_CODES.CHAIN_NOT_ADDED;
 
       // wagmi only does this for injected wallets and not for walletconnect
       if (isChainNotAddedError) {
@@ -466,8 +462,8 @@ export abstract class EVMWallet<
 
   protected async onDisconnect(): Promise<void> {
     this.connector.removeAllListeners();
-    await this.client?.destroy();
-    this.client = undefined;
+    await this.wagmiConfig?.destroy();
+    this.wagmiConfig = undefined;
     this.emit("disconnect");
   }
 
