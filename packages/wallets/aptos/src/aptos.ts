@@ -1,9 +1,11 @@
 import {
-  BaseWalletAdapter,
+  WalletCore,
   NetworkInfo,
   SignMessagePayload,
   SignMessageResponse,
-} from "@manahippo/aptos-wallet-adapter";
+  WalletReadyState,
+} from "@aptos-labs/wallet-adapter-core";
+
 import {
   BaseFeatures,
   CHAIN_ID_APTOS,
@@ -14,8 +16,9 @@ import {
   WalletState,
 } from "@xlabs-libs/wallet-aggregator-core";
 import { AptosClient, Types } from "aptos";
+import { isUint8Array } from "util/types";
 
-export type AptosAdapter = BaseWalletAdapter;
+export type AptosAdapter = WalletCore;
 export interface AptosClientConfig {
   nodeUrl: string;
   openApiConfig: any;
@@ -74,24 +77,24 @@ export class AptosWallet extends Wallet<
   }
 
   getName(): string {
-    return this.adapter.name;
+    return this.adapter.wallet!.name;
   }
 
   getUrl(): string {
-    return this.adapter.url;
+    return this.adapter.wallet!.url;
   }
 
   async connect(): Promise<string[]> {
-    await this.adapter.connect();
+    await this.adapter.connect(this.getName());
     return this.getAddresses();
   }
 
   getNetworkInfo() {
-    return this.adapter.network;
+    return this.adapter.network!;
   }
 
   isConnected(): boolean {
-    return this.adapter.connected;
+    return this.adapter.isConnected();
   }
 
   disconnect(): Promise<void> {
@@ -103,7 +106,7 @@ export class AptosWallet extends Wallet<
   }
 
   getAddress(): string | undefined {
-    return this.adapter.publicAccount.address?.toString();
+    return this.adapter.account?.address;
   }
 
   getAddresses(): string[] {
@@ -122,7 +125,9 @@ export class AptosWallet extends Wallet<
   signTransaction(
     tx: Types.TransactionPayload
   ): Promise<SignedAptosTransaction> {
-    return this.adapter.signTransaction(tx);
+    return this.adapter
+      .signTransaction(tx)
+      .then((signed) => signed.bcsToBytes());
   }
 
   async sendTransaction(
@@ -146,6 +151,7 @@ export class AptosWallet extends Wallet<
   async signAndSendTransaction(
     tx: Types.TransactionPayload
   ): Promise<SendTransactionResult<AptosSubmitResult>> {
+    // @ts-ignore TODO
     const result = await this.adapter.signAndSubmitTransaction(tx);
 
     return {
@@ -155,16 +161,25 @@ export class AptosWallet extends Wallet<
   }
 
   signMessage(msg: AptosMessage): Promise<SignedAptosMessage> {
+    if (typeof msg === "string") {
+      msg = { message: msg, nonce: "0" };
+    } else if (isUint8Array(msg)) {
+      msg = { message: msg.toString(), nonce: "0" };
+    }
     return this.adapter.signMessage(msg);
   }
 
   getIcon(): string {
-    const icon = ICON_OVERRIDES[this.adapter.name];
-    return icon || this.adapter.icon;
+    const icon = ICON_OVERRIDES[this.getName()];
+    return icon || this.adapter.wallet!.icon;
   }
 
   getWalletState(): WalletState {
-    const state = this.adapter.readyState;
+    const found = this.adapter.wallets.find((w) => {
+      w.name === this.getName();
+    });
+
+    const state = found?.readyState ?? ("Not Found" as WalletState);
     if (!(state in WalletState)) {
       throw new Error(`Unknown wallet state ${state}`);
     }
