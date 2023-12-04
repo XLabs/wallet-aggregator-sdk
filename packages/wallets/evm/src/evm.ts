@@ -74,6 +74,7 @@ export interface EVMWalletConfig<COpts = any> {
 }
 
 export enum EVMWalletType {
+  BitgetWallet = "bitgetwallet",
   Coinbase = "coinbase",
   Injected = "injected",
   Ledger = "ledger",
