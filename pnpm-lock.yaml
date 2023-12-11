@@ -304,20 +304,20 @@ importers:
   packages/wallets/injective:
     dependencies:
       '@injectivelabs/chain-api':
-        specifier: 1.9.20
-        version: 1.9.20
+        specifier: 1.9.24
+        version: 1.9.24
       '@injectivelabs/networks':
-        specifier: 1.10.7
-        version: 1.10.7(google-protobuf@3.21.2)
+        specifier: 1.14.4
+        version: 1.14.4(google-protobuf@3.21.2)
       '@injectivelabs/sdk-ts':
-        specifier: 1.10.47
-        version: 1.10.47(react-dom@18.2.0)(react@18.2.0)
+        specifier: 1.14.4
+        version: 1.14.4(react-dom@18.2.0)(react@18.2.0)
       '@injectivelabs/ts-types':
-        specifier: 1.10.4
-        version: 1.10.4
+        specifier: 1.14.4
+        version: 1.14.4
       '@injectivelabs/wallet-ts':
-        specifier: 1.10.51
-        version: 1.10.51(@babel/runtime@7.20.13)(@solana/web3.js@1.70.1)(bs58@4.0.1)(google-protobuf@3.21.2)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 1.14.4
+        version: 1.14.4(@babel/runtime@7.20.13)(@solana/web3.js@1.70.1)(bs58@4.0.1)(google-protobuf@3.21.2)(react-dom@18.2.0)(react@18.2.0)
       '@xlabs-libs/wallet-aggregator-core':
         specifier: workspace:^
         version: link:../core
@@ -2000,29 +2000,11 @@ packages:
       google-protobuf: 3.21.2
     dev: false
 
-  /@injectivelabs/chain-api@1.9.20:
-    resolution: {integrity: sha512-zaBwimrOInmZKiyvivgVBAZCvGmkMlR+HtQpeB8iGqPZqMfkyQjm2xhDWIivJRCAkd0tLOK54beYgP2Y3hhEjA==}
+  /@injectivelabs/chain-api@1.9.24:
+    resolution: {integrity: sha512-V6luz7D8NmaD8SabYnBku7TCSZU1MEopx6WTZcgVO79e+Yj+Cy3aowZqa3Aa9cS+bW54Peuoya5xhMtJyq7Rtg==}
     dependencies:
       '@injectivelabs/grpc-web': 0.0.1(google-protobuf@3.21.2)
       google-protobuf: 3.21.2
-    dev: false
-
-  /@injectivelabs/core-proto-ts@0.0.12:
-    resolution: {integrity: sha512-axdL+KWuv4aORIdYqJQy5k9H+bPsi5Y4KWNcYPxrFQ0FAu+sjpvm5PmbIzBSgv/hnIB2cHcLuKvE3BtEa3vJ/w==}
-    dependencies:
-      '@injectivelabs/grpc-web': 0.0.1(google-protobuf@3.21.2)
-      google-protobuf: 3.21.2
-      protobufjs: 7.2.3
-      rxjs: 7.8.0
-    dev: false
-
-  /@injectivelabs/core-proto-ts@0.0.14:
-    resolution: {integrity: sha512-NZWlgBzgVrXow9IknFQHvcYKX4QkUD25taRigoNYQK8PDn4+VXd9xM5WFUDRhzm2smTCguyl/+MghpEp4oTPWw==}
-    dependencies:
-      '@injectivelabs/grpc-web': 0.0.1(google-protobuf@3.21.2)
-      google-protobuf: 3.21.2
-      protobufjs: 7.2.3
-      rxjs: 7.8.0
     dev: false
 
   /@injectivelabs/core-proto-ts@0.0.18:
@@ -2043,17 +2025,13 @@ packages:
       rxjs: 7.8.0
     dev: false
 
-  /@injectivelabs/exceptions@1.10.12(google-protobuf@3.21.2):
-    resolution: {integrity: sha512-9x8WDRi/K6JRMRAGJblbS0wQKckIX69CPU61ea22RprkO0sPazxpzp56txgHj0uHYkq2bg/exrX8N6UxdrNCMg==}
-    requiresBuild: true
+  /@injectivelabs/dmm-proto-ts@1.0.19:
+    resolution: {integrity: sha512-2FCzCziy1RhzmnkAVIU+Asby/GXAVQqKt5/o1s52j0LJXfJMpiCrV6soLfnjTebj61T+1WvJBPFoZCCiVYBpcw==}
     dependencies:
       '@injectivelabs/grpc-web': 0.0.1(google-protobuf@3.21.2)
-      '@injectivelabs/ts-types': 1.10.12
-      http-status-codes: 2.2.0
-      link-module-alias: 1.2.0
-      shx: 0.3.4
-    transitivePeerDependencies:
-      - google-protobuf
+      google-protobuf: 3.21.2
+      protobufjs: 7.2.3
+      rxjs: 7.8.0
     dev: false
 
   /@injectivelabs/exceptions@1.14.0-beta.1(google-protobuf@3.21.2):
@@ -2061,7 +2039,20 @@ packages:
     requiresBuild: true
     dependencies:
       '@injectivelabs/grpc-web': 0.0.1(google-protobuf@3.21.2)
-      '@injectivelabs/ts-types': 1.14.0-beta.1
+      '@injectivelabs/ts-types': 1.14.4
+      http-status-codes: 2.2.0
+      link-module-alias: 1.2.0
+      shx: 0.3.4
+    transitivePeerDependencies:
+      - google-protobuf
+    dev: false
+
+  /@injectivelabs/exceptions@1.14.4(google-protobuf@3.21.2):
+    resolution: {integrity: sha512-mJVzDsw+anL85NzXl0l1Ortk7MEgHdD5EQwFp/XaI1U3cupsHKUfHpAuXjggD+XQVFeWoYOFzk4CJPCBgz6u+w==}
+    requiresBuild: true
+    dependencies:
+      '@injectivelabs/grpc-web': 0.0.1(google-protobuf@3.21.2)
+      '@injectivelabs/ts-types': 1.14.4
       http-status-codes: 2.2.0
       link-module-alias: 1.2.0
       shx: 0.3.4
@@ -2094,8 +2085,8 @@ packages:
       google-protobuf: 3.21.2
     dev: false
 
-  /@injectivelabs/indexer-proto-ts@1.10.8-rc.4:
-    resolution: {integrity: sha512-IwbepTfsHHAv3Z36As6yH/+HIplOEpUu6SFHBCVgdSIaQ8GuvTib4HETiVnV4mjYqoyVgWs+zLSAfih46rdMJQ==}
+  /@injectivelabs/indexer-proto-ts@1.11.22:
+    resolution: {integrity: sha512-Mx90Q6F2lW03FlqXqw6MKCtKl3Rxuhla2CBlhhXe6XrmZWt+LpkiYinlZCyQDnmwjuqzCqurlMx4/sEjuy5WhA==}
     dependencies:
       '@injectivelabs/grpc-web': 0.0.1(google-protobuf@3.21.2)
       google-protobuf: 3.21.2
@@ -2112,15 +2103,6 @@ packages:
       rxjs: 7.8.0
     dev: false
 
-  /@injectivelabs/mito-proto-ts@1.0.4:
-    resolution: {integrity: sha512-8raVmZnaXVbpikMTmnc+OtViBPzgyx2ilezUTZFCNcQzZM01lbJlpd0NbF6K5tG76eJ3Wjwj+YpAdRPNuayZ4A==}
-    dependencies:
-      '@injectivelabs/grpc-web': 0.0.1(google-protobuf@3.21.2)
-      google-protobuf: 3.21.2
-      protobufjs: 7.2.3
-      rxjs: 7.8.0
-    dev: false
-
   /@injectivelabs/mito-proto-ts@1.0.46:
     resolution: {integrity: sha512-K1g5udssQd4pDNzMteUQiI3PLHsuBhCKT6wli2h05ImB0NFQcGbLQlk3lpzsdfE9Usx2hCmZiQNUfUouRrTBpQ==}
     dependencies:
@@ -2130,8 +2112,8 @@ packages:
       rxjs: 7.8.0
     dev: false
 
-  /@injectivelabs/mito-proto-ts@1.0.9:
-    resolution: {integrity: sha512-+TZMvJ4SHwcn6SFPdqaiQFZdNhjH7hyRFozY15nOTC2utdGij9jEsjz1NsyOejfYDA0s1z5Wm1SgrMYKaVpAmQ==}
+  /@injectivelabs/mito-proto-ts@1.0.52:
+    resolution: {integrity: sha512-esqrLXy9GheL5DAGTSxhUYOJZXE8g/3NnYVqz/x9MxZHQwYhj3LoV2G8CWB0Ly2i7VEOc0osesgJk08hrgLa+w==}
     dependencies:
       '@injectivelabs/grpc-web': 0.0.1(google-protobuf@3.21.2)
       google-protobuf: 3.21.2
@@ -2139,40 +2121,12 @@ packages:
       rxjs: 7.8.0
     dev: false
 
-  /@injectivelabs/networks@1.10.12(google-protobuf@3.21.2):
-    resolution: {integrity: sha512-tTHyLls1Nik5QTs/S03qqG2y/ITvNwI8CJOQbMmmsr1CL2CdjJBtzRYn9Dyx2p8XgzRFf9hmlybpe20tq9O3SA==}
-    requiresBuild: true
-    dependencies:
-      '@injectivelabs/exceptions': 1.10.12(google-protobuf@3.21.2)
-      '@injectivelabs/ts-types': 1.10.12
-      '@injectivelabs/utils': 1.10.12(google-protobuf@3.21.2)
-      link-module-alias: 1.2.0
-      shx: 0.3.4
-    transitivePeerDependencies:
-      - debug
-      - google-protobuf
-    dev: false
-
-  /@injectivelabs/networks@1.10.7(google-protobuf@3.21.2):
-    resolution: {integrity: sha512-qnU3A7FgTVi4bGEMaSsSIN2wTBhKZfV+3fiwU09aX8ZNcWAilMx8d/mlE1naZFAHs7Kf5hFBxzgeSRZa1GJqiA==}
-    requiresBuild: true
-    dependencies:
-      '@injectivelabs/exceptions': 1.10.12(google-protobuf@3.21.2)
-      '@injectivelabs/ts-types': 1.10.12
-      '@injectivelabs/utils': 1.10.12(google-protobuf@3.21.2)
-      link-module-alias: 1.2.0
-      shx: 0.3.4
-    transitivePeerDependencies:
-      - debug
-      - google-protobuf
-    dev: false
-
   /@injectivelabs/networks@1.14.0-beta.1(google-protobuf@3.21.2):
     resolution: {integrity: sha512-mwdSVWPD27M/QVehf/lU68FiiOFxfvK20zHLnHQmzpIsyQpMWFasGSKFq6H166tQ6RkTGFp503bitRsEY8SZNA==}
     requiresBuild: true
     dependencies:
       '@injectivelabs/exceptions': 1.14.0-beta.1(google-protobuf@3.21.2)
-      '@injectivelabs/ts-types': 1.14.0-beta.1
+      '@injectivelabs/ts-types': 1.14.4
       '@injectivelabs/utils': 1.14.0-beta.1(google-protobuf@3.21.2)
       link-module-alias: 1.2.0
       shx: 0.3.4
@@ -2181,104 +2135,18 @@ packages:
       - google-protobuf
     dev: false
 
-  /@injectivelabs/sdk-ts@1.10.47(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-G11Cdf5iO6is0qWzQRdfiUJLI8IPF4VtD5mVfBwnakrk78syN/Dy492trL7hispDSQaCJaP6a/fa6HnMPCsvzA==}
+  /@injectivelabs/networks@1.14.4(google-protobuf@3.21.2):
+    resolution: {integrity: sha512-2DbbaiI/v5PY+X90zhFMstVcVokpxEytMWZZvRKls6YqSBERhE3lxUF696lk0TEecfZ37CikuxZ7E9hx+eXg2A==}
     requiresBuild: true
     dependencies:
-      '@apollo/client': 3.7.1(graphql@16.6.0)(react-dom@18.2.0)(react@18.2.0)
-      '@cosmjs/amino': 0.30.1
-      '@cosmjs/proto-signing': 0.30.1
-      '@cosmjs/stargate': 0.30.1
-      '@ethersproject/bytes': 5.7.0
-      '@injectivelabs/core-proto-ts': 0.0.12
-      '@injectivelabs/exceptions': 1.10.12(google-protobuf@3.21.2)
-      '@injectivelabs/grpc-web': 0.0.1(google-protobuf@3.21.2)
-      '@injectivelabs/grpc-web-node-http-transport': 0.0.2(@injectivelabs/grpc-web@0.0.1)
-      '@injectivelabs/grpc-web-react-native-transport': 0.0.2(@injectivelabs/grpc-web@0.0.1)
-      '@injectivelabs/indexer-proto-ts': 1.10.8-rc.4
-      '@injectivelabs/mito-proto-ts': 1.0.4
-      '@injectivelabs/networks': 1.10.12(google-protobuf@3.21.2)
-      '@injectivelabs/test-utils': 1.10.12
-      '@injectivelabs/token-metadata': 1.10.42(google-protobuf@3.21.2)
-      '@injectivelabs/ts-types': 1.10.12
-      '@injectivelabs/utils': 1.10.12(google-protobuf@3.21.2)
-      '@metamask/eth-sig-util': 4.0.1
-      axios: 0.27.2
-      bech32: 2.0.0
-      bip39: 3.0.4
-      cosmjs-types: 0.7.2
-      eth-crypto: 2.6.0
-      ethereumjs-util: 7.1.5
-      ethers: 5.7.2
-      google-protobuf: 3.21.2
-      graphql: 16.6.0
-      http-status-codes: 2.2.0
-      js-sha3: 0.8.0
-      jscrypto: 1.0.3
-      keccak256: 1.0.6
+      '@injectivelabs/exceptions': 1.14.4(google-protobuf@3.21.2)
+      '@injectivelabs/ts-types': 1.14.4
+      '@injectivelabs/utils': 1.14.4(google-protobuf@3.21.2)
       link-module-alias: 1.2.0
-      rxjs: 7.8.0
-      secp256k1: 4.0.3
       shx: 0.3.4
-      snakecase-keys: 5.4.4
     transitivePeerDependencies:
-      - bufferutil
       - debug
-      - graphql-ws
-      - react
-      - react-dom
-      - subscriptions-transport-ws
-      - utf-8-validate
-    dev: false
-
-  /@injectivelabs/sdk-ts@1.10.72(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-A5mHNNBgO4fI1c/7CZ0bGfVXliy8laP+VaYZ++aWh1YyudoZw4CTCEmLetZRy7AUU3XcfbHa8sAImRi7db+v6Q==}
-    requiresBuild: true
-    dependencies:
-      '@apollo/client': 3.7.1(graphql@16.6.0)(react-dom@18.2.0)(react@18.2.0)
-      '@cosmjs/amino': 0.30.1
-      '@cosmjs/proto-signing': 0.30.1
-      '@cosmjs/stargate': 0.30.1
-      '@ethersproject/bytes': 5.7.0
-      '@injectivelabs/core-proto-ts': 0.0.14
-      '@injectivelabs/exceptions': 1.10.12(google-protobuf@3.21.2)
-      '@injectivelabs/grpc-web': 0.0.1(google-protobuf@3.21.2)
-      '@injectivelabs/grpc-web-node-http-transport': 0.0.2(@injectivelabs/grpc-web@0.0.1)
-      '@injectivelabs/grpc-web-react-native-transport': 0.0.2(@injectivelabs/grpc-web@0.0.1)
-      '@injectivelabs/indexer-proto-ts': 1.10.8-rc.4
-      '@injectivelabs/mito-proto-ts': 1.0.9
-      '@injectivelabs/networks': 1.10.12(google-protobuf@3.21.2)
-      '@injectivelabs/test-utils': 1.10.12
-      '@injectivelabs/token-metadata': 1.10.42(google-protobuf@3.21.2)
-      '@injectivelabs/ts-types': 1.10.12
-      '@injectivelabs/utils': 1.10.12(google-protobuf@3.21.2)
-      '@metamask/eth-sig-util': 4.0.1
-      axios: 0.27.2
-      bech32: 2.0.0
-      bip39: 3.0.4
-      cosmjs-types: 0.7.2
-      eth-crypto: 2.6.0
-      ethereumjs-util: 7.1.5
-      ethers: 5.7.2
-      google-protobuf: 3.21.2
-      graphql: 16.6.0
-      http-status-codes: 2.2.0
-      js-sha3: 0.8.0
-      jscrypto: 1.0.3
-      keccak256: 1.0.6
-      link-module-alias: 1.2.0
-      rxjs: 7.8.0
-      secp256k1: 4.0.3
-      shx: 0.3.4
-      snakecase-keys: 5.4.4
-    transitivePeerDependencies:
-      - bufferutil
-      - debug
-      - graphql-ws
-      - react
-      - react-dom
-      - subscriptions-transport-ws
-      - utf-8-validate
+      - google-protobuf
     dev: false
 
   /@injectivelabs/sdk-ts@1.14.0-beta.1:
@@ -2334,18 +2202,56 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@injectivelabs/test-utils@1.10.12:
-    resolution: {integrity: sha512-IFqlEeFXXf6V1NEt65W2SfAN5/73lK4BmTrfeOQANfOFa3TUAJcPuU8rhx4jhi801cZLV3R9D/iQdgE1tbUK9A==}
+  /@injectivelabs/sdk-ts@1.14.4(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-Iw4y2YRxZ//p8lumqnSTUpXdoQGpt91wofm8R+eM65KOXX/T0p+6rpPYITWPxjT6E+koH4HXh9InnzzN4UzJQw==}
     requiresBuild: true
     dependencies:
-      axios: 0.21.4
-      bignumber.js: 9.1.1
+      '@apollo/client': 3.7.1(graphql@16.6.0)(react-dom@18.2.0)(react@18.2.0)
+      '@cosmjs/amino': 0.30.1
+      '@cosmjs/proto-signing': 0.30.1
+      '@cosmjs/stargate': 0.30.1
+      '@ensdomains/ens-validation': 0.1.0
+      '@ensdomains/eth-ens-namehash': 2.0.15
+      '@ethersproject/bytes': 5.7.0
+      '@injectivelabs/core-proto-ts': 0.0.18
+      '@injectivelabs/dmm-proto-ts': 1.0.19
+      '@injectivelabs/exceptions': 1.14.4(google-protobuf@3.21.2)
+      '@injectivelabs/grpc-web': 0.0.1(google-protobuf@3.21.2)
+      '@injectivelabs/grpc-web-node-http-transport': 0.0.2(@injectivelabs/grpc-web@0.0.1)
+      '@injectivelabs/grpc-web-react-native-transport': 0.0.2(@injectivelabs/grpc-web@0.0.1)
+      '@injectivelabs/indexer-proto-ts': 1.11.22
+      '@injectivelabs/mito-proto-ts': 1.0.52
+      '@injectivelabs/networks': 1.14.4(google-protobuf@3.21.2)
+      '@injectivelabs/test-utils': 1.14.3
+      '@injectivelabs/token-metadata': 1.14.4(google-protobuf@3.21.2)
+      '@injectivelabs/ts-types': 1.14.4
+      '@injectivelabs/utils': 1.14.4(google-protobuf@3.21.2)
+      '@metamask/eth-sig-util': 4.0.1
+      axios: 0.27.2
+      bech32: 2.0.0
+      bip39: 3.0.4
+      cosmjs-types: 0.7.2
+      ethereumjs-util: 7.1.5
+      ethers: 5.7.2
+      google-protobuf: 3.21.2
+      graphql: 16.6.0
+      http-status-codes: 2.2.0
+      js-sha3: 0.8.0
+      jscrypto: 1.0.3
+      keccak256: 1.0.6
       link-module-alias: 1.2.0
+      rxjs: 7.8.0
+      secp256k1: 4.0.3
       shx: 0.3.4
       snakecase-keys: 5.4.4
-      store2: 2.14.2
     transitivePeerDependencies:
+      - bufferutil
       - debug
+      - graphql-ws
+      - react
+      - react-dom
+      - subscriptions-transport-ws
+      - utf-8-validate
     dev: false
 
   /@injectivelabs/test-utils@1.14.0-beta.1:
@@ -2362,24 +2268,18 @@ packages:
       - debug
     dev: false
 
-  /@injectivelabs/token-metadata@1.10.42(google-protobuf@3.21.2):
-    resolution: {integrity: sha512-j5S+f05/Xtcqbg7pPHRI6hjJpdjIIuMHo16nLecU86mEHhXOzdJzhi/yzrtW7dstlgshyUJKRPZ7HaiOvZNrjA==}
+  /@injectivelabs/test-utils@1.14.3:
+    resolution: {integrity: sha512-dVe262sACa7YkRr7mfXx58yI/ieuQqm3IMGq7EMweFKI6Kh2gh8FAM2bsDgm1cGewEIhJ9tWh6OM5uNheeVamg==}
     requiresBuild: true
     dependencies:
-      '@injectivelabs/exceptions': 1.10.12(google-protobuf@3.21.2)
-      '@injectivelabs/networks': 1.10.12(google-protobuf@3.21.2)
-      '@injectivelabs/ts-types': 1.10.12
-      '@injectivelabs/utils': 1.10.12(google-protobuf@3.21.2)
-      '@types/lodash.values': 4.3.7
-      copyfiles: 2.4.1
-      jsonschema: 1.4.1
+      axios: 0.21.4
+      bignumber.js: 9.1.1
       link-module-alias: 1.2.0
-      lodash: 4.17.21
-      lodash.values: 4.3.0
       shx: 0.3.4
+      snakecase-keys: 5.4.4
+      store2: 2.14.2
     transitivePeerDependencies:
       - debug
-      - google-protobuf
     dev: false
 
   /@injectivelabs/token-metadata@1.14.0-beta.1(google-protobuf@3.21.2):
@@ -2387,8 +2287,8 @@ packages:
     requiresBuild: true
     dependencies:
       '@injectivelabs/exceptions': 1.14.0-beta.1(google-protobuf@3.21.2)
-      '@injectivelabs/networks': 1.14.0-beta.1(google-protobuf@3.21.2)
-      '@injectivelabs/ts-types': 1.14.0-beta.1
+      '@injectivelabs/networks': 1.14.4(google-protobuf@3.21.2)
+      '@injectivelabs/ts-types': 1.14.4
       '@injectivelabs/utils': 1.14.0-beta.1(google-protobuf@3.21.2)
       '@types/lodash.values': 4.3.7
       copyfiles: 2.4.1
@@ -2402,20 +2302,24 @@ packages:
       - google-protobuf
     dev: false
 
-  /@injectivelabs/ts-types@1.10.12:
-    resolution: {integrity: sha512-Z/qeZ9jwhqpreXFNiox6NrXLiMyhvMEd79RWMZ9lVOLjTeXRTUh/Vl7ry7KBE2OypsPPTMUP+k7Dhsn0ufFwgw==}
+  /@injectivelabs/token-metadata@1.14.4(google-protobuf@3.21.2):
+    resolution: {integrity: sha512-g0jrIFpEdQ4kjUUaMcXWmXWu5owpIGE6GQPj7Gx07kkPTDNDiIfcaHUQ0nzTmcG02h0AhFx1eSpkHZFLSwyG/Q==}
     requiresBuild: true
     dependencies:
+      '@injectivelabs/exceptions': 1.14.4(google-protobuf@3.21.2)
+      '@injectivelabs/networks': 1.14.4(google-protobuf@3.21.2)
+      '@injectivelabs/ts-types': 1.14.4
+      '@injectivelabs/utils': 1.14.4(google-protobuf@3.21.2)
+      '@types/lodash.values': 4.3.7
+      copyfiles: 2.4.1
+      jsonschema: 1.4.1
       link-module-alias: 1.2.0
+      lodash: 4.17.21
+      lodash.values: 4.3.0
       shx: 0.3.4
-    dev: false
-
-  /@injectivelabs/ts-types@1.10.4:
-    resolution: {integrity: sha512-NvC1xEG/qiRF36mtwM4fr12kwg8UFduQBQ/MQsM8yp1QRH+Qtq/My1j0AGcOWpMZ0tVONhWvUvr+t7Yih7ciAg==}
-    requiresBuild: true
-    dependencies:
-      link-module-alias: 1.2.0
-      shx: 0.3.4
+    transitivePeerDependencies:
+      - debug
+      - google-protobuf
     dev: false
 
   /@injectivelabs/ts-types@1.14.0-beta.1:
@@ -2426,22 +2330,12 @@ packages:
       shx: 0.3.4
     dev: false
 
-  /@injectivelabs/utils@1.10.12(google-protobuf@3.21.2):
-    resolution: {integrity: sha512-c8al79nxIJgV1cBAdW2TPDGldj/8gm5k0h5TIN/AJs8/AeIjpTwwVGfLY3QvPOpRsxuQ9CjBkTXrAcSL1wwkcw==}
+  /@injectivelabs/ts-types@1.14.4:
+    resolution: {integrity: sha512-c8g81bdrOQoi6S1CbeERRifkwNhjyLWB8lmF7liwRnPjyDciVHfHjikZjVWFLS9tJegNm44N9PWsM4RN9g0rXQ==}
     requiresBuild: true
     dependencies:
-      '@injectivelabs/exceptions': 1.10.12(google-protobuf@3.21.2)
-      '@injectivelabs/ts-types': 1.10.12
-      axios: 0.21.4
-      bignumber.js: 9.1.1
-      http-status-codes: 2.2.0
       link-module-alias: 1.2.0
       shx: 0.3.4
-      snakecase-keys: 5.4.4
-      store2: 2.14.2
-    transitivePeerDependencies:
-      - debug
-      - google-protobuf
     dev: false
 
   /@injectivelabs/utils@1.14.0-beta.1(google-protobuf@3.21.2):
@@ -2449,7 +2343,7 @@ packages:
     requiresBuild: true
     dependencies:
       '@injectivelabs/exceptions': 1.14.0-beta.1(google-protobuf@3.21.2)
-      '@injectivelabs/ts-types': 1.14.0-beta.1
+      '@injectivelabs/ts-types': 1.14.4
       axios: 0.21.4
       bignumber.js: 9.1.1
       http-status-codes: 2.2.0
@@ -2462,8 +2356,26 @@ packages:
       - google-protobuf
     dev: false
 
-  /@injectivelabs/wallet-ts@1.10.51(@babel/runtime@7.20.13)(@solana/web3.js@1.70.1)(bs58@4.0.1)(google-protobuf@3.21.2)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-UmGbxXAnQg/ccKRodq8RADdyJmTGtIVO1IXYa+LPPluSy9QvftWHeMsgpv3mtlXZMCuwduHK5dvVRYYGKNVe2A==}
+  /@injectivelabs/utils@1.14.4(google-protobuf@3.21.2):
+    resolution: {integrity: sha512-eyx6XpgqdmEhEhdwNT4zEDYx+wXOhW01foCGC6e0Dmmrcxv5Bjd+R2BuLopKJ9h22OYNJm6dAX3ZtcoFwpFYbQ==}
+    requiresBuild: true
+    dependencies:
+      '@injectivelabs/exceptions': 1.14.4(google-protobuf@3.21.2)
+      '@injectivelabs/ts-types': 1.14.4
+      axios: 0.21.4
+      bignumber.js: 9.1.1
+      http-status-codes: 2.2.0
+      link-module-alias: 1.2.0
+      shx: 0.3.4
+      snakecase-keys: 5.4.4
+      store2: 2.14.2
+    transitivePeerDependencies:
+      - debug
+      - google-protobuf
+    dev: false
+
+  /@injectivelabs/wallet-ts@1.14.4(@babel/runtime@7.20.13)(@solana/web3.js@1.70.1)(bs58@4.0.1)(google-protobuf@3.21.2)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-v5fDmAteUPWFA+1GurTwBGPD4VmAr/et/dsXP8rNtG4Xkpx1Oe9cuybvGce6udi4+RIM9mK2vjiOGAx5Er55bQ==}
     requiresBuild: true
     dependencies:
       '@cosmjs/launchpad': 0.27.1
@@ -2472,18 +2384,17 @@ packages:
       '@cosmostation/extension-client': 0.1.15
       '@ethereumjs/common': 3.1.2
       '@ethereumjs/tx': 4.1.2
-      '@injectivelabs/exceptions': 1.10.12(google-protobuf@3.21.2)
-      '@injectivelabs/networks': 1.10.12(google-protobuf@3.21.2)
-      '@injectivelabs/sdk-ts': 1.10.72(react-dom@18.2.0)(react@18.2.0)
-      '@injectivelabs/ts-types': 1.10.12
-      '@injectivelabs/utils': 1.10.12(google-protobuf@3.21.2)
+      '@injectivelabs/exceptions': 1.14.4(google-protobuf@3.21.2)
+      '@injectivelabs/networks': 1.14.4(google-protobuf@3.21.2)
+      '@injectivelabs/sdk-ts': 1.14.4(react-dom@18.2.0)(react@18.2.0)
+      '@injectivelabs/ts-types': 1.14.4
+      '@injectivelabs/utils': 1.14.4(google-protobuf@3.21.2)
       '@keplr-wallet/cosmos': 0.11.59
       '@keplr-wallet/types': 0.11.59
-      '@ledgerhq/hw-app-eth': 6.32.2
-      '@ledgerhq/hw-transport': 6.28.2
-      '@ledgerhq/hw-transport-webhid': 6.27.13
-      '@ledgerhq/hw-transport-webusb': 6.27.13
-      '@metamask/detect-provider': 2.0.0
+      '@ledgerhq/hw-app-eth': 6.33.2
+      '@ledgerhq/hw-transport': 6.28.3
+      '@ledgerhq/hw-transport-webhid': 6.27.14
+      '@ledgerhq/hw-transport-webusb': 6.27.14
       '@metamask/eth-sig-util': 4.0.1
       '@solana/wallet-adapter-wallets': 0.19.10(@babel/runtime@7.20.13)(@solana/web3.js@1.70.1)(bs58@4.0.1)(react-dom@18.2.0)(react@18.2.0)
       '@toruslabs/torus-embed': 1.41.2(@babel/runtime@7.20.13)
@@ -2721,8 +2632,8 @@ packages:
     resolution: {integrity: sha512-TQ21IjcZOw/scqypaVFY3jHVqI7X7Hta3qN/us6FvTol3AY06UmrhhXGww0E9xHmAbdX241ddwXEiMBSQZFr9g==}
     dev: false
 
-  /@ledgerhq/cryptoassets@9.4.0:
-    resolution: {integrity: sha512-x12C6e71NxYzw4kZkddjvTrH2Whv1owDcWArNKmWj90P2g8jsaakH1ajCMU9D9BsG35BsdOf9EsR+y73jCjdwg==}
+  /@ledgerhq/cryptoassets@9.13.0:
+    resolution: {integrity: sha512-MzGJyc48OGU/FLYGYwEJyfOgbJzlR8XJ9Oo6XpNpNUM1/E5NDqvD72V0D+0uWIJYN3e2NtyqHXShLZDu7P95YA==}
     dependencies:
       invariant: 2.2.4
     dev: false
@@ -2730,7 +2641,7 @@ packages:
   /@ledgerhq/devices@6.27.1:
     resolution: {integrity: sha512-jX++oy89jtv7Dp2X6gwt3MMkoajel80JFWcdc0HCouwDsV1mVJ3SQdwl/bQU0zd8HI6KebvUP95QTwbQLLK/RQ==}
     dependencies:
-      '@ledgerhq/errors': 6.12.2
+      '@ledgerhq/errors': 6.12.4
       '@ledgerhq/logs': 6.10.1
       rxjs: 6.6.7
       semver: 7.3.8
@@ -2745,17 +2656,27 @@ packages:
       semver: 7.3.8
     dev: false
 
-  /@ledgerhq/devices@8.0.1:
-    resolution: {integrity: sha512-8uuyR8DGowYBLatur+MyJtRJ8RYDWSFFqGnNmgBBdlRG6VPf9vjhrFZlmYqukWesPwkZNZstP475W4TS+j6EFw==}
+  /@ledgerhq/devices@8.1.0:
+    resolution: {integrity: sha512-Vsdv84Nwzee0qhObdwVzhkxW1+h2cFoD1AWuU8N1V/2OJKiVS35A1qloSCF0oHapg+KTJvim8tr5rRvlkCYyzQ==}
     dependencies:
-      '@ledgerhq/errors': 6.12.4
-      '@ledgerhq/logs': 6.10.1
-      rxjs: 6.6.7
+      '@ledgerhq/errors': 6.16.0
+      '@ledgerhq/logs': 6.12.0
+      rxjs: 7.8.1
       semver: 7.3.8
     dev: false
 
-  /@ledgerhq/errors@6.12.2:
-    resolution: {integrity: sha512-qYTkxlWHVItxPAb9pQewfVoN8nFvvFYzWEyzVRX/NuO/g3JKL5kef5lLuqTtUIFOvFROMLi3EBxU+vbvV0ktow==}
+  /@ledgerhq/domain-service@1.1.15:
+    resolution: {integrity: sha512-1X4MvNhVDTXCfOQckaUHsq/Qzn8xhFMcHjnLKOuCR5zNB8hYuTyg9e7JXURZ8W7/Qcn41rvIPxXBHwvMjWQBMA==}
+    dependencies:
+      '@ledgerhq/errors': 6.16.0
+      '@ledgerhq/logs': 6.12.0
+      '@ledgerhq/types-live': 6.43.0
+      axios: 1.6.2
+      eip55: 2.1.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    transitivePeerDependencies:
+      - debug
     dev: false
 
   /@ledgerhq/errors@6.12.3:
@@ -2764,6 +2685,10 @@ packages:
 
   /@ledgerhq/errors@6.12.4:
     resolution: {integrity: sha512-qi5poMrcIuFuivdzRjjQsNp7rRwUA5v3eo6D4yEy+l+w8wT4d4JtQ5u1TbrlGfFHfgLq7Lv6dsvh2ooLyWTyfg==}
+    dev: false
+
+  /@ledgerhq/errors@6.16.0:
+    resolution: {integrity: sha512-vnew6lf4jN6E+WI0DFhD4WY0uM8LYL8HCumtUr86hNwvmEfebi7LxxpJGmYfVQD5TgEC7NibYnQ+2q9XWAc02A==}
     dev: false
 
   /@ledgerhq/hw-app-algorand@6.27.12:
@@ -2777,28 +2702,30 @@ packages:
       tweetnacl: 1.0.3
     dev: false
 
-  /@ledgerhq/hw-app-eth@6.32.2:
-    resolution: {integrity: sha512-5RmRw+vhzCE88hFPcpFOXelLTk9cjscweYJLritdAcTSkXV3jOdmAYvY1KLhG5Ungy561r8AQHm6NleR/Qjpjw==}
+  /@ledgerhq/hw-app-eth@6.33.2:
+    resolution: {integrity: sha512-vmG/75gHmvxI2c4Jni7W46PnesMUwWjDoas1b0V5HE2OAqJ1LlxASHG+i9lVe5hFAnTRx+OmCb/qf9mya2P3mw==}
     dependencies:
       '@ethersproject/abi': 5.7.0
       '@ethersproject/rlp': 5.7.0
-      '@ledgerhq/cryptoassets': 9.4.0
-      '@ledgerhq/errors': 6.12.4
-      '@ledgerhq/hw-transport': 6.28.2
-      '@ledgerhq/hw-transport-mocker': 6.27.13
+      '@ledgerhq/cryptoassets': 9.13.0
+      '@ledgerhq/domain-service': 1.1.15
+      '@ledgerhq/errors': 6.16.0
+      '@ledgerhq/hw-transport': 6.28.3
+      '@ledgerhq/hw-transport-mocker': 6.28.0
       '@ledgerhq/logs': 6.10.1
-      axios: 0.26.1
+      axios: 1.6.2
       bignumber.js: 9.1.1
       crypto-js: 4.1.1
     transitivePeerDependencies:
       - debug
     dev: false
 
-  /@ledgerhq/hw-transport-mocker@6.27.13:
-    resolution: {integrity: sha512-GYik5D45/U8SIkVUeaio6KV6xkIf73v+i6gegMbUFO712x+TgkG/EH1fpF6+sTwLmNxqjaTyi8LYqYeZNW0GMg==}
+  /@ledgerhq/hw-transport-mocker@6.28.0:
+    resolution: {integrity: sha512-svUgIRdoc69b49MHncKikoRgWIqn7ZR3IHP+nq4TCTYn2nm5LILJYyf8osnCg8brsXdEY68z++fr++GyF9vUIw==}
     dependencies:
-      '@ledgerhq/hw-transport': 6.28.2
-      '@ledgerhq/logs': 6.10.1
+      '@ledgerhq/hw-transport': 6.30.0
+      '@ledgerhq/logs': 6.12.0
+      rxjs: 7.8.1
     dev: false
 
   /@ledgerhq/hw-transport-web-ble@6.27.12:
@@ -2815,8 +2742,8 @@ packages:
     resolution: {integrity: sha512-u74rBYlibpbyGblSn74fRs2pMM19gEAkYhfVibq0RE1GNFjxDMFC1n7Sb+93Jqmz8flyfB4UFJsxs8/l1tm2Kw==}
     dependencies:
       '@ledgerhq/devices': 6.27.1
-      '@ledgerhq/errors': 6.12.2
-      '@ledgerhq/hw-transport': 6.27.1
+      '@ledgerhq/errors': 6.12.4
+      '@ledgerhq/hw-transport': 6.28.3
       '@ledgerhq/logs': 6.10.1
     dev: false
 
@@ -2829,12 +2756,12 @@ packages:
       '@ledgerhq/logs': 6.10.1
     dev: false
 
-  /@ledgerhq/hw-transport-webhid@6.27.13:
-    resolution: {integrity: sha512-VDQ8i08Atc7QQJ1+JE+EtuKoxBNL+ySyxMnzVAABMzhy6LGCwxzfNKP7Pb9vZNruWyRYVNCN3RiNPCMmiCDd1g==}
+  /@ledgerhq/hw-transport-webhid@6.27.14:
+    resolution: {integrity: sha512-oSfGLJE9ztBd5pNoywi6fcSa/LGRlCe06Zre6de/S8hzZ6DIlJG99EBKt3+JYhbYiFjYK79NFJW5TGUKbbP0sQ==}
     dependencies:
-      '@ledgerhq/devices': 8.0.1
-      '@ledgerhq/errors': 6.12.4
-      '@ledgerhq/hw-transport': 6.28.2
+      '@ledgerhq/devices': 8.1.0
+      '@ledgerhq/errors': 6.16.0
+      '@ledgerhq/hw-transport': 6.28.3
       '@ledgerhq/logs': 6.10.1
     dev: false
 
@@ -2847,12 +2774,12 @@ packages:
       '@ledgerhq/logs': 6.10.1
     dev: false
 
-  /@ledgerhq/hw-transport-webusb@6.27.13:
-    resolution: {integrity: sha512-1X7xMdcEE/XVD0k5yO8DygR/gik3M9jDHynu8WxpIFDxAULWN5nyM2vWeXXGYl/MM75jV+OehWJ4oFhYGsn3rw==}
+  /@ledgerhq/hw-transport-webusb@6.27.14:
+    resolution: {integrity: sha512-uSpjyiR0FhNXNtXxWqbmatyfCPcjeyADm8E+czuCCM7Wwf0S05AeD+2qLiEa0U1DspBZvz65WgkhPfeSmUsbZA==}
     dependencies:
-      '@ledgerhq/devices': 8.0.1
-      '@ledgerhq/errors': 6.12.4
-      '@ledgerhq/hw-transport': 6.28.2
+      '@ledgerhq/devices': 8.1.0
+      '@ledgerhq/errors': 6.16.0
+      '@ledgerhq/hw-transport': 6.28.3
       '@ledgerhq/logs': 6.10.1
     dev: false
 
@@ -2860,7 +2787,7 @@ packages:
     resolution: {integrity: sha512-hnE4/Fq1YzQI4PA1W0H8tCkI99R3UWDb3pJeZd6/Xs4Qw/q1uiQO+vNLC6KIPPhK0IajUfuI/P2jk0qWcMsuAQ==}
     dependencies:
       '@ledgerhq/devices': 6.27.1
-      '@ledgerhq/errors': 6.12.2
+      '@ledgerhq/errors': 6.12.4
       events: 3.3.0
     dev: false
 
@@ -2872,16 +2799,36 @@ packages:
       events: 3.3.0
     dev: false
 
-  /@ledgerhq/hw-transport@6.28.2:
-    resolution: {integrity: sha512-2LxQdZnhSzu394brKuUZIWfuT2YAyNI3glRMf8+yHx3wUFqi10v8NzII99SHDyT8tN3Ovzmq+hbGHvrR2PqYRA==}
+  /@ledgerhq/hw-transport@6.28.3:
+    resolution: {integrity: sha512-YFPh9n51V4TfPZov7iAUbtez0cyNEVR1+49RG8tYvmsmk8ihvya2rR90U8KO2MnrT2jR4k2rlgQ3IcZJO9dBcw==}
     dependencies:
-      '@ledgerhq/devices': 8.0.1
-      '@ledgerhq/errors': 6.12.4
+      '@ledgerhq/devices': 8.1.0
+      '@ledgerhq/errors': 6.16.0
+      events: 3.3.0
+    dev: false
+
+  /@ledgerhq/hw-transport@6.30.0:
+    resolution: {integrity: sha512-wrAwn/wCAaGP2Yuy78cLyqmQNzbuDvUv4gJYF/UO4djvUz0jjvD2w5kxRWxF/W93vyKT+/RplRtFk3CJzD3e3A==}
+    dependencies:
+      '@ledgerhq/devices': 8.1.0
+      '@ledgerhq/errors': 6.16.0
+      '@ledgerhq/logs': 6.12.0
       events: 3.3.0
     dev: false
 
   /@ledgerhq/logs@6.10.1:
     resolution: {integrity: sha512-z+ILK8Q3y+nfUl43ctCPuR4Y2bIxk/ooCQFwZxhtci1EhAtMDzMAx2W25qx8G1PPL9UUOdnUax19+F0OjXoj4w==}
+    dev: false
+
+  /@ledgerhq/logs@6.12.0:
+    resolution: {integrity: sha512-ExDoj1QV5eC6TEbMdLUMMk9cfvNKhhv5gXol4SmULRVCx/3iyCPhJ74nsb3S0Vb+/f+XujBEj3vQn5+cwS0fNA==}
+    dev: false
+
+  /@ledgerhq/types-live@6.43.0:
+    resolution: {integrity: sha512-NvSWPefZ54BLTTMdljO2eS3j1Jbj4O+j/2OWZfyt6T1qMrU1OwORkIn7weuyqR0Y01mTos0sjST7r10MqtauJg==}
+    dependencies:
+      bignumber.js: 9.1.2
+      rxjs: 7.8.1
     dev: false
 
   /@lit-labs/ssr-dom-shim@1.0.0:
@@ -2916,11 +2863,6 @@ packages:
       - bufferutil
       - debug
       - utf-8-validate
-    dev: false
-
-  /@metamask/detect-provider@2.0.0:
-    resolution: {integrity: sha512-sFpN+TX13E9fdBDh9lvQeZdJn4qYoRb/6QF2oZZK/Pn559IhCFacPMU1rMuqyXoFQF3JSJfii2l98B87QDPeCQ==}
-    engines: {node: '>=14.0.0'}
     dev: false
 
   /@metamask/eth-sig-util@4.0.1:
@@ -3397,6 +3339,7 @@ packages:
   /@solana/wallet-adapter-backpack@0.1.11(@solana/web3.js@1.70.1):
     resolution: {integrity: sha512-acICFuFYzAQ5gBesHF0sykfFZ8dZurBwYuIXbF4kYDYu6tDpZeUG0eRY+7fxcNDR0J3ezPkxaNgyoibhIN6y5A==}
     engines: {node: '>=16'}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
     peerDependencies:
       '@solana/web3.js': ^1.58.0
     dependencies:
@@ -3437,6 +3380,7 @@ packages:
   /@solana/wallet-adapter-blocto@0.5.19(@solana/web3.js@1.70.1):
     resolution: {integrity: sha512-UgY8Kbsv29DoDS4nngCwCYSLQbpb7bIvmT4bMy3muOukzgMP97dV18FoABFXGV4te6/fFrDwSisJffO1WrahXA==}
     engines: {node: '>=16'}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
     peerDependencies:
       '@solana/web3.js': ^1.58.0
     dependencies:
@@ -3452,6 +3396,7 @@ packages:
   /@solana/wallet-adapter-brave@0.1.14(@solana/web3.js@1.70.1):
     resolution: {integrity: sha512-dKfh8ySglr5CpzOilciUR3FUhnzed/9K3Nwo6w7HV3GK24Z1q3CpPRDlbw8OoB8Pw+4GGcMCmFlDN4PMhZcyWw==}
     engines: {node: '>=16'}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
     peerDependencies:
       '@solana/web3.js': ^1.58.0
     dependencies:
@@ -3462,6 +3407,7 @@ packages:
   /@solana/wallet-adapter-censo@0.1.1(@solana/web3.js@1.70.1):
     resolution: {integrity: sha512-gPY3UauwBE0MRhhayrvANaHxMhSj5/IqHBabxgXqXXA9SRwcdxaPEdHWclB91noocgHZqZI0T9+iF211NXrQ2g==}
     engines: {node: '>=16'}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
     peerDependencies:
       '@solana/web3.js': ^1.61.0
     dependencies:
@@ -3518,6 +3464,7 @@ packages:
   /@solana/wallet-adapter-exodus@0.1.15(@solana/web3.js@1.70.1):
     resolution: {integrity: sha512-dfTRlw7FeF2lYOE6v9Ubzs6A++/EN96nYNg5AxcEycidQ/kEJBWp7LeKrvXGj2+Ivl+uia5SCF7DfHdm5BQXdg==}
     engines: {node: '>=16'}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
     peerDependencies:
       '@solana/web3.js': ^1.58.0
     dependencies:
@@ -3542,6 +3489,7 @@ packages:
   /@solana/wallet-adapter-glow@0.1.15(@solana/web3.js@1.70.1):
     resolution: {integrity: sha512-25xsdUntZQFsboVLxYFMer3ujXshHfOkvpAA6a+A9m7uNlqT6ejHqT75qqluAkxq98DzaZ8tEbFtlU7hfFgdBQ==}
     engines: {node: '>=16'}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
     peerDependencies:
       '@solana/web3.js': ^1.58.0
     dependencies:
@@ -3611,6 +3559,7 @@ packages:
   /@solana/wallet-adapter-magiceden@0.1.10(@solana/web3.js@1.70.1):
     resolution: {integrity: sha512-UUo8YK+nkZlILvxSEWQEjmyBPJmeIhNc/TTIR+pbpBipeSGPiHiuKOkPQbYTZYwMDsHuFpoCQgXhBAzyZiTwrw==}
     engines: {node: '>=16'}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
     peerDependencies:
       '@solana/web3.js': ^1.58.0
     dependencies:
@@ -3735,6 +3684,7 @@ packages:
   /@solana/wallet-adapter-slope@0.5.18(@solana/web3.js@1.70.1):
     resolution: {integrity: sha512-d7XycT6KAuWnpAM51sPlR92DITk6dBOOUvgzkmd2VeCQzN4uebVRpLDL2xW4ma/cFz+brRxh55UzVcXX5zK/ZQ==}
     engines: {node: '>=16'}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
     peerDependencies:
       '@solana/web3.js': ^1.58.0
     dependencies:
@@ -3757,6 +3707,7 @@ packages:
   /@solana/wallet-adapter-sollet@0.11.14(@solana/web3.js@1.70.1):
     resolution: {integrity: sha512-iE+QLS7eUhyMAiQB5MG/cYlhXMlprYKQtYSnxwgGmUOfIxXDX9HHMZiE3YJcsmtVODf2RvtM9ecd2BWiV1Fk1Q==}
     engines: {node: '>=16'}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
     peerDependencies:
       '@solana/web3.js': ^1.58.0
     dependencies:
@@ -3788,6 +3739,7 @@ packages:
   /@solana/wallet-adapter-strike@0.1.10(@solana/web3.js@1.70.1):
     resolution: {integrity: sha512-8IqEwEawELFYjhr1FrpiSEeHm9SYVtjG16dHcGgORhi59QqkebnVqkxfG3OCekPhBhayv9ToDPvyjJtv74aEXQ==}
     engines: {node: '>=16'}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
     peerDependencies:
       '@solana/web3.js': ^1.58.0
     dependencies:
@@ -4282,7 +4234,7 @@ packages:
       '@toruslabs/eccrypto': 1.1.8
       '@toruslabs/metadata-helpers': 3.0.0(@babel/runtime@7.20.13)
       bowser: 2.11.0
-      keccak: 3.0.2
+      keccak: 3.0.3
       loglevel: 1.8.1
       oblivious-set: 1.1.1
       socket.io-client: 4.5.4
@@ -4332,13 +4284,14 @@ packages:
       '@toruslabs/http-helpers': 3.2.0(@babel/runtime@7.20.13)
       elliptic: 6.5.4
       json-stable-stringify: 1.0.2
-      keccak: 3.0.2
+      keccak: 3.0.3
     transitivePeerDependencies:
       - '@sentry/types'
     dev: false
 
   /@toruslabs/openlogin-jrpc@2.9.0(@babel/runtime@7.20.13):
     resolution: {integrity: sha512-68SMBSsFqayTi/uVJe1cffnz6QxYMtVLCF7h4HxlWxM27dd3030FspPrNJHFqt7o2u8/WSCB9pax9BrbTwYglw==}
+    deprecated: Not supported. Pls upgrade
     peerDependencies:
       '@babel/runtime': 7.x
     dependencies:
@@ -4350,11 +4303,12 @@ packages:
       fast-safe-stringify: 2.1.1
       once: 1.4.0
       pump: 3.0.0
-      readable-stream: 3.6.0
+      readable-stream: 3.6.2
     dev: false
 
   /@toruslabs/openlogin-jrpc@3.2.0(@babel/runtime@7.20.13):
     resolution: {integrity: sha512-G+K0EHyVUaAEyeD4xGsnAZRpn/ner8lQ2HC2+pGKg6oGmzKI2wGMDcw2KMH6+HKlfBGVJ5/VR9AQfC/tZlLDmQ==}
+    deprecated: Not supported. Pls upgrade
     peerDependencies:
       '@babel/runtime': 7.x
     dependencies:
@@ -4371,17 +4325,19 @@ packages:
 
   /@toruslabs/openlogin-utils@2.1.0(@babel/runtime@7.20.13):
     resolution: {integrity: sha512-UVgjco4winOn4Gj0VRTvjSZgBA84h2OIkKuxrBFjS+yWhgxQBF4hXGp83uicSgx1MujtjyUOdhJrpV2joRHt9w==}
+    deprecated: Not supported. Pls upgrade
     peerDependencies:
       '@babel/runtime': 7.x
     dependencies:
       '@babel/runtime': 7.20.13
       base64url: 3.0.1
-      keccak: 3.0.2
+      keccak: 3.0.3
       randombytes: 2.1.0
     dev: false
 
   /@toruslabs/openlogin-utils@3.0.0(@babel/runtime@7.20.13):
     resolution: {integrity: sha512-T5t29/AIFqXc84x4OoAkZWjd0uoP2Lk6iaFndnIIMzCPu+BwwV0spX/jd/3YYNjZ8Po8D+faEnwAhiqemYeK2w==}
+    deprecated: Not supported. Pls upgrade
     peerDependencies:
       '@babel/runtime': 7.x
     dependencies:
@@ -4419,6 +4375,7 @@ packages:
   /@toruslabs/torus-embed@1.41.2(@babel/runtime@7.20.13):
     resolution: {integrity: sha512-EiKHz6+ab2hwXlyMF0B34MCTK7ooXa9FqY4DAezasunoKvevSKvwWmUOXlqfqUo/snxrEGFSMNtMe5LdLKIl4Q==}
     engines: {node: '>=14.17.0', npm: '>=6.x'}
+    deprecated: Not supported. Pls upgrade
     peerDependencies:
       '@babel/runtime': 7.x
     dependencies:
@@ -6146,6 +6103,16 @@ packages:
     transitivePeerDependencies:
       - debug
 
+  /axios@1.6.2:
+    resolution: {integrity: sha512-7i24Ri4pmDRfJTR7LDBhsOTtcm+9kjX5WiY1X3wIisx6G9So3pfMkEiU7emUBe46oceVImccTEM3k6C5dbVW8A==}
+    dependencies:
+      follow-redirects: 1.15.2
+      form-data: 4.0.0
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
   /babel-plugin-polyfill-corejs2@0.3.3(@babel/core@7.23.2):
     resolution: {integrity: sha512-8hOdmFYFSZhqg2C/JgLUQ+t52o5nirNwaWM2B9LWteozwIvM14VSwdsCAUET10qT+kmySAlseadmfeeSWFCy+Q==}
     peerDependencies:
@@ -6251,6 +6218,10 @@ packages:
 
   /bignumber.js@9.1.1:
     resolution: {integrity: sha512-pHm4LsMJ6lzgNGVfZHjMoO8sdoRhOzOH4MLmY65Jg70bpxCKu5iOHNJyfF6OyvYw7t8Fpf35RuzUyqnQsj8Vig==}
+    dev: false
+
+  /bignumber.js@9.1.2:
+    resolution: {integrity: sha512-2/mKyZH9K85bzOEfhXDBFZTGd1CTs+5IHpeFQo9luiBG7hghdC851Pj2WAhb6E3R6b9tZj/XKhbg4fum+Kepug==}
     dev: false
 
   /binary-extensions@2.2.0:
@@ -6412,7 +6383,7 @@ packages:
       elliptic: 6.5.4
       inherits: 2.0.4
       parse-asn1: 5.1.6
-      readable-stream: 3.6.0
+      readable-stream: 3.6.2
       safe-buffer: 5.2.1
     dev: false
 
@@ -7139,6 +7110,12 @@ packages:
       - bufferutil
       - debug
       - utf-8-validate
+    dev: false
+
+  /eip55@2.1.1:
+    resolution: {integrity: sha512-WcagVAmNu2Ww2cDUfzuWVntYwFxbvZ5MvIyLZpMjTTkjD6sCvkGOiS86jTppzu9/gWsc8isLHAeMBWK02OnZmA==}
+    dependencies:
+      keccak: 3.0.3
     dev: false
 
   /electron-to-chromium@1.4.284:
@@ -9432,7 +9409,7 @@ packages:
       jmespath: 0.15.0
       joycon: 2.2.5
       pump: 3.0.0
-      readable-stream: 3.6.0
+      readable-stream: 3.6.2
       split2: 3.2.2
       strip-json-comments: 3.1.1
     dev: false
@@ -9582,6 +9559,10 @@ packages:
 
   /proxy-compare@2.5.0:
     resolution: {integrity: sha512-f1us0OsVAJ3tdIMXGQx2lmseYS4YXe4W+sKF5g5ww/jV+5ogMadPt+sIZ+88Ga9kvMJsrRNWzCrKPpr6pMWYbA==}
+    dev: false
+
+  /proxy-from-env@1.1.0:
+    resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
     dev: false
 
   /prr@1.0.1:
@@ -9994,6 +9975,7 @@ packages:
   /ripple-lib@1.10.1:
     resolution: {integrity: sha512-OQk+Syl2JfxKxV2KuF/kBMtnh012I5tNnziP3G4WDGCGSIAgeqkOgkR59IQ0YDNrs1YW8GbApxrdMSRi/QClcA==}
     engines: {node: '>=10.13.0', yarn: ^1.15.2}
+    deprecated: 'ripple-lib is deprecated. Please migrate to xrpl.js using this migration guide: https://xrpl.org/xrpljs2-migration-guide.html'
     dependencies:
       '@types/lodash': 4.14.191
       '@types/ws': 7.4.7
@@ -10070,6 +10052,12 @@ packages:
     resolution: {integrity: sha512-F2+gxDshqmIub1KdvZkaEfGDwLNpPvk9Fs6LD/MyQxNgMds/WH9OdDDXOmxUZpME+iSK3rQCctkL0DYyytUqMg==}
     dependencies:
       tslib: 2.4.1
+
+  /rxjs@7.8.1:
+    resolution: {integrity: sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==}
+    dependencies:
+      tslib: 2.5.0
+    dev: false
 
   /safe-buffer@5.1.2:
     resolution: {integrity: sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==}
@@ -10402,7 +10390,7 @@ packages:
   /split2@3.2.2:
     resolution: {integrity: sha512-9NThjpgZnifTkJpzTZ7Eue85S49QwpNhZTq6GRJwObb6jnLFNGB7Qm73V5HewTROPyxD0C29xqmaI68bQtV+hg==}
     dependencies:
-      readable-stream: 3.6.0
+      readable-stream: 3.6.2
     dev: false
 
   /split2@4.1.0:

@@ -30,11 +30,11 @@
     "typescript": "^4.4.2"
   },
   "dependencies": {
-    "@injectivelabs/chain-api": "1.9.20",
-    "@injectivelabs/networks": "1.10.7",
-    "@injectivelabs/sdk-ts": "1.10.47",
-    "@injectivelabs/ts-types": "1.10.4",
-    "@injectivelabs/wallet-ts": "1.10.51",
+    "@injectivelabs/chain-api": "1.9.24",
+    "@injectivelabs/networks": "1.14.4",
+    "@injectivelabs/sdk-ts": "1.14.4",
+    "@injectivelabs/ts-types": "1.14.4",
+    "@injectivelabs/wallet-ts": "1.14.4",
     "@xlabs-libs/wallet-aggregator-core": "workspace:^"
   }
 }
