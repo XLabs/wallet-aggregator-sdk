@@ -77,6 +77,7 @@ export enum EVMWalletType {
   Injected = "injected",
   Ledger = "ledger",
   Metamask = "metamask",
+  OKXWallet = "okxwallet",
   WalletConnect = "walletconnect",
 }
 
