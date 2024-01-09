@@ -137,30 +137,22 @@ export abstract class EVMWallet<
   protected chains: Chain[];
   protected connector: C;
   protected connectorOptions: COpts;
-  protected preferredChain?: EVMChainId;
   protected network?: EVMNetworkInfo;
+  protected config: EVMWalletConfig<COpts>;
 
   private addresses: Address[] = [];
   private address?: Address;
   private autoSwitch: boolean;
-  private confirmations?: number;
   private wagmiConfig?: Config<PublicClient>;
   private provider?: ethers.providers.Web3Provider;
   private switchingChain = false;
 
-  constructor({
-    chains,
-    confirmations,
-    preferredChain,
-    autoSwitch = false,
-    connectorOptions,
-  }: EVMWalletConfig<COpts> = {}) {
+  constructor(config: EVMWalletConfig<COpts> = {}) {
     super();
-    this.chains = chains || DEFAULT_CHAINS;
-    this.preferredChain = preferredChain;
-    this.autoSwitch = autoSwitch;
-    this.confirmations = confirmations;
-    this.connectorOptions = connectorOptions || ({} as COpts);
+    this.chains = config.chains || DEFAULT_CHAINS;
+    this.autoSwitch = config.autoSwitch || false;
+    this.connectorOptions = config.connectorOptions || ({} as COpts);
+    this.config = config;
 
     // create here so that injected wallets can be detected before connecting
     this.connector = this.createConnector();
@@ -176,7 +168,7 @@ export abstract class EVMWallet<
     });
 
     await this.connector.connect({
-      chainId: evmChainId || this.preferredChain,
+      chainId: evmChainId || this.config.preferredChain,
     });
 
     this.provider = new ethers.providers.Web3Provider(
@@ -199,13 +191,13 @@ export abstract class EVMWallet<
   protected abstract createConnector(): C;
 
   private async enforcePrefferedChain(): Promise<void> {
-    if (!this.preferredChain) return;
+    if (!this.config.preferredChain) return;
     if (!this.connector.switchChain) throw new NotSupported();
 
     let currentChain = this.getNetworkInfo()?.chainId;
-    while (currentChain !== this.preferredChain) {
+    while (currentChain !== this.config.preferredChain) {
       try {
-        await this.connector.switchChain(this.preferredChain);
+        await this.connector.switchChain(this.config.preferredChain);
         currentChain = this.getNetworkInfo()?.chainId;
       } catch (error) {
         const { code } = error as RpcError;
@@ -229,7 +221,7 @@ export abstract class EVMWallet<
    * @param chainId The new evm chain id
    */
   public async setPrefferedChain(chainId: EVMChainId): Promise<void> {
-    this.preferredChain = chainId;
+    this.config.preferredChain = chainId;
     await this.enforcePrefferedChain();
   }
 
@@ -282,7 +274,7 @@ export abstract class EVMWallet<
     await this.enforcePrefferedChain();
 
     const response = await this.getSigner().sendTransaction(tx);
-    const receipt = await response.wait(this.confirmations);
+    const receipt = await response.wait(this.config.confirmations);
     return {
       id: receipt.transactionHash,
       data: receipt,
