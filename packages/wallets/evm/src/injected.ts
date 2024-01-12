@@ -57,6 +57,11 @@ export class InjectedWallet extends EVMWallet<
 
   getName(): string {
     const name = this.connector.name;
+
+    // bitget shows as bitkeep for legacy reasons
+    if (name === InjectedWallets.BitKeepWallet)
+      return InjectedWallets.BitgetWallet;
+
     return name === "Injected" || this.config.showAsGeneric
       ? this.config.genericName || InjectedWallets.Generic
       : name;
