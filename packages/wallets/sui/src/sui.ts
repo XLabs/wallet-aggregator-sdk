@@ -58,6 +58,8 @@ type SuiNetworkInfo = {
   chain: string;
 };
 
+const DO_NOT_REMOVE_WALLET_FROM = ["OKX", "Bitget"] as const;
+
 export class SuiWallet extends Wallet<
   typeof CHAIN_ID_SUI,
   void,
@@ -73,6 +75,7 @@ export class SuiWallet extends Wallet<
   BaseFeatures,
   WalletEvents
 > {
+  private readonly _name;
   private accounts: WalletAccount[] = [];
   private activeAccount?: WalletAccount;
 
@@ -81,6 +84,11 @@ export class SuiWallet extends Wallet<
     private readonly connection?: Connection
   ) {
     super();
+    if (DO_NOT_REMOVE_WALLET_FROM.find((name) => wallet.name.includes(name))) {
+      this._name = wallet.name;
+    } else {
+      this._name = wallet.name.replace("Wallet", "").trim();
+    }
   }
 
   async connect(): Promise<string[]> {
@@ -170,7 +178,7 @@ export class SuiWallet extends Wallet<
   }
 
   getName(): string {
-    return this.wallet.name.replace("Wallet", "").trim();
+    return this._name;
   }
 
   getUrl(): string {
