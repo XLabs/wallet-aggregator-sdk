@@ -16,7 +16,8 @@
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "build:esm": "tsc -p tsconfig.esm.json",
     "build": "shx rm -rf dist && npm run build:cjs && npm run build:esm",
-    "clean": "shx rm -rf dist"
+    "clean": "shx rm -rf dist",
+    "prepublish": "npm run build"
   },
   "files": [
     "dist/",
