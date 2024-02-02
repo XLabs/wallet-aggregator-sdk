@@ -69,11 +69,18 @@ export class SolanaWallet extends Wallet<
   Signature,
   SolanaNetworkInfo
 > {
+  private readonly _name;
+
   constructor(
     private readonly adapter: SolanaAdapter,
     private readonly connection: Connection
   ) {
     super();
+    if (adapter.name.includes("Bitget")) {
+      this._name = adapter.name + " Wallet";
+    } else {
+      this._name = adapter.name;
+    }
   }
 
   /** Retrieve the underlying solana adapter */
@@ -82,7 +89,7 @@ export class SolanaWallet extends Wallet<
   }
 
   getName(): string {
-    return this.adapter.name;
+    return this._name;
   }
 
   getUrl(): string {
