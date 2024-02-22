@@ -19,7 +19,7 @@ export const WALLETS: Partial<Record<SeiWalletType, WalletInfo>> = {
   },
   falcon: {
     name: "Falcon",
-    url: "https://https://www.falconwallet.app/",
+    url: "https://www.falconwallet.app/",
     icon: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAHQSURBVHgBvZfNTcNAEIXfOI7EkRKSDkIFhAoIFWBEgsgJOogpIScQwYqpAFIBpgM6SErwEck/w9hBCCneNfZu+A62lfVqn3dm3mwIFuD76x666VIeh2gEbwiGbBdP3gDqoTHsOTDFTUftFheS7N1cAPEN2hHRNNy4MIAX46HcemgFh8XVcAfYQztidLJV8aDcAV56h0jdW2jXp6jIZDSFeE0XYawVgKQ7gsMz5ThjRVcLH4aoQ+DwOXQQv8AClT7wbSxr9TQxkHHQhwWqd6CTDaEngiWqBTi5OvbgWAzkDvsSwI+TgdrZJOPz7KQwEFiiVS/gYDwDs5QoHTaamNORVM6HkYDt4vDRmOrEbeSEZXW0WryYTPOqn5tZcX11qEnTVxgL0FaHlkiVuH8WoK+O2tmhauSnF/DT5Qg5q7PayVkuIdrQSVeoEyBft4SjKask7dM0eIZlyhDI9npy09V0ZNN8dgRI5zvVv6aOoSn0n52vCqe2tpmsx/03rmy/5lTLc5oEPvYqIHHPKkcOPuPi3FaefAliQNzbeSfpSmd82MAAbTPS54ed3NA7YTfVnft8WEApoPx6YKCcKX+rsE8BcBMfaqwZk1oA4Vg5ZtGYvgA29askC0E4yAAAAABJRU5ErkJggg==",
   },
   coin98: {
