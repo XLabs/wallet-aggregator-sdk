@@ -31,11 +31,30 @@ export const CHAINS = {
   btc: 29,
   base: 30,
   sei: 32,
+  rootstock: 33, //
+  scroll: 34,
+  mantle: 35,
+  blast: 36,
+  xlayer: 37,
+  linea: 38,
+  berachain: 39,
+  seievm: 40,
   wormchain: 3104,
   cosmoshub: 4000,
   evmos: 4001,
   kujira: 4002,
+  neutron: 4003,
+  celestia: 4004,
+  stargaze: 4005,
+  seda: 4006,
+  dymension: 4007,
+  provenance: 4008,
   sepolia: 10002,
+  arbitrum_sepolia: 10003,
+  base_sepolia: 10004,
+  optimism_sepolia: 10005,
+  holesky: 10006,
+  polygon_sepolia: 10007,
 } as const;
 
 export type ChainName = keyof typeof CHAINS;
@@ -85,11 +104,30 @@ export const CHAIN_ID_XPLA = CHAINS["xpla"];
 export const CHAIN_ID_BTC = CHAINS["btc"];
 export const CHAIN_ID_BASE = CHAINS["base"];
 export const CHAIN_ID_SEI = CHAINS["sei"];
+export const CHAIN_ID_ROOTSTOCK = CHAINS["rootstock"];
+export const CHAIN_ID_SCROLL = CHAINS["scroll"];
+export const CHAIN_ID_MANTLE = CHAINS["mantle"];
+export const CHAIN_ID_BLAST = CHAINS["blast"];
+export const CHAIN_ID_XLAYER = CHAINS["xlayer"];
+export const CHAIN_ID_LINEA = CHAINS["linea"];
+export const CHAIN_ID_BERACHAIN = CHAINS["berachain"];
+export const CHAIN_ID_SEIEVM = CHAINS["seievm"];
 export const CHAIN_ID_WORMCHAIN = CHAINS["wormchain"];
 export const CHAIN_ID_COSMOSHUB = CHAINS["cosmoshub"];
 export const CHAIN_ID_EVMOS = CHAINS["evmos"];
 export const CHAIN_ID_KUJIRA = CHAINS["kujira"];
+export const CHAIN_ID_NEUTRON = CHAINS["neutron"];
+export const CHAIN_ID_CELESTIA = CHAINS["celestia"];
+export const CHAIN_ID_STARGAZE = CHAINS["stargaze"];
+export const CHAIN_ID_SEDA = CHAINS["seda"];
+export const CHAIN_ID_DYMENSION = CHAINS["dymension"];
+export const CHAIN_ID_PROVENANCE = CHAINS["provenance"];
 export const CHAIN_ID_SEPOLIA = CHAINS["sepolia"];
+export const CHAIN_ID_ARBITRUM_SEPOLIA = CHAINS["arbitrum_sepolia"];
+export const CHAIN_ID_BASE_SEPOLIA = CHAINS["base_sepolia"];
+export const CHAIN_ID_OPTIMISM_SEPOLIA = CHAINS["optimism_sepolia"];
+export const CHAIN_ID_HOLESKY = CHAINS["holesky"];
+export const CHAIN_ID_POLYGON_SEPOLIA = CHAINS["polygon_sepolia"];
 
 export type Network = "MAINNET" | "TESTNET" | "DEVNET";
 
@@ -135,7 +173,9 @@ export function isEVMChain(chainId: ChainId): boolean {
     chainId === CHAIN_ID_ARBITRUM ||
     chainId === CHAIN_ID_OPTIMISM ||
     chainId === CHAIN_ID_GNOSIS ||
-    chainId === CHAIN_ID_BASE
+    chainId === CHAIN_ID_BASE ||
+    chainId === CHAIN_ID_SCROLL ||
+    chainId === CHAIN_ID_BLAST
   );
 }
 

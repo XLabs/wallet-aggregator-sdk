@@ -96,6 +96,41 @@ export const emeraldTestnet = {
   },
 } as const satisfies Chain;
 
+// https://docs.blast.io/building/network-information
+export const blast = {
+  id: 81457,
+  name: "Blast Mainnet",
+  network: "blast-mainnet",
+  nativeCurrency: { name: "Blast Ethereum", symbol: "ETH", decimals: 18 },
+  rpcUrls: {
+    default: { http: ["https://rpc.blast.io"] },
+    public: { http: ["	https://rpc.blast.io"] },
+  },
+  blockExplorers: {
+    default: {
+      name: "Blast",
+      url: "https://blastscan.io",
+    },
+  },
+} as const satisfies Chain;
+
+export const blastSepolia = {
+  id: 168587773,
+  name: "Blast Sepolia",
+  network: "blast-repolia",
+  nativeCurrency: { name: "Blast Ethereum", symbol: "ETH", decimals: 18 },
+  rpcUrls: {
+    default: { http: ["https://sepolia.blast.io"] },
+    public: { http: ["https://sepolia.blast.io"] },
+  },
+  blockExplorers: {
+    default: {
+      name: "Blast Sepolia Explorer",
+      url: "https://sepolia.blastexplorer.io",
+    },
+  },
+} as const satisfies Chain;
+
 export const DEFAULT_CHAINS: Chain[] = [
   ...Object.values(CHAINS),
   acala,
@@ -104,4 +139,6 @@ export const DEFAULT_CHAINS: Chain[] = [
   emeraldTestnet,
   karura,
   karuraTestnet,
+  blast,
+  blastSepolia,
 ];
