@@ -131,14 +131,59 @@ export const blastSepolia = {
   },
 } as const satisfies Chain;
 
+export const scroll = {
+  id: 534_352,
+  name: "Scroll",
+  network: "scroll",
+  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ["https://rpc.ankr.com/scroll"],
+    },
+    public: {
+      http: ["https://rpc.ankr.com/scroll"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "Scrollscan",
+      url: "https://scrollscan.com",
+    },
+  },
+} as const satisfies Chain;
+
+export const scrollSepolia = {
+  id: 534_351,
+  name: "Scroll Sepolia",
+  network: "scroll-sepolia",
+  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ["https://rpc.ankr.com/scroll_sepolia_testnet"],
+    },
+    public: {
+      http: ["https://rpc.ankr.com/scroll_sepolia_testnet"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "Scrollscan",
+      url: "https://sepolia.scrollscan.com",
+    },
+  },
+  testnet: true,
+} as const satisfies Chain;
+
 export const DEFAULT_CHAINS: Chain[] = [
   ...Object.values(CHAINS),
   acala,
   acalaTestnet,
+  blast,
+  blastSepolia,
   emerald,
   emeraldTestnet,
   karura,
   karuraTestnet,
-  blast,
-  blastSepolia,
+  scroll,
+  scrollSepolia,
 ];
