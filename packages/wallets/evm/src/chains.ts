@@ -202,10 +202,10 @@ export const xlayerTestnet = {
   nativeCurrency: { name: "OKB", symbol: "OKB", decimals: 18 },
   rpcUrls: {
     default: {
-      http: ["https://xlayertestrpc.okx.com/"],
+      http: ["https://testrpc.xlayer.tech"],
     },
     public: {
-      http: ["https://xlayertestrpc.okx.com/"],
+      http: ["https://testrpc.xlayer.tech"],
     },
   },
   blockExplorers: {
