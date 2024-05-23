@@ -175,7 +175,7 @@ export const scrollSepolia = {
 } as const satisfies Chain;
 
 export const xlayer = {
-  id: 37,
+  id: 196,
   name: "X Layer",
   network: "xlayer-mainnet",
   nativeCurrency: { name: "OKB", symbol: "OKB", decimals: 18 },
