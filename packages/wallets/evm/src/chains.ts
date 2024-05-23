@@ -174,6 +174,49 @@ export const scrollSepolia = {
   testnet: true,
 } as const satisfies Chain;
 
+export const xlayer = {
+  id: 37,
+  name: "X Layer",
+  network: "xlayer-mainnet",
+  nativeCurrency: { name: "OKB", symbol: "OKB", decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ["https://rpc.xlayer.tech"],
+    },
+    public: {
+      http: ["https://rpc.xlayer.tech"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "X Layer Explorer",
+      url: "https://www.okx.com/web3/explorer/xlayer",
+    },
+  },
+} as const satisfies Chain;
+
+export const xlayerTestnet = {
+  id: 195,
+  name: "X Layer Testnet",
+  network: "xlayer-testnet",
+  nativeCurrency: { name: "OKB", symbol: "OKB", decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ["https://xlayertestrpc.okx.com/"],
+    },
+    public: {
+      http: ["https://xlayertestrpc.okx.com/"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "X Layer Testnet Explorer",
+      url: "https://www.okx.com/web3/explorer/xlayer-test",
+    },
+  },
+  testnet: true,
+} as const satisfies Chain;
+
 export const DEFAULT_CHAINS: Chain[] = [
   ...Object.values(CHAINS),
   acala,
@@ -186,4 +229,6 @@ export const DEFAULT_CHAINS: Chain[] = [
   karuraTestnet,
   scroll,
   scrollSepolia,
+  xlayer,
+  xlayerTestnet,
 ];
