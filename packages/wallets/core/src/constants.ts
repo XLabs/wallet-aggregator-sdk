@@ -176,7 +176,8 @@ export function isEVMChain(chainId: ChainId): boolean {
     chainId === CHAIN_ID_BASE ||
     chainId === CHAIN_ID_SCROLL ||
     chainId === CHAIN_ID_BLAST ||
-    chainId === CHAIN_ID_XLAYER
+    chainId === CHAIN_ID_XLAYER ||
+    chainId === CHAIN_ID_MANTLE
   );
 }
 
