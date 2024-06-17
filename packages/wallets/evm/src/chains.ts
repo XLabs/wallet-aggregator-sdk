@@ -217,6 +217,48 @@ export const xlayerTestnet = {
   testnet: true,
 } as const satisfies Chain;
 
+export const mantle = {
+  id: 5000,
+  name: "Mantle",
+  network: "mantle",
+  nativeCurrency: { name: "MNT", symbol: "MNT", decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ["https://rpc.mantle.xyz"],
+    },
+    public: {
+      http: ["https://rpc.mantle.xyz"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "Mantle Explorer",
+      url: "https://explorer.mantle.xyz",
+    },
+  },
+} as const satisfies Chain;
+
+export const mantleTestnet = {
+  id: 5000,
+  name: "Mantle",
+  network: "mantle-testnet",
+  nativeCurrency: { name: "MNT", symbol: "MNT", decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ["https://rpc.testnet.mantle.xyz"],
+    },
+    public: {
+      http: ["https://rpc.testnet.mantle.xyz"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "Mantle Explorer",
+      url: "https://explorer.testnet.mantle.xyz",
+    },
+  },
+} as const satisfies Chain;
+
 export const DEFAULT_CHAINS: Chain[] = [
   ...Object.values(CHAINS),
   acala,
@@ -231,4 +273,6 @@ export const DEFAULT_CHAINS: Chain[] = [
   scrollSepolia,
   xlayer,
   xlayerTestnet,
+  mantle,
+  mantleTestnet,
 ];
