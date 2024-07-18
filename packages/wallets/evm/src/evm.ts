@@ -79,6 +79,7 @@ export enum EVMWalletType {
   Metamask = "metamask",
   OKXWallet = "okxwallet",
   WalletConnect = "walletconnect",
+  Safe = "safe",
 }
 
 export interface WatchAssetParams {
