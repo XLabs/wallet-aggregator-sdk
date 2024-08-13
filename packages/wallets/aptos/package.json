@@ -30,6 +30,8 @@
     "typescript": "^5.3.2"
   },
   "dependencies": {
+    "@aptos-connect/wallet-adapter-plugin": "^1.0.1",
+    "@aptos-labs/ts-sdk": "^1.26.0",
     "@manahippo/aptos-wallet-adapter": "^1.0.8",
     "@xlabs-libs/wallet-aggregator-core": "workspace:^"
   }
