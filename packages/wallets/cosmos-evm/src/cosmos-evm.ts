@@ -102,7 +102,7 @@ export class CosmosEvmWallet extends CosmosWallet {
     const signer = await extension.getOfflineSigner(this.chainId);
     const signed = await signer.signDirect(this.activeAccount.address, {
       ...toSign.signDoc,
-      accountNumber: Long.fromString(account.base_account.account_number),
+      accountNumber: BigInt(account.base_account.account_number),
     });
 
     return {
