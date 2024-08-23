@@ -127,6 +127,5 @@ export const AlgorandFeatures = {
 export enum AlgorandWalletType {
   Defly = "defly",
   Ledger = "ledger",
-  MyAlgo = "myalgo",
   Pera = "pera",
 }
