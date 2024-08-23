@@ -16,7 +16,6 @@ import {
   CHAIN_ID_ETH,
   CHAIN_ID_SOME_CHAIN,
 } from "@xlabs/wallet-aggregator-core";
-import { MyAlgoWallet } from "@xlabs/wallet-aggregator-algorand";
 import {
   MetamaskWallet,
   WalletConnectWallet,
@@ -28,7 +27,6 @@ type AvailableWalletsMap = Partial<Record<ChainId, Wallet[]>>;
 
 const Main = () => {
   const wallets: AvailableWalletsMap = {
-    [CHAIN_ID_ALGORAND]: [new MyAlgoWallet()],
     [CHAIN_ID_ETH]: [new MetamaskWallet(), new WalletConnectWallet()],
   };
 
@@ -48,7 +46,6 @@ import {
   CHAIN_ID_ETH,
   CHAIN_ID_SOME_CHAIN,
 } from "@xlabs/wallet-aggregator-core";
-import { MyAlgoWallet } from "@xlabs/wallet-aggregator-algorand";
 import {
   MetamaskWallet,
   WalletConnectWallet,
@@ -63,7 +60,6 @@ const Main = () => {
     const someChainParams = await fetchSomeChainParams();
 
     return {
-      [CHAIN_ID_ALGORAND]: [new MyAlgoWallet()],
       [CHAIN_ID_ETH]: [new MetamaskWallet(), new WalletConnectWallet()],
       [CHAIN_ID_SOME_CHAIN]: [new SomeWallet(someChainParams)],
     };

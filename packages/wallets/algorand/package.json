@@ -39,7 +39,6 @@
     "@ledgerhq/hw-transport-webhid": "^6.27.12",
     "@ledgerhq/hw-transport-webusb": "^6.27.12",
     "@perawallet/connect": "^1.3.3",
-    "@randlabs/myalgo-connect": "^1.4.0",
     "@xlabs-libs/wallet-aggregator-core": "workspace:^",
     "algosdk": "^1.24.0"
   }
