@@ -25,11 +25,13 @@
   ],
   "devDependencies": {
     "@types/node": "^18.11.9",
-    "aptos": "^1.4.0",
+    "aptos": "^1.21.0",
     "shx": "^0.3.4",
     "typescript": "^5.3.2"
   },
   "dependencies": {
+    "@aptos-labs/wallet-adapter-core": "^4.15.0",
+    "@aptos-labs/wallet-standard": "^0.1.0",
     "@manahippo/aptos-wallet-adapter": "^1.0.8",
     "@xlabs-libs/wallet-aggregator-core": "workspace:^"
   }
