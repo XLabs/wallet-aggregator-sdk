@@ -254,6 +254,9 @@ importers:
 
   packages/wallets/evm:
     dependencies:
+      '@binance/w3w-utils':
+        specifier: ^1.1.6
+        version: 1.1.6
       '@ethersproject/abi':
         specifier: ^5.7.0
         version: 5.7.0
@@ -545,6 +548,12 @@ packages:
   '@babel/runtime@7.23.7':
     resolution: {integrity: sha512-w06OXVOFso7LcbzMiDGt+3X7Rh7Ho8MmgPoWU3rarH+8upf+wSU/grlGbWzQyr3DkdN6ZeuMFjpdwW0Q+HxobA==}
     engines: {node: '>=6.9.0'}
+
+  '@binance/w3w-types@1.1.4':
+    resolution: {integrity: sha512-CCnneapNTVY1+RseZNIhExVp3ux8LihcXRkGwmvJtZTTJJIC7xQlTWy9olkAsz+opqWK+heAcyYGmt4RUt1M5g==}
+
+  '@binance/w3w-utils@1.1.6':
+    resolution: {integrity: sha512-NGT629vS9tRlbigtNn9wHtTYNB00oyDcsajO/kpAcDiQn4ktYs7+oTIr/qLvjP8Z3opTXpbooqMPITDY7DI0IA==}
 
   '@blockshake/defly-connect@1.1.1':
     resolution: {integrity: sha512-Ft3/zqnUeV5dmTXIyTB5amyUdwG899NQ9PSVdGf9oNsnq+Q+IJMVo+GjntTC8sC7/z9cDRYJ2xnj3YjCtTfQcg==}
@@ -3728,6 +3737,9 @@ packages:
     resolution: {integrity: sha512-YqvUxoOcVPnCp0VU1/56f+iKSdvIRJYPznH22BdXV3xMk75SFXhWeJkZ8C9XxUWt1b5x2X1SxuFygW1U0FmkEQ==}
     engines: {node: '>=6'}
 
+  js-base64@3.7.7:
+    resolution: {integrity: sha512-7rCnleh0z2CkXhH67J8K1Ytz0b2Y+yxTPL+/KOJoa20hfnVQ/3/T6W/KflYI4bRHRagNeXeU2bkNGI3v1oS/lw==}
+
   js-sdsl@4.2.0:
     resolution: {integrity: sha512-dyBIzQBDkCqCu+0upx25Y2jGdbTGxE9fshMsCdK0ViOongpV+n5tXRcZY9v7CaVQ79AGS9KA1KHtojxiM7aXSQ==}
 
@@ -5345,6 +5357,17 @@ snapshots:
   '@babel/runtime@7.23.7':
     dependencies:
       regenerator-runtime: 0.14.1
+
+  '@binance/w3w-types@1.1.4':
+    dependencies:
+      eventemitter3: 5.0.0
+
+  '@binance/w3w-utils@1.1.6':
+    dependencies:
+      '@binance/w3w-types': 1.1.4
+      eventemitter3: 5.0.0
+      hash.js: 1.1.7
+      js-base64: 3.7.7
 
   '@blockshake/defly-connect@1.1.1(algosdk@1.24.0)(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
     dependencies:
@@ -10848,6 +10871,8 @@ snapshots:
   jmespath@0.15.0: {}
 
   joycon@2.2.5: {}
+
+  js-base64@3.7.7: {}
 
   js-sdsl@4.2.0: {}
 
