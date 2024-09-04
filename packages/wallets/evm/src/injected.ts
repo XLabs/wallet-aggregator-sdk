@@ -4,7 +4,7 @@ import { EVMWallet, EVMWalletConfig, EVMWalletType } from "./evm";
 
 export enum InjectedWallets {
   MetaMask = "MetaMask",
-  BinanceWallet = "Binance",
+  BinanceWallet = "Binance Web3 Wallet",
   BitgetWallet = "Bitget Wallet",
   BraveWallet = "Brave Wallet",
   KuCoinWallet = "KuCoin Wallet",
