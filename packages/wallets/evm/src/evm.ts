@@ -1,8 +1,4 @@
 import {
-  TransactionReceipt,
-  TransactionRequest,
-} from "@ethersproject/abstract-provider";
-import {
   Config,
   Connector,
   ConnectorData,
@@ -25,10 +21,9 @@ import {
   WalletState,
   isEVMChain,
 } from "@xlabs-libs/wallet-aggregator-core";
-import { BigNumber, ethers, utils } from "ethers";
+import { ethers, TransactionReceipt, TransactionRequest } from "ethers";
 import { Chain, DEFAULT_CHAINS } from "./chains";
 import { evmChainIdToChainId, isTestnetEvm } from "./constants";
-import { ERC20 } from "./contracts/ERC20";
 import { RpcError } from "viem";
 
 type EVMChainId = number;
@@ -97,7 +92,7 @@ export interface ConnectParams {
   evmChainId?: number;
 }
 
-export type EthereumMessage = string | ethers.utils.Bytes;
+export type EthereumMessage = string | Uint8Array;
 
 export interface EVMNetworkInfo {
   /** @description Network EVM chain id */
@@ -145,7 +140,7 @@ export abstract class EVMWallet<
   private address?: Address;
   private autoSwitch: boolean;
   private wagmiConfig?: Config<PublicClient>;
-  private provider?: ethers.providers.Web3Provider;
+  private provider?: ethers.BrowserProvider;
   private switchingChain = false;
 
   constructor(config: EVMWalletConfig<COpts> = {}) {
@@ -172,8 +167,8 @@ export abstract class EVMWallet<
       chainId: evmChainId || this.config.preferredChain,
     });
 
-    this.provider = new ethers.providers.Web3Provider(
-      (await this.connector.getProvider()) as ethers.providers.ExternalProvider,
+    this.provider = new ethers.BrowserProvider(
+      (await this.connector.getProvider()) as ethers.Eip1193Provider,
       "any"
     );
 
@@ -273,11 +268,11 @@ export abstract class EVMWallet<
     if (!this.isConnected()) throw new NotConnected();
 
     await this.enforcePrefferedChain();
-
-    const response = await this.getSigner().sendTransaction(tx);
-    const receipt = await response.wait(this.config.confirmations);
+    const signer = await this.getSigner();
+    const response = await signer.sendTransaction(tx);
+    const receipt = (await response.wait(this.config.confirmations))!;
     return {
-      id: receipt.transactionHash,
+      id: receipt?.hash,
       data: receipt,
     };
   }
@@ -291,7 +286,8 @@ export abstract class EVMWallet<
   async signMessage(msg: EthereumMessage): Promise<Signature> {
     if (!this.isConnected()) throw new NotConnected();
     await this.enforcePrefferedChain();
-    const signature = await this.getSigner().signMessage(msg);
+    const signer = await this.getSigner();
+    const signature = await signer.signMessage(msg);
     return new Uint8Array(Buffer.from(signature.substring(2), "hex"));
   }
 
@@ -347,7 +343,7 @@ export abstract class EVMWallet<
 
     return (await this.provider.send("wallet_addEthereumChain", [
       {
-        chainId: ethers.utils.hexValue(chain.id),
+        chainId: ethers.toBeHex(chain.id),
         chainName: chain.name,
         nativeCurrency: chain.nativeCurrency,
         rpcUrls: [chain.rpcUrls.public?.http[0] ?? ""],
@@ -389,11 +385,11 @@ export abstract class EVMWallet<
   }
 
   /**
-   * Retrieve the underlying Web3Provider
+   * Retrieve the underlying BrowserProvider
    *
-   * @returns {ethers.providers.Web3Provider} Returns the underlying ethers.js Web3Provider if connected, or undefined if not
+   * @returns {ethers.BrowserProvider} Returns the underlying ethers.js BrowserProvider if connected, or undefined if not
    */
-  getProvider(): ethers.providers.Web3Provider | undefined {
+  getProvider(): ethers.BrowserProvider | undefined {
     return this.provider;
   }
 
@@ -402,9 +398,9 @@ export abstract class EVMWallet<
    *
    * @returns {ethers.Signer} Returns the underlying ethers.js Signer if connected, or undefined if not
    */
-  getSigner(): ethers.Signer {
+  async getSigner(): Promise<ethers.Signer> {
     if (!this.provider) throw new NotConnected();
-    return this.provider.getSigner(this.address);
+    return await this.provider.getSigner(this.address);
   }
 
   getWalletState(): WalletState {
@@ -414,26 +410,27 @@ export abstract class EVMWallet<
   }
 
   async getBalance(assetAddress?: string): Promise<string> {
-    if (!this.isConnected()) throw new NotConnected();
-    const signer = this.getSigner();
+    if (!this.isConnected() || !this.provider) throw new NotConnected();
+    const signer = await this.getSigner();
     if (!signer) throw new Error("Signer not found");
 
     if (assetAddress) {
-      const erc20: ERC20 = new ethers.Contract(
+      const erc20 = new ethers.Contract(
         assetAddress,
         [
           "function balanceOf(address) view returns (uint)",
           "function decimals() public view returns (uint8)",
         ],
         signer
-      ) as ERC20;
+      );
       const decimals: number = await erc20.decimals();
-      const balance: BigNumber = await erc20.balanceOf(assetAddress);
-      return utils.formatUnits(balance, decimals);
+      const balance: bigint = await erc20.balanceOf(assetAddress);
+      return ethers.formatUnits(balance, decimals);
     }
 
-    const balance = await signer.getBalance();
-    return utils.formatEther(balance);
+    const address = await signer.getAddress();
+    const balance = await this.provider.getBalance(address);
+    return ethers.formatEther(balance);
   }
 
   protected async onChainChanged(): Promise<void> {
@@ -469,7 +466,7 @@ export abstract class EVMWallet<
   }
 
   protected parseEvmChainId(id: string | number): number {
-    return utils.isHexString(id)
+    return ethers.isHexString(id)
       ? parseInt(id.toString().substring(2), 16)
       : (id as number);
   }

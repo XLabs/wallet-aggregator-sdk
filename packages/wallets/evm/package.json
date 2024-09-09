@@ -33,14 +33,10 @@
     "@binance/w3w-ethereum-provider": "1.1.8-alpha.0",
     "@binance/w3w-utils": "^1.1.6",
     "@binance/w3w-wagmi-connector": "1.2.2-alpha.0",
-    "@ethersproject/abi": "^5.7.0",
-    "@ethersproject/abstract-provider": "^5.7.0",
-    "@ethersproject/bytes": "^5.7.0",
-    "@ethersproject/providers": "^5.7.2",
     "@wagmi/core": "^1.4.13",
     "@web3modal/standalone": "^2.2.1",
     "@xlabs-libs/wallet-aggregator-core": "workspace:^",
-    "ethers": "^5.7.2",
+    "ethers": "^6.4.2",
     "versions": "^10.4.1",
     "viem": "^1.20.3"
   }
