@@ -34,6 +34,8 @@ export enum WalletState {
   NotDetected = "NotDetected",
   Loadable = "Loadable",
   Unsupported = "Unsupported",
+  Active = "Active",
+  Inactive = "Inactive",
 }
 
 export interface SendTransactionResult<R> {

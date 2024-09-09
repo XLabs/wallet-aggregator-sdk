@@ -1,5 +1,6 @@
 import { InjectedConnector } from "@wagmi/core/connectors/injected";
 import { EVMWallet, EVMWalletConfig, EVMWalletType } from "./evm";
+import { WalletState } from "@xlabs-libs/wallet-aggregator-core";
 
 export enum InjectedWallets {
   MetaMask = "MetaMask",
@@ -13,7 +14,33 @@ export enum InjectedWallets {
   RabbyWallet = "Rabby Wallet",
   Generic = "Injected Wallet",
   OktoWallet = "Okto Wallet",
+  PhantomWallet = "Phantom Wallet",
+  BackpackWallet = "Backpack Wallet",
 }
+
+const DetectionStrategies: Record<string, () => WalletState> = {
+  [InjectedWallets.PhantomWallet]: () => {
+    const phantom = (window as any).phantom;
+    const isPhantom = window.ethereum?.isPhantom;
+    if (!phantom) return WalletState.NotDetected;
+    return isPhantom ? WalletState.Active : WalletState.Inactive;
+  },
+  [InjectedWallets.BackpackWallet]: () => {
+    const backpack = (window as any).backpack;
+    const isBackpack = window.ethereum?.isBackpack;
+    if (!backpack) return WalletState.NotDetected;
+    return isBackpack ? WalletState.Active : WalletState.Inactive;
+  },
+  [InjectedWallets.BraveWallet]: () => {
+    const brave = (window as any).braveWallet;
+    const isBrave = window.ethereum?.isBraveWallet;
+    if (!brave) return WalletState.NotDetected;
+    return isBrave ? WalletState.Active : WalletState.Inactive;
+  },
+  [InjectedWallets.BinanceWallet]: () => {
+    return isInBinance() ? WalletState.Active : WalletState.Inactive;
+  },
+};
 
 const GENERIC_ICON =
   "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4KPCEtLSBDcmVhdG9yOiBDb3JlbERSQVcgMjAxOSAoNjQtQml0KSAtLT4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZlcnNpb249IjEuMSIgc2hhcGUtcmVuZGVyaW5nPSJnZW9tZXRyaWNQcmVjaXNpb24iIHRleHQtcmVuZGVyaW5nPSJnZW9tZXRyaWNQcmVjaXNpb24iIGltYWdlLXJlbmRlcmluZz0ib3B0aW1pemVRdWFsaXR5IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIKdmlld0JveD0iMCAwIDc4NC4zNyAxMjc3LjM5IgogeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiCiB4bWxuczp4b2RtPSJodHRwOi8vd3d3LmNvcmVsLmNvbS9jb3JlbGRyYXcvb2RtLzIwMDMiPgogPGcgaWQ9IkxheWVyX3gwMDIwXzEiPgogIDxtZXRhZGF0YSBpZD0iQ29yZWxDb3JwSURfMENvcmVsLUxheWVyIi8+CiAgPGcgaWQ9Il8xNDIxMzk0MzQyNDAwIj4KICAgPGc+CiAgICA8cG9seWdvbiBmaWxsPSIjMzQzNDM0IiBmaWxsLXJ1bGU9Im5vbnplcm8iIHBvaW50cz0iMzkyLjA3LDAgMzgzLjUsMjkuMTEgMzgzLjUsODczLjc0IDM5Mi4wNyw4ODIuMjkgNzg0LjEzLDY1MC41NCAiLz4KICAgIDxwb2x5Z29uIGZpbGw9IiM4QzhDOEMiIGZpbGwtcnVsZT0ibm9uemVybyIgcG9pbnRzPSIzOTIuMDcsMCAtMCw2NTAuNTQgMzkyLjA3LDg4Mi4yOSAzOTIuMDcsNDcyLjMzICIvPgogICAgPHBvbHlnb24gZmlsbD0iIzNDM0MzQiIgZmlsbC1ydWxlPSJub256ZXJvIiBwb2ludHM9IjM5Mi4wNyw5NTYuNTIgMzg3LjI0LDk2Mi40MSAzODcuMjQsMTI2My4yOCAzOTIuMDcsMTI3Ny4zOCA3ODQuMzcsNzI0Ljg5ICIvPgogICAgPHBvbHlnb24gZmlsbD0iIzhDOEM4QyIgZmlsbC1ydWxlPSJub256ZXJvIiBwb2ludHM9IjM5Mi4wNywxMjc3LjM4IDM5Mi4wNyw5NTYuNTIgLTAsNzI0Ljg5ICIvPgogICAgPHBvbHlnb24gZmlsbD0iIzE0MTQxNCIgZmlsbC1ydWxlPSJub256ZXJvIiBwb2ludHM9IjM5Mi4wNyw4ODIuMjkgNzg0LjEzLDY1MC41NCAzOTIuMDcsNDcyLjMzICIvPgogICAgPHBvbHlnb24gZmlsbD0iIzM5MzkzOSIgZmlsbC1ydWxlPSJub256ZXJvIiBwb2ludHM9IjAsNjUwLjU0IDM5Mi4wNyw4ODIuMjkgMzkyLjA3LDQ3Mi4zMyAiLz4KICAgPC9nPgogIDwvZz4KIDwvZz4KPC9zdmc+Cg==";
@@ -92,6 +119,10 @@ export class InjectedWallet extends EVMWallet<
         return "https://rabby.io/";
       case InjectedWallets.OktoWallet:
         return "https://okto.tech/";
+      case InjectedWallets.PhantomWallet:
+        return "https://phantom.app/";
+      case InjectedWallets.BackpackWallet:
+        return "https://www.backpack.app/";
       default:
         return "https://ethereum.org/";
     }
@@ -123,8 +154,21 @@ export class InjectedWallet extends EVMWallet<
         return "data:image/svg+xml;charset=UTF-8,%3csvg width='83' height='82' viewBox='0 0 83 82' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cg clip-path='url(%23clip0_1120_17431)'%3e%3cpath d='M82.4999 41C82.4999 63.6436 64.1437 81.9999 41.4999 81.9999C18.8563 81.9999 0.500009 63.6436 0.5 41C0.499991 18.3564 18.8563 8.54166e-06 41.4999 0C64.1435 -8.54166e-06 82.4999 18.3564 82.4999 41Z' fill='url(%23paint0_linear_1120_17431)'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M41.5 18.8601C29.2724 18.8601 19.36 28.7725 19.36 41.0001C19.36 42.2001 19.4555 43.3779 19.6392 44.5261C19.7607 45.31 20.2188 47.0099 21.079 47.5385C22.1525 48.1981 23.3676 47.631 24.3623 47.1668L24.3671 47.1646C25.1635 46.7929 27.5018 45.703 28.5714 45.2045C28.8163 45.0825 29.4633 44.9192 30.0923 45.2412C30.8786 45.6437 31.1095 46.4705 31.0627 46.9635C31.0159 47.4565 30.7506 48.1075 30.0807 48.4179C29.5448 48.6663 26.3908 50.1362 24.8808 50.8402C24.5568 50.9654 23.8392 51.4349 23.5615 52.3107C23.2142 53.4054 23.7556 54.2502 23.9452 54.493C24.0869 54.686 24.5091 55.1169 25.0646 55.2966C25.7591 55.5213 26.3554 55.4355 26.8211 55.2231C27.1936 55.0532 34.584 51.6064 38.2326 49.9043C38.4717 49.7857 39.1066 49.6309 39.7336 49.9603C40.5174 50.372 40.7431 51.1479 40.7035 51.6269C40.6639 52.1059 40.3987 52.8106 39.7455 53.1154C39.2229 53.3592 34.3691 55.6194 32.0075 56.7189C31.5911 56.9074 30.7459 57.5713 30.6966 58.7187C30.6349 60.153 31.6269 60.8328 32.0421 61.0241C32.3698 61.193 33.232 61.4351 34.0587 61.0526C34.8853 60.6702 43.6698 56.5731 47.9588 54.5724C48.2131 54.4411 48.9044 54.2717 49.4937 54.5724C50.2655 54.9662 50.5219 55.6383 50.5219 56.1467C50.5219 56.6551 50.4988 57.028 49.6946 57.7484C48.9911 58.3787 47.9588 58.9988 44.4412 60.4978C43.2365 61.0112 42.4155 61.3891 42.5506 62.0374C42.652 62.5245 43.0066 62.7098 44.1846 62.6565C45.3626 62.6032 50.6669 62.1869 55.9806 57.7484C60.6719 53.6887 63.64 47.691 63.64 41.0001C63.64 38.5346 63.237 36.1632 62.4932 33.9482C62.2405 34.0538 61.963 34.1121 61.672 34.1121C60.4945 34.1121 59.54 33.1576 59.54 31.9801C59.54 31.1326 60.0345 30.4005 60.7508 30.0568C56.9411 23.3694 49.7471 18.8601 41.5 18.8601ZM49.7 32.8001C49.7 33.9776 48.7455 34.9321 47.568 34.9321C46.3905 34.9321 45.436 33.9776 45.436 32.8001C45.436 31.6226 46.3905 30.6681 47.568 30.6681C48.7455 30.6681 49.7 31.6226 49.7 32.8001Z' fill='white'/%3e%3c/g%3e%3cdefs%3e%3clinearGradient id='paint0_linear_1120_17431' x1='41.4999' y1='0' x2='41.4999' y2='81.9999' gradientUnits='userSpaceOnUse'%3e%3cstop stop-color='%236246F5'/%3e%3cstop offset='0.493007' stop-color='%235166EE'/%3e%3cstop offset='1' stop-color='%2356B9F9'/%3e%3c/linearGradient%3e%3cclipPath id='clip0_1120_17431'%3e%3crect width='82' height='82' fill='white' transform='translate(0.5)'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e";
       case InjectedWallets.CoinbaseWallet:
         return "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAwIiBoZWlnaHQ9IjEwMDAiIHZpZXdCb3g9IjAgMCAxMDAwIDEwMDAiIGZpbGw9Im5vbmUiPgo8Y2lyY2xlIGN4PSI1MDAiIGN5PSI1MDAiIHI9IjUwMCIgZmlsbD0iIzAwNTJGRiIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTE1MCA1MDBDMTUwIDY5My4zIDMwNi43IDg1MCA1MDAgODUwQzY5My4zIDg1MCA4NTAgNjkzLjMgODUwIDUwMEM4NTAgMzA2LjcgNjkzLjMgMTUwIDUwMCAxNTBDMzA2LjcgMTUwIDE1MCAzMDYuNyAxNTAgNTAwWk00MTAuNTU2IDM4Ny4yMjJDMzk3LjY2OSAzODcuMjIyIDM4Ny4yMjIgMzk3LjY2OSAzODcuMjIyIDQxMC41NTZWNTg5LjQ0NEMzODcuMjIyIDYwMi4zMzEgMzk3LjY2OSA2MTIuNzc4IDQxMC41NTYgNjEyLjc3OEg1ODkuNDQ0QzYwMi4zMzEgNjEyLjc3OCA2MTIuNzc4IDYwMi4zMzEgNjEyLjc3OCA1ODkuNDQ0VjQxMC41NTZDNjEyLjc3OCAzOTcuNjY5IDYwMi4zMzEgMzg3LjIyMiA1ODkuNDQ0IDM4Ny4yMjJINDEwLjU1NloiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPg==";
+      case InjectedWallets.PhantomWallet:
+        return "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDgiIGhlaWdodD0iMTA4IiB2aWV3Qm94PSIwIDAgMTA4IDEwOCIgZmlsbD0ibm9uZSI+CjxyZWN0IHdpZHRoPSIxMDgiIGhlaWdodD0iMTA4IiByeD0iMjYiIGZpbGw9IiNBQjlGRjIiLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik00Ni41MjY3IDY5LjkyMjlDNDIuMDA1NCA3Ni44NTA5IDM0LjQyOTIgODUuNjE4MiAyNC4zNDggODUuNjE4MkMxOS41ODI0IDg1LjYxODIgMTUgODMuNjU2MyAxNSA3NS4xMzQyQzE1IDUzLjQzMDUgNDQuNjMyNiAxOS44MzI3IDcyLjEyNjggMTkuODMyN0M4Ny43NjggMTkuODMyNyA5NCAzMC42ODQ2IDk0IDQzLjAwNzlDOTQgNTguODI1OCA4My43MzU1IDc2LjkxMjIgNzMuNTMyMSA3Ni45MTIyQzcwLjI5MzkgNzYuOTEyMiA2OC43MDUzIDc1LjEzNDIgNjguNzA1MyA3Mi4zMTRDNjguNzA1MyA3MS41NzgzIDY4LjgyNzUgNzAuNzgxMiA2OS4wNzE5IDY5LjkyMjlDNjUuNTg5MyA3NS44Njk5IDU4Ljg2ODUgODEuMzg3OCA1Mi41NzU0IDgxLjM4NzhDNDcuOTkzIDgxLjM4NzggNDUuNjcxMyA3OC41MDYzIDQ1LjY3MTMgNzQuNDU5OEM0NS42NzEzIDcyLjk4ODQgNDUuOTc2OCA3MS40NTU2IDQ2LjUyNjcgNjkuOTIyOVpNODMuNjc2MSA0Mi41Nzk0QzgzLjY3NjEgNDYuMTcwNCA4MS41NTc1IDQ3Ljk2NTggNzkuMTg3NSA0Ny45NjU4Qzc2Ljc4MTYgNDcuOTY1OCA3NC42OTg5IDQ2LjE3MDQgNzQuNjk4OSA0Mi41Nzk0Qzc0LjY5ODkgMzguOTg4NSA3Ni43ODE2IDM3LjE5MzEgNzkuMTg3NSAzNy4xOTMxQzgxLjU1NzUgMzcuMTkzMSA4My42NzYxIDM4Ljk4ODUgODMuNjc2MSA0Mi41Nzk0Wk03MC4yMTAzIDQyLjU3OTVDNzAuMjEwMyA0Ni4xNzA0IDY4LjA5MTYgNDcuOTY1OCA2NS43MjE2IDQ3Ljk2NThDNjMuMzE1NyA0Ny45NjU4IDYxLjIzMyA0Ni4xNzA0IDYxLjIzMyA0Mi41Nzk1QzYxLjIzMyAzOC45ODg1IDYzLjMxNTcgMzcuMTkzMSA2NS43MjE2IDM3LjE5MzFDNjguMDkxNiAzNy4xOTMxIDcwLjIxMDMgMzguOTg4NSA3MC4yMTAzIDQyLjU3OTVaIiBmaWxsPSIjRkZGREY4Ii8+Cjwvc3ZnPg==";
+      case InjectedWallets.BackpackWallet:
+        return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJcAAACXCAYAAAAYn8l5AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAgdSURBVHgB7d1dchPXFgXgtVvi1n27er1VkMgjQAwgUjMCfEeAGQHcEWBGgD0CzAgCI7DsDCBmBFZsqvKqx1TZOjvntERiHExwYJ+zu3t9L3aByyW5l87/j4Aap3U9GQATDZhUot/HfxorMBLFKH4/uvbjSxUsJX5N3weVdwPF4mKAk635fA5qCHoqhml0Z4UdrfQRFBP8NUD/nGAuQd4OBnjz3/l8gZ7qXbhiqOqh6vMYqBo5xKBpkNff/TQ/QM/0JlzvY7Wnqi+zheqa+IdeXFTyv1htnqAnehGu8+n0eXyru3BAoXurqnoRQ7ZEx3U6XLEKHMcq8FWp0uomqRQbVPKw6+2xzoYrBWugehh7e2M4lAKGWE3e7XA12clweQ/WFcthJQ+6WoJV6KCWBCsZrYIepmERdFDnwnU2nb5sSbAacaA2tQt/RAd1KlxpDEsgz9A2scPxyw91+1733+hUm+tsNju9RakVp3DEdDhAVD81dXST5WUlW10aohiiI87qekeCjq/80xIi86D4RSqkHtnyDnDyW/ya+wE2U02bucpUDcb5y3EluB//awzVyebHRlVAKr120RGdKbnOZ7PDNIGcghQf5LwtPbAUvPgJn4SAOgXuUvCkDwOsREREREREREREbdHHNfTjzbe3mZq5rcXm67LPA6JdXc+VQjO5s8IEld7XtGVsvU1sjPziNFQTtmYLWqgwj98v+rCWvjPhSiVSDNO2yVYxA2klqgpONMjbO4P2TFfdRqvDdW3vYY026+AWtFaGq5nsDeEp1mu3OrWKs1lbH4M2EHnR9tKsVeHqcqg+RQQHbQ5Za8J1Pp0+3ew97Hyorom9Td27d3z8Ai3jPlxe9x7m1sYd267X0L+fTh8Pg/7c92AlzUaO+LdY7x5vB7cll6ct+N60Zce2y3C9n81eqWIHdKM27Nh2Vy0yWF9mvdFDD1PTAU65KrkYrH9GoDt3j49fwxk34Wp2Svvc0Nrsb5TNZHQqMUQ/2sLmgseAuQiXu8a7yDzO+73+3Ba1dJhciBPicTL8MVRreBAb+fccnclaPFxndb0twcVZCXGwUvYvK+zddplMc6pOwG4sPUq3f1ydmlM0XG6OOool1VDw5Gsfiof3sxlsfeBhHVnR3mIaeS9/Io28uHc0/yZjRvGBLr47OtpKJSAK8XRqTrFwpbMdyo+8x2Adz3fxjcXf+Sz9bpTi5NScItWij+rQJlhXnU/rvfikn6KM4u2vIiVX0/gt2S4RHFgHK2lKMGmWNZcwukwT/gVlD1cqtUr2qpp5OclXZV2KPMH6Gpf8YvV49kNsfhSSPVyp1EJBQfMuvkuN/FCwgV+JPi915mrWcHkotUqsUQ9x7AyFSq/Ue9wcKpdd1nB5KLVQQBpziqVXsamZKnYqSpRe2cKV3lwstR6hoLSFC4VUFd6gnFGJ0itbuAbANgquf09VYslu+WbOr9io+aBAcyRbuETLzrvFaukdCpM/t/lnl9pe53VdI6Ms4WrOZyg8Gh//uMVXbK5KBzzdM5lRlnDFKrFGaYriE7lA4degmORs2GcJV+kqsXkNpR/sWunXMKpW+Vb6moer+aQ42Bqm4uI+oDEKq6p8PfYcJdcEPhTfqS0edotnrBrNwxXHV2o4EKdB7qOwOJj5PcprbuxABvbhEp3BAy1bgqYeczqEDg6ETB94+2pR/VSLucd5rnLRY97I9YE3DdembndzKk3JXquHHvMftBvVopdSq6GK7RITuB4Gka8Z/frnwcNmTMNVrXyFKxoNQsh+SsxQ9SWcucjwwbctucTfQW1pV3fOttdmI8o2nNGV/ZibdbU4hkMS9FWO6nFdHWr2kvKLSMvDFXslHsZ1/mKzt+/QMmBuNvzeYCD6HxhzfbKgqdhjSgGzaNh6D1aikDGMmYYrxxv4KjFgq/BtAxaDVXsPVkPVvFnQ35JrI1WRl0FPv/as0VTFpmOghqEFwUKeec4haEN2309nOwo9GFbV6y9dEh1DNRmG8AhB0xZ+d73jkky385/N6lOPB6V9EcH8ykVQH63DGjRHRmLSTKP4md66lbTk+u5xOjTFDkuum8QR9QpaVwGfPOtB1j9Dn9H7NhfZYbjIDMNFZhguMsNwkRmGi8wwXGSG4SIzDBeZYbjIDMNFZhguMsNwkRmGi8wwXGSG4SIzDBeZYbjIDMNFZhguMsNwkRmGi8wwXGSG4SIzDBeZYbh6SkUWMGZ7hJKi2O2o9Hka7J+Nabiau52l/FV09DEVvMtx17fpKTcfnE/rXRV93IZzqzpuGR/5/r3j+S4yyBKuD9IBaf92dOlB35S8hpmIiIiIiIiIiIiIrsk2Qr+5IWwMjtCXdLI1ny+RiXm4UqgGAXsCR3c895gIDi5E/p8jZKbhaoKl+jMnrJ0RnFyKPLQOmOmSm2EITxkshxSTKuAZjJmGSyDu7namtQr6CMZsFwsKr4jzKsd9i1xDT2YYLjLDcJEZhovMMFxkhuEiMwwXmWG4yAzDRWYYLjLDcJEZhovMMFxkhuEiMwwXmWG4yAzDRWYYLjLDcJEZhovMMFxkhuEiMwwXmWG4yAzDRWYYLjLDcJEZhovMGJ9yowuQS62/bzGoHIFcCgFvYcz6vsUDkEv/GuANjJmGa6u5gk32Qc7Ifo7r8cwb9JcVdlWwALkgwCI9E2RgHq50qOtK5CEDVl4K1qCyP2j3gyxDEal6jAF7oBBeqF6M7F9U8iDnbbFZryFOTut6nE4SrgT3oToBLz2wsoTICRRHsRrcy3m5wQe/A/gfCSdYaThuAAAAAElFTkSuQmCC";
       default:
         return this.config.genericIcon || GENERIC_ICON;
+    }
+  }
+
+  getWalletState(): WalletState {
+    const detectionStrategy = DetectionStrategies[this.getName()];
+    if (detectionStrategy) {
+      return detectionStrategy();
+    } else {
+      return super.getWalletState();
     }
   }
 
