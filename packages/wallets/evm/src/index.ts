@@ -1,4 +1,5 @@
 export * from "./evm";
+export * from "./eip6963";
 export * from "./metamask";
 export * from "./binance";
 export * from "./coinbase";
