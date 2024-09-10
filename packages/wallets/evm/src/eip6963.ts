@@ -36,6 +36,10 @@ class Eip6963Connector extends InjectedConnector {
   }
 }
 
+/**
+ * Add a new entry to support a new wallet
+ * that supports EIP-6963
+ */
 export enum Eip6963Wallets {
   PhantomWallet = "Phantom",
   MetaMaskWallet = "MetaMask",
@@ -77,20 +81,22 @@ export class Eip6963Wallet extends EVMWallet<
 
   constructor(readonly name: string) {
     super();
-    window.addEventListener(
-      "eip6963:announceProvider",
-      (event: AnounceProvider) => {
-        console.debug("eip6963:announceProvider", event.detail);
-        if (event.detail.info.name === name) {
-          this.detail = event.detail;
-          this.createConnector();
-        }
-      }
-    );
+    window.addEventListener("eip6963:announceProvider", this.registerProvider);
     window.dispatchEvent(new Event("eip6963:requestProvider"));
   }
 
+  registerProvider = (event: AnounceProvider) => {
+    if (event.detail.info.name === this.name) {
+      this.detail = event.detail;
+      this.createConnector();
+    }
+  };
+
   createConnector() {
+    window.removeEventListener(
+      "eip6963:announceProvider",
+      this.registerProvider
+    );
     return new Eip6963Connector(this, {
       chains: this.chains,
       options: this.connectorOptions,
