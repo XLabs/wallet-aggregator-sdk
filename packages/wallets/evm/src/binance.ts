@@ -31,7 +31,7 @@ export class BinanceWallet extends EVMWallet<
   }
 
   getName(): string {
-    return "Binance Wallet";
+    return "Binance W3W";
   }
 
   getUrl(): string {
