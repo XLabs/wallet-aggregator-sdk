@@ -1,5 +1,6 @@
 export * from "./evm";
 export * from "./metamask";
+export * from "./binance";
 export * from "./coinbase";
 export * from "./walletConnect";
 export * from "./walletConnectLegacy";
