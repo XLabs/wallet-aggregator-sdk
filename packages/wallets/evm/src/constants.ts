@@ -25,7 +25,7 @@ export const EVM_CHAINS = {
 } as const;
 
 export const EVM_CHAINS_TESTNET = {
-  ethereum: 5,
+  ethereum: 17000,
   bsc: 97,
   polygon: 80001,
   avalanche: 43113,
