@@ -22,6 +22,7 @@ export const EVM_CHAINS = {
   blast: 81457,
   xlayer: 196,
   mantle: 5000,
+  worldchain: 480,
 } as const;
 
 export const EVM_CHAINS_TESTNET = {
@@ -45,6 +46,7 @@ export const EVM_CHAINS_TESTNET = {
   blast: 168587773,
   xlayer: 195,
   mantle: 5001,
+  worldchain: 4801,
 } as const;
 
 export type EVMChainName =
@@ -68,7 +70,8 @@ export type EVMChainName =
   | "scroll"
   | "blast"
   | "xlayer"
-  | "mantle";
+  | "mantle"
+  | "worldchain";
 
 type Indexable = string | number | symbol;
 
