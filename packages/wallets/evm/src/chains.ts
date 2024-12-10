@@ -259,6 +259,49 @@ export const mantleTestnet = {
   },
 } as const satisfies Chain;
 
+export const worldchain = {
+  id: 480,
+  name: "World Chain",
+  network: "worldchain",
+  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ["https://worldchain-mainnet.g.alchemy.com/public"],
+    },
+    public: {
+      http: ["https://worldchain-mainnet.g.alchemy.com/public"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "World Scan",
+      url: "https://worldscan.org/",
+    },
+  },
+} as const satisfies Chain;
+
+export const worldchainTestnet = {
+  id: 4801,
+  name: "World Chain",
+  network: "worldchain-sepolia",
+  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ["https://worldchain-sepolia.g.alchemy.com/public"],
+    },
+    public: {
+      http: ["https://worldchain-sepolia.g.alchemy.com/public"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "World Scan",
+      url: "https://worldchain-sepolia.explorer.alchemy.com/",
+    },
+  },
+  testnet: true,
+} as const satisfies Chain;
+
 export const DEFAULT_CHAINS: Chain[] = [
   ...Object.values(CHAINS),
   acala,
@@ -275,4 +318,6 @@ export const DEFAULT_CHAINS: Chain[] = [
   xlayerTestnet,
   mantle,
   mantleTestnet,
+  worldchain,
+  worldchainTestnet,
 ];
