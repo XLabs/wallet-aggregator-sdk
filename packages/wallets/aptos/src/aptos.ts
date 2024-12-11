@@ -112,26 +112,27 @@ export class AptosWallet extends Wallet<
   private network: NetworkInfo | undefined;
   private walletCore: WalletCore;
   /**
-   * @param adapter The Aptos wallet adapter which will serve as the underlying connection to the wallet
+   * @param selectedAptosWallet The Aptos wallet adapter which will serve as the underlying connection to the wallet
    */
   constructor(
-    private readonly adapter: AnyAptosWallet,
+    private readonly selectedAptosWallet: AnyAptosWallet,
     dappConfig?: DappConfig
   ) {
     super();
+    // To avoid reusing the same WalletCore object for multiple wallets we will generate one for each one
     this.walletCore = new WalletCore([], [], dappConfig, true);
   }
 
   getName(): string {
-    return getWalletOverride("name", this.adapter);
+    return getWalletOverride("name", this.selectedAptosWallet);
   }
 
   getUrl(): string {
-    return this.adapter.url;
+    return this.selectedAptosWallet.url;
   }
 
   async connect(): Promise<string[]> {
-    await this.walletCore.connect(this.adapter.name);
+    await this.walletCore.connect(this.selectedAptosWallet.name);
 
     // Set address
     this.address = this.walletCore.account?.address;
@@ -157,6 +158,8 @@ export class AptosWallet extends Wallet<
   }
 
   disconnect(): Promise<void> {
+    this.walletCore.off("accountChange");
+    this.walletCore.off("networkChange");
     return this.walletCore.disconnect();
   }
 
@@ -214,15 +217,12 @@ export class AptosWallet extends Wallet<
   }
 
   getIcon(): string {
-    return getWalletOverride("icon", this.adapter);
+    return getWalletOverride("icon", this.selectedAptosWallet);
   }
 
   getWalletState(): WalletState {
-    const state = this.adapter.readyState;
-    if (!("state" in WalletState) || !state) {
-      throw new Error(`Unknown wallet state ${state}`);
-    }
-    return WalletState[state];
+    const state = this.selectedAptosWallet.readyState;
+    return WalletState[state || WalletState.NotDetected];
   }
 
   getFeatures(): BaseFeatures[] {
