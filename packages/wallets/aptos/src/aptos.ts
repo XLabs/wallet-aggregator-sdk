@@ -1,4 +1,4 @@
-import { AccountAuthenticator } from "@aptos-labs/ts-sdk";
+import { AccountAuthenticator, Network } from "@aptos-labs/ts-sdk";
 
 import {
   WalletName,
@@ -9,8 +9,18 @@ import {
   AnyAptosWallet,
   AnyRawTransaction,
   InputTransactionData,
+  Wallet as IAptosWallet,
   DappConfig,
 } from "@aptos-labs/wallet-adapter-core";
+
+import { BitgetWallet } from "@bitget-wallet/aptos-wallet-adapter";
+import { MartianWallet } from "@martianwallet/aptos-wallet-adapter";
+import { MSafeWalletAdapter } from "@msafe/aptos-wallet-adapter";
+import { OKXWallet } from "@okwallet/aptos-wallet-adapter";
+import { PontemWallet } from "@pontem/wallet-adapter-plugin";
+import { TrustWallet } from "@trustwallet/aptos-wallet-adapter";
+import { FewchaWallet } from "fewcha-plugin-wallet-adapter";
+import { PetraWallet } from "petra-plugin-wallet-adapter";
 
 import {
   BaseFeatures,
@@ -110,17 +120,56 @@ export class AptosWallet extends Wallet<
 > {
   private address: string | undefined;
   private network: NetworkInfo | undefined;
-  private walletCore: WalletCore;
   /**
    * @param selectedAptosWallet The Aptos wallet adapter which will serve as the underlying connection to the wallet
+   * @param walletCore WalletCore class obtained via walletCoreFactory static function
    */
   constructor(
     private readonly selectedAptosWallet: AnyAptosWallet,
-    dappConfig?: DappConfig
+    private readonly walletCore: WalletCore
   ) {
     super();
-    // To avoid reusing the same WalletCore object for multiple wallets we will generate one for each one
-    this.walletCore = new WalletCore([], [], dappConfig, true);
+  }
+
+  /**
+   * @param config WalletCore configuration
+   * @param withNonStandard Add nonstandard wallets to the wallet core, these includes the following wallets:
+   * - BitgetWallet
+   * - MartianWallet
+   * - MSafeWalletAdapter
+   * - OKXWallet
+   * - PontemWallet
+   * - TrustWallet
+   * - FewchaWallet
+   * - PetraWallet
+   * @param newWalletsToAdd Add new wallets to the wallet core
+   * @returns {WalletCore} WalletCore instance
+   */
+  static walletCoreFactory(
+    config: DappConfig = { network: "mainnet" as Network },
+    withNonStandard = true,
+    newWalletsToAdd: IAptosWallet[] = []
+  ): WalletCore {
+    const nonStandardWallets: IAptosWallet[] = [
+      new BitgetWallet(),
+      new MartianWallet(),
+      new MSafeWalletAdapter(),
+      new OKXWallet(),
+      new PontemWallet(),
+      new TrustWallet() as IAptosWallet,
+      new FewchaWallet() as IAptosWallet,
+      // We are forcing PetraWallet to avoid the NotDetected issue
+      new PetraWallet(),
+    ];
+
+    return new WalletCore(
+      withNonStandard
+        ? [...nonStandardWallets, ...newWalletsToAdd]
+        : newWalletsToAdd,
+      [],
+      config,
+      true
+    );
   }
 
   getName(): string {

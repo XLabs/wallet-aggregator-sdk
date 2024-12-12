@@ -130,9 +130,33 @@ importers:
       '@aptos-labs/wallet-standard':
         specifier: ^0.2.0
         version: 0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3)
+      '@bitget-wallet/aptos-wallet-adapter':
+        specifier: ^0.1.2
+        version: 0.1.2(@aptos-labs/wallet-adapter-core@4.23.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/core@1.4.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/protocol@0.0.6)(graphql-request@7.1.2(graphql@16.6.0)))(@mizuwallet-sdk/protocol@0.0.6)(@telegram-apps/bridge@1.7.1)(@wallet-standard/core@1.0.3)(aptos@1.4.0))(aptos@1.4.0)
+      '@martianwallet/aptos-wallet-adapter':
+        specifier: ^0.0.5
+        version: 0.0.5
+      '@msafe/aptos-wallet-adapter':
+        specifier: ^1.1.3
+        version: 1.1.3(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/core@1.4.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/protocol@0.0.6)(graphql-request@7.1.2(graphql@16.6.0)))(@mizuwallet-sdk/protocol@0.0.6)(@telegram-apps/bridge@1.7.1)(@wallet-standard/core@1.0.3)
+      '@okwallet/aptos-wallet-adapter':
+        specifier: ^0.0.7
+        version: 0.0.7(@aptos-labs/wallet-adapter-core@4.23.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/core@1.4.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/protocol@0.0.6)(graphql-request@7.1.2(graphql@16.6.0)))(@mizuwallet-sdk/protocol@0.0.6)(@telegram-apps/bridge@1.7.1)(@wallet-standard/core@1.0.3)(aptos@1.4.0))(aptos@1.4.0)
+      '@pontem/wallet-adapter-plugin':
+        specifier: ^0.2.1
+        version: 0.2.1
+      '@trustwallet/aptos-wallet-adapter':
+        specifier: ^0.1.6
+        version: 0.1.6
       '@xlabs-libs/wallet-aggregator-core':
         specifier: workspace:^
         version: link:../core
+      fewcha-plugin-wallet-adapter:
+        specifier: ^0.1.3
+        version: 0.1.3(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      petra-plugin-wallet-adapter:
+        specifier: ^0.4.5
+        version: 0.4.5(@aptos-labs/ts-sdk@1.33.1)(aptos@1.4.0)
     devDependencies:
       '@types/node':
         specifier: ^18.11.9
@@ -581,6 +605,21 @@ packages:
     resolution: {integrity: sha512-d6nWtUI//fyEN8DeLjm3+ro87Ad6+IKwR9pCqfrs/Azahso1xR1Llxd/O6fj/m1DDsuDj/HAsCsy5TC/aKD6Eg==}
     engines: {node: '>=11.0.0'}
 
+  '@aptos-labs/wallet-adapter-core@0.1.7':
+    resolution: {integrity: sha512-g3HvX31kuFT5HqEe9Vh0ZgV1u0Otsfx54yeAwL7RO8CioBVBjYELhMsOYz0BOjecmAKhQ14G60VU8MqDyzYkIA==}
+
+  '@aptos-labs/wallet-adapter-core@2.1.0':
+    resolution: {integrity: sha512-ZSCCsFt2heEh9IDaObbzw8EwqfzJGCWGBoaGouBtOYn2DVkh5R0P9xRj6ryF9cuO+tkfP+8KZmZ9m4c+xsJN2g==}
+
+  '@aptos-labs/wallet-adapter-core@2.2.0':
+    resolution: {integrity: sha512-JL0zTXXoSQba1EDGqY5yTJxZVKMKwgMKZNA1JyV54s5loWzE2tinwg002EB+ONodkVmMhKbWnajCFFOgvgk+NQ==}
+
+  '@aptos-labs/wallet-adapter-core@3.16.0':
+    resolution: {integrity: sha512-4pBNoDLzuIOxdNwJEO770bkxROuEIQis0H0lFOVVCL33jK8/MWLlQo8hFgc71ovN1vWfdERDEgPLbAtVChploQ==}
+    peerDependencies:
+      '@aptos-labs/ts-sdk': ^1.13.2
+      aptos: ^1.21.0
+
   '@aptos-labs/wallet-adapter-core@4.23.0':
     resolution: {integrity: sha512-7QC4Zae9eFmPQpSkhElF69zn5rVpSIoB437yuDktUsZY1C3YFCRHvxkFk7mO0zMdb3ec6NikD62Iag9oFuLKMg==}
     peerDependencies:
@@ -655,6 +694,12 @@ packages:
     peerDependencies:
       viem: ^1.19.3
       wagmi: ^1.4.7
+
+  '@bitget-wallet/aptos-wallet-adapter@0.1.2':
+    resolution: {integrity: sha512-6dImtKlwdk0zuYKQpeZ/nOVyyBXqTxVin9ZLgdyPXsnBcpy0PnyGgffsfsOVHxk93eOdiRjNxoiCs1b4a+1ssg==}
+    peerDependencies:
+      '@aptos-labs/wallet-adapter-core': 3.5.0
+      aptos: ^1.21.0
 
   '@blockshake/defly-connect@1.1.1':
     resolution: {integrity: sha512-Ft3/zqnUeV5dmTXIyTB5amyUdwG899NQ9PSVdGf9oNsnq+Q+IJMVo+GjntTC8sC7/z9cDRYJ2xnj3YjCtTfQcg==}
@@ -989,6 +1034,9 @@ packages:
   '@evanhahn/lottie-web-light@5.8.1':
     resolution: {integrity: sha512-U0G1tt3/UEYnyCNNslWPi1dB7X1xQ9aoSip+B3GTKO/Bns8yz/p39vBkRSN9d25nkbHuCsbjky2coQftj5YVKw==}
 
+  '@fewcha/web3@0.1.38':
+    resolution: {integrity: sha512-t39g9V5zAiYZPGSahp4a0B4WM5IqxQJxr5ednv0f0l5amJZMPyOinFeZDgkLqTIzhe7yq6yIndKbqzPfdu1rng==}
+
   '@fractalwagmi/popup-connection@1.0.18':
     resolution: {integrity: sha512-QcHe8bfeaQAKnFEvnxLqIAD7RFL7Z7bzn0BnOyDJxuj55NFBRVFGmq69MCqn2o6kmmfmusfYSQHNLWiv5L8H5A==}
     peerDependencies:
@@ -1304,6 +1352,9 @@ packages:
   '@lit/reactive-element@1.6.1':
     resolution: {integrity: sha512-va15kYZr7KZNNPZdxONGQzpUr+4sxVu7V/VG7a8mRfPPXUyhEYj5RzXCQmGrlP3tAh0L3HHm5AjBMFYRqlM9SA==}
 
+  '@martianwallet/aptos-wallet-adapter@0.0.5':
+    resolution: {integrity: sha512-x6Q3bM7HSltCAD8Zl0AeU1AFhu0M+Ho22QP+oOXWhdb4TledVVLNfGIAx1jP4slqfcpDGOjnibPtPt8Bm32wmg==}
+
   '@metamask/detect-provider@2.0.0':
     resolution: {integrity: sha512-sFpN+TX13E9fdBDh9lvQeZdJn4qYoRb/6QF2oZZK/Pn559IhCFacPMU1rMuqyXoFQF3JSJfii2l98B87QDPeCQ==}
     engines: {node: '>=14.0.0'}
@@ -1416,6 +1467,15 @@ packages:
     resolution: {integrity: sha512-z10PF9JV6SbjFq+/rYabM+8CVlMokgl8RFGvieSGNTmrkQanfHn+15XBrhG3BgUfvmTeSeyShfOHpG0i9zEdcg==}
     deprecated: Motion One for Vue is deprecated. Use Oku Motion instead https://oku-ui.com/motion
 
+  '@msafe/aptos-wallet-adapter@1.1.3':
+    resolution: {integrity: sha512-/5ftbNac9j2Vc6YOqET4IdkhiJnMzuy9LcnGP8ptLWHVuye5P/pAjIpv0A07gOM4/siUJQzlXkBxXdLYF9p8wQ==}
+
+  '@msafe/aptos-wallet@6.1.1':
+    resolution: {integrity: sha512-g/2TPRqyChciaw/S69EBr7CgzYJBT1LJulU0nMNnkehJc+ZX/fNN+5JXEuea+a0rXsk/flcbCSfvT2JtS0+/mQ==}
+
+  '@mysten/bcs@0.3.0':
+    resolution: {integrity: sha512-Me6OkrS+idPq+ZUM1MEcKP9YOTacZKLwo0gf8rfeImQ+G25tqPRhjpccZGOUJGOKh+gojH2vjkWi2TYJv9kNCg==}
+
   '@mysten/bcs@0.7.1':
     resolution: {integrity: sha512-wFPb8bkhwrbiStfZMV5rFM7J+umpke59/dNjDp+UYJKykNlW23LCk2ePyEUvGdb62HGJM1jyOJ8g4egE3OmdKA==}
 
@@ -1427,6 +1487,11 @@ packages:
 
   '@mysten/bcs@0.9.0':
     resolution: {integrity: sha512-h56essa8oSS4/J0Dby8k8stMoOSt+QZIEIeZNtgTOWh9HeV69yFg2BUg/+Rk7jzfWzvUmw9lFyKNipXcD5QOTw==}
+
+  '@mysten/sui.js@0.13.0':
+    resolution: {integrity: sha512-8s4IYN6GH95Begjuy0Xr45vQyyVZZHx83g5hJOpT9o98kQgdjaO218UdqQRVoFt/TODpNsTaI5OlymlKCgFVTQ==}
+    engines: {node: '>=16'}
+    deprecated: This package has been renamed to @mysten/sui, please update to use the renamed package.
 
   '@mysten/sui.js@0.32.2':
     resolution: {integrity: sha512-/Hm4xkGolJhqj8FvQr7QSHDTlxIvL52mtbOao9f75YjrBh7y1Uh9kbJSY7xiTF1NY9sv6p5hUVlYRJuM0Hvn9A==}
@@ -1495,6 +1560,10 @@ packages:
     resolution: {integrity: sha512-MVC8EAQp7MvEcm30KWENFjgR+Mkmf+D189XJTkFIlwohU5hcBbn1ZkKq7KVTi2Hme3PMGF390DaL52beVrIihQ==}
     engines: {node: '>= 16'}
 
+  '@noble/hashes@1.3.3':
+    resolution: {integrity: sha512-V7/fPHgl+jsVPXqqeOzT8egNj2iBIVt+ECeMMG8TdcnTikP3oaBtUVqpT/gYCR68aEBJSF+XbYUxStjbFMqIIA==}
+    engines: {node: '>= 16'}
+
   '@noble/hashes@1.6.0':
     resolution: {integrity: sha512-YUULf0Uk4/mAA89w+k3+yUYh6NrEvxZa5T6SY3wlMvE2chHkxFUUIDI8/XW1QSC357iA5pSnqt7XEhvFOqmDyQ==}
     engines: {node: ^14.21.3 || >=16}
@@ -1502,6 +1571,9 @@ packages:
   '@noble/hashes@1.6.1':
     resolution: {integrity: sha512-pq5D8h10hHBjyqX+cfBm0i8JUXJ0UhczFc4r74zbuT9XgewFo2E3J1cOaGtdZynILNmQ685YWGzGE1Zv6io50w==}
     engines: {node: ^14.21.3 || >=16}
+
+  '@noble/secp256k1@1.7.1':
+    resolution: {integrity: sha512-hOUk6AyBFmqVrv7k5WAw/LpszxVbj9gGN4JRkIX52fdFAj1UA61KXmZDvqVEm+pOyec3+fIeZB02LYa/pWOArw==}
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -1514,6 +1586,12 @@ packages:
   '@nodelib/fs.walk@1.2.8':
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
+
+  '@okwallet/aptos-wallet-adapter@0.0.7':
+    resolution: {integrity: sha512-n6Uhh8uzj6pRRXppKYUPRDxzb3x/wH9xy3uXqYMbjJbiPb5LrWhm8LYYkRpw3ZFFNH3B/taMILd2qygzWVDH5w==}
+    peerDependencies:
+      '@aptos-labs/wallet-adapter-core': 3.5.0
+      aptos: ^1.21.0
 
   '@open-rpc/client-js@1.8.1':
     resolution: {integrity: sha512-vV+Hetl688nY/oWI9IFY0iKDrWuLdYhf7OIKI6U1DcnJV7r4gAgwRJjEr1QVYszUc0gjkHoQJzqevmXMGLyA0g==}
@@ -1626,6 +1704,9 @@ packages:
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
+
+  '@pontem/wallet-adapter-plugin@0.2.1':
+    resolution: {integrity: sha512-mrhCT+mFsDtjFHZj9LBksY++ciQiAlr+gkHhvEzkuQkYuHkCf6HwKOkIlDL42cl7y8/15NrfZomEQ5Uxudhc3g==}
 
   '@project-serum/sol-wallet-adapter@0.2.0':
     resolution: {integrity: sha512-ed7wZwlDqjF88VCq7eHVO8njHqdUkBxBL8WEVOnB47ooLO4btOJt6GBdkKpKqKX86c86LiEROJclcdW8e7kIjg==}
@@ -2295,6 +2376,9 @@ packages:
   '@trezor/utxo-lib@1.0.5':
     resolution: {integrity: sha512-75DtK4COKftXWdNfAwudm9fVSC0bE3GSwd1wXWVrqFtiIVmwcLZohbdaVEo3Z6UqbCHWqzgiZBRfycX0EsYriw==}
 
+  '@trustwallet/aptos-wallet-adapter@0.1.6':
+    resolution: {integrity: sha512-vlu5JuxqMpGMLanayNKQpTC87zn4NMRo3k96iVI+IdwEeyIgiJbbFq+XqUAezzQG/U88u4jv3vK2x7cbPnNFIw==}
+
   '@types/bn.js@4.11.6':
     resolution: {integrity: sha512-pqr857jrp2kPuO9uRjZ3PwnJTjoQy+fcdxvBTvHm6dkmEL9q+hDD/2j/0ELOBPtPnS8LjCX0gI9nbl8lVkadpg==}
 
@@ -2867,6 +2951,11 @@ packages:
   anymatch@3.1.3:
     resolution: {integrity: sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==}
     engines: {node: '>= 8'}
+
+  aptos@1.21.0:
+    resolution: {integrity: sha512-PRKjoFgL8tVEc9+oS7eJUv8GNxx8n3+0byH2+m7CP3raYOD6yFKOecuwjVMIJmgfpjp6xH0P0HDMGZAXmSyU0Q==}
+    engines: {node: '>=11.0.0'}
+    deprecated: Package aptos is no longer supported, please migrate to https://www.npmjs.com/package/@aptos-labs/ts-sdk
 
   aptos@1.4.0:
     resolution: {integrity: sha512-D1yBXeyhiBKgJnUQX8iDXckZMPFwdJ9YfUZtRcDhUoR7qLX4hfmLQYemvLqtJvyTCf/Nggfp66hXX1Z8FdlEiQ==}
@@ -3686,6 +3775,9 @@ packages:
   fastq@1.14.0:
     resolution: {integrity: sha512-eR2D+V9/ExcbF9ls441yIuN6TI2ED1Y2ZcA5BmMtJsOkWOFRJQ0Jt0g1UwqXJJVAb+V+umH5Dfr8oh4EVP7VVg==}
 
+  fewcha-plugin-wallet-adapter@0.1.3:
+    resolution: {integrity: sha512-Ek59XhrkjVN+Yj1eBNI/SLGLgo9Sn1LVh8uDKgBaNix7nNAAJrgo2CoPCk/L595TSoO5FJtkBFdlnvRPAGJlAQ==}
+
   file-entry-cache@6.0.1:
     resolution: {integrity: sha512-7Gps/XWymbLk2QLYK4NzpMOrYjMhdIxXuIvy2QBsLE6ljuodKvdkWs/cpyJJ3CVIVpH0Oi1Hvg1ovbMzLdFBBg==}
     engines: {node: ^10.12.0 || >=12.0.0}
@@ -4103,6 +4195,11 @@ packages:
   jackspeak@3.4.3:
     resolution: {integrity: sha512-OGlZQpz2yfahA/Rd1Y8Cd9SIEsqvXkLVoSw/cgwhnhFMDbsQFeZYoJJ7bIZBS9BcamUW96asq/npPWugM+RQBw==}
 
+  jayson@3.7.0:
+    resolution: {integrity: sha512-tfy39KJMrrXJ+mFcMpxwBvFDetS8LAID93+rycFglIQM4kl3uNR3W4lBLE/FFhsoUCEox5Dt2adVpDm/XtebbQ==}
+    engines: {node: '>=8'}
+    hasBin: true
+
   jayson@4.1.0:
     resolution: {integrity: sha512-R6JlbyLN53Mjku329XoRT2zJAE6ZgOQ8f91ucYdMCD4nkGCF9kZSrcGXpHIU4jeKj58zUZke2p+cdQchU7Ly7A==}
     engines: {node: '>=8'}
@@ -4165,6 +4262,10 @@ packages:
   json-rpc-middleware-stream@4.2.3:
     resolution: {integrity: sha512-4iFb0yffm5vo3eFKDbQgke9o17XBcLQ2c3sONrXSbcOLzP8LTojqo8hRGVgtJShhm5q4ZDSNq039fAx9o65E1w==}
     engines: {node: '>=14.0.0'}
+
+  json-rpc-protocol@0.13.2:
+    resolution: {integrity: sha512-2InSi+c7wGESmvYcEVS0clctpJCodV7gLqLN1BIIPNK07wokXIwhOL8RQWU4O7oX5adChn6HJGtIU6JaUQ1P/A==}
+    engines: {node: '>=4'}
 
   json-rpc-random-id@1.0.1:
     resolution: {integrity: sha512-RJ9YYNCkhVDBuP4zN5BBtYAzEl03yq/jIIsyif0JY9qyJuQQZNeDK7anAPKKlyEtLSj2s8h6hNh2F8zO5q7ScA==}
@@ -4352,6 +4453,9 @@ packages:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
     hasBin: true
 
+  lossless-json@1.0.5:
+    resolution: {integrity: sha512-RicKUuLwZVNZ6ZdJHgIZnSeA05p8qWc5NW0uR96mpPIjN9WDLUg9+kj1esQU1GkPn9iLZVKatSQK5gyiaFHgJA==}
+
   lottie-web@5.10.2:
     resolution: {integrity: sha512-d0PFIGiwuMsJYaF4uPo+qG8dEorlI+xFI2zrrFtE1bGO4WoLIz+NjremxEq1swpR7juR10aeOtmNh3d6G3ub0A==}
 
@@ -4372,6 +4476,9 @@ packages:
   lru-cache@6.0.0:
     resolution: {integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==}
     engines: {node: '>=10'}
+
+  make-error@1.3.6:
+    resolution: {integrity: sha512-s8UhlNe7vPKomQhC1qFelMokr/Sc3AgNbso3n74mVPA5LTZwkB9NlXf4XPamLxJE8h0gh73rM94xvwRT2CVInw==}
 
   map-obj@4.3.0:
     resolution: {integrity: sha512-hdN1wVrZbb29eBGiGjJbeP8JbKjq1urkHJ/LIP/NY48MZ1QVXUsQBV1G1zvYFHn1XE06cwjBsOI2K3Ulnj1YXQ==}
@@ -4705,6 +4812,12 @@ packages:
   pbkdf2@3.1.2:
     resolution: {integrity: sha512-iuh7L6jA7JEGu2WxDwtQP1ddOpaJNC4KlDEFfdQajSGgGPNi4OyDc2R7QnbY2bR9QjBVGwgvTdNJZoE7RaxUMA==}
     engines: {node: '>=0.12'}
+
+  petra-plugin-wallet-adapter@0.4.5:
+    resolution: {integrity: sha512-x2S2xRAIz/5ytbB2wHCTJhqLBDsgWPEVmj7X2aril1BUplIGPJHTstgo8hqOngb2rtYbBY+wviyS9Di4IDCGRA==}
+    peerDependencies:
+      '@aptos-labs/ts-sdk': ^1.3.0
+      aptos: ^1.21.0
 
   picocolors@1.1.0:
     resolution: {integrity: sha512-TQ92mBOW0l3LeMeyLV6mzy/kWr8lkd/hp3mTg7wYK7zJhuBStmGMBG0BdeDZS/dZx1IukaX6Bk11zcln25o1Aw==}
@@ -6004,6 +6117,43 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
+  '@aptos-labs/wallet-adapter-core@0.1.7':
+    dependencies:
+      aptos: 1.21.0
+      eventemitter3: 4.0.7
+    transitivePeerDependencies:
+      - debug
+
+  '@aptos-labs/wallet-adapter-core@2.1.0':
+    dependencies:
+      aptos: 1.4.0
+      buffer: 6.0.3
+      eventemitter3: 4.0.7
+      tweetnacl: 1.0.3
+    transitivePeerDependencies:
+      - debug
+
+  '@aptos-labs/wallet-adapter-core@2.2.0':
+    dependencies:
+      aptos: 1.21.0
+      buffer: 6.0.3
+      eventemitter3: 4.0.7
+      tweetnacl: 1.0.3
+    transitivePeerDependencies:
+      - debug
+
+  '@aptos-labs/wallet-adapter-core@3.16.0(@aptos-labs/ts-sdk@1.33.1)(aptos@1.4.0)':
+    dependencies:
+      '@aptos-labs/ts-sdk': 1.33.1
+      '@aptos-labs/wallet-standard': 0.0.11
+      '@atomrigslab/aptos-wallet-adapter': 0.1.21(@aptos-labs/ts-sdk@1.33.1)
+      aptos: 1.4.0
+      buffer: 6.0.3
+      eventemitter3: 4.0.7
+      tweetnacl: 1.0.3
+    transitivePeerDependencies:
+      - debug
+
   '@aptos-labs/wallet-adapter-core@4.23.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/core@1.4.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/protocol@0.0.6)(graphql-request@7.1.2(graphql@16.6.0)))(@mizuwallet-sdk/protocol@0.0.6)(@telegram-apps/bridge@1.7.1)(@wallet-standard/core@1.0.3)(aptos@1.4.0)':
     dependencies:
       '@aptos-connect/wallet-adapter-plugin': 2.3.4(@aptos-labs/ts-sdk@1.33.1)(@aptos-labs/wallet-standard@0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3))(@telegram-apps/bridge@1.7.1)(aptos@1.4.0)
@@ -6176,6 +6326,11 @@ snapshots:
       - ts-node
       - utf-8-validate
 
+  '@bitget-wallet/aptos-wallet-adapter@0.1.2(@aptos-labs/wallet-adapter-core@4.23.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/core@1.4.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/protocol@0.0.6)(graphql-request@7.1.2(graphql@16.6.0)))(@mizuwallet-sdk/protocol@0.0.6)(@telegram-apps/bridge@1.7.1)(@wallet-standard/core@1.0.3)(aptos@1.4.0))(aptos@1.4.0)':
+    dependencies:
+      '@aptos-labs/wallet-adapter-core': 4.23.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/core@1.4.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/protocol@0.0.6)(graphql-request@7.1.2(graphql@16.6.0)))(@mizuwallet-sdk/protocol@0.0.6)(@telegram-apps/bridge@1.7.1)(@wallet-standard/core@1.0.3)(aptos@1.4.0)
+      aptos: 1.4.0
+
   '@blockshake/defly-connect@1.1.1(algosdk@1.24.0)(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
     dependencies:
       '@walletconnect/client': 1.8.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
@@ -6217,7 +6372,7 @@ snapshots:
   '@chainsafe/persistent-merkle-tree@0.6.1':
     dependencies:
       '@chainsafe/as-sha256': 0.4.1
-      '@noble/hashes': 1.3.2
+      '@noble/hashes': 1.6.1
 
   '@chainsafe/ssz@0.11.1':
     dependencies:
@@ -6342,7 +6497,7 @@ snapshots:
       '@cosmjs/encoding': 0.28.13
       '@cosmjs/math': 0.28.13
       '@cosmjs/utils': 0.28.13
-      '@noble/hashes': 1.3.2
+      '@noble/hashes': 1.6.1
       bn.js: 5.2.1
       elliptic: 6.5.4
       libsodium-wrappers: 0.7.10
@@ -7034,6 +7189,17 @@ snapshots:
       '@ethersproject/strings': 5.7.0
 
   '@evanhahn/lottie-web-light@5.8.1': {}
+
+  '@fewcha/web3@0.1.38(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+    dependencies:
+      '@mysten/sui.js': 0.13.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      aptos: 1.21.0
+      buffer: 6.0.3
+    transitivePeerDependencies:
+      - bufferutil
+      - debug
+      - encoding
+      - utf-8-validate
 
   '@fractalwagmi/popup-connection@1.0.18(react-dom@16.13.1(react@16.13.1))(react@16.13.1)':
     dependencies:
@@ -7836,6 +8002,13 @@ snapshots:
     dependencies:
       '@lit-labs/ssr-dom-shim': 1.0.0
 
+  '@martianwallet/aptos-wallet-adapter@0.0.5':
+    dependencies:
+      '@aptos-labs/wallet-adapter-core': 2.1.0
+      aptos: 1.4.0
+    transitivePeerDependencies:
+      - debug
+
   '@metamask/detect-provider@2.0.0': {}
 
   '@metamask/eth-sig-util@4.0.1':
@@ -8031,6 +8204,28 @@ snapshots:
       '@motionone/dom': 10.16.4
       tslib: 2.5.0
 
+  '@msafe/aptos-wallet-adapter@1.1.3(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/core@1.4.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/protocol@0.0.6)(graphql-request@7.1.2(graphql@16.6.0)))(@mizuwallet-sdk/protocol@0.0.6)(@telegram-apps/bridge@1.7.1)(@wallet-standard/core@1.0.3)':
+    dependencies:
+      '@aptos-labs/wallet-adapter-core': 4.23.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/core@1.4.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/protocol@0.0.6)(graphql-request@7.1.2(graphql@16.6.0)))(@mizuwallet-sdk/protocol@0.0.6)(@telegram-apps/bridge@1.7.1)(@wallet-standard/core@1.0.3)(aptos@1.4.0)
+      '@msafe/aptos-wallet': 6.1.1
+      aptos: 1.4.0
+    transitivePeerDependencies:
+      - '@aptos-labs/ts-sdk'
+      - '@mizuwallet-sdk/core'
+      - '@mizuwallet-sdk/protocol'
+      - '@telegram-apps/bridge'
+      - '@wallet-standard/core'
+      - debug
+
+  '@msafe/aptos-wallet@6.1.1':
+    dependencies:
+      buffer: 6.0.3
+      json-rpc-protocol: 0.13.2
+
+  '@mysten/bcs@0.3.0':
+    dependencies:
+      bn.js: 5.2.1
+
   '@mysten/bcs@0.7.1':
     dependencies:
       bs58: 5.0.0
@@ -8046,6 +8241,26 @@ snapshots:
   '@mysten/bcs@0.9.0':
     dependencies:
       bs58: 5.0.0
+
+  '@mysten/sui.js@0.13.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+    dependencies:
+      '@mysten/bcs': 0.3.0
+      '@noble/hashes': 1.6.1
+      '@noble/secp256k1': 1.7.1
+      '@scure/bip32': 1.6.0
+      '@scure/bip39': 1.5.0
+      bn.js: 5.2.1
+      buffer: 6.0.3
+      cross-fetch: 3.1.5
+      jayson: 3.7.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      js-sha3: 0.8.0
+      lossless-json: 1.0.5
+      rpc-websockets: 7.5.1
+      tweetnacl: 1.0.3
+    transitivePeerDependencies:
+      - bufferutil
+      - encoding
+      - utf-8-validate
 
   '@mysten/sui.js@0.32.2(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
     dependencies:
@@ -8184,9 +8399,13 @@ snapshots:
 
   '@noble/hashes@1.3.2': {}
 
+  '@noble/hashes@1.3.3': {}
+
   '@noble/hashes@1.6.0': {}
 
   '@noble/hashes@1.6.1': {}
+
+  '@noble/secp256k1@1.7.1': {}
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
@@ -8199,6 +8418,11 @@ snapshots:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.14.0
+
+  '@okwallet/aptos-wallet-adapter@0.0.7(@aptos-labs/wallet-adapter-core@4.23.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/core@1.4.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/protocol@0.0.6)(graphql-request@7.1.2(graphql@16.6.0)))(@mizuwallet-sdk/protocol@0.0.6)(@telegram-apps/bridge@1.7.1)(@wallet-standard/core@1.0.3)(aptos@1.4.0))(aptos@1.4.0)':
+    dependencies:
+      '@aptos-labs/wallet-adapter-core': 4.23.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/core@1.4.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/protocol@0.0.6)(graphql-request@7.1.2(graphql@16.6.0)))(@mizuwallet-sdk/protocol@0.0.6)(@telegram-apps/bridge@1.7.1)(@wallet-standard/core@1.0.3)(aptos@1.4.0)
+      aptos: 1.4.0
 
   '@open-rpc/client-js@1.8.1(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
     dependencies:
@@ -8322,6 +8546,13 @@ snapshots:
 
   '@pkgjs/parseargs@0.11.0':
     optional: true
+
+  '@pontem/wallet-adapter-plugin@0.2.1':
+    dependencies:
+      '@aptos-labs/wallet-adapter-core': 2.2.0
+      aptos: 1.21.0
+    transitivePeerDependencies:
+      - debug
 
   '@project-serum/sol-wallet-adapter@0.2.0(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
     dependencies:
@@ -9346,6 +9577,13 @@ snapshots:
       typeforce: 1.18.0
       varuint-bitcoin: 1.1.2
       wif: 2.0.6
+
+  '@trustwallet/aptos-wallet-adapter@0.1.6':
+    dependencies:
+      '@aptos-labs/wallet-adapter-core': 0.1.7
+      aptos: 1.21.0
+    transitivePeerDependencies:
+      - debug
 
   '@types/bn.js@4.11.6':
     dependencies:
@@ -10451,6 +10689,17 @@ snapshots:
       normalize-path: 3.0.0
       picomatch: 2.3.1
 
+  aptos@1.21.0:
+    dependencies:
+      '@aptos-labs/aptos-client': 0.1.1
+      '@noble/hashes': 1.3.3
+      '@scure/bip39': 1.2.1
+      eventemitter3: 5.0.1
+      form-data: 4.0.0
+      tweetnacl: 1.0.3
+    transitivePeerDependencies:
+      - debug
+
   aptos@1.4.0:
     dependencies:
       '@noble/hashes': 1.1.3
@@ -10703,7 +10952,7 @@ snapshots:
 
   bs58check@3.0.1:
     dependencies:
-      '@noble/hashes': 1.3.2
+      '@noble/hashes': 1.6.1
       bs58: 5.0.0
 
   buffer-alloc-unsafe@1.1.0: {}
@@ -11528,6 +11777,17 @@ snapshots:
     dependencies:
       reusify: 1.0.4
 
+  fewcha-plugin-wallet-adapter@0.1.3(bufferutil@4.0.7)(utf-8-validate@5.0.10):
+    dependencies:
+      '@aptos-labs/wallet-adapter-core': 2.2.0
+      '@fewcha/web3': 0.1.38(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      aptos: 1.21.0
+    transitivePeerDependencies:
+      - bufferutil
+      - debug
+      - encoding
+      - utf-8-validate
+
   file-entry-cache@6.0.1:
     dependencies:
       flat-cache: 3.0.4
@@ -11945,6 +12205,25 @@ snapshots:
     optionalDependencies:
       '@pkgjs/parseargs': 0.11.0
 
+  jayson@3.7.0(bufferutil@4.0.7)(utf-8-validate@5.0.10):
+    dependencies:
+      '@types/connect': 3.4.35
+      '@types/node': 12.20.55
+      '@types/ws': 7.4.7
+      JSONStream: 1.3.5
+      commander: 2.20.3
+      delay: 5.0.0
+      es6-promisify: 5.0.0
+      eyes: 0.1.8
+      isomorphic-ws: 4.0.1(ws@7.5.9(bufferutil@4.0.7)(utf-8-validate@5.0.10))
+      json-stringify-safe: 5.0.1
+      lodash: 4.17.21
+      uuid: 8.3.2
+      ws: 7.5.9(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
   jayson@4.1.0(bufferutil@4.0.7)(utf-8-validate@5.0.10):
     dependencies:
       '@types/connect': 3.4.35
@@ -12010,6 +12289,10 @@ snapshots:
       '@metamask/safe-event-emitter': 3.0.0
       json-rpc-engine: 6.1.0
       readable-stream: 2.3.7
+
+  json-rpc-protocol@0.13.2:
+    dependencies:
+      make-error: 1.3.6
 
   json-rpc-random-id@1.0.1: {}
 
@@ -12215,6 +12498,8 @@ snapshots:
     dependencies:
       js-tokens: 4.0.0
 
+  lossless-json@1.0.5: {}
+
   lottie-web@5.10.2: {}
 
   lower-case@2.0.2:
@@ -12230,6 +12515,8 @@ snapshots:
   lru-cache@6.0.0:
     dependencies:
       yallist: 4.0.0
+
+  make-error@1.3.6: {}
 
   map-obj@4.3.0: {}
 
@@ -12531,6 +12818,14 @@ snapshots:
       ripemd160: 2.0.2
       safe-buffer: 5.2.1
       sha.js: 2.4.11
+
+  petra-plugin-wallet-adapter@0.4.5(@aptos-labs/ts-sdk@1.33.1)(aptos@1.4.0):
+    dependencies:
+      '@aptos-labs/ts-sdk': 1.33.1
+      '@aptos-labs/wallet-adapter-core': 3.16.0(@aptos-labs/ts-sdk@1.33.1)(aptos@1.4.0)
+      aptos: 1.4.0
+    transitivePeerDependencies:
+      - debug
 
   picocolors@1.1.0: {}
 
