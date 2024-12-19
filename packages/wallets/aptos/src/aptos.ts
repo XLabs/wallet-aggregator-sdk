@@ -15,12 +15,13 @@ import {
 
 import { BitgetWallet } from "@bitget-wallet/aptos-wallet-adapter";
 import { MartianWallet } from "@martianwallet/aptos-wallet-adapter";
-import { MSafeWalletAdapter } from "@msafe/aptos-wallet-adapter";
 import { OKXWallet } from "@okwallet/aptos-wallet-adapter";
 import { PontemWallet } from "@pontem/wallet-adapter-plugin";
-import { TrustWallet } from "@trustwallet/aptos-wallet-adapter";
 import { FewchaWallet } from "fewcha-plugin-wallet-adapter";
 import { PetraWallet } from "petra-plugin-wallet-adapter";
+// FIXME: These wallets are not working
+// import { MSafeWalletAdapter } from "@msafe/aptos-wallet-adapter";
+// import { TrustWallet } from "@trustwallet/aptos-wallet-adapter";
 
 import {
   BaseFeatures,
@@ -153,11 +154,12 @@ export class AptosWallet extends Wallet<
     const nonStandardWallets: IAptosWallet[] = [
       new BitgetWallet(),
       new MartianWallet(),
-      new MSafeWalletAdapter(),
       new OKXWallet(),
       new PontemWallet(),
-      new TrustWallet() as IAptosWallet,
+      // FIXME: These wallets are not working!!
       new FewchaWallet() as IAptosWallet,
+      // new MSafeWalletAdapter(),
+      // new TrustWallet() as IAptosWallet,
       // We are forcing PetraWallet to avoid the NotDetected issue
       new PetraWallet(),
     ];
@@ -166,7 +168,14 @@ export class AptosWallet extends Wallet<
       withNonStandard
         ? [...nonStandardWallets, ...newWalletsToAdd]
         : newWalletsToAdd,
-      [],
+      // FIXME: T Wallet is not working and is removed from available wallets.
+      [
+        "Nightly",
+        "Continue with Google",
+        "Continue with Apple" as any,
+        "Mizu Wallet",
+        "Pontem Wallet",
+      ],
       config,
       true
     );
