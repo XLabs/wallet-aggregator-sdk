@@ -74,7 +74,7 @@ importers:
     dependencies:
       '@blockshake/defly-connect':
         specifier: ^1.1.1
-        version: 1.1.1(algosdk@1.24.0)(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+        version: 1.1.1(algosdk@1.24.0)(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@ledgerhq/hw-app-algorand':
         specifier: ^6.27.12
         version: 6.27.12
@@ -92,7 +92,7 @@ importers:
         version: 6.27.12
       '@perawallet/connect':
         specifier: ^1.3.3
-        version: 1.3.3(algosdk@1.24.0)(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+        version: 1.3.3(algosdk@1.24.0)(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@xlabs-libs/wallet-aggregator-core':
         specifier: workspace:^
         version: link:../core
@@ -126,50 +126,41 @@ importers:
         version: 1.33.1
       '@aptos-labs/wallet-adapter-core':
         specifier: ^4.23.0
-        version: 4.23.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/core@1.4.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/protocol@0.0.6)(graphql-request@7.1.2(graphql@16.6.0)))(@mizuwallet-sdk/protocol@0.0.6)(@telegram-apps/bridge@1.7.1)(@wallet-standard/core@1.0.3)(aptos@1.4.0)
+        version: 4.23.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/core@1.4.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/protocol@0.0.6)(graphql-request@7.1.2(graphql@16.6.0)))(@mizuwallet-sdk/protocol@0.0.6)(@telegram-apps/bridge@1.7.1)(@wallet-standard/core@1.0.3)(aptos@1.21.0)
       '@aptos-labs/wallet-standard':
         specifier: ^0.2.0
         version: 0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3)
       '@bitget-wallet/aptos-wallet-adapter':
         specifier: ^0.1.2
-        version: 0.1.2(@aptos-labs/wallet-adapter-core@4.23.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/core@1.4.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/protocol@0.0.6)(graphql-request@7.1.2(graphql@16.6.0)))(@mizuwallet-sdk/protocol@0.0.6)(@telegram-apps/bridge@1.7.1)(@wallet-standard/core@1.0.3)(aptos@1.4.0))(aptos@1.4.0)
+        version: 0.1.2(@aptos-labs/wallet-adapter-core@4.23.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/core@1.4.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/protocol@0.0.6)(graphql-request@7.1.2(graphql@16.6.0)))(@mizuwallet-sdk/protocol@0.0.6)(@telegram-apps/bridge@1.7.1)(@wallet-standard/core@1.0.3)(aptos@1.21.0))(aptos@1.21.0)
       '@martianwallet/aptos-wallet-adapter':
         specifier: ^0.0.5
         version: 0.0.5
-      '@msafe/aptos-wallet-adapter':
-        specifier: ^1.1.3
-        version: 1.1.3(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/core@1.4.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/protocol@0.0.6)(graphql-request@7.1.2(graphql@16.6.0)))(@mizuwallet-sdk/protocol@0.0.6)(@telegram-apps/bridge@1.7.1)(@wallet-standard/core@1.0.3)
-      '@okwallet/aptos-wallet-adapter':
-        specifier: ^0.0.7
-        version: 0.0.7(@aptos-labs/wallet-adapter-core@4.23.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/core@1.4.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/protocol@0.0.6)(graphql-request@7.1.2(graphql@16.6.0)))(@mizuwallet-sdk/protocol@0.0.6)(@telegram-apps/bridge@1.7.1)(@wallet-standard/core@1.0.3)(aptos@1.4.0))(aptos@1.4.0)
       '@pontem/wallet-adapter-plugin':
         specifier: ^0.2.1
         version: 0.2.1
-      '@trustwallet/aptos-wallet-adapter':
-        specifier: ^0.1.6
-        version: 0.1.6
       '@xlabs-libs/wallet-aggregator-core':
         specifier: workspace:^
         version: link:../core
       fewcha-plugin-wallet-adapter:
         specifier: ^0.1.3
-        version: 0.1.3(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+        version: 0.1.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       petra-plugin-wallet-adapter:
         specifier: ^0.4.5
-        version: 0.4.5(@aptos-labs/ts-sdk@1.33.1)(aptos@1.4.0)
+        version: 0.4.5(@aptos-labs/ts-sdk@1.33.1)(aptos@1.21.0)
     devDependencies:
       '@types/node':
-        specifier: ^18.11.9
-        version: 18.11.11
+        specifier: ^18.19.69
+        version: 18.19.69
       aptos:
-        specifier: ^1.4.0
-        version: 1.4.0
+        specifier: ^1.21.0
+        version: 1.21.0
       shx:
         specifier: ^0.3.4
         version: 0.3.4
       typescript:
-        specifier: ^5.3.2
-        version: 5.3.2
+        specifier: ^5.7.2
+        version: 5.7.2
 
   packages/wallets/core:
     dependencies:
@@ -198,16 +189,16 @@ importers:
         version: 0.32.4
       '@cosmjs/cosmwasm-stargate':
         specifier: ^0.32.4
-        version: 0.32.4(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+        version: 0.32.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@cosmjs/proto-signing':
         specifier: ^0.32.4
         version: 0.32.4
       '@cosmjs/stargate':
         specifier: ^0.32.4
-        version: 0.32.4(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+        version: 0.32.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@cosmjs/tendermint-rpc':
         specifier: ^0.32.4
-        version: 0.32.4(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+        version: 0.32.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@types/node':
         specifier: ^18.11.9
         version: 18.11.11
@@ -231,7 +222,7 @@ importers:
     dependencies:
       '@injectivelabs/sdk-ts':
         specifier: 1.14.0-beta.1
-        version: 1.14.0-beta.1(bufferutil@4.0.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(utf-8-validate@5.0.10)
+        version: 1.14.0-beta.1(bufferutil@4.0.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(utf-8-validate@5.0.10)
       '@xlabs-libs/wallet-aggregator-core':
         specifier: workspace:^
         version: link:../core
@@ -244,7 +235,7 @@ importers:
         version: 0.32.4
       '@cosmjs/cosmwasm-stargate':
         specifier: ^0.32.4
-        version: 0.32.4(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+        version: 0.32.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@cosmjs/encoding':
         specifier: ^0.32.4
         version: 0.32.4
@@ -256,10 +247,10 @@ importers:
         version: 0.32.4
       '@cosmjs/stargate':
         specifier: ^0.32.4
-        version: 0.32.4(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+        version: 0.32.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@cosmjs/tendermint-rpc':
         specifier: ^0.32.4
-        version: 0.32.4(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+        version: 0.32.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@cosmjs/utils':
         specifier: ^0.32.4
         version: 0.32.4
@@ -286,16 +277,16 @@ importers:
     dependencies:
       '@binance/w3w-ethereum-provider':
         specifier: 1.1.8-alpha.0
-        version: 1.1.8-alpha.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+        version: 1.1.8-alpha.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@binance/w3w-utils':
         specifier: ^1.1.6
         version: 1.1.6
       '@binance/w3w-wagmi-connector':
         specifier: 1.2.2-alpha.0
-        version: 1.2.2-alpha.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)(viem@1.21.4(bufferutil@4.0.7)(typescript@5.3.2)(utf-8-validate@5.0.10))(wagmi@1.4.13(@types/react@17.0.52)(bufferutil@4.0.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.3.2)(utf-8-validate@5.0.10)(viem@1.21.4(bufferutil@4.0.7)(typescript@5.3.2)(utf-8-validate@5.0.10)))
+        version: 1.2.2-alpha.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)(viem@1.21.4(bufferutil@4.0.9)(typescript@5.3.2)(utf-8-validate@5.0.10))(wagmi@1.4.13(@types/react@17.0.52)(bufferutil@4.0.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.3.2)(utf-8-validate@5.0.10)(viem@1.21.4(bufferutil@4.0.9)(typescript@5.3.2)(utf-8-validate@5.0.10)))
       '@wagmi/core':
         specifier: ^1.4.13
-        version: 1.4.13(@types/react@17.0.52)(bufferutil@4.0.7)(react@18.2.0)(typescript@5.3.2)(utf-8-validate@5.0.10)(viem@1.21.4(bufferutil@4.0.7)(typescript@5.3.2)(utf-8-validate@5.0.10))
+        version: 1.4.13(@types/react@17.0.52)(bufferutil@4.0.9)(react@18.2.0)(typescript@5.3.2)(utf-8-validate@5.0.10)(viem@1.21.4(bufferutil@4.0.9)(typescript@5.3.2)(utf-8-validate@5.0.10))
       '@web3modal/standalone':
         specifier: ^2.2.1
         version: 2.2.1(react@18.2.0)
@@ -304,13 +295,13 @@ importers:
         version: link:../core
       ethers:
         specifier: ^6.4.2
-        version: 6.13.2(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+        version: 6.13.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       versions:
         specifier: ^10.4.1
         version: 10.4.1
       viem:
         specifier: ^1.20.3
-        version: 1.21.4(bufferutil@4.0.7)(typescript@5.3.2)(utf-8-validate@5.0.10)
+        version: 1.21.4(bufferutil@4.0.9)(typescript@5.3.2)(utf-8-validate@5.0.10)
     devDependencies:
       '@types/node':
         specifier: ^18.11.9
@@ -335,13 +326,13 @@ importers:
         version: 1.14.6(google-protobuf@3.21.2)
       '@injectivelabs/sdk-ts':
         specifier: 1.14.7
-        version: 1.14.7(bufferutil@4.0.7)(react-dom@16.13.1(react@16.13.1))(react@16.13.1)(utf-8-validate@5.0.10)
+        version: 1.14.7(bufferutil@4.0.9)(react-dom@16.13.1(react@16.13.1))(react@16.13.1)(utf-8-validate@5.0.10)
       '@injectivelabs/ts-types':
         specifier: 1.14.4
         version: 1.14.4
       '@injectivelabs/wallet-ts':
         specifier: 1.14.4
-        version: 1.14.4(@babel/runtime@7.20.13)(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))(bs58@5.0.0)(bufferutil@4.0.7)(google-protobuf@3.21.2)(react-dom@16.13.1(react@16.13.1))(react@16.13.1)(utf-8-validate@5.0.10)
+        version: 1.14.4(@babel/runtime@7.20.13)(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bs58@5.0.0)(bufferutil@4.0.9)(google-protobuf@3.21.2)(react-dom@16.13.1(react@16.13.1))(react@16.13.1)(utf-8-validate@5.0.10)
       '@xlabs-libs/wallet-aggregator-core':
         specifier: workspace:^
         version: link:../core
@@ -400,7 +391,7 @@ importers:
     dependencies:
       '@sei-js/core':
         specifier: ^3.1.0
-        version: 3.1.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+        version: 3.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@xlabs-libs/wallet-aggregator-core':
         specifier: workspace:^
         version: link:../core
@@ -410,13 +401,13 @@ importers:
         version: 0.29.5
       '@cosmjs/cosmwasm-stargate':
         specifier: 0.29.5
-        version: 0.29.5(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+        version: 0.29.5(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@cosmjs/proto-signing':
         specifier: 0.29.5
         version: 0.29.5
       '@cosmjs/stargate':
         specifier: 0.29.5
-        version: 0.29.5(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+        version: 0.29.5(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@types/node':
         specifier: ^18.11.9
         version: 18.11.11
@@ -465,13 +456,13 @@ importers:
     dependencies:
       '@kunalabs-io/sui-snap-wallet':
         specifier: ^0.4.2
-        version: 0.4.2(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+        version: 0.4.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@mysten/sui.js':
         specifier: ^0.32.2
-        version: 0.32.2(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+        version: 0.32.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@mysten/wallet-standard':
         specifier: ^0.5.4
-        version: 0.5.4(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+        version: 0.5.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@xlabs-libs/wallet-aggregator-core':
         specifier: workspace:^
         version: link:../core
@@ -604,9 +595,6 @@ packages:
   '@aptos-labs/ts-sdk@1.33.1':
     resolution: {integrity: sha512-d6nWtUI//fyEN8DeLjm3+ro87Ad6+IKwR9pCqfrs/Azahso1xR1Llxd/O6fj/m1DDsuDj/HAsCsy5TC/aKD6Eg==}
     engines: {node: '>=11.0.0'}
-
-  '@aptos-labs/wallet-adapter-core@0.1.7':
-    resolution: {integrity: sha512-g3HvX31kuFT5HqEe9Vh0ZgV1u0Otsfx54yeAwL7RO8CioBVBjYELhMsOYz0BOjecmAKhQ14G60VU8MqDyzYkIA==}
 
   '@aptos-labs/wallet-adapter-core@2.1.0':
     resolution: {integrity: sha512-ZSCCsFt2heEh9IDaObbzw8EwqfzJGCWGBoaGouBtOYn2DVkh5R0P9xRj6ryF9cuO+tkfP+8KZmZ9m4c+xsJN2g==}
@@ -1467,12 +1455,6 @@ packages:
     resolution: {integrity: sha512-z10PF9JV6SbjFq+/rYabM+8CVlMokgl8RFGvieSGNTmrkQanfHn+15XBrhG3BgUfvmTeSeyShfOHpG0i9zEdcg==}
     deprecated: Motion One for Vue is deprecated. Use Oku Motion instead https://oku-ui.com/motion
 
-  '@msafe/aptos-wallet-adapter@1.1.3':
-    resolution: {integrity: sha512-/5ftbNac9j2Vc6YOqET4IdkhiJnMzuy9LcnGP8ptLWHVuye5P/pAjIpv0A07gOM4/siUJQzlXkBxXdLYF9p8wQ==}
-
-  '@msafe/aptos-wallet@6.1.1':
-    resolution: {integrity: sha512-g/2TPRqyChciaw/S69EBr7CgzYJBT1LJulU0nMNnkehJc+ZX/fNN+5JXEuea+a0rXsk/flcbCSfvT2JtS0+/mQ==}
-
   '@mysten/bcs@0.3.0':
     resolution: {integrity: sha512-Me6OkrS+idPq+ZUM1MEcKP9YOTacZKLwo0gf8rfeImQ+G25tqPRhjpccZGOUJGOKh+gojH2vjkWi2TYJv9kNCg==}
 
@@ -1547,12 +1529,6 @@ packages:
     resolution: {integrity: sha512-UTMhXK9SeDhFJVrHeUJ5uZlI6ajXg10O6Ddocf9S6GjbSBVZsJo88HzKwXznNfGpMTRDyJkqMjNDPYgf0qFWnw==}
     engines: {node: ^14.21.3 || >=16}
 
-  '@noble/hashes@1.1.3':
-    resolution: {integrity: sha512-CE0FCR57H2acVI5UOzIGSSIYxZ6v/HOhDR0Ro9VLyhnzLwx0o8W1mmgaqlEUx4049qJDlIBRztv5k+MM8vbO3A==}
-
-  '@noble/hashes@1.1.4':
-    resolution: {integrity: sha512-+PYsVPrTSqtVjatKt2A/Proukn2Yrz61OBThOCKErc5w2/r1Fh37vbDv0Eah7pyNltrmacjwTvdw3JoR+WE4TA==}
-
   '@noble/hashes@1.3.0':
     resolution: {integrity: sha512-ilHEACi9DwqJB0pw7kv+Apvh50jiiSyR/cQ3y4W7lOR5mhvn/50FLUfsnfJz0BDZtl/RR16kXvptiv6q1msYZg==}
 
@@ -1586,12 +1562,6 @@ packages:
   '@nodelib/fs.walk@1.2.8':
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
-
-  '@okwallet/aptos-wallet-adapter@0.0.7':
-    resolution: {integrity: sha512-n6Uhh8uzj6pRRXppKYUPRDxzb3x/wH9xy3uXqYMbjJbiPb5LrWhm8LYYkRpw3ZFFNH3B/taMILd2qygzWVDH5w==}
-    peerDependencies:
-      '@aptos-labs/wallet-adapter-core': 3.5.0
-      aptos: ^1.21.0
 
   '@open-rpc/client-js@1.8.1':
     resolution: {integrity: sha512-vV+Hetl688nY/oWI9IFY0iKDrWuLdYhf7OIKI6U1DcnJV7r4gAgwRJjEr1QVYszUc0gjkHoQJzqevmXMGLyA0g==}
@@ -1766,6 +1736,9 @@ packages:
   '@scure/base@1.1.3':
     resolution: {integrity: sha512-/+SgoRjLq7Xlf0CWuLHq2LUZeL/w65kfzAPG5NH9pcmBhs+nunQTn4gvdwgMTIXnt9b2C/1SeL2XiysZEyIC9Q==}
 
+  '@scure/base@1.1.9':
+    resolution: {integrity: sha512-8YKhl8GHiNI/pU2VMaofa2Tor7PJRAjwQLBBuilkJ9L5+13yVbC7JO/wS7piioAvPSwR3JKM1IJ/u4xQzbcXKg==}
+
   '@scure/base@1.2.1':
     resolution: {integrity: sha512-DGmGtC8Tt63J5GfHgfl5CuAXh96VF/LD8K9Hr/Gv0J2lAoRGlPOMpqMpMbCTOoOJMZCk2Xt+DskdDyn6dEFdzQ==}
 
@@ -1777,9 +1750,6 @@ packages:
 
   '@scure/bip32@1.6.0':
     resolution: {integrity: sha512-82q1QfklrUUdXJzjuRU7iG7D7XiFx5PHYVS0+oeNKhyDLT7WPqs6pBcM2W5ZdwOwKCwoE1Vy1se+DHjcXwCYnA==}
-
-  '@scure/bip39@1.1.0':
-    resolution: {integrity: sha512-pwrPOS16VeTKg98dYXQyIjJEcWfz7/1YJIwxUEPFfQPtc86Ym/1sVgQ2RLoD43AazMk2l/unK4ITySSpW2+82w==}
 
   '@scure/bip39@1.2.0':
     resolution: {integrity: sha512-SX/uKq52cuxm4YFXWFaVByaSHJh2w3BnokVSeUJVCv6K7WulT9u2BuNRBhuFl8vAuYnzx9bEu9WgpcNYTrYieg==}
@@ -2226,17 +2196,17 @@ packages:
   '@telegram-apps/bridge@1.7.1':
     resolution: {integrity: sha512-oRbznpIC4UibMVygQ+tcS0ZSKx7DaI07MXQF42VETQ/VOCKeaWZeQFUifo4A+CzT6XMGo2hyse/CQP9ziX0H7g==}
 
-  '@telegram-apps/signals@1.1.0':
-    resolution: {integrity: sha512-5qN7cU8t3l7n0cKcnzc/1TYKJTwAggUinfwbLHL1SYmB47pBHjCvfsRiYliFohk6lb635SBmNuVZL6LHFmGZaw==}
+  '@telegram-apps/signals@1.1.1':
+    resolution: {integrity: sha512-vz37r8lemGpPzDiBRfqpXYBynzmy3SFnY6zfHsTZABTYYt0b0WQZyU5mFDqqqugGhka78Gy11xmr9csgy4YgGA==}
 
-  '@telegram-apps/toolkit@1.0.0':
-    resolution: {integrity: sha512-fSVoveLuMzwRKWeXEufMSXxH+HvjsFKb1DeT3pG5qLpnb2rdtejnNcwAt6WEPtiZ3a4YntYaFuR3KYgVv0ZxeQ==}
+  '@telegram-apps/toolkit@1.1.1':
+    resolution: {integrity: sha512-+vhKx6ngfvjyTE6Xagl3z1TPVbfx5s7xAkcYzCdHYUo6T60jLIqLgyZMcI1UPoIAMuMu1pHoO+p8QNCj/+tFmw==}
 
-  '@telegram-apps/transformers@1.2.0':
-    resolution: {integrity: sha512-RufLdD044RPaAJdh+Mp/98JI+Wkp5mhX3WYCg6IZYFMRwu3QTu2FBwYmU9FdRmBF9utbcymSFrY1cqxh+Vtkfg==}
+  '@telegram-apps/transformers@1.2.2':
+    resolution: {integrity: sha512-vvMwXckd1D7Ozc0h66PSUwF5QLrRV9HlGJFFeBuUex8QEk5mSPtsJkLiqB8aBbwuFDa91+TUSM/CxqPZO/e9YQ==}
 
-  '@telegram-apps/types@1.2.0':
-    resolution: {integrity: sha512-HhvnSCsqlJpes5ZGsZP/qbDNq8eLLnjgZKaF5NRsDqAKUPvaIIFT1HdyDII/8EioUgoI4FHsP8MylK2Gzm2efg==}
+  '@telegram-apps/types@1.2.1':
+    resolution: {integrity: sha512-so4HLh7clur0YyMthi9KVIgWoGpZdXlFOuQjk3+Q5NAvJZ11nAheBSwPlGw/Ko92+zwvrSBE/lQyN2+p17RP+w==}
 
   '@terra-money/terra.js@3.1.7':
     resolution: {integrity: sha512-z7NwVI1gh0846pgQJaPHya6SRKLd/dHWR5UwWG6T2Pf24I2EjCo8YY5Fay30pCvHTYA2NBFgnWfXEZ/31TfB1Q==}
@@ -2376,9 +2346,6 @@ packages:
   '@trezor/utxo-lib@1.0.5':
     resolution: {integrity: sha512-75DtK4COKftXWdNfAwudm9fVSC0bE3GSwd1wXWVrqFtiIVmwcLZohbdaVEo3Z6UqbCHWqzgiZBRfycX0EsYriw==}
 
-  '@trustwallet/aptos-wallet-adapter@0.1.6':
-    resolution: {integrity: sha512-vlu5JuxqMpGMLanayNKQpTC87zn4NMRo3k96iVI+IdwEeyIgiJbbFq+XqUAezzQG/U88u4jv3vK2x7cbPnNFIw==}
-
   '@types/bn.js@4.11.6':
     resolution: {integrity: sha512-pqr857jrp2kPuO9uRjZ3PwnJTjoQy+fcdxvBTvHm6dkmEL9q+hDD/2j/0ELOBPtPnS8LjCX0gI9nbl8lVkadpg==}
 
@@ -2393,6 +2360,9 @@ packages:
 
   '@types/connect@3.4.35':
     resolution: {integrity: sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==}
+
+  '@types/connect@3.4.38':
+    resolution: {integrity: sha512-K6uROf1LD88uDQqJCktA4yzL1YYAK6NgfsI0v/mTgyPKWsX1CnJ0XPSDhViejru1GcRkLWb8RlzFYJRqGUbaug==}
 
   '@types/debug@4.1.12':
     resolution: {integrity: sha512-vIChWdVG3LG1SMxEvI/AK+FWJthlrqlTu7fbrlywTkkaONwk/UAGaULXRlf8vkzFBLVm0zkMdCquhL5aOjhXPQ==}
@@ -2447,6 +2417,9 @@ packages:
 
   '@types/node@18.15.13':
     resolution: {integrity: sha512-N+0kuo9KgrUQ1Sn/ifDXsvg0TTleP7rIy4zOBGECxAljqvqfqpTfzx0Q1NUedOixRMBfe2Whhb056a42cWs26Q==}
+
+  '@types/node@18.19.69':
+    resolution: {integrity: sha512-ECPdY1nlaiO/Y6GUnwgtAAhLNaQ53AyIVz+eILxpEo5OvuqE6yWkqWBIb5dU0DqhKQtMeny+FBD3PK6lm7L5xQ==}
 
   '@types/pbkdf2@3.1.0':
     resolution: {integrity: sha512-Cf63Rv7jCQ0LaL8tNXmEyqTHuIJxRdlS5vMh1mj5voN4+QFhVZnlZruezqpWYDiJ8UTzhP0VmeLXCmBk66YrMQ==}
@@ -2957,11 +2930,6 @@ packages:
     engines: {node: '>=11.0.0'}
     deprecated: Package aptos is no longer supported, please migrate to https://www.npmjs.com/package/@aptos-labs/ts-sdk
 
-  aptos@1.4.0:
-    resolution: {integrity: sha512-D1yBXeyhiBKgJnUQX8iDXckZMPFwdJ9YfUZtRcDhUoR7qLX4hfmLQYemvLqtJvyTCf/Nggfp66hXX1Z8FdlEiQ==}
-    engines: {node: '>=11.0.0'}
-    deprecated: Package aptos is no longer supported, please migrate to https://www.npmjs.com/package/@aptos-labs/ts-sdk
-
   arch@2.2.0:
     resolution: {integrity: sha512-Of/R0wqp83cgHozfIYLbBMnej79U/SVGOOyuB3VVFv1NRM/PSFMK12x9KVtiYzJqmnU5WR2qp0Z5rHb7sWGnFQ==}
 
@@ -3020,6 +2988,9 @@ packages:
 
   axios@1.7.4:
     resolution: {integrity: sha512-DukmaFRnY6AzAALSH4J2M3k6PkaC+MfaAGdEERRWcC9q3/TWQwLpHR8ZRLKTdQ3aBDL64EdluRDjJqKw+BPZEw==}
+
+  axios@1.7.9:
+    resolution: {integrity: sha512-LhLcE7Hbiryz8oMDdDptSrWowmB4Bl6RCt6sIJKpRB4XtVf0iEgewX3au/pJqm+Py1kCASkb/FFKjxQaLtxJvw==}
 
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
@@ -3182,6 +3153,10 @@ packages:
 
   bufferutil@4.0.7:
     resolution: {integrity: sha512-kukuqc39WOHtdxtw4UScxF/WVnMFVSQVKhtx3AjZJzhd0RGZZldcrfSEbVsWWe6KNH253574cq5F+wpv0G9pJw==}
+    engines: {node: '>=6.14.2'}
+
+  bufferutil@4.0.9:
+    resolution: {integrity: sha512-WDtdLmJvAuNNPzByAYpRo2rF1Mmradw6gvWsQKf63476DDXmomT9zUiGypLcG4ibIM67vhAj8jJRdbmEws2Aqw==}
     engines: {node: '>=6.14.2'}
 
   bytebuffer@5.0.1:
@@ -3371,6 +3346,9 @@ packages:
 
   cross-fetch@3.1.5:
     resolution: {integrity: sha512-lvb1SBsI0Z7GDwmuid+mU3kWVBwTVUbe7S0H52yaaAdQOXq2YktTCZdlAcNKFzE6QtRz0snpw9bNiPeOIkkQvw==}
+
+  cross-fetch@3.2.0:
+    resolution: {integrity: sha512-Q+xVJLoGOeIMXZmbUK4HYk+69cQH6LudR0Vu/pRm2YlU/hDV9CiS0gKUMaWY5f2NeUH9C1nV3bsTlCo0FsTV1Q==}
 
   cross-spawn@7.0.3:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
@@ -3848,6 +3826,10 @@ packages:
     resolution: {integrity: sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==}
     engines: {node: '>= 6'}
 
+  form-data@4.0.1:
+    resolution: {integrity: sha512-tzN8e4TX8+kkxGPK8D5u0FNmjPUjw3lwC9lSLxxoB/+GtsJG91CO8bSWy73APlgAZzZbXEYZJuxjkHH2w+Ezhw==}
+    engines: {node: '>= 6'}
+
   fs.realpath@1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
 
@@ -3910,6 +3892,9 @@ packages:
 
   google-protobuf@3.21.2:
     resolution: {integrity: sha512-3MSOYFO5U9mPGikIYCzK0SaThypfGgS6bHqrUGXG3DPHCrb+txNqeEcns1W0lkGfk0rCyNXm7xB9rMxnCiZOoA==}
+
+  google-protobuf@3.21.4:
+    resolution: {integrity: sha512-MnG7N936zcKTco4Jd2PX2U96Kf9PxygAPKBug+74LHzmHXmceN16MmRcdgZv+DGef/S9YvQAfRsNCn4cjf9yyQ==}
 
   gopd@1.0.1:
     resolution: {integrity: sha512-d65bNlIadxvpb/A2abVdlqKqV563juRnZ1Wtk6s1sIR8uNsXR70xqIzVqxVf1eTqDunwT2MkczEeaezCKTZhwA==}
@@ -4263,10 +4248,6 @@ packages:
     resolution: {integrity: sha512-4iFb0yffm5vo3eFKDbQgke9o17XBcLQ2c3sONrXSbcOLzP8LTojqo8hRGVgtJShhm5q4ZDSNq039fAx9o65E1w==}
     engines: {node: '>=14.0.0'}
 
-  json-rpc-protocol@0.13.2:
-    resolution: {integrity: sha512-2InSi+c7wGESmvYcEVS0clctpJCodV7gLqLN1BIIPNK07wokXIwhOL8RQWU4O7oX5adChn6HJGtIU6JaUQ1P/A==}
-    engines: {node: '>=4'}
-
   json-rpc-random-id@1.0.1:
     resolution: {integrity: sha512-RJ9YYNCkhVDBuP4zN5BBtYAzEl03yq/jIIsyif0JY9qyJuQQZNeDK7anAPKKlyEtLSj2s8h6hNh2F8zO5q7ScA==}
 
@@ -4477,9 +4458,6 @@ packages:
     resolution: {integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==}
     engines: {node: '>=10'}
 
-  make-error@1.3.6:
-    resolution: {integrity: sha512-s8UhlNe7vPKomQhC1qFelMokr/Sc3AgNbso3n74mVPA5LTZwkB9NlXf4XPamLxJE8h0gh73rM94xvwRT2CVInw==}
-
   map-obj@4.3.0:
     resolution: {integrity: sha512-hdN1wVrZbb29eBGiGjJbeP8JbKjq1urkHJ/LIP/NY48MZ1QVXUsQBV1G1zvYFHn1XE06cwjBsOI2K3Ulnj1YXQ==}
     engines: {node: '>=8'}
@@ -4660,6 +4638,10 @@ packages:
 
   node-gyp-build@4.5.0:
     resolution: {integrity: sha512-2iGbaQBV+ITgCz76ZEjmhUKAKVf7xfY1sRl4UiKQspfZMH2h06SyhNsnSVy50cwkFQDGLyif6m/6uFXHkOZ6rg==}
+    hasBin: true
+
+  node-gyp-build@4.8.4:
+    resolution: {integrity: sha512-LA4ZjwlnUblHVgq0oBF3Jl/6h/Nvs5fzBLwdEF4nuxnFdsfajde4WfxtJr3CaiH+F6ewcIB/q4jQ4UzPyid+CQ==}
     hasBin: true
 
   noms@0.0.0:
@@ -4964,6 +4946,10 @@ packages:
     resolution: {integrity: sha512-xL96WDdCZYdU7Slin569tFX712BxsxslWwAfAhCYjQKGTq7dAU91Lomy6nLLhh/dyGhk/YH4TwTSRxTzhuHyZg==}
     hasBin: true
 
+  protobufjs@6.11.4:
+    resolution: {integrity: sha512-5kQWPaJHi1WoCpjTGszzQ32PG2F4+wRY6BmAT4Vfw56Q2FZ4YZzK20xUYQH4YkfehY1e6QSICrJquM6xXZNcrw==}
+    hasBin: true
+
   protobufjs@7.2.3:
     resolution: {integrity: sha512-TtpvOqwB5Gdz/PQmOjgsrGH1nHjAQVCN7JG4A6r1sXRWESL5rNMAiRcBQlCAdKxZcAbstExQePYG8xof/JVRgg==}
     engines: {node: '>=12.0.0'}
@@ -4982,6 +4968,9 @@ packages:
 
   pump@3.0.0:
     resolution: {integrity: sha512-LwZy+p3SFs1Pytd/jYct4wpv49HiYCqd9Rlc5ZVdk0V+8Yzv6jR5Blk3TRmPL1ft69TxP0IMZGJ+WPFU2BFhww==}
+
+  pump@3.0.2:
+    resolution: {integrity: sha512-tUPXtzlGM8FE3P0ZL6DVs/3P58k9nk8/jZeQCurTJylQA8qFYzHFfhBJkuqyE0FifOsQ0uKWekiZ5g8wtr28cw==}
 
   punycode@2.1.1:
     resolution: {integrity: sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==}
@@ -5105,6 +5094,9 @@ packages:
   readable-stream@2.3.7:
     resolution: {integrity: sha512-Ebho8K4jIbHAxnuxi7o42OrZgF/ZTNcsZj6nRKyUmkhLFq8CHItp/fy6hQZuZmP/n3yZ9VBUbp4zz/mX8hmYPw==}
 
+  readable-stream@2.3.8:
+    resolution: {integrity: sha512-8p0AUk4XODgIewSi0l8Epjs+EVnWiK7NoDIEGU0HhE7+ZyY8D1IMY7odu5lRrFXGg71L15KG8QrPmum45RTtdA==}
+
   readable-stream@3.6.0:
     resolution: {integrity: sha512-BViHy7LKeTz4oNnkcLJ+lVSL6vpiFeX6/d3oSH8zCW7UxP2onchk+vTGB143xuFjHS3deTgkKoXXymXqymiIdA==}
     engines: {node: '>= 6'}
@@ -5221,6 +5213,9 @@ packages:
   rlp@2.2.7:
     resolution: {integrity: sha512-d5gdPmgQ0Z+AklL2NVXr/IoSjNZFfTVvQWzL/AM2AOcSzYP2xjlb0AC8YyCLc41MSNf6P6QVtjgPdmVtzb+4lQ==}
     hasBin: true
+
+  rpc-websockets@7.11.2:
+    resolution: {integrity: sha512-pL9r5N6AVHlMN/vT98+fcO+5+/UcPLf/4tq+WUaid/PPUGS/ttJ3y8e9IqmaWKtShNAysMSjkczuEA49NuV7UQ==}
 
   rpc-websockets@7.5.1:
     resolution: {integrity: sha512-kGFkeTsmd37pHPMaHIgN1LVKXMi0JD782v4Ds9ZKtLlwdTKjn+CxM9A9/gLT2LaOuEcEFGL98h1QWQtlOIdW0w==}
@@ -5628,13 +5623,18 @@ packages:
   typeforce@1.18.0:
     resolution: {integrity: sha512-7uc1O8h1M1g0rArakJdf0uLRSSgFcYexrVoKo+bzJd32gd4gDy2L/Z+8/FjPnU9ydY3pEnVPtr9FyscYY60K1g==}
 
-  typescript@4.9.3:
-    resolution: {integrity: sha512-CIfGzTelbKNEnLpLdGFgdyKhG23CKdKgQPOBc+OUNrkJ2vr+KSzsSV5kq5iWhEQbok+quxgGzrAtGWCyU7tHnA==}
+  typescript@4.9.5:
+    resolution: {integrity: sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==}
     engines: {node: '>=4.2.0'}
     hasBin: true
 
   typescript@5.3.2:
     resolution: {integrity: sha512-6l+RyNy7oAHDfxC4FzSJcz9vnjTKxrLpDG5M2Vu4SHRVNg6xzqZp6LYSR9zjqQTu8DU/f5xwxUdADOkbrIX2gQ==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
+  typescript@5.7.2:
+    resolution: {integrity: sha512-i5t66RHxDvVN40HfDd1PsEThGNnlMCMT3jMUuoh9/0TaqWevNontacunWyN02LA9/fIbEWlcHZcgTKb9QoaLfg==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -5649,6 +5649,9 @@ packages:
 
   uncrypto@0.1.3:
     resolution: {integrity: sha512-Ql87qFHB3s/De2ClA9e0gsnS6zXG27SkTiSJwjCc9MebbfapQfuPzumMIUMi38ezPZVNFcHI9sUIepeQfw8J8Q==}
+
+  undici-types@5.26.5:
+    resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
 
   unenv@1.9.0:
     resolution: {integrity: sha512-QKnFNznRxmbOF1hDgzpqrlIf6NC5sbZ2OJ+5Wl3OX8uM+LUJXbj4TXvLJCtwbPTmbMHCLIz6JLKNinNsMShK9g==}
@@ -5718,6 +5721,11 @@ packages:
     resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
+
+  use-sync-external-store@1.4.0:
+    resolution: {integrity: sha512-9WXSPC5fMv61vaupRkCKCxsPxBocVnwakBEkMIHHpkTTg6icbJtg6jzgtLDm4bl3cSHAca52rYWih0k4K3PfHw==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
   utf-8-validate@5.0.10:
     resolution: {integrity: sha512-Z6czzLq4u8fPOyx7TU6X3dvUZVvoJmxSQ+IcrlmagKhilxlhZgxPK6C5Jqbkw1IDUmFTM+cz9QDnnLTwDz/2gQ==}
@@ -5871,6 +5879,18 @@ packages:
       utf-8-validate:
         optional: true
 
+  ws@7.5.10:
+    resolution: {integrity: sha512-+dbF1tHwZpXcbOJdVOkzLDxZP1ailvSxM6ZweXTegylPny803bFhA+vqBYw4s31NSAk4S2Qz+AKXK9a4wkdjcQ==}
+    engines: {node: '>=8.3.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: ^5.0.2
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+
   ws@7.5.3:
     resolution: {integrity: sha512-kQ/dHIzuLrS6Je9+uv81ueZomEwH0qVYstcAQ4/Z93K8zeko9gtAbttJWzoC5ukqXY1PpoouV3+VSOqEAFt5wg==}
     engines: {node: '>=8.3.0'}
@@ -5909,6 +5929,18 @@ packages:
 
   ws@8.17.1:
     resolution: {integrity: sha512-6XQFvXTkbfUOZOKKILFG1PDK2NDQs4azKQl26T0YS5CxqWLgXajbPZ+h4gZekJyRqFU8pvnbAbbs/3TgRPy+GQ==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: '>=5.0.2'
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+
+  ws@8.18.0:
+    resolution: {integrity: sha512-8VbfWfHLbbwu3+N6OKsOMpBdT4kXPDDB9cJk2bJ6mh9ucxdlnNvH1e+roYkKmN9Nxw2yjz7VzeO9oOz2zJ04Pw==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -6062,32 +6094,32 @@ snapshots:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  '@aptos-connect/wallet-adapter-plugin@2.3.4(@aptos-labs/ts-sdk@1.33.1)(@aptos-labs/wallet-standard@0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3))(@telegram-apps/bridge@1.7.1)(aptos@1.4.0)':
+  '@aptos-connect/wallet-adapter-plugin@2.3.4(@aptos-labs/ts-sdk@1.33.1)(@aptos-labs/wallet-standard@0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3))(@telegram-apps/bridge@1.7.1)(aptos@1.21.0)':
     dependencies:
-      '@aptos-connect/wallet-api': 0.1.6(@aptos-labs/ts-sdk@1.33.1)(@aptos-labs/wallet-standard@0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3))(aptos@1.4.0)
+      '@aptos-connect/wallet-api': 0.1.6(@aptos-labs/ts-sdk@1.33.1)(@aptos-labs/wallet-standard@0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3))(aptos@1.21.0)
       '@aptos-labs/ts-sdk': 1.33.1
       '@aptos-labs/wallet-standard': 0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3)
-      '@identity-connect/crypto': 0.2.5(@aptos-labs/ts-sdk@1.33.1)(@aptos-labs/wallet-standard@0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3))(aptos@1.4.0)
-      '@identity-connect/dapp-sdk': 0.10.2(@aptos-labs/ts-sdk@1.33.1)(@aptos-labs/wallet-standard@0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3))(@telegram-apps/bridge@1.7.1)(aptos@1.4.0)
+      '@identity-connect/crypto': 0.2.5(@aptos-labs/ts-sdk@1.33.1)(@aptos-labs/wallet-standard@0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3))(aptos@1.21.0)
+      '@identity-connect/dapp-sdk': 0.10.2(@aptos-labs/ts-sdk@1.33.1)(@aptos-labs/wallet-standard@0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3))(@telegram-apps/bridge@1.7.1)(aptos@1.21.0)
     transitivePeerDependencies:
       - '@telegram-apps/bridge'
       - aptos
       - debug
 
-  '@aptos-connect/wallet-api@0.1.6(@aptos-labs/ts-sdk@1.33.1)(@aptos-labs/wallet-standard@0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3))(aptos@1.4.0)':
+  '@aptos-connect/wallet-api@0.1.6(@aptos-labs/ts-sdk@1.33.1)(@aptos-labs/wallet-standard@0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3))(aptos@1.21.0)':
     dependencies:
       '@aptos-labs/ts-sdk': 1.33.1
       '@aptos-labs/wallet-standard': 0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3)
       '@identity-connect/api': 0.7.0
-      aptos: 1.4.0
+      aptos: 1.21.0
 
-  '@aptos-connect/web-transport@0.1.1(@aptos-labs/ts-sdk@1.33.1)(@aptos-labs/wallet-standard@0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3))(@telegram-apps/bridge@1.7.1)(aptos@1.4.0)':
+  '@aptos-connect/web-transport@0.1.1(@aptos-labs/ts-sdk@1.33.1)(@aptos-labs/wallet-standard@0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3))(@telegram-apps/bridge@1.7.1)(aptos@1.21.0)':
     dependencies:
-      '@aptos-connect/wallet-api': 0.1.6(@aptos-labs/ts-sdk@1.33.1)(@aptos-labs/wallet-standard@0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3))(aptos@1.4.0)
+      '@aptos-connect/wallet-api': 0.1.6(@aptos-labs/ts-sdk@1.33.1)(@aptos-labs/wallet-standard@0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3))(aptos@1.21.0)
       '@aptos-labs/ts-sdk': 1.33.1
       '@aptos-labs/wallet-standard': 0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3)
       '@telegram-apps/bridge': 1.7.1
-      aptos: 1.4.0
+      aptos: 1.21.0
       uuid: 9.0.1
 
   '@aptos-labs/aptos-cli@1.0.2':
@@ -6110,23 +6142,16 @@ snapshots:
       '@scure/bip32': 1.6.0
       '@scure/bip39': 1.5.0
       eventemitter3: 5.0.1
-      form-data: 4.0.0
+      form-data: 4.0.1
       js-base64: 3.7.7
       jwt-decode: 4.0.0
       poseidon-lite: 0.2.1
     transitivePeerDependencies:
       - debug
 
-  '@aptos-labs/wallet-adapter-core@0.1.7':
-    dependencies:
-      aptos: 1.21.0
-      eventemitter3: 4.0.7
-    transitivePeerDependencies:
-      - debug
-
   '@aptos-labs/wallet-adapter-core@2.1.0':
     dependencies:
-      aptos: 1.4.0
+      aptos: 1.21.0
       buffer: 6.0.3
       eventemitter3: 4.0.7
       tweetnacl: 1.0.3
@@ -6142,26 +6167,26 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@aptos-labs/wallet-adapter-core@3.16.0(@aptos-labs/ts-sdk@1.33.1)(aptos@1.4.0)':
+  '@aptos-labs/wallet-adapter-core@3.16.0(@aptos-labs/ts-sdk@1.33.1)(aptos@1.21.0)':
     dependencies:
       '@aptos-labs/ts-sdk': 1.33.1
       '@aptos-labs/wallet-standard': 0.0.11
       '@atomrigslab/aptos-wallet-adapter': 0.1.21(@aptos-labs/ts-sdk@1.33.1)
-      aptos: 1.4.0
+      aptos: 1.21.0
       buffer: 6.0.3
       eventemitter3: 4.0.7
       tweetnacl: 1.0.3
     transitivePeerDependencies:
       - debug
 
-  '@aptos-labs/wallet-adapter-core@4.23.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/core@1.4.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/protocol@0.0.6)(graphql-request@7.1.2(graphql@16.6.0)))(@mizuwallet-sdk/protocol@0.0.6)(@telegram-apps/bridge@1.7.1)(@wallet-standard/core@1.0.3)(aptos@1.4.0)':
+  '@aptos-labs/wallet-adapter-core@4.23.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/core@1.4.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/protocol@0.0.6)(graphql-request@7.1.2(graphql@16.6.0)))(@mizuwallet-sdk/protocol@0.0.6)(@telegram-apps/bridge@1.7.1)(@wallet-standard/core@1.0.3)(aptos@1.21.0)':
     dependencies:
-      '@aptos-connect/wallet-adapter-plugin': 2.3.4(@aptos-labs/ts-sdk@1.33.1)(@aptos-labs/wallet-standard@0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3))(@telegram-apps/bridge@1.7.1)(aptos@1.4.0)
+      '@aptos-connect/wallet-adapter-plugin': 2.3.4(@aptos-labs/ts-sdk@1.33.1)(@aptos-labs/wallet-standard@0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3))(@telegram-apps/bridge@1.7.1)(aptos@1.21.0)
       '@aptos-labs/ts-sdk': 1.33.1
       '@aptos-labs/wallet-standard': 0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3)
       '@atomrigslab/aptos-wallet-adapter': 0.1.21(@aptos-labs/ts-sdk@1.33.1)
       '@mizuwallet-sdk/aptos-wallet-adapter': 0.3.2(@mizuwallet-sdk/core@1.4.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/protocol@0.0.6)(graphql-request@7.1.2(graphql@16.6.0)))(@mizuwallet-sdk/protocol@0.0.6)(@wallet-standard/core@1.0.3)
-      aptos: 1.4.0
+      aptos: 1.21.0
       buffer: 6.0.3
       eventemitter3: 4.0.7
       tweetnacl: 1.0.3
@@ -6213,7 +6238,7 @@ snapshots:
       is-stream: 2.0.1
       json-rpc-engine: 6.1.0
       json-rpc-middleware-stream: 3.0.0
-      pump: 3.0.0
+      pump: 3.0.2
       webextension-polyfill-ts: 0.25.0
 
   '@babel/runtime@7.20.13':
@@ -6224,14 +6249,14 @@ snapshots:
     dependencies:
       regenerator-runtime: 0.14.1
 
-  '@binance/w3w-core@1.1.8-alpha.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@binance/w3w-core@1.1.8-alpha.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@binance/w3w-qrcode-modal': 1.1.5
-      '@binance/w3w-socket-transport': 1.1.4(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@binance/w3w-socket-transport': 1.1.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@binance/w3w-types': 1.1.4
       '@binance/w3w-utils': 1.1.4
       '@ethersproject/abi': 5.7.0
-      axios: 1.6.2
+      axios: 1.7.9
       js-base64: 3.7.7
     transitivePeerDependencies:
       - bufferutil
@@ -6239,13 +6264,13 @@ snapshots:
       - ts-node
       - utf-8-validate
 
-  '@binance/w3w-ethereum-provider@1.1.8-alpha.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@binance/w3w-ethereum-provider@1.1.8-alpha.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@binance/w3w-http-client': 1.1.4
-      '@binance/w3w-sign-client': 1.1.8-alpha.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@binance/w3w-sign-client': 1.1.8-alpha.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@binance/w3w-types': 1.1.4
       '@binance/w3w-utils': 1.1.4
-      eip1193-provider: 1.0.1(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      eip1193-provider: 1.0.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       eventemitter3: 5.0.0
     transitivePeerDependencies:
       - bufferutil
@@ -6275,9 +6300,9 @@ snapshots:
     transitivePeerDependencies:
       - ts-node
 
-  '@binance/w3w-sign-client@1.1.8-alpha.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@binance/w3w-sign-client@1.1.8-alpha.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
-      '@binance/w3w-core': 1.1.8-alpha.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@binance/w3w-core': 1.1.8-alpha.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@binance/w3w-types': 1.1.4
       '@binance/w3w-utils': 1.1.4
     transitivePeerDependencies:
@@ -6286,11 +6311,11 @@ snapshots:
       - ts-node
       - utf-8-validate
 
-  '@binance/w3w-socket-transport@1.1.4(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@binance/w3w-socket-transport@1.1.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@binance/w3w-types': 1.1.4
       '@binance/w3w-utils': 1.1.4
-      ws: 8.13.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      ws: 8.13.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -6313,12 +6338,12 @@ snapshots:
       hash.js: 1.1.7
       js-base64: 3.7.7
 
-  '@binance/w3w-wagmi-connector@1.2.2-alpha.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)(viem@1.21.4(bufferutil@4.0.7)(typescript@5.3.2)(utf-8-validate@5.0.10))(wagmi@1.4.13(@types/react@17.0.52)(bufferutil@4.0.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.3.2)(utf-8-validate@5.0.10)(viem@1.21.4(bufferutil@4.0.7)(typescript@5.3.2)(utf-8-validate@5.0.10)))':
+  '@binance/w3w-wagmi-connector@1.2.2-alpha.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)(viem@1.21.4(bufferutil@4.0.9)(typescript@5.3.2)(utf-8-validate@5.0.10))(wagmi@1.4.13(@types/react@17.0.52)(bufferutil@4.0.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.3.2)(utf-8-validate@5.0.10)(viem@1.21.4(bufferutil@4.0.9)(typescript@5.3.2)(utf-8-validate@5.0.10)))':
     dependencies:
-      '@binance/w3w-ethereum-provider': 1.1.8-alpha.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@binance/w3w-ethereum-provider': 1.1.8-alpha.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@binance/w3w-utils': 1.1.4
-      viem: 1.21.4(bufferutil@4.0.7)(typescript@5.3.2)(utf-8-validate@5.0.10)
-      wagmi: 1.4.13(@types/react@17.0.52)(bufferutil@4.0.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.3.2)(utf-8-validate@5.0.10)(viem@1.21.4(bufferutil@4.0.7)(typescript@5.3.2)(utf-8-validate@5.0.10))
+      viem: 1.21.4(bufferutil@4.0.9)(typescript@5.3.2)(utf-8-validate@5.0.10)
+      wagmi: 1.4.13(@types/react@17.0.52)(bufferutil@4.0.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.3.2)(utf-8-validate@5.0.10)(viem@1.21.4(bufferutil@4.0.9)(typescript@5.3.2)(utf-8-validate@5.0.10))
     transitivePeerDependencies:
       - bufferutil
       - debug
@@ -6326,14 +6351,14 @@ snapshots:
       - ts-node
       - utf-8-validate
 
-  '@bitget-wallet/aptos-wallet-adapter@0.1.2(@aptos-labs/wallet-adapter-core@4.23.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/core@1.4.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/protocol@0.0.6)(graphql-request@7.1.2(graphql@16.6.0)))(@mizuwallet-sdk/protocol@0.0.6)(@telegram-apps/bridge@1.7.1)(@wallet-standard/core@1.0.3)(aptos@1.4.0))(aptos@1.4.0)':
+  '@bitget-wallet/aptos-wallet-adapter@0.1.2(@aptos-labs/wallet-adapter-core@4.23.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/core@1.4.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/protocol@0.0.6)(graphql-request@7.1.2(graphql@16.6.0)))(@mizuwallet-sdk/protocol@0.0.6)(@telegram-apps/bridge@1.7.1)(@wallet-standard/core@1.0.3)(aptos@1.21.0))(aptos@1.21.0)':
     dependencies:
-      '@aptos-labs/wallet-adapter-core': 4.23.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/core@1.4.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/protocol@0.0.6)(graphql-request@7.1.2(graphql@16.6.0)))(@mizuwallet-sdk/protocol@0.0.6)(@telegram-apps/bridge@1.7.1)(@wallet-standard/core@1.0.3)(aptos@1.4.0)
-      aptos: 1.4.0
+      '@aptos-labs/wallet-adapter-core': 4.23.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/core@1.4.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/protocol@0.0.6)(graphql-request@7.1.2(graphql@16.6.0)))(@mizuwallet-sdk/protocol@0.0.6)(@telegram-apps/bridge@1.7.1)(@wallet-standard/core@1.0.3)(aptos@1.21.0)
+      aptos: 1.21.0
 
-  '@blockshake/defly-connect@1.1.1(algosdk@1.24.0)(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@blockshake/defly-connect@1.1.1(algosdk@1.24.0)(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
-      '@walletconnect/client': 1.8.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@walletconnect/client': 1.8.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@walletconnect/types': 1.8.0
       algosdk: 1.24.0
       bowser: 2.11.0
@@ -6344,21 +6369,21 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@blocto/sdk@0.2.22(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@blocto/sdk@0.2.22(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       bs58: 4.0.1
       buffer: 6.0.3
-      eip1193-provider: 1.0.1(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      eip1193-provider: 1.0.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       js-sha3: 0.8.0
     transitivePeerDependencies:
       - bufferutil
       - debug
       - utf-8-validate
 
-  '@censo-custody/solana-wallet-adapter@0.1.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@censo-custody/solana-wallet-adapter@0.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       bs58: 4.0.1
       eventemitter3: 4.0.7
       uuid: 8.3.2
@@ -6379,10 +6404,10 @@ snapshots:
       '@chainsafe/as-sha256': 0.4.1
       '@chainsafe/persistent-merkle-tree': 0.6.1
 
-  '@coinbase/wallet-sdk@3.7.2(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@coinbase/wallet-sdk@3.7.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@metamask/safe-event-emitter': 2.0.0
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       bind-decorator: 1.0.11
       bn.js: 5.2.1
       buffer: 6.0.3
@@ -6406,7 +6431,7 @@ snapshots:
 
   '@confio/ics23@0.6.8':
     dependencies:
-      '@noble/hashes': 1.3.2
+      '@noble/hashes': 1.6.1
       protobufjs: 6.11.3
 
   '@cosmjs/amino@0.27.1':
@@ -6444,15 +6469,15 @@ snapshots:
       '@cosmjs/math': 0.32.4
       '@cosmjs/utils': 0.32.4
 
-  '@cosmjs/cosmwasm-stargate@0.29.5(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@cosmjs/cosmwasm-stargate@0.29.5(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@cosmjs/amino': 0.29.5
       '@cosmjs/crypto': 0.29.5
       '@cosmjs/encoding': 0.29.5
       '@cosmjs/math': 0.29.5
       '@cosmjs/proto-signing': 0.29.5
-      '@cosmjs/stargate': 0.29.5(bufferutil@4.0.7)(utf-8-validate@5.0.10)
-      '@cosmjs/tendermint-rpc': 0.29.5(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@cosmjs/stargate': 0.29.5(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@cosmjs/tendermint-rpc': 0.29.5(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@cosmjs/utils': 0.29.5
       cosmjs-types: 0.5.2
       long: 4.0.0
@@ -6462,15 +6487,15 @@ snapshots:
       - debug
       - utf-8-validate
 
-  '@cosmjs/cosmwasm-stargate@0.32.4(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@cosmjs/cosmwasm-stargate@0.32.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@cosmjs/amino': 0.32.4
       '@cosmjs/crypto': 0.32.4
       '@cosmjs/encoding': 0.32.4
       '@cosmjs/math': 0.32.4
       '@cosmjs/proto-signing': 0.32.4
-      '@cosmjs/stargate': 0.32.4(bufferutil@4.0.7)(utf-8-validate@5.0.10)
-      '@cosmjs/tendermint-rpc': 0.32.4(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@cosmjs/stargate': 0.32.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@cosmjs/tendermint-rpc': 0.32.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@cosmjs/utils': 0.32.4
       cosmjs-types: 0.9.0
       pako: 2.1.0
@@ -6507,7 +6532,7 @@ snapshots:
       '@cosmjs/encoding': 0.29.5
       '@cosmjs/math': 0.29.5
       '@cosmjs/utils': 0.29.5
-      '@noble/hashes': 1.3.2
+      '@noble/hashes': 1.6.1
       bn.js: 5.2.1
       elliptic: 6.5.4
       libsodium-wrappers: 0.7.10
@@ -6517,7 +6542,7 @@ snapshots:
       '@cosmjs/encoding': 0.30.1
       '@cosmjs/math': 0.30.1
       '@cosmjs/utils': 0.30.1
-      '@noble/hashes': 1.3.2
+      '@noble/hashes': 1.6.1
       bn.js: 5.2.1
       elliptic: 6.5.4
       libsodium-wrappers: 0.7.10
@@ -6527,7 +6552,7 @@ snapshots:
       '@cosmjs/encoding': 0.32.4
       '@cosmjs/math': 0.32.4
       '@cosmjs/utils': 0.32.4
-      '@noble/hashes': 1.3.2
+      '@noble/hashes': 1.6.1
       bn.js: 5.2.1
       elliptic: 6.5.4
       libsodium-wrappers-sumo: 0.7.11
@@ -6653,47 +6678,47 @@ snapshots:
       '@cosmjs/utils': 0.32.4
       cosmjs-types: 0.9.0
 
-  '@cosmjs/socket@0.28.13(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@cosmjs/socket@0.28.13(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@cosmjs/stream': 0.28.13
-      isomorphic-ws: 4.0.1(ws@7.5.9(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      ws: 7.5.9(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      isomorphic-ws: 4.0.1(ws@7.5.9(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      ws: 7.5.9(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       xstream: 11.14.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
 
-  '@cosmjs/socket@0.29.5(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@cosmjs/socket@0.29.5(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@cosmjs/stream': 0.29.5
-      isomorphic-ws: 4.0.1(ws@7.5.9(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      ws: 7.5.9(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      isomorphic-ws: 4.0.1(ws@7.5.9(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      ws: 7.5.9(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       xstream: 11.14.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
 
-  '@cosmjs/socket@0.30.1(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@cosmjs/socket@0.30.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@cosmjs/stream': 0.30.1
-      isomorphic-ws: 4.0.1(ws@7.5.9(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      ws: 7.5.9(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      isomorphic-ws: 4.0.1(ws@7.5.9(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      ws: 7.5.9(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       xstream: 11.14.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
 
-  '@cosmjs/socket@0.32.4(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@cosmjs/socket@0.32.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@cosmjs/stream': 0.32.4
-      isomorphic-ws: 4.0.1(ws@7.5.9(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      ws: 7.5.9(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      isomorphic-ws: 4.0.1(ws@7.5.9(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      ws: 7.5.9(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       xstream: 11.14.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
 
-  '@cosmjs/stargate@0.28.13(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@cosmjs/stargate@0.28.13(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@confio/ics23': 0.6.8
       '@cosmjs/amino': 0.28.13
@@ -6701,18 +6726,18 @@ snapshots:
       '@cosmjs/math': 0.28.13
       '@cosmjs/proto-signing': 0.28.13
       '@cosmjs/stream': 0.28.13
-      '@cosmjs/tendermint-rpc': 0.28.13(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@cosmjs/tendermint-rpc': 0.28.13(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@cosmjs/utils': 0.28.13
       cosmjs-types: 0.4.1
       long: 4.0.0
-      protobufjs: 6.11.3
+      protobufjs: 6.11.4
       xstream: 11.14.0
     transitivePeerDependencies:
       - bufferutil
       - debug
       - utf-8-validate
 
-  '@cosmjs/stargate@0.29.5(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@cosmjs/stargate@0.29.5(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@confio/ics23': 0.6.8
       '@cosmjs/amino': 0.29.5
@@ -6720,7 +6745,7 @@ snapshots:
       '@cosmjs/math': 0.29.5
       '@cosmjs/proto-signing': 0.29.5
       '@cosmjs/stream': 0.29.5
-      '@cosmjs/tendermint-rpc': 0.29.5(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@cosmjs/tendermint-rpc': 0.29.5(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@cosmjs/utils': 0.29.5
       cosmjs-types: 0.5.2
       long: 4.0.0
@@ -6731,7 +6756,7 @@ snapshots:
       - debug
       - utf-8-validate
 
-  '@cosmjs/stargate@0.30.1(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@cosmjs/stargate@0.30.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@confio/ics23': 0.6.8
       '@cosmjs/amino': 0.30.1
@@ -6739,7 +6764,7 @@ snapshots:
       '@cosmjs/math': 0.30.1
       '@cosmjs/proto-signing': 0.30.1
       '@cosmjs/stream': 0.30.1
-      '@cosmjs/tendermint-rpc': 0.30.1(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@cosmjs/tendermint-rpc': 0.30.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@cosmjs/utils': 0.30.1
       cosmjs-types: 0.7.2
       long: 4.0.0
@@ -6750,7 +6775,7 @@ snapshots:
       - debug
       - utf-8-validate
 
-  '@cosmjs/stargate@0.32.4(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@cosmjs/stargate@0.32.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@confio/ics23': 0.6.8
       '@cosmjs/amino': 0.32.4
@@ -6758,7 +6783,7 @@ snapshots:
       '@cosmjs/math': 0.32.4
       '@cosmjs/proto-signing': 0.32.4
       '@cosmjs/stream': 0.32.4
-      '@cosmjs/tendermint-rpc': 0.32.4(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@cosmjs/tendermint-rpc': 0.32.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@cosmjs/utils': 0.32.4
       cosmjs-types: 0.9.0
       xstream: 11.14.0
@@ -6783,13 +6808,13 @@ snapshots:
     dependencies:
       xstream: 11.14.0
 
-  '@cosmjs/tendermint-rpc@0.28.13(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@cosmjs/tendermint-rpc@0.28.13(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@cosmjs/crypto': 0.28.13
       '@cosmjs/encoding': 0.28.13
       '@cosmjs/json-rpc': 0.28.13
       '@cosmjs/math': 0.28.13
-      '@cosmjs/socket': 0.28.13(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@cosmjs/socket': 0.28.13(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@cosmjs/stream': 0.28.13
       '@cosmjs/utils': 0.28.13
       axios: 0.21.4
@@ -6800,13 +6825,13 @@ snapshots:
       - debug
       - utf-8-validate
 
-  '@cosmjs/tendermint-rpc@0.29.5(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@cosmjs/tendermint-rpc@0.29.5(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@cosmjs/crypto': 0.29.5
       '@cosmjs/encoding': 0.29.5
       '@cosmjs/json-rpc': 0.29.5
       '@cosmjs/math': 0.29.5
-      '@cosmjs/socket': 0.29.5(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@cosmjs/socket': 0.29.5(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@cosmjs/stream': 0.29.5
       '@cosmjs/utils': 0.29.5
       axios: 0.21.4
@@ -6817,13 +6842,13 @@ snapshots:
       - debug
       - utf-8-validate
 
-  '@cosmjs/tendermint-rpc@0.30.1(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@cosmjs/tendermint-rpc@0.30.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@cosmjs/crypto': 0.30.1
       '@cosmjs/encoding': 0.30.1
       '@cosmjs/json-rpc': 0.30.1
       '@cosmjs/math': 0.30.1
-      '@cosmjs/socket': 0.30.1(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@cosmjs/socket': 0.30.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@cosmjs/stream': 0.30.1
       '@cosmjs/utils': 0.30.1
       axios: 0.21.4
@@ -6834,13 +6859,13 @@ snapshots:
       - debug
       - utf-8-validate
 
-  '@cosmjs/tendermint-rpc@0.32.4(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@cosmjs/tendermint-rpc@0.32.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@cosmjs/crypto': 0.32.4
       '@cosmjs/encoding': 0.32.4
       '@cosmjs/json-rpc': 0.32.4
       '@cosmjs/math': 0.32.4
-      '@cosmjs/socket': 0.32.4(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@cosmjs/socket': 0.32.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@cosmjs/stream': 0.32.4
       '@cosmjs/utils': 0.32.4
       axios: 1.6.2
@@ -7070,7 +7095,7 @@ snapshots:
     dependencies:
       '@ethersproject/logger': 5.7.0
 
-  '@ethersproject/providers@5.7.2(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@ethersproject/providers@5.7.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@ethersproject/abstract-provider': 5.7.0
       '@ethersproject/abstract-signer': 5.7.0
@@ -7091,7 +7116,7 @@ snapshots:
       '@ethersproject/transactions': 5.7.0
       '@ethersproject/web': 5.7.1
       bech32: 1.1.4
-      ws: 7.4.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      ws: 7.4.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -7190,9 +7215,9 @@ snapshots:
 
   '@evanhahn/lottie-web-light@5.8.1': {}
 
-  '@fewcha/web3@0.1.38(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@fewcha/web3@0.1.38(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
-      '@mysten/sui.js': 0.13.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@mysten/sui.js': 0.13.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       aptos: 1.21.0
       buffer: 6.0.3
     transitivePeerDependencies:
@@ -7206,10 +7231,10 @@ snapshots:
       react: 16.13.1
       react-dom: 16.13.1(react@16.13.1)
 
-  '@fractalwagmi/solana-wallet-adapter@0.1.1(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))(react-dom@16.13.1(react@16.13.1))(react@16.13.1)':
+  '@fractalwagmi/solana-wallet-adapter@0.1.1(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))(react-dom@16.13.1(react@16.13.1))(react@16.13.1)':
     dependencies:
       '@fractalwagmi/popup-connection': 1.0.18(react-dom@16.13.1(react@16.13.1))(react@16.13.1)
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       bs58: 5.0.0
     transitivePeerDependencies:
       - '@solana/web3.js'
@@ -7240,37 +7265,37 @@ snapshots:
 
   '@identity-connect/api@0.7.0': {}
 
-  '@identity-connect/crypto@0.2.5(@aptos-labs/ts-sdk@1.33.1)(@aptos-labs/wallet-standard@0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3))(aptos@1.4.0)':
+  '@identity-connect/crypto@0.2.5(@aptos-labs/ts-sdk@1.33.1)(@aptos-labs/wallet-standard@0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3))(aptos@1.21.0)':
     dependencies:
-      '@aptos-connect/wallet-api': 0.1.6(@aptos-labs/ts-sdk@1.33.1)(@aptos-labs/wallet-standard@0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3))(aptos@1.4.0)
+      '@aptos-connect/wallet-api': 0.1.6(@aptos-labs/ts-sdk@1.33.1)(@aptos-labs/wallet-standard@0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3))(aptos@1.21.0)
       '@aptos-labs/ts-sdk': 1.33.1
-      '@noble/hashes': 1.3.2
+      '@noble/hashes': 1.6.1
       ed2curve: 0.3.0
       tweetnacl: 1.0.3
     transitivePeerDependencies:
       - '@aptos-labs/wallet-standard'
       - aptos
 
-  '@identity-connect/dapp-sdk@0.10.2(@aptos-labs/ts-sdk@1.33.1)(@aptos-labs/wallet-standard@0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3))(@telegram-apps/bridge@1.7.1)(aptos@1.4.0)':
+  '@identity-connect/dapp-sdk@0.10.2(@aptos-labs/ts-sdk@1.33.1)(@aptos-labs/wallet-standard@0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3))(@telegram-apps/bridge@1.7.1)(aptos@1.21.0)':
     dependencies:
-      '@aptos-connect/wallet-api': 0.1.6(@aptos-labs/ts-sdk@1.33.1)(@aptos-labs/wallet-standard@0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3))(aptos@1.4.0)
-      '@aptos-connect/web-transport': 0.1.1(@aptos-labs/ts-sdk@1.33.1)(@aptos-labs/wallet-standard@0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3))(@telegram-apps/bridge@1.7.1)(aptos@1.4.0)
+      '@aptos-connect/wallet-api': 0.1.6(@aptos-labs/ts-sdk@1.33.1)(@aptos-labs/wallet-standard@0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3))(aptos@1.21.0)
+      '@aptos-connect/web-transport': 0.1.1(@aptos-labs/ts-sdk@1.33.1)(@aptos-labs/wallet-standard@0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3))(@telegram-apps/bridge@1.7.1)(aptos@1.21.0)
       '@aptos-labs/ts-sdk': 1.33.1
       '@aptos-labs/wallet-standard': 0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3)
       '@identity-connect/api': 0.7.0
-      '@identity-connect/crypto': 0.2.5(@aptos-labs/ts-sdk@1.33.1)(@aptos-labs/wallet-standard@0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3))(aptos@1.4.0)
-      '@identity-connect/wallet-api': 0.1.2(@aptos-labs/ts-sdk@1.33.1)(aptos@1.4.0)
-      axios: 1.6.2
+      '@identity-connect/crypto': 0.2.5(@aptos-labs/ts-sdk@1.33.1)(@aptos-labs/wallet-standard@0.2.0(@aptos-labs/ts-sdk@1.33.1)(@wallet-standard/core@1.0.3))(aptos@1.21.0)
+      '@identity-connect/wallet-api': 0.1.2(@aptos-labs/ts-sdk@1.33.1)(aptos@1.21.0)
+      axios: 1.7.9
       uuid: 9.0.1
     transitivePeerDependencies:
       - '@telegram-apps/bridge'
       - aptos
       - debug
 
-  '@identity-connect/wallet-api@0.1.2(@aptos-labs/ts-sdk@1.33.1)(aptos@1.4.0)':
+  '@identity-connect/wallet-api@0.1.2(@aptos-labs/ts-sdk@1.33.1)(aptos@1.21.0)':
     dependencies:
       '@aptos-labs/ts-sdk': 1.33.1
-      aptos: 1.4.0
+      aptos: 1.21.0
 
   '@improbable-eng/grpc-web@0.14.1(google-protobuf@3.21.2)':
     dependencies:
@@ -7414,12 +7439,12 @@ snapshots:
       - debug
       - google-protobuf
 
-  '@injectivelabs/sdk-ts@1.14.0-beta.1(bufferutil@4.0.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(utf-8-validate@5.0.10)':
+  '@injectivelabs/sdk-ts@1.14.0-beta.1(bufferutil@4.0.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(utf-8-validate@5.0.10)':
     dependencies:
       '@apollo/client': 3.7.1(graphql@16.6.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@cosmjs/amino': 0.30.1
       '@cosmjs/proto-signing': 0.30.1
-      '@cosmjs/stargate': 0.30.1(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@cosmjs/stargate': 0.30.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@ensdomains/ens-validation': 0.1.0
       '@ensdomains/eth-ens-namehash': 2.0.15
       '@ethersproject/bytes': 5.7.0
@@ -7441,9 +7466,9 @@ snapshots:
       bech32: 2.0.0
       bip39: 3.0.4
       cosmjs-types: 0.7.2
-      eth-crypto: 2.6.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      eth-crypto: 2.6.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       ethereumjs-util: 7.1.5
-      ethers: 5.7.2(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      ethers: 5.7.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       google-protobuf: 3.21.2
       graphql: 16.6.0
       http-status-codes: 2.2.0
@@ -7464,12 +7489,12 @@ snapshots:
       - subscriptions-transport-ws
       - utf-8-validate
 
-  '@injectivelabs/sdk-ts@1.14.7(bufferutil@4.0.7)(react-dom@16.13.1(react@16.13.1))(react@16.13.1)(utf-8-validate@5.0.10)':
+  '@injectivelabs/sdk-ts@1.14.7(bufferutil@4.0.9)(react-dom@16.13.1(react@16.13.1))(react@16.13.1)(utf-8-validate@5.0.10)':
     dependencies:
       '@apollo/client': 3.7.1(graphql@16.6.0)(react-dom@16.13.1(react@16.13.1))(react@16.13.1)
       '@cosmjs/amino': 0.32.4
       '@cosmjs/proto-signing': 0.32.4
-      '@cosmjs/stargate': 0.32.4(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@cosmjs/stargate': 0.32.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@ensdomains/ens-validation': 0.1.0
       '@ensdomains/eth-ens-namehash': 2.0.15
       '@ethersproject/bytes': 5.7.0
@@ -7492,7 +7517,7 @@ snapshots:
       bip39: 3.0.4
       cosmjs-types: 0.9.0
       ethereumjs-util: 7.1.5
-      ethers: 5.7.2(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      ethers: 5.7.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       google-protobuf: 3.21.2
       graphql: 16.6.0
       http-status-codes: 2.2.0
@@ -7628,17 +7653,17 @@ snapshots:
       - debug
       - google-protobuf
 
-  '@injectivelabs/wallet-ts@1.14.4(@babel/runtime@7.20.13)(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))(bs58@5.0.0)(bufferutil@4.0.7)(google-protobuf@3.21.2)(react-dom@16.13.1(react@16.13.1))(react@16.13.1)(utf-8-validate@5.0.10)':
+  '@injectivelabs/wallet-ts@1.14.4(@babel/runtime@7.20.13)(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bs58@5.0.0)(bufferutil@4.0.9)(google-protobuf@3.21.2)(react-dom@16.13.1(react@16.13.1))(react@16.13.1)(utf-8-validate@5.0.10)':
     dependencies:
       '@cosmjs/launchpad': 0.27.1
       '@cosmjs/proto-signing': 0.30.1
-      '@cosmjs/stargate': 0.30.1(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@cosmjs/stargate': 0.30.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@cosmostation/extension-client': 0.1.15
       '@ethereumjs/common': 3.1.2
       '@ethereumjs/tx': 4.1.2
       '@injectivelabs/exceptions': 1.14.4(google-protobuf@3.21.2)
       '@injectivelabs/networks': 1.14.6(google-protobuf@3.21.2)
-      '@injectivelabs/sdk-ts': 1.14.7(bufferutil@4.0.7)(react-dom@16.13.1(react@16.13.1))(react@16.13.1)(utf-8-validate@5.0.10)
+      '@injectivelabs/sdk-ts': 1.14.7(bufferutil@4.0.9)(react-dom@16.13.1(react@16.13.1))(react@16.13.1)(utf-8-validate@5.0.10)
       '@injectivelabs/ts-types': 1.14.4
       '@injectivelabs/utils': 1.14.4(google-protobuf@3.21.2)
       '@keplr-wallet/cosmos': 0.11.59
@@ -7648,14 +7673,14 @@ snapshots:
       '@ledgerhq/hw-transport-webhid': 6.27.14
       '@ledgerhq/hw-transport-webusb': 6.27.14
       '@metamask/eth-sig-util': 4.0.1
-      '@solana/wallet-adapter-wallets': 0.19.10(@babel/runtime@7.20.13)(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))(bs58@5.0.0)(bufferutil@4.0.7)(react-dom@16.13.1(react@16.13.1))(react@16.13.1)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-wallets': 0.19.10(@babel/runtime@7.20.13)(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bs58@5.0.0)(bufferutil@4.0.9)(react-dom@16.13.1(react@16.13.1))(react@16.13.1)(utf-8-validate@5.0.10)
       '@toruslabs/torus-embed': 1.41.2(@babel/runtime@7.20.13)
-      '@trezor/connect-web': 9.0.8(bufferutil@4.0.7)(utf-8-validate@5.0.10)
-      alchemy-sdk: 2.8.1(bufferutil@4.0.7)(utf-8-validate@5.0.10)
-      eip1193-provider: 1.0.1(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@trezor/connect-web': 9.0.8(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      alchemy-sdk: 2.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      eip1193-provider: 1.0.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       eth-sig-util: 3.0.1
       ethereumjs-util: 7.1.5
-      ethers: 5.7.2(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      ethers: 5.7.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       hdkey: 2.1.0
       link-module-alias: 1.2.0
       long: 5.2.3
@@ -7690,11 +7715,11 @@ snapshots:
       wrap-ansi: 8.1.0
       wrap-ansi-cjs: wrap-ansi@7.0.0
 
-  '@jnwng/walletconnect-solana@0.1.4(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@jnwng/walletconnect-solana@0.1.4(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@walletconnect/qrcode-modal': 1.8.0
-      '@walletconnect/sign-client': 2.0.0-rc.3(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@walletconnect/sign-client': 2.0.0-rc.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@walletconnect/utils': 2.0.0-rc.3
       bs58: 5.0.0
     transitivePeerDependencies:
@@ -7720,12 +7745,12 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@json-rpc-tools/provider@1.7.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@json-rpc-tools/provider@1.7.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@json-rpc-tools/utils': 1.7.6
       axios: 0.21.4
       safe-json-utils: 1.1.1
-      ws: 7.5.9(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      ws: 7.5.9(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - bufferutil
       - debug
@@ -7814,14 +7839,14 @@ snapshots:
       react-modal: 3.16.1(react-dom@16.13.1(react@16.13.1))(react@16.13.1)
       react-qr-reader: 2.2.1(react-dom@16.13.1(react@16.13.1))(react@16.13.1)
       rxjs: 6.6.7
-      typescript: 4.9.3
+      typescript: 4.9.5
 
-  '@keystonehq/sol-keyring@0.3.1(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@keystonehq/sol-keyring@0.3.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@keystonehq/bc-ur-registry': 0.5.4
       '@keystonehq/bc-ur-registry-sol': 0.3.1
       '@keystonehq/sdk': 0.13.1
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       bs58: 5.0.0
       uuid: 8.3.2
     transitivePeerDependencies:
@@ -7829,12 +7854,12 @@ snapshots:
       - encoding
       - utf-8-validate
 
-  '@kunalabs-io/sui-snap-wallet@0.4.2(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@kunalabs-io/sui-snap-wallet@0.4.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@metamask/detect-provider': 2.0.0
       '@metamask/providers': 13.1.0
-      '@mysten/sui.js': 0.42.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
-      '@mysten/wallet-adapter-base': 0.9.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@mysten/sui.js': 0.42.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@mysten/wallet-adapter-base': 0.9.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@mysten/wallet-standard': 0.8.11
       superstruct: 1.0.3
     transitivePeerDependencies:
@@ -8005,7 +8030,7 @@ snapshots:
   '@martianwallet/aptos-wallet-adapter@0.0.5':
     dependencies:
       '@aptos-labs/wallet-adapter-core': 2.1.0
-      aptos: 1.4.0
+      aptos: 1.21.0
     transitivePeerDependencies:
       - debug
 
@@ -8077,8 +8102,8 @@ snapshots:
   '@metamask/utils@8.2.1':
     dependencies:
       '@ethereumjs/tx': 4.2.0
-      '@noble/hashes': 1.3.2
-      '@scure/base': 1.1.3
+      '@noble/hashes': 1.6.1
+      '@scure/base': 1.2.1
       '@types/debug': 4.1.12
       debug: 4.3.4
       pony-cause: 2.1.10
@@ -8204,24 +8229,6 @@ snapshots:
       '@motionone/dom': 10.16.4
       tslib: 2.5.0
 
-  '@msafe/aptos-wallet-adapter@1.1.3(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/core@1.4.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/protocol@0.0.6)(graphql-request@7.1.2(graphql@16.6.0)))(@mizuwallet-sdk/protocol@0.0.6)(@telegram-apps/bridge@1.7.1)(@wallet-standard/core@1.0.3)':
-    dependencies:
-      '@aptos-labs/wallet-adapter-core': 4.23.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/core@1.4.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/protocol@0.0.6)(graphql-request@7.1.2(graphql@16.6.0)))(@mizuwallet-sdk/protocol@0.0.6)(@telegram-apps/bridge@1.7.1)(@wallet-standard/core@1.0.3)(aptos@1.4.0)
-      '@msafe/aptos-wallet': 6.1.1
-      aptos: 1.4.0
-    transitivePeerDependencies:
-      - '@aptos-labs/ts-sdk'
-      - '@mizuwallet-sdk/core'
-      - '@mizuwallet-sdk/protocol'
-      - '@telegram-apps/bridge'
-      - '@wallet-standard/core'
-      - debug
-
-  '@msafe/aptos-wallet@6.1.1':
-    dependencies:
-      buffer: 6.0.3
-      json-rpc-protocol: 0.13.2
-
   '@mysten/bcs@0.3.0':
     dependencies:
       bn.js: 5.2.1
@@ -8242,7 +8249,7 @@ snapshots:
     dependencies:
       bs58: 5.0.0
 
-  '@mysten/sui.js@0.13.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@mysten/sui.js@0.13.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@mysten/bcs': 0.3.0
       '@noble/hashes': 1.6.1
@@ -8251,18 +8258,18 @@ snapshots:
       '@scure/bip39': 1.5.0
       bn.js: 5.2.1
       buffer: 6.0.3
-      cross-fetch: 3.1.5
-      jayson: 3.7.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      cross-fetch: 3.2.0
+      jayson: 3.7.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       js-sha3: 0.8.0
       lossless-json: 1.0.5
-      rpc-websockets: 7.5.1
+      rpc-websockets: 7.11.2
       tweetnacl: 1.0.3
     transitivePeerDependencies:
       - bufferutil
       - encoding
       - utf-8-validate
 
-  '@mysten/sui.js@0.32.2(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@mysten/sui.js@0.32.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@mysten/bcs': 0.7.1
       '@noble/curves': 1.0.0
@@ -8270,7 +8277,7 @@ snapshots:
       '@scure/bip32': 1.3.0
       '@scure/bip39': 1.2.0
       '@suchipi/femver': 1.0.0
-      jayson: 4.1.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      jayson: 4.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       rpc-websockets: 7.5.1
       superstruct: 1.0.3
       tweetnacl: 1.0.3
@@ -8278,14 +8285,14 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@mysten/sui.js@0.40.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@mysten/sui.js@0.40.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@mysten/bcs': 0.7.3
       '@noble/curves': 1.2.0
-      '@noble/hashes': 1.3.2
-      '@open-rpc/client-js': 1.8.1(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@noble/hashes': 1.6.1
+      '@open-rpc/client-js': 1.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@scure/bip32': 1.3.2
-      '@scure/bip39': 1.2.1
+      '@scure/bip39': 1.5.0
       '@suchipi/femver': 1.0.0
       events: 3.3.0
       superstruct: 1.0.3
@@ -8295,14 +8302,14 @@ snapshots:
       - encoding
       - utf-8-validate
 
-  '@mysten/sui.js@0.42.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@mysten/sui.js@0.42.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@mysten/bcs': 0.7.4
       '@noble/curves': 1.2.0
-      '@noble/hashes': 1.3.2
-      '@open-rpc/client-js': 1.8.1(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@noble/hashes': 1.6.1
+      '@open-rpc/client-js': 1.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@scure/bip32': 1.3.2
-      '@scure/bip39': 1.2.1
+      '@scure/bip39': 1.5.0
       '@suchipi/femver': 1.0.0
       events: 3.3.0
       superstruct: 1.0.3
@@ -8316,33 +8323,33 @@ snapshots:
     dependencies:
       '@mysten/bcs': 0.9.0
       '@noble/curves': 1.2.0
-      '@noble/hashes': 1.3.2
+      '@noble/hashes': 1.6.1
       '@scure/bip32': 1.3.2
-      '@scure/bip39': 1.2.1
+      '@scure/bip39': 1.5.0
       '@suchipi/femver': 1.0.0
       superstruct: 1.0.3
       tweetnacl: 1.0.3
 
-  '@mysten/wallet-adapter-base@0.9.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@mysten/wallet-adapter-base@0.9.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
-      '@mysten/sui.js': 0.40.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
-      '@mysten/wallet-standard': 0.6.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@mysten/sui.js': 0.40.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@mysten/wallet-standard': 0.6.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - bufferutil
       - encoding
       - utf-8-validate
 
-  '@mysten/wallet-standard@0.5.4(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@mysten/wallet-standard@0.5.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
-      '@mysten/sui.js': 0.32.2(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@mysten/sui.js': 0.32.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@wallet-standard/core': 1.0.3
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
 
-  '@mysten/wallet-standard@0.6.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@mysten/wallet-standard@0.6.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
-      '@mysten/sui.js': 0.40.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@mysten/sui.js': 0.40.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@wallet-standard/core': 1.0.3
     transitivePeerDependencies:
       - bufferutil
@@ -8391,10 +8398,6 @@ snapshots:
     dependencies:
       '@noble/hashes': 1.6.0
 
-  '@noble/hashes@1.1.3': {}
-
-  '@noble/hashes@1.1.4': {}
-
   '@noble/hashes@1.3.0': {}
 
   '@noble/hashes@1.3.2': {}
@@ -8419,29 +8422,24 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.14.0
 
-  '@okwallet/aptos-wallet-adapter@0.0.7(@aptos-labs/wallet-adapter-core@4.23.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/core@1.4.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/protocol@0.0.6)(graphql-request@7.1.2(graphql@16.6.0)))(@mizuwallet-sdk/protocol@0.0.6)(@telegram-apps/bridge@1.7.1)(@wallet-standard/core@1.0.3)(aptos@1.4.0))(aptos@1.4.0)':
-    dependencies:
-      '@aptos-labs/wallet-adapter-core': 4.23.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/core@1.4.0(@aptos-labs/ts-sdk@1.33.1)(@mizuwallet-sdk/protocol@0.0.6)(graphql-request@7.1.2(graphql@16.6.0)))(@mizuwallet-sdk/protocol@0.0.6)(@telegram-apps/bridge@1.7.1)(@wallet-standard/core@1.0.3)(aptos@1.4.0)
-      aptos: 1.4.0
-
-  '@open-rpc/client-js@1.8.1(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@open-rpc/client-js@1.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       isomorphic-fetch: 3.0.0
-      isomorphic-ws: 5.0.0(ws@7.5.9(bufferutil@4.0.7)(utf-8-validate@5.0.10))
+      isomorphic-ws: 5.0.0(ws@7.5.9(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       strict-event-emitter-types: 2.0.0
-      ws: 7.5.9(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      ws: 7.5.9(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - bufferutil
       - encoding
       - utf-8-validate
 
-  '@osmonauts/helpers@0.6.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@osmonauts/helpers@0.6.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@babel/runtime': 7.20.13
       '@cosmjs/amino': 0.28.13
       '@cosmjs/crypto': 0.28.13
       '@cosmjs/proto-signing': 0.28.13
-      '@cosmjs/stargate': 0.28.13(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@cosmjs/stargate': 0.28.13(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       cosmjs-types: 0.5.1
       long: 5.2.3
       protobufjs: 6.11.3
@@ -8523,18 +8521,18 @@ snapshots:
       crypto-js: 4.1.1
       uuid: 8.3.2
 
-  '@particle-network/solana-wallet@0.5.6(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))(bs58@5.0.0)':
+  '@particle-network/solana-wallet@0.5.6(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bs58@5.0.0)':
     dependencies:
       '@particle-network/auth': 0.5.6
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       bs58: 5.0.0
 
   '@pedrouid/environment@1.0.1': {}
 
-  '@perawallet/connect@1.3.3(algosdk@1.24.0)(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@perawallet/connect@1.3.3(algosdk@1.24.0)(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@evanhahn/lottie-web-light': 5.8.1
-      '@walletconnect/client': 1.8.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@walletconnect/client': 1.8.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@walletconnect/types': 1.8.0
       algosdk: 1.24.0
       bowser: 2.11.0
@@ -8554,15 +8552,15 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@project-serum/sol-wallet-adapter@0.2.0(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@project-serum/sol-wallet-adapter@0.2.0(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       bs58: 4.0.1
       eventemitter3: 4.0.7
 
-  '@project-serum/sol-wallet-adapter@0.2.6(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@project-serum/sol-wallet-adapter@0.2.6(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       bs58: 4.0.1
       eventemitter3: 4.0.7
 
@@ -8589,9 +8587,9 @@ snapshots:
 
   '@protobufjs/utf8@1.1.0': {}
 
-  '@safe-global/safe-apps-provider@0.18.1(bufferutil@4.0.7)(typescript@5.3.2)(utf-8-validate@5.0.10)':
+  '@safe-global/safe-apps-provider@0.18.1(bufferutil@4.0.9)(typescript@5.3.2)(utf-8-validate@5.0.10)':
     dependencies:
-      '@safe-global/safe-apps-sdk': 8.1.0(bufferutil@4.0.7)(typescript@5.3.2)(utf-8-validate@5.0.10)
+      '@safe-global/safe-apps-sdk': 8.1.0(bufferutil@4.0.9)(typescript@5.3.2)(utf-8-validate@5.0.10)
       events: 3.3.0
     transitivePeerDependencies:
       - bufferutil
@@ -8599,10 +8597,10 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@safe-global/safe-apps-sdk@8.1.0(bufferutil@4.0.7)(typescript@5.3.2)(utf-8-validate@5.0.10)':
+  '@safe-global/safe-apps-sdk@8.1.0(bufferutil@4.0.9)(typescript@5.3.2)(utf-8-validate@5.0.10)':
     dependencies:
       '@safe-global/safe-gateway-typescript-sdk': 3.13.3
-      viem: 1.21.4(bufferutil@4.0.7)(typescript@5.3.2)(utf-8-validate@5.0.10)
+      viem: 1.21.4(bufferutil@4.0.9)(typescript@5.3.2)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - bufferutil
       - typescript
@@ -8615,12 +8613,14 @@ snapshots:
 
   '@scure/base@1.1.3': {}
 
+  '@scure/base@1.1.9': {}
+
   '@scure/base@1.2.1': {}
 
   '@scure/bip32@1.3.0':
     dependencies:
       '@noble/curves': 1.0.0
-      '@noble/hashes': 1.3.2
+      '@noble/hashes': 1.3.0
       '@scure/base': 1.1.1
 
   '@scure/bip32@1.3.2':
@@ -8635,41 +8635,36 @@ snapshots:
       '@noble/hashes': 1.6.1
       '@scure/base': 1.2.1
 
-  '@scure/bip39@1.1.0':
-    dependencies:
-      '@noble/hashes': 1.1.4
-      '@scure/base': 1.1.1
-
   '@scure/bip39@1.2.0':
     dependencies:
-      '@noble/hashes': 1.3.2
+      '@noble/hashes': 1.3.0
       '@scure/base': 1.1.1
 
   '@scure/bip39@1.2.1':
     dependencies:
-      '@noble/hashes': 1.3.2
-      '@scure/base': 1.1.3
+      '@noble/hashes': 1.3.3
+      '@scure/base': 1.1.9
 
   '@scure/bip39@1.5.0':
     dependencies:
       '@noble/hashes': 1.6.1
       '@scure/base': 1.2.1
 
-  '@sei-js/core@3.1.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@sei-js/core@3.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@cosmjs/amino': 0.29.5
-      '@cosmjs/cosmwasm-stargate': 0.29.5(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@cosmjs/cosmwasm-stargate': 0.29.5(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@cosmjs/crypto': 0.29.5
       '@cosmjs/encoding': 0.29.5
       '@cosmjs/json-rpc': 0.29.5
       '@cosmjs/math': 0.29.5
       '@cosmjs/proto-signing': 0.29.5
-      '@cosmjs/stargate': 0.29.5(bufferutil@4.0.7)(utf-8-validate@5.0.10)
-      '@cosmjs/tendermint-rpc': 0.29.5(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@cosmjs/stargate': 0.29.5(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@cosmjs/tendermint-rpc': 0.29.5(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@cosmjs/utils': 0.29.5
       '@ethersproject/keccak256': 5.7.0
       '@keplr-wallet/types': 0.11.59
-      '@sei-js/proto': 3.1.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@sei-js/proto': 3.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       buffer: 6.0.3
       crypto-js: 4.1.1
       elliptic: 6.5.4
@@ -8682,15 +8677,15 @@ snapshots:
       - debug
       - utf-8-validate
 
-  '@sei-js/proto@3.1.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@sei-js/proto@3.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@babel/runtime': 7.20.13
       '@cosmjs/amino': 0.29.5
       '@cosmjs/encoding': 0.29.5
       '@cosmjs/proto-signing': 0.29.5
-      '@cosmjs/stargate': 0.29.5(bufferutil@4.0.7)(utf-8-validate@5.0.10)
-      '@cosmjs/tendermint-rpc': 0.29.5(bufferutil@4.0.7)(utf-8-validate@5.0.10)
-      '@osmonauts/helpers': 0.6.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@cosmjs/stargate': 0.29.5(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@cosmjs/tendermint-rpc': 0.29.5(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@osmonauts/helpers': 0.6.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@osmonauts/lcd': 0.8.0
       protobufjs: 6.11.3
     transitivePeerDependencies:
@@ -8706,20 +8701,20 @@ snapshots:
     dependencies:
       buffer: 6.0.3
 
-  '@solana/wallet-adapter-alpha@0.1.7(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-alpha@0.1.7(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
-  '@solana/wallet-adapter-avana@0.1.10(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-avana@0.1.10(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
-  '@solana/wallet-adapter-backpack@0.1.11(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-backpack@0.1.11(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
   '@solana/wallet-adapter-base@0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
     dependencies:
@@ -8729,232 +8724,240 @@ snapshots:
       '@wallet-standard/features': 1.0.3
       eventemitter3: 4.0.7
 
-  '@solana/wallet-adapter-bitkeep@0.3.16(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-base@0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-standard-features': 1.1.0
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@wallet-standard/base': 1.0.1
+      '@wallet-standard/features': 1.0.3
+      eventemitter3: 4.0.7
 
-  '@solana/wallet-adapter-bitpie@0.5.15(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-bitkeep@0.3.16(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
-  '@solana/wallet-adapter-blocto@0.5.19(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@solana/wallet-adapter-bitpie@0.5.15(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@blocto/sdk': 0.2.22(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))(bufferutil@4.0.7)(utf-8-validate@5.0.10)
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+
+  '@solana/wallet-adapter-blocto@0.5.19(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
+    dependencies:
+      '@blocto/sdk': 0.2.22(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - bufferutil
       - debug
       - utf-8-validate
 
-  '@solana/wallet-adapter-brave@0.1.14(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-brave@0.1.14(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
-  '@solana/wallet-adapter-censo@0.1.1(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@solana/wallet-adapter-censo@0.1.1(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
-      '@censo-custody/solana-wallet-adapter': 0.1.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@censo-custody/solana-wallet-adapter': 0.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - bufferutil
       - encoding
       - utf-8-validate
 
-  '@solana/wallet-adapter-clover@0.4.16(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-clover@0.4.16(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
-  '@solana/wallet-adapter-coin98@0.5.17(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-coin98@0.5.17(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       bs58: 4.0.1
 
-  '@solana/wallet-adapter-coinbase@0.1.15(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-coinbase@0.1.15(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
-  '@solana/wallet-adapter-coinhub@0.3.15(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-coinhub@0.3.15(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
-  '@solana/wallet-adapter-exodus@0.1.15(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-exodus@0.1.15(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
-  '@solana/wallet-adapter-fractal@0.1.5(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))(react-dom@16.13.1(react@16.13.1))(react@16.13.1)':
+  '@solana/wallet-adapter-fractal@0.1.5(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))(react-dom@16.13.1(react@16.13.1))(react@16.13.1)':
     dependencies:
-      '@fractalwagmi/solana-wallet-adapter': 0.1.1(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))(react-dom@16.13.1(react@16.13.1))(react@16.13.1)
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@fractalwagmi/solana-wallet-adapter': 0.1.1(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))(react-dom@16.13.1(react@16.13.1))(react@16.13.1)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - react
       - react-dom
 
-  '@solana/wallet-adapter-glow@0.1.15(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-glow@0.1.15(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
-  '@solana/wallet-adapter-huobi@0.1.12(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-huobi@0.1.12(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
-  '@solana/wallet-adapter-hyperpay@0.1.11(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-hyperpay@0.1.11(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
-  '@solana/wallet-adapter-keystone@0.1.9(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@solana/wallet-adapter-keystone@0.1.9(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
-      '@keystonehq/sol-keyring': 0.3.1(bufferutil@4.0.7)(utf-8-validate@5.0.10)
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@keystonehq/sol-keyring': 0.3.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - bufferutil
       - encoding
       - utf-8-validate
 
-  '@solana/wallet-adapter-krystal@0.1.9(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-krystal@0.1.9(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
-  '@solana/wallet-adapter-ledger@0.9.22(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-ledger@0.9.22(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
       '@ledgerhq/devices': 6.27.1
       '@ledgerhq/hw-transport': 6.27.1
       '@ledgerhq/hw-transport-webhid': 6.27.1
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       buffer: 6.0.3
 
-  '@solana/wallet-adapter-magiceden@0.1.10(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-magiceden@0.1.10(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
-  '@solana/wallet-adapter-mathwallet@0.9.15(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-mathwallet@0.9.15(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
-  '@solana/wallet-adapter-neko@0.2.9(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-neko@0.2.9(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
-  '@solana/wallet-adapter-nightly@0.1.12(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-nightly@0.1.12(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
-  '@solana/wallet-adapter-nufi@0.1.13(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-nufi@0.1.13(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
-  '@solana/wallet-adapter-onto@0.1.4(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-onto@0.1.4(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
-  '@solana/wallet-adapter-particle@0.1.7(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))(bs58@5.0.0)':
+  '@solana/wallet-adapter-particle@0.1.7(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bs58@5.0.0)':
     dependencies:
-      '@particle-network/solana-wallet': 0.5.6(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))(bs58@5.0.0)
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@particle-network/solana-wallet': 0.5.6(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bs58@5.0.0)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - bs58
 
-  '@solana/wallet-adapter-phantom@0.9.19(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-phantom@0.9.19(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
-  '@solana/wallet-adapter-safepal@0.5.15(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-safepal@0.5.15(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
-  '@solana/wallet-adapter-saifu@0.1.12(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-saifu@0.1.12(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
-  '@solana/wallet-adapter-salmon@0.1.11(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-salmon@0.1.11(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
-      salmon-adapter-sdk: 1.1.1(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      salmon-adapter-sdk: 1.1.1(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
 
-  '@solana/wallet-adapter-sky@0.1.12(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-sky@0.1.12(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
-  '@solana/wallet-adapter-slope@0.5.18(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-slope@0.5.18(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       bs58: 4.0.1
 
-  '@solana/wallet-adapter-solflare@0.6.21(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-solflare@0.6.21(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
-      '@solflare-wallet/sdk': 1.2.0(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@solflare-wallet/sdk': 1.2.0(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
 
-  '@solana/wallet-adapter-sollet@0.11.14(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-sollet@0.11.14(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@project-serum/sol-wallet-adapter': 0.2.6(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@project-serum/sol-wallet-adapter': 0.2.6(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
-  '@solana/wallet-adapter-solong@0.9.15(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-solong@0.9.15(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
-  '@solana/wallet-adapter-spot@0.1.12(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-spot@0.1.12(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
-  '@solana/wallet-adapter-strike@0.1.10(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@solana/wallet-adapter-strike@0.1.10(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
-      '@strike-protocols/solana-wallet-adapter': 0.1.8(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@strike-protocols/solana-wallet-adapter': 0.1.8(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - bufferutil
       - encoding
       - utf-8-validate
 
-  '@solana/wallet-adapter-tokenary@0.1.9(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-tokenary@0.1.9(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
-  '@solana/wallet-adapter-tokenpocket@0.4.16(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-tokenpocket@0.4.16(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
-  '@solana/wallet-adapter-torus@0.11.25(@babel/runtime@7.20.13)(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@solana/wallet-adapter-torus@0.11.25(@babel/runtime@7.20.13)(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
-      '@toruslabs/solana-embed': 0.3.2(@babel/runtime@7.20.13)(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@toruslabs/solana-embed': 0.3.2(@babel/runtime@7.20.13)(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       assert: 2.0.0
       crypto-browserify: 3.12.0
       process: 0.11.10
@@ -8967,75 +8970,75 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@solana/wallet-adapter-trust@0.1.10(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-trust@0.1.10(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
-  '@solana/wallet-adapter-unsafe-burner@0.1.4(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-unsafe-burner@0.1.4(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
-  '@solana/wallet-adapter-walletconnect@0.1.10(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@solana/wallet-adapter-walletconnect@0.1.10(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
-      '@jnwng/walletconnect-solana': 0.1.4(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))(bufferutil@4.0.7)(utf-8-validate@5.0.10)
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@jnwng/walletconnect-solana': 0.1.4(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - '@react-native-async-storage/async-storage'
       - better-sqlite3
       - bufferutil
       - utf-8-validate
 
-  '@solana/wallet-adapter-wallets@0.19.10(@babel/runtime@7.20.13)(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))(bs58@5.0.0)(bufferutil@4.0.7)(react-dom@16.13.1(react@16.13.1))(react@16.13.1)(utf-8-validate@5.0.10)':
+  '@solana/wallet-adapter-wallets@0.19.10(@babel/runtime@7.20.13)(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bs58@5.0.0)(bufferutil@4.0.9)(react-dom@16.13.1(react@16.13.1))(react@16.13.1)(utf-8-validate@5.0.10)':
     dependencies:
-      '@solana/wallet-adapter-alpha': 0.1.7(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-avana': 0.1.10(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-backpack': 0.1.11(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-bitkeep': 0.3.16(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-bitpie': 0.5.15(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-blocto': 0.5.19(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))(bufferutil@4.0.7)(utf-8-validate@5.0.10)
-      '@solana/wallet-adapter-brave': 0.1.14(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-censo': 0.1.1(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))(bufferutil@4.0.7)(utf-8-validate@5.0.10)
-      '@solana/wallet-adapter-clover': 0.4.16(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-coin98': 0.5.17(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-coinbase': 0.1.15(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-coinhub': 0.3.15(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-exodus': 0.1.15(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-fractal': 0.1.5(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))(react-dom@16.13.1(react@16.13.1))(react@16.13.1)
-      '@solana/wallet-adapter-glow': 0.1.15(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-huobi': 0.1.12(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-hyperpay': 0.1.11(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-keystone': 0.1.9(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))(bufferutil@4.0.7)(utf-8-validate@5.0.10)
-      '@solana/wallet-adapter-krystal': 0.1.9(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-ledger': 0.9.22(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-magiceden': 0.1.10(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-mathwallet': 0.9.15(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-neko': 0.2.9(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-nightly': 0.1.12(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-nufi': 0.1.13(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-onto': 0.1.4(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-particle': 0.1.7(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))(bs58@5.0.0)
-      '@solana/wallet-adapter-phantom': 0.9.19(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-safepal': 0.5.15(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-saifu': 0.1.12(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-salmon': 0.1.11(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-sky': 0.1.12(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-slope': 0.5.18(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-solflare': 0.6.21(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-sollet': 0.11.14(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-solong': 0.9.15(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-spot': 0.1.12(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-strike': 0.1.10(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))(bufferutil@4.0.7)(utf-8-validate@5.0.10)
-      '@solana/wallet-adapter-tokenary': 0.1.9(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-tokenpocket': 0.4.16(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-torus': 0.11.25(@babel/runtime@7.20.13)(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))(bufferutil@4.0.7)(utf-8-validate@5.0.10)
-      '@solana/wallet-adapter-trust': 0.1.10(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-unsafe-burner': 0.1.4(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/wallet-adapter-walletconnect': 0.1.10(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))(bufferutil@4.0.7)(utf-8-validate@5.0.10)
-      '@solana/wallet-adapter-xdefi': 0.1.4(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-alpha': 0.1.7(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-avana': 0.1.10(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-backpack': 0.1.11(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-bitkeep': 0.3.16(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-bitpie': 0.5.15(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-blocto': 0.5.19(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-brave': 0.1.14(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-censo': 0.1.1(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-clover': 0.4.16(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-coin98': 0.5.17(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-coinbase': 0.1.15(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-coinhub': 0.3.15(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-exodus': 0.1.15(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-fractal': 0.1.5(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))(react-dom@16.13.1(react@16.13.1))(react@16.13.1)
+      '@solana/wallet-adapter-glow': 0.1.15(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-huobi': 0.1.12(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-hyperpay': 0.1.11(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-keystone': 0.1.9(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-krystal': 0.1.9(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-ledger': 0.9.22(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-magiceden': 0.1.10(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-mathwallet': 0.9.15(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-neko': 0.2.9(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-nightly': 0.1.12(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-nufi': 0.1.13(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-onto': 0.1.4(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-particle': 0.1.7(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bs58@5.0.0)
+      '@solana/wallet-adapter-phantom': 0.9.19(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-safepal': 0.5.15(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-saifu': 0.1.12(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-salmon': 0.1.11(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-sky': 0.1.12(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-slope': 0.5.18(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-solflare': 0.6.21(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-sollet': 0.11.14(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-solong': 0.9.15(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-spot': 0.1.12(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-strike': 0.1.10(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-tokenary': 0.1.9(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-tokenpocket': 0.4.16(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-torus': 0.11.25(@babel/runtime@7.20.13)(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-trust': 0.1.10(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-unsafe-burner': 0.1.4(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-walletconnect': 0.1.10(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-xdefi': 0.1.4(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - '@babel/runtime'
       - '@react-native-async-storage/async-storage'
@@ -9050,10 +9053,10 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@solana/wallet-adapter-xdefi@0.1.4(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-xdefi@0.1.4(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
   '@solana/wallet-standard-chains@1.1.0':
     dependencies:
@@ -9105,10 +9108,32 @@ snapshots:
       - encoding
       - utf-8-validate
 
-  '@solflare-wallet/sdk@1.2.0(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))':
+  '@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
-      '@project-serum/sol-wallet-adapter': 0.2.0(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@babel/runtime': 7.23.7
+      '@noble/curves': 1.2.0
+      '@noble/hashes': 1.3.2
+      '@solana/buffer-layout': 4.0.0
+      agentkeepalive: 4.5.0
+      bigint-buffer: 1.1.5
+      bn.js: 5.2.1
+      borsh: 0.7.0
+      bs58: 4.0.1
+      buffer: 6.0.3
+      fast-stable-stringify: 1.0.0
+      jayson: 4.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      node-fetch: 2.7.0
+      rpc-websockets: 7.5.1
+      superstruct: 0.14.2
+    transitivePeerDependencies:
+      - bufferutil
+      - encoding
+      - utf-8-validate
+
+  '@solflare-wallet/sdk@1.2.0(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
+    dependencies:
+      '@project-serum/sol-wallet-adapter': 0.2.0(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       bs58: 4.0.1
       eventemitter3: 4.0.7
       uuid: 8.3.2
@@ -9204,9 +9229,9 @@ snapshots:
       '@stablelib/random': 1.0.2
       '@stablelib/wipe': 1.0.1
 
-  '@strike-protocols/solana-wallet-adapter@0.1.8(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@strike-protocols/solana-wallet-adapter@0.1.8(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       bs58: 4.0.1
       eventemitter3: 4.0.7
       uuid: 8.3.2
@@ -9240,27 +9265,27 @@ snapshots:
     dependencies:
       '@tanstack/query-core': 4.36.1
       react: 18.2.0
-      use-sync-external-store: 1.2.0(react@18.2.0)
+      use-sync-external-store: 1.4.0(react@18.2.0)
     optionalDependencies:
       react-dom: 18.2.0(react@18.2.0)
 
   '@telegram-apps/bridge@1.7.1':
     dependencies:
-      '@telegram-apps/signals': 1.1.0
-      '@telegram-apps/toolkit': 1.0.0
-      '@telegram-apps/transformers': 1.2.0
-      '@telegram-apps/types': 1.2.0
+      '@telegram-apps/signals': 1.1.1
+      '@telegram-apps/toolkit': 1.1.1
+      '@telegram-apps/transformers': 1.2.2
+      '@telegram-apps/types': 1.2.1
 
-  '@telegram-apps/signals@1.1.0': {}
+  '@telegram-apps/signals@1.1.1': {}
 
-  '@telegram-apps/toolkit@1.0.0': {}
+  '@telegram-apps/toolkit@1.1.1': {}
 
-  '@telegram-apps/transformers@1.2.0':
+  '@telegram-apps/transformers@1.2.2':
     dependencies:
-      '@telegram-apps/toolkit': 1.0.0
-      '@telegram-apps/types': 1.2.0
+      '@telegram-apps/toolkit': 1.1.1
+      '@telegram-apps/types': 1.2.1
 
-  '@telegram-apps/types@1.2.0': {}
+  '@telegram-apps/types@1.2.1': {}
 
   '@terra-money/terra.js@3.1.7':
     dependencies:
@@ -9283,9 +9308,9 @@ snapshots:
 
   '@terra-money/terra.proto@0.1.7':
     dependencies:
-      google-protobuf: 3.21.2
+      google-protobuf: 3.21.4
       long: 4.0.0
-      protobufjs: 6.11.3
+      protobufjs: 6.11.4
 
   '@terra-money/terra.proto@2.1.0':
     dependencies:
@@ -9341,10 +9366,10 @@ snapshots:
       '@terra-money/terra.js': 3.1.7
       rxjs: 7.8.0
 
-  '@toruslabs/base-controllers@2.5.0(@babel/runtime@7.20.13)(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@toruslabs/base-controllers@2.5.0(@babel/runtime@7.20.13)(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@babel/runtime': 7.20.13
-      '@toruslabs/broadcast-channel': 6.1.1(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@toruslabs/broadcast-channel': 6.1.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@toruslabs/http-helpers': 3.2.0(@babel/runtime@7.20.13)
       '@toruslabs/openlogin-jrpc': 2.9.0(@babel/runtime@7.20.13)
       async-mutex: 0.4.0
@@ -9361,7 +9386,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@toruslabs/broadcast-channel@6.1.1(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@toruslabs/broadcast-channel@6.1.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@babel/runtime': 7.20.13
       '@toruslabs/eccrypto': 1.1.8
@@ -9370,7 +9395,7 @@ snapshots:
       keccak: 3.0.3
       loglevel: 1.8.1
       oblivious-set: 1.1.1
-      socket.io-client: 4.5.4(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      socket.io-client: 4.5.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       unload: 2.4.1
     transitivePeerDependencies:
       - '@sentry/types'
@@ -9442,11 +9467,11 @@ snapshots:
       keccak: 3.0.3
       randombytes: 2.1.0
 
-  '@toruslabs/solana-embed@0.3.2(@babel/runtime@7.20.13)(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@toruslabs/solana-embed@0.3.2(@babel/runtime@7.20.13)(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@babel/runtime': 7.20.13
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
-      '@toruslabs/base-controllers': 2.5.0(@babel/runtime@7.20.13)(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@toruslabs/base-controllers': 2.5.0(@babel/runtime@7.20.13)(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@toruslabs/http-helpers': 3.2.0(@babel/runtime@7.20.13)
       '@toruslabs/openlogin-jrpc': 2.9.0(@babel/runtime@7.20.13)
       eth-rpc-errors: 4.0.3
@@ -9492,7 +9517,7 @@ snapshots:
       '@trezor/utils': 9.0.7
       bignumber.js: 9.1.2
 
-  '@trezor/blockchain-link@2.1.10(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@trezor/blockchain-link@2.1.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@trezor/blockchain-link-types': 1.0.1
       '@trezor/blockchain-link-utils': 1.0.1
@@ -9501,9 +9526,9 @@ snapshots:
       '@types/web': 0.0.99
       bignumber.js: 9.1.2
       events: 3.3.0
-      ripple-lib: 1.10.1(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      ripple-lib: 1.10.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       socks-proxy-agent: 6.1.1
-      ws: 7.5.9(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      ws: 7.5.9(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - bufferutil
       - supports-color
@@ -9515,9 +9540,9 @@ snapshots:
 
   '@trezor/connect-common@0.0.13': {}
 
-  '@trezor/connect-web@9.0.8(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@trezor/connect-web@9.0.8(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
-      '@trezor/connect': 9.0.8(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@trezor/connect': 9.0.8(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@trezor/utils': 9.0.7
       events: 3.3.0
     transitivePeerDependencies:
@@ -9526,9 +9551,9 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@trezor/connect@9.0.8(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@trezor/connect@9.0.8(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
-      '@trezor/blockchain-link': 2.1.10(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@trezor/blockchain-link': 2.1.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@trezor/connect-analytics': 1.0.0
       '@trezor/connect-common': 0.0.13
       '@trezor/transport': 1.1.9
@@ -9578,13 +9603,6 @@ snapshots:
       varuint-bitcoin: 1.1.2
       wif: 2.0.6
 
-  '@trustwallet/aptos-wallet-adapter@0.1.6':
-    dependencies:
-      '@aptos-labs/wallet-adapter-core': 0.1.7
-      aptos: 1.21.0
-    transitivePeerDependencies:
-      - debug
-
   '@types/bn.js@4.11.6':
     dependencies:
       '@types/node': 18.11.11
@@ -9597,7 +9615,7 @@ snapshots:
     dependencies:
       '@types/http-cache-semantics': 4.0.4
       '@types/keyv': 3.1.4
-      '@types/node': 18.15.13
+      '@types/node': 18.19.69
       '@types/responselike': 1.0.3
 
   '@types/chrome@0.0.136':
@@ -9608,6 +9626,10 @@ snapshots:
   '@types/connect@3.4.35':
     dependencies:
       '@types/node': 18.11.11
+
+  '@types/connect@3.4.38':
+    dependencies:
+      '@types/node': 18.19.69
 
   '@types/debug@4.1.12':
     dependencies:
@@ -9627,7 +9649,7 @@ snapshots:
 
   '@types/keyv@3.1.4':
     dependencies:
-      '@types/node': 18.15.13
+      '@types/node': 18.19.69
 
   '@types/lodash.values@4.3.7':
     dependencies:
@@ -9656,6 +9678,10 @@ snapshots:
 
   '@types/node@18.15.13': {}
 
+  '@types/node@18.19.69':
+    dependencies:
+      undici-types: 5.26.5
+
   '@types/pbkdf2@3.1.0':
     dependencies:
       '@types/node': 18.11.11
@@ -9674,7 +9700,7 @@ snapshots:
 
   '@types/responselike@1.0.3':
     dependencies:
-      '@types/node': 18.15.13
+      '@types/node': 18.19.69
 
   '@types/scheduler@0.16.2': {}
 
@@ -9782,18 +9808,18 @@ snapshots:
       '@typescript-eslint/types': 5.54.1
       eslint-visitor-keys: 3.3.0
 
-  '@wagmi/connectors@3.1.11(@types/react@17.0.52)(bufferutil@4.0.7)(react@18.2.0)(typescript@5.3.2)(utf-8-validate@5.0.10)(viem@1.21.4(bufferutil@4.0.7)(typescript@5.3.2)(utf-8-validate@5.0.10))':
+  '@wagmi/connectors@3.1.11(@types/react@17.0.52)(bufferutil@4.0.9)(react@18.2.0)(typescript@5.3.2)(utf-8-validate@5.0.10)(viem@1.21.4(bufferutil@4.0.9)(typescript@5.3.2)(utf-8-validate@5.0.10))':
     dependencies:
-      '@coinbase/wallet-sdk': 3.7.2(bufferutil@4.0.7)(utf-8-validate@5.0.10)
-      '@safe-global/safe-apps-provider': 0.18.1(bufferutil@4.0.7)(typescript@5.3.2)(utf-8-validate@5.0.10)
-      '@safe-global/safe-apps-sdk': 8.1.0(bufferutil@4.0.7)(typescript@5.3.2)(utf-8-validate@5.0.10)
-      '@walletconnect/ethereum-provider': 2.11.0(@types/react@17.0.52)(bufferutil@4.0.7)(react@18.2.0)(utf-8-validate@5.0.10)
+      '@coinbase/wallet-sdk': 3.7.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@safe-global/safe-apps-provider': 0.18.1(bufferutil@4.0.9)(typescript@5.3.2)(utf-8-validate@5.0.10)
+      '@safe-global/safe-apps-sdk': 8.1.0(bufferutil@4.0.9)(typescript@5.3.2)(utf-8-validate@5.0.10)
+      '@walletconnect/ethereum-provider': 2.11.0(@types/react@17.0.52)(bufferutil@4.0.9)(react@18.2.0)(utf-8-validate@5.0.10)
       '@walletconnect/legacy-provider': 2.0.0
       '@walletconnect/modal': 2.6.2(@types/react@17.0.52)(react@18.2.0)
       '@walletconnect/utils': 2.11.0
       abitype: 0.8.7(typescript@5.3.2)
       eventemitter3: 4.0.7
-      viem: 1.21.4(bufferutil@4.0.7)(typescript@5.3.2)(utf-8-validate@5.0.10)
+      viem: 1.21.4(bufferutil@4.0.9)(typescript@5.3.2)(utf-8-validate@5.0.10)
     optionalDependencies:
       typescript: 5.3.2
     transitivePeerDependencies:
@@ -9817,12 +9843,12 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@wagmi/core@1.4.13(@types/react@17.0.52)(bufferutil@4.0.7)(react@18.2.0)(typescript@5.3.2)(utf-8-validate@5.0.10)(viem@1.21.4(bufferutil@4.0.7)(typescript@5.3.2)(utf-8-validate@5.0.10))':
+  '@wagmi/core@1.4.13(@types/react@17.0.52)(bufferutil@4.0.9)(react@18.2.0)(typescript@5.3.2)(utf-8-validate@5.0.10)(viem@1.21.4(bufferutil@4.0.9)(typescript@5.3.2)(utf-8-validate@5.0.10))':
     dependencies:
-      '@wagmi/connectors': 3.1.11(@types/react@17.0.52)(bufferutil@4.0.7)(react@18.2.0)(typescript@5.3.2)(utf-8-validate@5.0.10)(viem@1.21.4(bufferutil@4.0.7)(typescript@5.3.2)(utf-8-validate@5.0.10))
+      '@wagmi/connectors': 3.1.11(@types/react@17.0.52)(bufferutil@4.0.9)(react@18.2.0)(typescript@5.3.2)(utf-8-validate@5.0.10)(viem@1.21.4(bufferutil@4.0.9)(typescript@5.3.2)(utf-8-validate@5.0.10))
       abitype: 0.8.7(typescript@5.3.2)
       eventemitter3: 4.0.7
-      viem: 1.21.4(bufferutil@4.0.7)(typescript@5.3.2)(utf-8-validate@5.0.10)
+      viem: 1.21.4(bufferutil@4.0.9)(typescript@5.3.2)(utf-8-validate@5.0.10)
       zustand: 4.4.1(@types/react@17.0.52)(react@18.2.0)
     optionalDependencies:
       typescript: 5.3.2
@@ -9877,9 +9903,9 @@ snapshots:
       '@walletconnect/window-metadata': 1.0.0
       detect-browser: 5.2.0
 
-  '@walletconnect/client@1.8.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@walletconnect/client@1.8.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
-      '@walletconnect/core': 1.8.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@walletconnect/core': 1.8.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@walletconnect/iso-crypto': 1.8.0
       '@walletconnect/types': 1.8.0
       '@walletconnect/utils': 1.8.0
@@ -9896,12 +9922,21 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@walletconnect/core@2.0.0-rc.3(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@walletconnect/core@1.8.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
+    dependencies:
+      '@walletconnect/socket-transport': 1.8.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@walletconnect/types': 1.8.0
+      '@walletconnect/utils': 1.8.0
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
+  '@walletconnect/core@2.0.0-rc.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@walletconnect/heartbeat': 1.0.0
       '@walletconnect/jsonrpc-provider': 1.0.5
       '@walletconnect/jsonrpc-utils': 1.0.3
-      '@walletconnect/jsonrpc-ws-connection': 1.0.3(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@walletconnect/jsonrpc-ws-connection': 1.0.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@walletconnect/keyvaluestorage': 1.0.0
       '@walletconnect/logger': 1.0.1
       '@walletconnect/relay-api': 1.0.6
@@ -9920,13 +9955,13 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@walletconnect/core@2.11.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@walletconnect/core@2.11.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@walletconnect/heartbeat': 1.2.1
       '@walletconnect/jsonrpc-provider': 1.0.13
       '@walletconnect/jsonrpc-types': 1.0.3
       '@walletconnect/jsonrpc-utils': 1.0.8
-      '@walletconnect/jsonrpc-ws-connection': 1.0.14(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@walletconnect/jsonrpc-ws-connection': 1.0.14(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@walletconnect/keyvaluestorage': 1.1.1
       '@walletconnect/logger': 2.0.1
       '@walletconnect/relay-api': 1.0.9
@@ -9976,16 +10011,16 @@ snapshots:
     dependencies:
       tslib: 1.14.1
 
-  '@walletconnect/ethereum-provider@2.11.0(@types/react@17.0.52)(bufferutil@4.0.7)(react@18.2.0)(utf-8-validate@5.0.10)':
+  '@walletconnect/ethereum-provider@2.11.0(@types/react@17.0.52)(bufferutil@4.0.9)(react@18.2.0)(utf-8-validate@5.0.10)':
     dependencies:
       '@walletconnect/jsonrpc-http-connection': 1.0.7
       '@walletconnect/jsonrpc-provider': 1.0.13
       '@walletconnect/jsonrpc-types': 1.0.3
       '@walletconnect/jsonrpc-utils': 1.0.8
       '@walletconnect/modal': 2.6.2(@types/react@17.0.52)(react@18.2.0)
-      '@walletconnect/sign-client': 2.11.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@walletconnect/sign-client': 2.11.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@walletconnect/types': 2.11.0
-      '@walletconnect/universal-provider': 2.11.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@walletconnect/universal-provider': 2.11.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@walletconnect/utils': 2.11.0
       events: 3.3.0
     transitivePeerDependencies:
@@ -10080,21 +10115,21 @@ snapshots:
       '@walletconnect/jsonrpc-types': 1.0.3
       tslib: 1.14.1
 
-  '@walletconnect/jsonrpc-ws-connection@1.0.14(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@walletconnect/jsonrpc-ws-connection@1.0.14(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@walletconnect/jsonrpc-utils': 1.0.8
       '@walletconnect/safe-json': 1.0.2
       events: 3.3.0
-      ws: 7.5.9(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      ws: 7.5.9(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
 
-  '@walletconnect/jsonrpc-ws-connection@1.0.3(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@walletconnect/jsonrpc-ws-connection@1.0.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@walletconnect/jsonrpc-utils': 1.0.8
       '@walletconnect/safe-json': 1.0.2
-      ws: 7.5.9(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      ws: 7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -10254,9 +10289,9 @@ snapshots:
     dependencies:
       tslib: 1.14.1
 
-  '@walletconnect/sign-client@2.0.0-rc.3(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@walletconnect/sign-client@2.0.0-rc.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
-      '@walletconnect/core': 2.0.0-rc.3(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@walletconnect/core': 2.0.0-rc.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@walletconnect/events': 1.0.0
       '@walletconnect/heartbeat': 1.0.0
       '@walletconnect/jsonrpc-provider': 1.0.5
@@ -10273,9 +10308,9 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@walletconnect/sign-client@2.11.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@walletconnect/sign-client@2.11.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
-      '@walletconnect/core': 2.11.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@walletconnect/core': 2.11.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@walletconnect/events': 1.0.1
       '@walletconnect/heartbeat': 1.2.1
       '@walletconnect/jsonrpc-utils': 1.0.8
@@ -10307,6 +10342,15 @@ snapshots:
       '@walletconnect/types': 1.8.0
       '@walletconnect/utils': 1.8.0
       ws: 7.5.3(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
+  '@walletconnect/socket-transport@1.8.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
+    dependencies:
+      '@walletconnect/types': 1.8.0
+      '@walletconnect/utils': 1.8.0
+      ws: 7.5.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -10352,14 +10396,14 @@ snapshots:
       - '@vercel/kv'
       - supports-color
 
-  '@walletconnect/universal-provider@2.11.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)':
+  '@walletconnect/universal-provider@2.11.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@walletconnect/jsonrpc-http-connection': 1.0.7
       '@walletconnect/jsonrpc-provider': 1.0.13
       '@walletconnect/jsonrpc-types': 1.0.3
       '@walletconnect/jsonrpc-utils': 1.0.8
       '@walletconnect/logger': 2.0.1
-      '@walletconnect/sign-client': 2.11.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@walletconnect/sign-client': 2.11.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@walletconnect/types': 2.11.0
       '@walletconnect/utils': 2.11.0
       events: 3.3.0
@@ -10623,7 +10667,7 @@ snapshots:
       json-schema-traverse: 0.4.1
       uri-js: 4.4.1
 
-  alchemy-sdk@2.8.1(bufferutil@4.0.7)(utf-8-validate@5.0.10):
+  alchemy-sdk@2.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10):
     dependencies:
       '@ethersproject/abi': 5.7.0
       '@ethersproject/abstract-provider': 5.7.0
@@ -10632,7 +10676,7 @@ snapshots:
       '@ethersproject/contracts': 5.7.0
       '@ethersproject/hash': 5.7.0
       '@ethersproject/networks': 5.7.1
-      '@ethersproject/providers': 5.7.2(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@ethersproject/providers': 5.7.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@ethersproject/units': 5.7.0
       '@ethersproject/wallet': 5.7.0
       '@ethersproject/web': 5.7.1
@@ -10700,16 +10744,6 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  aptos@1.4.0:
-    dependencies:
-      '@noble/hashes': 1.1.3
-      '@scure/bip39': 1.1.0
-      axios: 0.27.2
-      form-data: 4.0.0
-      tweetnacl: 1.0.3
-    transitivePeerDependencies:
-      - debug
-
   arch@2.2.0: {}
 
   arg@5.0.2: {}
@@ -10770,14 +10804,14 @@ snapshots:
   axios@0.27.2:
     dependencies:
       follow-redirects: 1.15.2
-      form-data: 4.0.0
+      form-data: 4.0.1
     transitivePeerDependencies:
       - debug
 
   axios@1.6.2:
     dependencies:
       follow-redirects: 1.15.2
-      form-data: 4.0.0
+      form-data: 4.0.1
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
@@ -10786,6 +10820,14 @@ snapshots:
     dependencies:
       follow-redirects: 1.15.9
       form-data: 4.0.0
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
+
+  axios@1.7.9:
+    dependencies:
+      follow-redirects: 1.15.9
+      form-data: 4.0.1
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
@@ -10987,6 +11029,11 @@ snapshots:
     dependencies:
       node-gyp-build: 4.5.0
 
+  bufferutil@4.0.9:
+    dependencies:
+      node-gyp-build: 4.8.4
+    optional: true
+
   bytebuffer@5.0.1:
     dependencies:
       long: 3.2.0
@@ -11155,12 +11202,12 @@ snapshots:
   cosmjs-types@0.4.1:
     dependencies:
       long: 4.0.0
-      protobufjs: 6.11.3
+      protobufjs: 6.11.4
 
   cosmjs-types@0.5.1:
     dependencies:
       long: 4.0.0
-      protobufjs: 6.11.3
+      protobufjs: 6.11.4
 
   cosmjs-types@0.5.2:
     dependencies:
@@ -11205,6 +11252,12 @@ snapshots:
   cross-fetch@3.1.5:
     dependencies:
       node-fetch: 2.6.7
+    transitivePeerDependencies:
+      - encoding
+
+  cross-fetch@3.2.0:
+    dependencies:
+      node-fetch: 2.7.0
     transitivePeerDependencies:
       - encoding
 
@@ -11359,9 +11412,9 @@ snapshots:
     dependencies:
       tweetnacl: 1.0.3
 
-  eip1193-provider@1.0.1(bufferutil@4.0.7)(utf-8-validate@5.0.10):
+  eip1193-provider@1.0.1(bufferutil@4.0.9)(utf-8-validate@5.0.10):
     dependencies:
-      '@json-rpc-tools/provider': 1.7.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@json-rpc-tools/provider': 1.7.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - bufferutil
       - debug
@@ -11393,12 +11446,12 @@ snapshots:
     dependencies:
       once: 1.4.0
 
-  engine.io-client@6.2.3(bufferutil@4.0.7)(utf-8-validate@5.0.10):
+  engine.io-client@6.2.3(bufferutil@4.0.9)(utf-8-validate@5.0.10):
     dependencies:
       '@socket.io/component-emitter': 3.1.0
       debug: 4.3.4
       engine.io-parser: 5.0.4
-      ws: 8.2.3(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      ws: 8.2.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       xmlhttprequest-ssl: 2.0.0
     transitivePeerDependencies:
       - bufferutil
@@ -11541,14 +11594,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eth-crypto@2.6.0(bufferutil@4.0.7)(utf-8-validate@5.0.10):
+  eth-crypto@2.6.0(bufferutil@4.0.9)(utf-8-validate@5.0.10):
     dependencies:
       '@babel/runtime': 7.20.13
       '@ethereumjs/tx': 3.5.2
       '@types/bn.js': 5.1.1
       eccrypto: 1.1.6
       ethereumjs-util: 7.1.5
-      ethers: 5.7.2(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      ethers: 5.7.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       secp256k1: 5.0.0
     transitivePeerDependencies:
       - bufferutil
@@ -11640,7 +11693,7 @@ snapshots:
       ethereum-cryptography: 0.1.3
       rlp: 2.2.7
 
-  ethers@5.7.2(bufferutil@4.0.7)(utf-8-validate@5.0.10):
+  ethers@5.7.2(bufferutil@4.0.9)(utf-8-validate@5.0.10):
     dependencies:
       '@ethersproject/abi': 5.7.0
       '@ethersproject/abstract-provider': 5.7.0
@@ -11660,7 +11713,7 @@ snapshots:
       '@ethersproject/networks': 5.7.1
       '@ethersproject/pbkdf2': 5.7.0
       '@ethersproject/properties': 5.7.0
-      '@ethersproject/providers': 5.7.2(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@ethersproject/providers': 5.7.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@ethersproject/random': 5.7.0
       '@ethersproject/rlp': 5.7.0
       '@ethersproject/sha2': 5.7.0
@@ -11676,7 +11729,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  ethers@6.13.2(bufferutil@4.0.7)(utf-8-validate@5.0.10):
+  ethers@6.13.2(bufferutil@4.0.9)(utf-8-validate@5.0.10):
     dependencies:
       '@adraffy/ens-normalize': 1.10.1
       '@noble/curves': 1.2.0
@@ -11684,7 +11737,7 @@ snapshots:
       '@types/node': 18.15.13
       aes-js: 4.0.0-beta.5
       tslib: 2.4.0
-      ws: 8.17.1(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      ws: 8.17.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -11777,10 +11830,10 @@ snapshots:
     dependencies:
       reusify: 1.0.4
 
-  fewcha-plugin-wallet-adapter@0.1.3(bufferutil@4.0.7)(utf-8-validate@5.0.10):
+  fewcha-plugin-wallet-adapter@0.1.3(bufferutil@4.0.9)(utf-8-validate@5.0.10):
     dependencies:
       '@aptos-labs/wallet-adapter-core': 2.2.0
-      '@fewcha/web3': 0.1.38(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@fewcha/web3': 0.1.38(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       aptos: 1.21.0
     transitivePeerDependencies:
       - bufferutil
@@ -11848,6 +11901,12 @@ snapshots:
       combined-stream: 1.0.8
       mime-types: 2.1.35
 
+  form-data@4.0.1:
+    dependencies:
+      asynckit: 0.4.0
+      combined-stream: 1.0.8
+      mime-types: 2.1.35
+
   fs.realpath@1.0.0: {}
 
   fsevents@2.3.3:
@@ -11869,7 +11928,7 @@ snapshots:
 
   get-stream@5.2.0:
     dependencies:
-      pump: 3.0.0
+      pump: 3.0.2
 
   get-stream@6.0.1: {}
 
@@ -11917,6 +11976,8 @@ snapshots:
       slash: 3.0.0
 
   google-protobuf@3.21.2: {}
+
+  google-protobuf@3.21.4: {}
 
   gopd@1.0.1:
     dependencies:
@@ -12187,17 +12248,25 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
+  isomorphic-ws@4.0.1(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)):
+    dependencies:
+      ws: 7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+
   isomorphic-ws@4.0.1(ws@7.5.9(bufferutil@4.0.7)(utf-8-validate@5.0.10)):
     dependencies:
       ws: 7.5.9(bufferutil@4.0.7)(utf-8-validate@5.0.10)
 
-  isomorphic-ws@5.0.0(ws@7.5.9(bufferutil@4.0.7)(utf-8-validate@5.0.10)):
+  isomorphic-ws@4.0.1(ws@7.5.9(bufferutil@4.0.9)(utf-8-validate@5.0.10)):
     dependencies:
-      ws: 7.5.9(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      ws: 7.5.9(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
-  isows@1.0.3(ws@8.13.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)):
+  isomorphic-ws@5.0.0(ws@7.5.9(bufferutil@4.0.9)(utf-8-validate@5.0.10)):
     dependencies:
-      ws: 8.13.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      ws: 7.5.9(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+
+  isows@1.0.3(ws@8.13.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)):
+    dependencies:
+      ws: 8.13.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
 
   jackspeak@3.4.3:
     dependencies:
@@ -12205,9 +12274,9 @@ snapshots:
     optionalDependencies:
       '@pkgjs/parseargs': 0.11.0
 
-  jayson@3.7.0(bufferutil@4.0.7)(utf-8-validate@5.0.10):
+  jayson@3.7.0(bufferutil@4.0.9)(utf-8-validate@5.0.10):
     dependencies:
-      '@types/connect': 3.4.35
+      '@types/connect': 3.4.38
       '@types/node': 12.20.55
       '@types/ws': 7.4.7
       JSONStream: 1.3.5
@@ -12215,11 +12284,11 @@ snapshots:
       delay: 5.0.0
       es6-promisify: 5.0.0
       eyes: 0.1.8
-      isomorphic-ws: 4.0.1(ws@7.5.9(bufferutil@4.0.7)(utf-8-validate@5.0.10))
+      isomorphic-ws: 4.0.1(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       json-stringify-safe: 5.0.1
       lodash: 4.17.21
       uuid: 8.3.2
-      ws: 7.5.9(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      ws: 7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -12238,6 +12307,24 @@ snapshots:
       json-stringify-safe: 5.0.1
       uuid: 8.3.2
       ws: 7.5.9(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
+  jayson@4.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10):
+    dependencies:
+      '@types/connect': 3.4.35
+      '@types/node': 12.20.55
+      '@types/ws': 7.4.7
+      JSONStream: 1.3.5
+      commander: 2.20.3
+      delay: 5.0.0
+      es6-promisify: 5.0.0
+      eyes: 0.1.8
+      isomorphic-ws: 4.0.1(ws@7.5.9(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      json-stringify-safe: 5.0.1
+      uuid: 8.3.2
+      ws: 7.5.9(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -12282,17 +12369,13 @@ snapshots:
   json-rpc-middleware-stream@3.0.0:
     dependencies:
       '@metamask/safe-event-emitter': 2.0.0
-      readable-stream: 2.3.7
+      readable-stream: 2.3.8
 
   json-rpc-middleware-stream@4.2.3:
     dependencies:
       '@metamask/safe-event-emitter': 3.0.0
       json-rpc-engine: 6.1.0
       readable-stream: 2.3.7
-
-  json-rpc-protocol@0.13.2:
-    dependencies:
-      make-error: 1.3.6
 
   json-rpc-random-id@1.0.1: {}
 
@@ -12516,8 +12599,6 @@ snapshots:
     dependencies:
       yallist: 4.0.0
 
-  make-error@1.3.6: {}
-
   map-obj@4.3.0: {}
 
   md5.js@1.3.5:
@@ -12676,6 +12757,9 @@ snapshots:
 
   node-gyp-build@4.5.0: {}
 
+  node-gyp-build@4.8.4:
+    optional: true
+
   noms@0.0.0:
     dependencies:
       inherits: 2.0.4
@@ -12819,11 +12903,11 @@ snapshots:
       safe-buffer: 5.2.1
       sha.js: 2.4.11
 
-  petra-plugin-wallet-adapter@0.4.5(@aptos-labs/ts-sdk@1.33.1)(aptos@1.4.0):
+  petra-plugin-wallet-adapter@0.4.5(@aptos-labs/ts-sdk@1.33.1)(aptos@1.21.0):
     dependencies:
       '@aptos-labs/ts-sdk': 1.33.1
-      '@aptos-labs/wallet-adapter-core': 3.16.0(@aptos-labs/ts-sdk@1.33.1)(aptos@1.4.0)
-      aptos: 1.4.0
+      '@aptos-labs/wallet-adapter-core': 3.16.0(@aptos-labs/ts-sdk@1.33.1)(aptos@1.21.0)
+      aptos: 1.21.0
     transitivePeerDependencies:
       - debug
 
@@ -12853,7 +12937,7 @@ snapshots:
       fast-safe-stringify: 2.1.1
       jmespath: 0.15.0
       joycon: 2.2.5
-      pump: 3.0.0
+      pump: 3.0.2
       readable-stream: 3.6.2
       split2: 3.2.2
       strip-json-comments: 3.1.1
@@ -12976,6 +13060,22 @@ snapshots:
       '@types/node': 18.11.11
       long: 4.0.0
 
+  protobufjs@6.11.4:
+    dependencies:
+      '@protobufjs/aspromise': 1.1.2
+      '@protobufjs/base64': 1.1.2
+      '@protobufjs/codegen': 2.0.4
+      '@protobufjs/eventemitter': 1.1.0
+      '@protobufjs/fetch': 1.1.0
+      '@protobufjs/float': 1.0.2
+      '@protobufjs/inquire': 1.1.0
+      '@protobufjs/path': 1.1.2
+      '@protobufjs/pool': 1.1.0
+      '@protobufjs/utf8': 1.1.0
+      '@types/long': 4.0.2
+      '@types/node': 18.19.69
+      long: 4.0.0
+
   protobufjs@7.2.3:
     dependencies:
       '@protobufjs/aspromise': 1.1.2
@@ -13007,6 +13107,11 @@ snapshots:
       safe-buffer: 5.2.1
 
   pump@3.0.0:
+    dependencies:
+      end-of-stream: 1.4.4
+      once: 1.4.0
+
+  pump@3.0.2:
     dependencies:
       end-of-stream: 1.4.4
       once: 1.4.0
@@ -13167,6 +13272,16 @@ snapshots:
       string_decoder: 1.1.1
       util-deprecate: 1.0.2
 
+  readable-stream@2.3.8:
+    dependencies:
+      core-util-is: 1.0.3
+      inherits: 2.0.4
+      isarray: 1.0.0
+      process-nextick-args: 2.0.1
+      safe-buffer: 5.1.2
+      string_decoder: 1.1.1
+      util-deprecate: 1.0.2
+
   readable-stream@3.6.0:
     dependencies:
       inherits: 2.0.4
@@ -13276,7 +13391,7 @@ snapshots:
       bignumber.js: 9.1.2
       lodash: 4.17.21
 
-  ripple-lib@1.10.1(bufferutil@4.0.7)(utf-8-validate@5.0.10):
+  ripple-lib@1.10.1(bufferutil@4.0.9)(utf-8-validate@5.0.10):
     dependencies:
       '@types/lodash': 4.14.191
       '@types/ws': 7.4.7
@@ -13288,7 +13403,7 @@ snapshots:
       ripple-binary-codec: 1.4.3
       ripple-keypairs: 1.1.5
       ripple-lib-transactionparser: 0.8.2
-      ws: 7.5.9(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      ws: 7.5.9(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - bufferutil
       - supports-color
@@ -13297,6 +13412,15 @@ snapshots:
   rlp@2.2.7:
     dependencies:
       bn.js: 5.2.1
+
+  rpc-websockets@7.11.2:
+    dependencies:
+      eventemitter3: 4.0.7
+      uuid: 8.3.2
+      ws: 8.18.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+    optionalDependencies:
+      bufferutil: 4.0.9
+      utf-8-validate: 5.0.10
 
   rpc-websockets@7.5.1:
     dependencies:
@@ -13338,10 +13462,10 @@ snapshots:
 
   safer-buffer@2.1.2: {}
 
-  salmon-adapter-sdk@1.1.1(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)):
+  salmon-adapter-sdk@1.1.1(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)):
     dependencies:
-      '@project-serum/sol-wallet-adapter': 0.2.6(@solana/web3.js@1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      '@solana/web3.js': 1.87.6(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      '@project-serum/sol-wallet-adapter': 0.2.6(@solana/web3.js@1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/web3.js': 1.87.6(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       eventemitter3: 4.0.7
 
   scheduler@0.19.1:
@@ -13475,11 +13599,11 @@ snapshots:
       snake-case: 3.0.4
       type-fest: 2.19.0
 
-  socket.io-client@4.5.4(bufferutil@4.0.7)(utf-8-validate@5.0.10):
+  socket.io-client@4.5.4(bufferutil@4.0.9)(utf-8-validate@5.0.10):
     dependencies:
       '@socket.io/component-emitter': 3.1.0
       debug: 4.3.4
-      engine.io-client: 6.2.3(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      engine.io-client: 6.2.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       socket.io-parser: 4.2.1
     transitivePeerDependencies:
       - bufferutil
@@ -13739,9 +13863,11 @@ snapshots:
 
   typeforce@1.18.0: {}
 
-  typescript@4.9.3: {}
+  typescript@4.9.5: {}
 
   typescript@5.3.2: {}
+
+  typescript@5.7.2: {}
 
   u3@0.1.1: {}
 
@@ -13752,6 +13878,8 @@ snapshots:
       multiformats: 9.9.0
 
   uncrypto@0.1.3: {}
+
+  undici-types@5.26.5: {}
 
   unenv@1.9.0:
     dependencies:
@@ -13801,6 +13929,10 @@ snapshots:
     dependencies:
       react: 18.2.0
 
+  use-sync-external-store@1.4.0(react@18.2.0):
+    dependencies:
+      react: 18.2.0
+
   utf-8-validate@5.0.10:
     dependencies:
       node-gyp-build: 4.5.0
@@ -13842,7 +13974,7 @@ snapshots:
 
   versions@10.4.1: {}
 
-  viem@1.21.4(bufferutil@4.0.7)(typescript@5.3.2)(utf-8-validate@5.0.10):
+  viem@1.21.4(bufferutil@4.0.9)(typescript@5.3.2)(utf-8-validate@5.0.10):
     dependencies:
       '@adraffy/ens-normalize': 1.10.0
       '@noble/curves': 1.2.0
@@ -13850,8 +13982,8 @@ snapshots:
       '@scure/bip32': 1.3.2
       '@scure/bip39': 1.2.1
       abitype: 0.9.8(typescript@5.3.2)
-      isows: 1.0.3(ws@8.13.0(bufferutil@4.0.7)(utf-8-validate@5.0.10))
-      ws: 8.13.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      isows: 1.0.3(ws@8.13.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      ws: 8.13.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     optionalDependencies:
       typescript: 5.3.2
     transitivePeerDependencies:
@@ -13861,16 +13993,16 @@ snapshots:
 
   vlq@2.0.4: {}
 
-  wagmi@1.4.13(@types/react@17.0.52)(bufferutil@4.0.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.3.2)(utf-8-validate@5.0.10)(viem@1.21.4(bufferutil@4.0.7)(typescript@5.3.2)(utf-8-validate@5.0.10)):
+  wagmi@1.4.13(@types/react@17.0.52)(bufferutil@4.0.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.3.2)(utf-8-validate@5.0.10)(viem@1.21.4(bufferutil@4.0.9)(typescript@5.3.2)(utf-8-validate@5.0.10)):
     dependencies:
       '@tanstack/query-sync-storage-persister': 4.36.1
       '@tanstack/react-query': 4.36.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@tanstack/react-query-persist-client': 4.36.1(@tanstack/react-query@4.36.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0))
-      '@wagmi/core': 1.4.13(@types/react@17.0.52)(bufferutil@4.0.7)(react@18.2.0)(typescript@5.3.2)(utf-8-validate@5.0.10)(viem@1.21.4(bufferutil@4.0.7)(typescript@5.3.2)(utf-8-validate@5.0.10))
+      '@wagmi/core': 1.4.13(@types/react@17.0.52)(bufferutil@4.0.9)(react@18.2.0)(typescript@5.3.2)(utf-8-validate@5.0.10)(viem@1.21.4(bufferutil@4.0.9)(typescript@5.3.2)(utf-8-validate@5.0.10))
       abitype: 0.8.7(typescript@5.3.2)
       react: 18.2.0
-      use-sync-external-store: 1.2.0(react@18.2.0)
-      viem: 1.21.4(bufferutil@4.0.7)(typescript@5.3.2)(utf-8-validate@5.0.10)
+      use-sync-external-store: 1.4.0(react@18.2.0)
+      viem: 1.21.4(bufferutil@4.0.9)(typescript@5.3.2)(utf-8-validate@5.0.10)
     optionalDependencies:
       typescript: 5.3.2
     transitivePeerDependencies:
@@ -13980,9 +14112,14 @@ snapshots:
 
   wrappy@1.0.2: {}
 
-  ws@7.4.6(bufferutil@4.0.7)(utf-8-validate@5.0.10):
+  ws@7.4.6(bufferutil@4.0.9)(utf-8-validate@5.0.10):
     optionalDependencies:
-      bufferutil: 4.0.7
+      bufferutil: 4.0.9
+      utf-8-validate: 5.0.10
+
+  ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10):
+    optionalDependencies:
+      bufferutil: 4.0.9
       utf-8-validate: 5.0.10
 
   ws@7.5.3(bufferutil@4.0.7)(utf-8-validate@5.0.10):
@@ -13990,9 +14127,19 @@ snapshots:
       bufferutil: 4.0.7
       utf-8-validate: 5.0.10
 
+  ws@7.5.3(bufferutil@4.0.9)(utf-8-validate@5.0.10):
+    optionalDependencies:
+      bufferutil: 4.0.9
+      utf-8-validate: 5.0.10
+
   ws@7.5.9(bufferutil@4.0.7)(utf-8-validate@5.0.10):
     optionalDependencies:
       bufferutil: 4.0.7
+      utf-8-validate: 5.0.10
+
+  ws@7.5.9(bufferutil@4.0.9)(utf-8-validate@5.0.10):
+    optionalDependencies:
+      bufferutil: 4.0.9
       utf-8-validate: 5.0.10
 
   ws@8.13.0(bufferutil@4.0.7)(utf-8-validate@5.0.10):
@@ -14000,14 +14147,24 @@ snapshots:
       bufferutil: 4.0.7
       utf-8-validate: 5.0.10
 
-  ws@8.17.1(bufferutil@4.0.7)(utf-8-validate@5.0.10):
+  ws@8.13.0(bufferutil@4.0.9)(utf-8-validate@5.0.10):
     optionalDependencies:
-      bufferutil: 4.0.7
+      bufferutil: 4.0.9
       utf-8-validate: 5.0.10
 
-  ws@8.2.3(bufferutil@4.0.7)(utf-8-validate@5.0.10):
+  ws@8.17.1(bufferutil@4.0.9)(utf-8-validate@5.0.10):
     optionalDependencies:
-      bufferutil: 4.0.7
+      bufferutil: 4.0.9
+      utf-8-validate: 5.0.10
+
+  ws@8.18.0(bufferutil@4.0.9)(utf-8-validate@5.0.10):
+    optionalDependencies:
+      bufferutil: 4.0.9
+      utf-8-validate: 5.0.10
+
+  ws@8.2.3(bufferutil@4.0.9)(utf-8-validate@5.0.10):
+    optionalDependencies:
+      bufferutil: 4.0.9
       utf-8-validate: 5.0.10
 
   xmlhttprequest-ssl@2.0.0: {}
