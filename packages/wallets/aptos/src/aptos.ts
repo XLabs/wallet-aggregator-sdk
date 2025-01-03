@@ -15,11 +15,11 @@ import {
 
 import { BitgetWallet } from "@bitget-wallet/aptos-wallet-adapter";
 import { MartianWallet } from "@martianwallet/aptos-wallet-adapter";
-import { OKXWallet } from "@okwallet/aptos-wallet-adapter";
 import { PontemWallet } from "@pontem/wallet-adapter-plugin";
 import { FewchaWallet } from "fewcha-plugin-wallet-adapter";
 import { PetraWallet } from "petra-plugin-wallet-adapter";
 // FIXME: These wallets are not working
+// import { OKXWallet } from "@okwallet/aptos-wallet-adapter";
 // import { MSafeWalletAdapter } from "@msafe/aptos-wallet-adapter";
 // import { TrustWallet } from "@trustwallet/aptos-wallet-adapter";
 
@@ -152,16 +152,17 @@ export class AptosWallet extends Wallet<
     newWalletsToAdd: IAptosWallet[] = []
   ): WalletCore {
     const nonStandardWallets: IAptosWallet[] = [
+      // We are forcing PetraWallet to avoid the NotDetected issue
+      new PetraWallet(),
+      // ---------------------------------------------------------
       new BitgetWallet(),
       new MartianWallet(),
-      new OKXWallet(),
       new PontemWallet(),
       // FIXME: These wallets are not working!!
       new FewchaWallet() as IAptosWallet,
+      // new OKXWallet(),
       // new MSafeWalletAdapter(),
       // new TrustWallet() as IAptosWallet,
-      // We are forcing PetraWallet to avoid the NotDetected issue
-      new PetraWallet(),
     ];
 
     return new WalletCore(
