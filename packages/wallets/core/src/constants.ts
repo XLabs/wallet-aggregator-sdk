@@ -39,7 +39,9 @@ export const CHAINS = {
   linea: 38,
   berachain: 39,
   seievm: 40,
+  unichain: 44,
   worldchain: 45,
+  monad: 48,
   wormchain: 3104,
   cosmoshub: 4000,
   evmos: 4001,
@@ -130,6 +132,8 @@ export const CHAIN_ID_BASE_SEPOLIA = CHAINS["base_sepolia"];
 export const CHAIN_ID_OPTIMISM_SEPOLIA = CHAINS["optimism_sepolia"];
 export const CHAIN_ID_HOLESKY = CHAINS["holesky"];
 export const CHAIN_ID_POLYGON_SEPOLIA = CHAINS["polygon_sepolia"];
+export const CHAIN_ID_UNICHAIN = CHAINS["unichain"];
+export const CHAIN_ID_MONAD = CHAINS["monad"];
 
 export type Network = "MAINNET" | "TESTNET" | "DEVNET";
 
@@ -180,7 +184,9 @@ export function isEVMChain(chainId: ChainId): boolean {
     chainId === CHAIN_ID_WORLDCHAIN ||
     chainId === CHAIN_ID_BLAST ||
     chainId === CHAIN_ID_XLAYER ||
-    chainId === CHAIN_ID_MANTLE
+    chainId === CHAIN_ID_MANTLE ||
+    chainId === CHAIN_ID_UNICHAIN ||
+    chainId === CHAIN_ID_MONAD
   );
 }
 
