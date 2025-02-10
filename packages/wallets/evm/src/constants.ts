@@ -23,6 +23,7 @@ export const EVM_CHAINS = {
   xlayer: 196,
   mantle: 5000,
   worldchain: 480,
+  unichain: 130,
 } as const;
 
 export const EVM_CHAINS_TESTNET = {
@@ -47,6 +48,8 @@ export const EVM_CHAINS_TESTNET = {
   xlayer: 195,
   mantle: 5001,
   worldchain: 4801,
+  unichain: 1301,
+  monad: 10143,
 } as const;
 
 export type EVMChainName =
@@ -71,7 +74,9 @@ export type EVMChainName =
   | "blast"
   | "xlayer"
   | "mantle"
-  | "worldchain";
+  | "worldchain"
+  | "unichain"
+  | "monad";
 
 type Indexable = string | number | symbol;
 
@@ -82,10 +87,11 @@ const invertMap = <K extends Indexable, V extends Indexable>(
     return Object.assign(obj, { [id as Indexable]: name });
   }, {} as Record<V, K>);
 
-export const EVM_CHAIN_ID_TO_NAME: Record<number, EVMChainName> = invertMap<
-  EVMChainName,
-  number
->(EVM_CHAINS);
+// TODO: remove "monad" when mainnet is launched
+export type MainnnetEVMChainName = Exclude<EVMChainName, "monad">;
+
+export const EVM_CHAIN_ID_TO_NAME: Record<number, MainnnetEVMChainName> =
+  invertMap<MainnnetEVMChainName, number>(EVM_CHAINS);
 export const EVM_TESTNET_CHAIN_ID_TO_NAME: Record<number, EVMChainName> =
   invertMap(EVM_CHAINS_TESTNET);
 

@@ -302,6 +302,71 @@ export const worldchainTestnet = {
   testnet: true,
 } as const satisfies Chain;
 
+export const unichain = {
+  id: 130,
+  name: "Unichain",
+  network: "unichain",
+  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ["https://mainnet.unichain.org"],
+    },
+    public: {
+      http: ["https://mainnet.unichain.org"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "Unichain Explorer",
+      url: "https://unichain.blockscout.com/",
+    },
+  },
+} as const satisfies Chain;
+
+export const unichainTestnet = {
+  id: 1301,
+  name: "Unichain Sepolia",
+  network: "unichain-sepolia",
+  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ["https://sepolia.unichain.org"],
+    },
+    public: {
+      http: ["https://sepolia.unichain.org"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "Unichain Explorer",
+      url: "https://unichain-sepolia.blockscout.com/",
+    },
+  },
+  testnet: true,
+} as const satisfies Chain;
+
+export const monadTestnet = {
+  id: 10143,
+  name: "Monad Testnet",
+  network: "monad-testnet",
+  nativeCurrency: { name: "MON", symbol: "MON", decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ["https://testnet-rpc.monad.xyz"],
+    },
+    public: {
+      http: ["https://testnet-rpc.monad.xyz"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "Oasis",
+      url: "https://testnet.explorer.oasis.dev",
+    },
+  },
+  testnet: true,
+} as const satisfies Chain;
+
 export const DEFAULT_CHAINS: Chain[] = [
   ...Object.values(CHAINS),
   acala,
@@ -320,4 +385,7 @@ export const DEFAULT_CHAINS: Chain[] = [
   mantleTestnet,
   worldchain,
   worldchainTestnet,
+  unichain,
+  unichainTestnet,
+  monadTestnet,
 ];
