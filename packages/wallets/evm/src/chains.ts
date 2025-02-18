@@ -259,6 +259,135 @@ export const mantleTestnet = {
   },
 } as const satisfies Chain;
 
+export const worldchain = {
+  id: 480,
+  name: "World Chain",
+  network: "worldchain",
+  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ["https://worldchain-mainnet.g.alchemy.com/public"],
+    },
+    public: {
+      http: ["https://worldchain-mainnet.g.alchemy.com/public"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "World Scan",
+      url: "https://worldscan.org/",
+    },
+  },
+} as const satisfies Chain;
+
+export const worldchainTestnet = {
+  id: 4801,
+  name: "World Chain",
+  network: "worldchain-sepolia",
+  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ["https://worldchain-sepolia.g.alchemy.com/public"],
+    },
+    public: {
+      http: ["https://worldchain-sepolia.g.alchemy.com/public"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "World Scan",
+      url: "https://worldchain-sepolia.explorer.alchemy.com/",
+    },
+  },
+  testnet: true,
+} as const satisfies Chain;
+
+export const unichain = {
+  id: 130,
+  name: "Unichain",
+  network: "unichain",
+  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ["https://unichain-mainnet.g.alchemy.com/public"],
+    },
+    public: {
+      http: ["https://unichain-mainnet.g.alchemy.com/public"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "Unichain Explorer",
+      url: "https://unichain.blockscout.com/",
+    },
+  },
+} as const satisfies Chain;
+
+export const unichainTestnet = {
+  id: 1301,
+  name: "Unichain Testnet",
+  network: "unichain-sepolia",
+  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ["https://unichain-sepolia.g.alchemy.com/public/"],
+    },
+    public: {
+      http: ["https://unichain-sepolia.g.alchemy.com/public/"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "Unichain Explorer",
+      url: "https://unichain-sepolia.blockscout.com/",
+    },
+  },
+  testnet: true,
+} as const satisfies Chain;
+
+export const berachain = {
+  id: 80094,
+  name: "Berachain",
+  network: "berachain",
+  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ["https://berachain-mainnet.g.alchemy.com/public"],
+    },
+    public: {
+      http: ["https://berachain-mainnet.g.alchemy.com/public"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "Berachain Explorer",
+      url: "https://berascan.com/",
+    },
+  },
+} as const satisfies Chain;
+
+export const berachainTestnet = {
+  id: 80084,
+  name: "Berachain",
+  network: "berachain-bartio",
+  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ["https://berachain-bartio.g.alchemy.com/public"],
+    },
+    public: {
+      http: ["https://berachain-bartio.g.alchemy.com/public"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "Berachain Explorer",
+      url: "https://bartio.beratrail.io/",
+    },
+  },
+  testnet: true,
+} as const satisfies Chain;
+
 export const DEFAULT_CHAINS: Chain[] = [
   ...Object.values(CHAINS),
   acala,
@@ -275,4 +404,10 @@ export const DEFAULT_CHAINS: Chain[] = [
   xlayerTestnet,
   mantle,
   mantleTestnet,
+  worldchain,
+  worldchainTestnet,
+  unichain,
+  unichainTestnet,
+  berachain,
+  berachainTestnet,
 ];
